@@ -1,0 +1,9 @@
+*
+
+!.config
+!.config/gh/config.yml
+!.gitconfig
+!.gitignore
+!.hushlogin
+!.zprofile
+!.zshrc

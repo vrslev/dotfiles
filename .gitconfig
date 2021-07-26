@@ -1,0 +1,19 @@
+[user]
+	name = Lev
+	email = mail@vrslev.com
+
+[core]
+	autocrlf = input
+	editor = code
+
+[help]
+	autocorrect = 1
+
+[color]
+	ui = auto
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
