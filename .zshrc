@@ -21,7 +21,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 ZSH_COLORIZE_TOOL=chroma
 
 # Uncomment the following line to enable command auto-correction.
-ENABLE_CORRECTION="true"
+# ENABLE_CORRECTION="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
