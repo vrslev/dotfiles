@@ -32,6 +32,9 @@ defaults write com.apple.LaunchServices LSQuarantine -bool false
 defaults write NSGlobalDomain KeyRepeat -int 1
 defaults write NSGlobalDomain InitialKeyRepeat -int 10
 
+# Disable type accents on long press
+defaults write -g ApplePressAndHoldEnabled -bool false
+
 ###############################################################################
 # Finder                                                                      #
 ###############################################################################
