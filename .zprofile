@@ -12,3 +12,6 @@ if type brew &>/dev/null; then
 fi
 
 alias pip="pip3"
+alias ibrew='arch -x86_64 /usr/local/bin/brew'
+
+export PATH="/opt/homebrew/opt/node@12/bin:$PATH"
