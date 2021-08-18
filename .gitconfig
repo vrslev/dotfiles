@@ -4,7 +4,7 @@
 
 [core]
 	autocrlf = input
-	editor = code
+	editor = nano
 
 [help]
 	autocorrect = 1
