@@ -8,4 +8,3 @@ if type brew &>/dev/null; then
 fi
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
-export PATH=/opt/homebrew/bin:$PATH
