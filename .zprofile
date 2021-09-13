@@ -1,4 +1,3 @@
-eval "$(/opt/homebrew/bin/brew shellenv)"
 alias ibrew='arch -x86_64 /usr/local/bin/brew'
 
 if type brew &>/dev/null; then
@@ -7,3 +6,6 @@ if type brew &>/dev/null; then
     autoload -Uz compinit
     compinit
 fi
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
+export PATH=/opt/homebrew/bin:$PATH
