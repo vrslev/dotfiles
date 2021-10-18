@@ -76,3 +76,15 @@ fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+alias pip=pip3
+export PATH="/Users/lev/.local/bin:$PATH"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# The next line updates PATH for Yandex Cloud CLI.
+if [ -f '/Users/lev/yandex-cloud/path.bash.inc' ]; then source '/Users/lev/yandex-cloud/path.bash.inc'; fi
+
+# The next line enables shell command completion for yc.
+if [ -f '/Users/lev/yandex-cloud/completion.zsh.inc' ]; then source '/Users/lev/yandex-cloud/completion.zsh.inc'; fi
+
