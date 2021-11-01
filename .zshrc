@@ -43,6 +43,7 @@ plugins=(
     gh
     pip
     python
+    pyenv
     zsh-interactive-cd
 )
 
