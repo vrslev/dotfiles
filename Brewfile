@@ -3,14 +3,17 @@ tap "homebrew/cask"
 tap "homebrew/command-not-found"
 tap "homebrew/core"
 tap "homebrew/services"
+brew "cloc"
 brew "fzf"
 brew "gh"
 brew "git"
-brew "python@3.9"
+brew "go"
+brew "jq"
+brew "python@3.9", link: false
 brew "jrnl"
-brew "mackup"
 brew "mariadb"
 brew "mas"
+brew "pyenv"
 brew "redis"
 brew "tree"
 brew "wget"
@@ -34,7 +37,6 @@ mas "Keynote", id: 409183694
 mas "Microsoft PowerPoint", id: 462062816
 mas "Numbers", id: 409203825
 mas "Pages", id: 409201541
-mas "Pandan", id: 1569600264
 mas "Pixelmator Pro", id: 1289583905
 mas "Reeder", id: 1529448980
 mas "Speedtest", id: 1153157709
