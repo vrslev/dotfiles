@@ -13,5 +13,5 @@
     "username": "vrslev"
   },
   "all_branches": true,
-  "exclude": "(^vrslev/...$)|(^vrslev/frappe$)"
+  "exclude": "(^vrslev/...$)|(^vrslev/frappe$)|(^vrslev/dotfiles$)"
 }
