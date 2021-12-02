@@ -1,0 +1,17 @@
+{
+  "output_dir": "code",
+  "source": "all_repos.source.github",
+  "source_settings": {
+    "api_key": "...",
+    "username": "vrslev",
+    "forks": true,
+    "private": true
+  },
+  "push": "all_repos.push.github_pull_request",
+  "push_settings": {
+    "api_key": "...",
+    "username": "vrslev"
+  },
+  "all_branches": true,
+  "exclude": "(^vrslev/...$)|(^vrslev/frappe$)"
+}

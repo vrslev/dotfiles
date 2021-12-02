@@ -12,3 +12,6 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init --path)"
+
+# all-repos autocomplete on git clone (https://github.com/asottile/all-repos#all-repos-complete-options)
+eval "$(all-repos-complete -C ~/.../all-repos.json --bash)"
