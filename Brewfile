@@ -6,6 +6,7 @@ tap "homebrew/services"
 brew "bat"
 brew "python@3.9", link: false
 brew "colima"
+brew "coreutils"
 brew "docker"
 brew "docker-compose"
 brew "exa"
