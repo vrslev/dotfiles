@@ -18,7 +18,7 @@ fi
 eval "$(pyenv init --path)"
 
 # Expose pipx binaries
-export PATH="$PATH:/Users/lev/.local/bin"
+export PATH="$HOME/.local/bin:$PATH"
 
 # Don't allow Hombrew to collect analytics
 export HOMEBREW_NO_ANALYTICS=1
