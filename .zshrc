@@ -17,14 +17,9 @@ plugins=(
   docker
   docker-compose
   dotenv
-  gh
   git
-  npm
   pip
-  pyenv
-  python
   sudo
-  virtualenv
   zsh-autosuggestions
   zsh-interactive-cd
   zsh-syntax-highlighting
@@ -67,7 +62,6 @@ fi
 # Aliases
 #
 
-unalias py # "python" oh-my-zsh plugin has intersecting alias with python-launcher
 alias pip=pip3
 alias ls=exa
 
