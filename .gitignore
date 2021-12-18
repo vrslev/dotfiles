@@ -1,6 +1,7 @@
 *
 
 !.config
+!.config/gh
 !.config/gh/config.yml
 !.gitconfig
 !.gitignore
