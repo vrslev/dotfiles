@@ -7,9 +7,9 @@
 !.gitconfig
 !.gitignore
 !.hushlogin
+!.hyper.js
+!.macos
 !.zprofile
 !.zshrc
-!.macos
-!Brewfile
 !all-repos-sample.json
-!.hyper.js
+!Brewfile
