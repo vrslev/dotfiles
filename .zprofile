@@ -1,14 +1,18 @@
-alias ibrew='arch -x86_64 /usr/local/bin/brew'
-
-if type brew &>/dev/null; then
-    FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
-
-    autoload -Uz compinit
-    compinit
+# Init brew env
+if [[ -f /opt/homebrew/bin/brew ]]; then
+    # arm64
+    eval $(/opt/homebrew/bin/brew shellenv)
+elif [[ -f /usr/local/bin/brew ]]; then
+    # intel
+    eval $(/usr/local/bin/brew shellenv)
 fi
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
+# Preferred editor for local and remote sessions
+if [[ -n $SSH_CONNECTION ]]; then
+    export EDITOR='nano'
+else
+    export EDITOR='code'
+fi
 
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
+# Init pyenv env
 eval "$(pyenv init --path)"
