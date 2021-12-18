@@ -16,6 +16,7 @@ brew "go"
 brew "jq"
 brew "mariadb", restart_service: true
 brew "mas"
+brew "openssl@3"
 brew "postgresql", restart_service: true
 brew "pyenv"
 brew "python-launcher"
