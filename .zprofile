@@ -16,3 +16,6 @@ fi
 
 # Init pyenv env
 eval "$(pyenv init --path)"
+
+# Expose pipx binaries
+export PATH="$PATH:/Users/lev/.local/bin"
