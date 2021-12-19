@@ -1,3 +1,8 @@
+#
+# Fig environment variables (start)
+#
+[ -s ~/.fig/shell/pre.sh ] && source ~/.fig/shell/pre.sh
+
 # Init brew env
 if [[ -f /opt/homebrew/bin/brew ]]; then
     # arm64
@@ -22,3 +27,8 @@ export PATH="$HOME/.local/bin:$PATH"
 
 # Don't allow Hombrew to collect analytics
 export HOMEBREW_NO_ANALYTICS=1
+
+#
+# Fig environment variables (end)
+#
+[ -s ~/.fig/fig.sh ] && source ~/.fig/fig.sh

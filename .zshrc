@@ -54,11 +54,6 @@ if type brew &>/dev/null; then
 fi
 
 #
-# Fig environment variables (end)
-#
-[ -s ~/.fig/fig.sh ] && source ~/.fig/fig.sh
-
-#
 # Aliases
 #
 
@@ -90,3 +85,8 @@ cd() {
     fi
   fi
 }
+
+#
+# Fig environment variables (end)
+#
+[ -s ~/.fig/fig.sh ] && source ~/.fig/fig.sh
