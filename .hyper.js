@@ -20,22 +20,22 @@ module.exports = {
     // letter spacing as a relative unit
     letterSpacing: 0,
     // terminal cursor background color and opacity (hex, rgb, hsl, hsv, hwb or cmyk)
-    cursorColor: "rgba(248,28,229,0.8)",
+    cursorColor: "#79b8ff",
     // terminal text color under BLOCK cursor
-    cursorAccentColor: "#000",
+    cursorAccentColor: "#586069",
     // `'BEAM'` for |, `'UNDERLINE'` for _, `'BLOCK'` for █
     cursorShape: "BLOCK",
     // set to `true` (without backticks and without quotes) for blinking cursor
     cursorBlink: false,
     // color of the text
-    foregroundColor: "#fff",
+    foregroundColor: "#d1d5da",
     // terminal background color
     // opacity is only supported on macOS
-    backgroundColor: "#000",
+    backgroundColor: "#1f2428",
     // terminal selection color
-    selectionColor: "rgba(248,28,229,0.3)",
+    selectionColor: "#d1d5da",
     // border color (window, tabs)
-    borderColor: "#333",
+    borderColor: "#1b1f23",
     // custom CSS to embed in the main window
     css: "",
     // custom CSS to embed in the terminal window
@@ -55,22 +55,22 @@ module.exports = {
     // including the 6 x 6 color cubes and the grayscale map, just provide
     // an array here instead of a color map object
     colors: {
-      black: "#000000",
-      red: "#C51E14",
-      green: "#1DC121",
-      yellow: "#C7C329",
-      blue: "#0A2FC4",
-      magenta: "#C839C5",
-      cyan: "#20C5C6",
-      white: "#C7C7C7",
-      lightBlack: "#686868",
-      lightRed: "#FD6F6B",
-      lightGreen: "#67F86F",
-      lightYellow: "#FFFA72",
-      lightBlue: "#6A76FB",
-      lightMagenta: "#FD7CFC",
-      lightCyan: "#68FDFE",
-      lightWhite: "#FFFFFF",
+      black: "#586069",
+      red: "#ea4a5a",
+      green: "#34d058",
+      yellow: "#ffea7f",
+      blue: "#2188ff",
+      magenta: "#b392f0",
+      cyan: "#39c5cf",
+      white: "#d1d5da",
+      lightBlack: "#959da5",
+      lightRed: "#f97583",
+      lightGreen: "#85e89d",
+      lightYellow: "#ffea7f",
+      lightBlue: "#79b8ff",
+      lightMagenta: "#b392f0",
+      lightCyan: "#56d4dd",
+      lightWhite: "#fafbfc",
       limeGreen: "#32CD32",
       lightCoral: "#F08080",
     },
@@ -136,7 +136,7 @@ module.exports = {
   },
   // a list of plugins to fetch and install from npm
   plugins: [
-    "hyper-github-dark",
+    // "hyper-github-dark",
     "hyper-tabs-enhanced",
     "hypercwd",
     "hyperduck",
@@ -144,9 +144,7 @@ module.exports = {
   // in development, you can create a directory under
   // `~/.hyper_plugins/local/` and include it here
   // to load it and avoid it being `npm install`ed
-  localPlugins: [
-  "fig-hyper-integration"
-],
+  localPlugins: ["fig-hyper-integration"],
   keymaps: {
     // Example
     // 'window:devtools': 'cmd+alt+o',
