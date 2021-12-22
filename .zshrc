@@ -48,8 +48,6 @@ if type brew &>/dev/null; then
   source "$(brew --prefix)/opt/fzf/shell/completion.zsh"
   # load fzf key bindings
   source "/opt/homebrew/opt/fzf/shell/key-bindings.zsh"
-  # load yc completions
-  source "$(brew --prefix)/Caskroom/yandex-cloud-cli/latest/yandex-cloud-cli/completion.zsh.inc"
 fi
 
 #
