@@ -19,27 +19,10 @@ module.exports = {
     lineHeight: 1,
     // letter spacing as a relative unit
     letterSpacing: 0,
-    // terminal cursor background color and opacity (hex, rgb, hsl, hsv, hwb or cmyk)
-    cursorColor: "#79b8ff",
-    // terminal text color under BLOCK cursor
-    cursorAccentColor: "#586069",
     // `'BEAM'` for |, `'UNDERLINE'` for _, `'BLOCK'` for █
     cursorShape: "BLOCK",
     // set to `true` (without backticks and without quotes) for blinking cursor
     cursorBlink: false,
-    // color of the text
-    foregroundColor: "#ffffff",
-    // terminal background color
-    // opacity is only supported on macOS
-    backgroundColor: "#1f2428",
-    // terminal selection color
-    selectionColor: "#d1d5da",
-    // border color (window, tabs)
-    borderColor: "#1b1f23",
-    // custom CSS to embed in the main window
-    css: "",
-    // custom CSS to embed in the terminal window
-    termCSS: "",
     // set custom startup directory (must be an absolute path)
     workingDirectory: "",
     // if you're using a Linux setup which show native menus, set to false
@@ -51,29 +34,6 @@ module.exports = {
     showWindowControls: "",
     // custom padding (CSS format, i.e.: `top right bottom left`)
     padding: "12px 14px",
-    // the full list. if you're going to provide the full color palette,
-    // including the 6 x 6 color cubes and the grayscale map, just provide
-    // an array here instead of a color map object
-    colors: {
-      black: "#586069",
-      red: "#ea4a5a",
-      green: "#34d058",
-      yellow: "#ffea7f",
-      blue: "#2188ff",
-      magenta: "#b392f0",
-      cyan: "#39c5cf",
-      white: "#d1d5da",
-      lightBlack: "#959da5",
-      lightRed: "#f97583",
-      lightGreen: "#85e89d",
-      lightYellow: "#ffea7f",
-      lightBlue: "#79b8ff",
-      lightMagenta: "#b392f0",
-      lightCyan: "#56d4dd",
-      lightWhite: "#fafbfc",
-      limeGreen: "#32CD32",
-      lightCoral: "#F08080",
-    },
     // the shell to run when spawning a new session (i.e. /usr/local/bin/fish)
     // if left empty, your system's login shell will be used by default
     //
@@ -126,21 +86,12 @@ module.exports = {
     // set to true to disable auto updates
     disableAutoUpdates: false,
     // for advanced config flags please refer to https://hyper.is/#cfg
-    hyperTabs: {
-      tabIconsColored: true,
-      trafficButtons: true,
-    },
     hypercwd: {
       initialWorkingDirectory: "~",
     },
   },
   // a list of plugins to fetch and install from npm
-  plugins: [
-    // "hyper-github-dark",
-    "hyper-tabs-enhanced",
-    "hypercwd",
-    "hyperduck",
-  ],
+  plugins: ["hypercwd", "hyperduck", "hyper-vscode-github-auto-theme"],
   // in development, you can create a directory under
   // `~/.hyper_plugins/local/` and include it here
   // to load it and avoid it being `npm install`ed
