@@ -21,7 +21,8 @@ plugins=(
   sudo
   zsh-autosuggestions
   zsh-interactive-cd
-  zsh-syntax-highlighting
+  zsh-syntax-highlighting # https://github.com/zsh-users/zsh-syntax-highlighting
+  you-should-use          # https://github.com/MichaelAquilina/zsh-you-should-use
 )
 
 source $ZSH/oh-my-zsh.sh
