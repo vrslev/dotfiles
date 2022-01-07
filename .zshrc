@@ -38,6 +38,9 @@ eval "$(pyenv init -)"
 # Autocompletions
 #
 
+zstyle ':completion:*' menu select
+fpath+=~/.zfunc
+
 if type brew &>/dev/null; then
   # load main completions for packages installed with brew
   FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
