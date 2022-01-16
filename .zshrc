@@ -32,7 +32,12 @@ source $ZSH/oh-my-zsh.sh
 #
 
 eval "$(starship init zsh)"
-eval "$(pyenv init -)"
+
+# Lazy load pyenv
+pyenv() {
+  eval "$(command pyenv init -)"
+  pyenv "$@"
+}
 
 #
 # Autocompletions
@@ -46,7 +51,11 @@ if type brew &>/dev/null; then
   FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
 
   autoload -Uz compinit
-  compinit
+  if [ $(date +'%j') != $(/usr/bin/stat -f '%Sm' -t '%j' ${ZDOTDIR:-$HOME}/.zcompdump) ]; then
+    compinit
+  else
+    compinit -C
+  fi
 
   # load fzf completions
   source "$(brew --prefix)/opt/fzf/shell/completion.zsh"
