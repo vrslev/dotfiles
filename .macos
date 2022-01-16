@@ -107,6 +107,9 @@ defaults write com.apple.dock autohide-time-modifier -float 0
 # Don’t show recent applications in Dock
 defaults write com.apple.dock show-recents -bool false
 
+# Disable Dock resizing
+defaults write com.apple.dock size-immutable -bool true
+
 ###############################################################################
 # Safari & WebKit                                                             #
 ###############################################################################
