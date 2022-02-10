@@ -69,6 +69,7 @@ fi
 
 alias pip=pip3
 alias ls=exa
+alias pc=pre-commit
 
 if [[ -f /usr/local/bin/brew ]]; then
   alias ibrew='arch -x86_64 /usr/local/bin/brew'
