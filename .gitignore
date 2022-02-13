@@ -4,6 +4,8 @@
 !.config/gh
 !.config/gh/config.yml
 !.config/starship.toml
+!.config/pip
+!.config/pip/pip.conf
 !.gitconfig
 !.gitignore
 !.hushlogin
