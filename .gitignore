@@ -8,6 +8,10 @@
 !.config/pip/pip.conf
 !.config/fish
 !.config/fish/config.fish
+!.config/iterm2
+!.config/iterm2/com.googlecode.iterm2.plist
+!.config/iterm2/GitHub Dark.itermcolors
+!.config/iterm2/GitHub Light.itermcolors
 !.gitconfig
 !.gitignore
 !.hyper.js
