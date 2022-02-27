@@ -10,10 +10,7 @@
 !.config/fish/config.fish
 !.gitconfig
 !.gitignore
-!.hushlogin
 !.hyper.js
 !.macos
-!.zprofile
-!.zshrc
 !all-repos-sample.json
 !Brewfile
