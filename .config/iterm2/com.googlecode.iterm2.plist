@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>AlternateMouseScroll</key>
+	<true/>
 	<key>Custom Color Presets</key>
 	<dict>
 		<key>GitHub Dark</key>
@@ -2987,13 +2989,13 @@
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.41176470588235292</real>
+				<real>0.1803921568627451</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.37647058823529411</real>
+				<real>0.16078431372549021</real>
 				<key>Red Component</key>
-				<real>0.34509803921568627</real>
+				<real>0.14117647058823529</real>
 			</dict>
 			<key>Guid</key>
 			<string>B5625889-F6DB-42E7-9E22-ACE3FD36A2B7</string>
