@@ -6,6 +6,8 @@
 !.config/starship.toml
 !.config/pip
 !.config/pip/pip.conf
+!.config/fish
+!.config/fish/config.fish
 !.gitconfig
 !.gitignore
 !.hushlogin
