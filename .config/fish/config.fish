@@ -83,7 +83,7 @@ alias ls=exa
 alias pc=pre-commit
 alias bake="docker buildx bake"
 alias venv=virtualenv
-
+alias dco="docker compose"
 if test -f /usr/local/bin/brew 
   alias ibrew 'arch -x86_64 /usr/local/bin/brew'
 end
