@@ -89,3 +89,5 @@ if test -f /usr/local/bin/brew
 end
 
 # TODO: Poetry completions
+
+set -x PYTHONDONTWRITEBYTECODE 1
