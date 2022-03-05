@@ -23,8 +23,10 @@ eval (pyenv init --path)
 
 eval (starship init fish)
 
-# Expose pipx binaries
+# Add pipx binaries
 set -x PATH $HOME/.local/bin $PATH
+# Add scipts
+set -x PATH $HOME/bin $PATH
 
 # No greeting when starting an interactive shell
 function fish_greeting

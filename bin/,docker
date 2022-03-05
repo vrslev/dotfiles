@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# Build and run an ephemeral docker image without making me remember the
+# commands to do so.
+
+docker build -t ephemeral . 1>&2 && exec docker run -it ephemeral "$@"

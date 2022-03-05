@@ -1,19 +1,23 @@
 *
 
 !.config
-!.config/gh
-!.config/gh/config.yml
-!.config/starship.toml
-!.config/pip
-!.config/pip/pip.conf
 !.config/fish
 !.config/fish/config.fish
+!.config/fish/fish_plugins
+!.config/gh
+!.config/gh/config.yml
 !.config/iterm2
 !.config/iterm2/com.googlecode.iterm2.plist
 !.config/iterm2/GitHub Dark.itermcolors
 !.config/iterm2/GitHub Light.itermcolors
+!.config/pip
+!.config/pip/pip.conf
+!.config/starship.toml
 !.gitconfig
 !.gitignore
 !.macos
 !all-repos-sample.json
+!bin
+!bin/,docker
+!bin/,home
 !Brewfile
