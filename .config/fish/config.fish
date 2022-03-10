@@ -92,6 +92,7 @@ alias dco="docker compose"
 if test -f /usr/local/bin/brew 
   alias ibrew 'arch -x86_64 /usr/local/bin/brew'
 end
+alias df=duf
 
 # TODO: Poetry completions
 
