@@ -3,13 +3,16 @@ if status is-interactive
 end
 
 # Init brew env
-if test -f /opt/homebrew/bin/brew
-    # arm64
-    eval (/opt/homebrew/bin/brew shellenv)
-else if test -f /usr/local/bin/brew
+if test -f /usr/local/bin/brew
     # intel
     eval (/usr/local/bin/brew shellenv)
 end
+
+if test -f /opt/homebrew/bin/brew
+    # arm64
+    eval (/opt/homebrew/bin/brew shellenv)
+end
+
 
 # Preferred editor for local and remote sessions
 if test -n $SSH_CONNECTION
