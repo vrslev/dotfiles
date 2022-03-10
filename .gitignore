@@ -20,4 +20,6 @@
 !bin
 !bin/,docker
 !bin/,home
+!bin/,brewfile
 !Brewfile
+!iBrewfile

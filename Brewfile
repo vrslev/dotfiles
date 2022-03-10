@@ -9,7 +9,6 @@ brew "cloc"
 brew "colima"
 brew "coreutils"
 brew "docker", link: false
-brew "docker-compose"
 brew "exa"
 brew "ffmpeg"
 brew "fish"
