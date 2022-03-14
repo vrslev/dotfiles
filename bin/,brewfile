@@ -3,4 +3,4 @@
 set -x
 
 /opt/homebrew/bin/brew bundle dump -f --file ~/Brewfile --mas --no-lock
-/usr/local/bin/brew bundle dump -f --file ~/Brewfile.intel --no-lock
+/usr/local/bin/brew bundle dump -f --file ~/iBrewfile --no-lock
