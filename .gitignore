@@ -16,7 +16,6 @@
 !.gitconfig
 !.gitignore
 !.macos
-!all-repos-sample.json
 !bin
 !bin/,docker
 !bin/,home
