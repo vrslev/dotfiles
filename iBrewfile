@@ -1,6 +1,4 @@
 tap "homebrew/bundle"
-tap "homebrew/cask"
-tap "homebrew/command-not-found"
 tap "homebrew/core"
 brew "node@14", link: true
 mas "Disk Speed Test", id: 425264550
