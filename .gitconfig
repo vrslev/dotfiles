@@ -13,3 +13,9 @@
 
 [init]
 	defaultBranch = main
+
+[alias]
+	a = add
+	c = commit
+	cm = commit -m
+	p = push
