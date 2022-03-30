@@ -16,6 +16,8 @@
 
 [alias]
 	a = add
-	c = commit
+	ch = checkout
+	chm = checkout main
 	cm = commit -m
 	p = push
+	l = log --oneline --decorate --color --graph
