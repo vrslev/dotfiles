@@ -21,15 +21,15 @@ else
     set -x EDITOR nano
 end
 
-# Init pyenv env
 eval (pyenv init --path)
-
 eval (starship init fish)
 
 # Add pipx binaries
 set -x PATH $HOME/.local/bin $PATH
 # Add scipts
 set -x PATH $HOME/bin $PATH
+# Prevent python from writing byte code
+set -x PYTHONDONTWRITEBYTECODE 1
 
 # No greeting when starting an interactive shell
 function fish_greeting
@@ -83,17 +83,22 @@ function fish_user_key_bindings
     bind '$' bind_dollar
 end
 
-alias pip=pip3
 alias ls=exa
-alias pc=pre-commit
 alias bake="docker buildx bake"
 alias venv=virtualenv
-alias dco="docker compose"
 if test -f /usr/local/bin/brew 
   alias ibrew 'arch -x86_64 /usr/local/bin/brew'
 end
 alias df=duf
 
-# TODO: Poetry completions
+# https://github.com/jhillyerd/plugin-git/blob/44a1eb5856cea43e4c01318120c1d4e1823d1e34/functions/__git.init.fish#L3
+function __abbr
+    set -l name $argv[1]
+    set -l body $argv[2..-1]
+    abbr -a $name $body
+    set -a __git_plugin_abbreviations $name
+end
 
-set -x PYTHONDONTWRITEBYTECODE 1
+__abbr g git
+__abbr pc pre-commit
+__abbr dco "docker compose"
