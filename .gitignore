@@ -17,8 +17,6 @@
 !.gitignore
 !.macos
 !bin
-!bin/,docker
-!bin/,home
-!bin/,brewfile
+!bin/*
 !Brewfile
 !iBrewfile
