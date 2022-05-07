@@ -21,7 +21,7 @@ else
     set -x EDITOR nano
 end
 
-eval (pyenv init --path)
+pyenv init - | source
 eval (starship init fish)
 
 # Add pipx binaries
