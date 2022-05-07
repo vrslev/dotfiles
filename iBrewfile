@@ -1,6 +1,5 @@
 tap "homebrew/bundle"
 tap "homebrew/core"
-brew "node@14", link: true
 mas "AudioBookBinder", id: 413969927
 mas "Disk Speed Test", id: 425264550
 mas "GarageBand", id: 682658836
