@@ -1,3 +1,4 @@
 #!/bin/sh
 
 cp ~/Library/Application\ Support/Code/User/settings.json ~/vscode/
+code --list-extensions >~/vscode/extensions.txt
