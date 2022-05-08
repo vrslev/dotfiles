@@ -20,3 +20,6 @@
 !bin/*
 !Brewfile
 !iBrewfile
+!.docker
+!.docker/daemon.json
+!.docker/features.json
