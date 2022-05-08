@@ -1,0 +1,100 @@
+{
+  "[dockerfile]": {
+    "editor.defaultFormatter": "ms-azuretools.vscode-docker"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "debug.console.closeOnEnd": true,
+  "diffEditor.codeLens": true,
+  "editor.accessibilitySupport": "off",
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true
+  },
+  "editor.fontSize": 14,
+  "editor.formatOnSave": true,
+  "editor.quickSuggestions": true,
+  "editor.suggestSelection": "first",
+  "editor.unicodeHighlight.ambiguousCharacters": false,
+  "emmet.includeLanguages": {
+    "jinja-html": "html"
+  },
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+  "explorer.fileNesting.enabled": true,
+  "extensions.ignoreRecommendations": true,
+  "files.associations": {
+    "*.hcl": "terraform-vars"
+  },
+  "files.autoGuessEncoding": true,
+  "files.autoSave": "afterDelay",
+  "files.exclude": {
+    "**/*.egg-info": true,
+    "**/__pycache__": true
+  },
+  "git.autofetch": true,
+  "git.confirmSync": false,
+  "git.enableSmartCommit": true,
+  "git.ignoredRepositories": ["/opt/homebrew"],
+  "gitlens.codeLens.enabled": false,
+  "gitlens.currentLine.enabled": false,
+  "gitlens.hovers.avatars": false,
+  "gitlens.hovers.currentLine.over": "line",
+  "gitlens.hovers.pullRequests.enabled": false,
+  "gitlens.statusBar.enabled": false,
+  "javascript.validate.enable": true,
+  "liveServer.settings.donotShowInfoMsg": true,
+  "liveServer.settings.donotVerifyTags": true,
+  "python.analysis.indexing": true,
+  "python.diagnostics.sourceMapsEnabled": true,
+  "python.linting.mypyArgs": [],
+  "python.linting.pylintEnabled": false,
+  "python.poetryPath": "/opt/homebrew/bin/poetry",
+  "python.testing.pytestPath": "pytest",
+  "security.workspace.trust.untrustedFiles": "open",
+  "telemetry.telemetryLevel": "off",
+  "terminal.external.osxExec": "iTerm.app",
+  "terminal.integrated.copyOnSelection": true,
+  "terminal.integrated.defaultProfile.osx": "fish",
+  "terminal.integrated.fontSize": 13,
+  "terminal.integrated.showExitAlert": false,
+  "todo-tree.highlights.enabled": false,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "typescript.validate.enable": true,
+  "window.autoDetectColorScheme": true,
+  "window.newWindowDimensions": "maximized",
+  "workbench.colorTheme": "GitHub Light",
+  "workbench.editorAssociations": {
+    "*.ipynb": "jupyter-notebook",
+    "*.state": "default",
+    "git-rebase-todo": "gitlens.rebase"
+  },
+  "workbench.fontAliasing": "antialiased",
+  "workbench.list.smoothScrolling": true,
+  "workbench.preferredDarkColorTheme": "GitHub Dark",
+  "workbench.preferredLightColorTheme": "GitHub Light"
+}
