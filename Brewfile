@@ -69,6 +69,7 @@ cask "windscribe"
 cask "wkhtmltopdf"
 cask "yandex-cloud-cli"
 cask "zoom"
+mas "1Password for Safari", id: 1569813296
 mas "AudioBookBinder", id: 413969927
 mas "Disk Speed Test", id: 425264550
 mas "GarageBand", id: 682658836
