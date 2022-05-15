@@ -59,7 +59,9 @@
   "git.autofetch": true,
   "git.confirmSync": false,
   "git.enableSmartCommit": true,
-  "git.ignoredRepositories": ["/opt/homebrew"],
+  "git.ignoredRepositories": [
+    "/opt/homebrew"
+  ],
   "gitlens.codeLens.enabled": false,
   "gitlens.currentLine.enabled": false,
   "gitlens.hovers.avatars": false,
@@ -75,6 +77,7 @@
   "python.linting.pylintEnabled": false,
   "python.poetryPath": "/opt/homebrew/bin/poetry",
   "python.testing.pytestPath": "pytest",
+  "redhat.telemetry.enabled": false,
   "security.workspace.trust.untrustedFiles": "open",
   "telemetry.telemetryLevel": "off",
   "terminal.external.osxExec": "iTerm.app",

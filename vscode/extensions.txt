@@ -15,8 +15,6 @@ golang.go
 Gruntfuggly.todo-tree
 hangxingliu.vscode-nginx-conf-hint
 hashicorp.terraform
-johnsoncodehk.volar
-johnsoncodehk.vscode-typescript-vue-plugin
 mikestead.dotenv
 mrorz.language-gettext
 ms-azuretools.vscode-docker
@@ -38,3 +36,5 @@ samuelcolvin.jinjahtml
 skyapps.fish-vscode
 softwaredotcom.swdc-vscode
 VisualStudioExptTeam.vscodeintellicode
+Vue.volar
+Vue.vscode-typescript-vue-plugin
