@@ -59,9 +59,7 @@
   "git.autofetch": true,
   "git.confirmSync": false,
   "git.enableSmartCommit": true,
-  "git.ignoredRepositories": [
-    "/opt/homebrew"
-  ],
+  "git.ignoredRepositories": ["/opt/homebrew"],
   "gitlens.codeLens.enabled": false,
   "gitlens.currentLine.enabled": false,
   "gitlens.hovers.avatars": false,
