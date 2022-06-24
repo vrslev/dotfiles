@@ -37,7 +37,11 @@
   },
   "editor.fontSize": 14,
   "editor.formatOnSave": true,
-  "editor.quickSuggestions": true,
+  "editor.quickSuggestions": {
+    "comments": "on",
+    "strings": "on",
+    "other": "on"
+  },
   "editor.suggestSelection": "first",
   "editor.unicodeHighlight.ambiguousCharacters": false,
   "emmet.includeLanguages": {
