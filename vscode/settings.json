@@ -18,8 +18,8 @@
   "editor.formatOnSave": true,
   "editor.quickSuggestions": {
     "comments": "on",
-    "strings": "on",
-    "other": "on"
+    "other": "on",
+    "strings": "on"
   },
   "editor.suggestSelection": "first",
   "editor.unicodeHighlight.ambiguousCharacters": false,
@@ -56,7 +56,6 @@
   "python.diagnostics.sourceMapsEnabled": true,
   "python.linting.mypyArgs": [],
   "python.linting.pylintEnabled": false,
-  "python.poetryPath": "/opt/homebrew/bin/poetry",
   "python.testing.pytestPath": "pytest",
   "redhat.telemetry.enabled": false,
   "security.workspace.trust.untrustedFiles": "open",
