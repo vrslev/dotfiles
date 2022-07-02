@@ -28,6 +28,8 @@ eval (starship init fish)
 set -x PATH $HOME/.local/bin $PATH
 # Add scipts
 set -x PATH $HOME/bin $PATH
+# Add cargo
+set -x PATH $HOME/.cargo/bin $PATH
 # Prevent python from writing byte code
 set -x PYTHONDONTWRITEBYTECODE 1
 
