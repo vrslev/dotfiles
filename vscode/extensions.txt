@@ -32,6 +32,7 @@ ms-vscode.remote-repositories
 redhat.vscode-yaml
 richie5um2.vscode-sort-json
 ritwickdey.LiveServer
+rust-lang.rust-analyzer
 samuelcolvin.jinjahtml
 skyapps.fish-vscode
 softwaredotcom.swdc-vscode
