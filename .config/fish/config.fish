@@ -32,6 +32,8 @@ set -x PATH $HOME/bin $PATH
 set -x PATH $HOME/.cargo/bin $PATH
 # Prevent python from writing byte code
 set -x PYTHONDONTWRITEBYTECODE 1
+# Set language
+set -x LC_ALL en_US.utf8
 
 # No greeting when starting an interactive shell
 function fish_greeting
@@ -85,13 +87,13 @@ function fish_user_key_bindings
     bind '$' bind_dollar
 end
 
-alias ls=exa
-alias bake="docker buildx bake"
-alias venv=virtualenv
+alias ls exa
+alias bake "docker buildx bake"
+alias venv virtualenv
 if test -f /usr/local/bin/brew 
   alias ibrew 'arch -x86_64 /usr/local/bin/brew'
 end
-alias df=duf
+alias df duf
 
 # https://github.com/jhillyerd/plugin-git/blob/44a1eb5856cea43e4c01318120c1d4e1823d1e34/functions/__git.init.fish#L3
 function __abbr
