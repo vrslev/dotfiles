@@ -35,6 +35,7 @@
   },
   "files.autoGuessEncoding": true,
   "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 300,
   "files.exclude": {
     "**/*.egg-info": true,
     "**/__pycache__": true
@@ -58,6 +59,7 @@
   "python.linting.pylintEnabled": false,
   "python.testing.pytestPath": "pytest",
   "redhat.telemetry.enabled": false,
+  "rust-analyzer.inlayHints.typeHints.enable": false,
   "security.workspace.trust.untrustedFiles": "open",
   "telemetry.telemetryLevel": "off",
   "terminal.external.osxExec": "iTerm.app",
