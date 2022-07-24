@@ -1,15 +1,2 @@
-[battery]
-full_symbol = "🔋 "
-charging_symbol = "⚡️ "
-discharging_symbol = "💀 "
-
-[git_branch]
-symbol = "🌱 "
-
-[nodejs]
-version_format = "v${major}"
-format = "via [🤖 $version](bold green) "
-symbol = "🤖 "
-
 [python]
 python_binary = ["py"]

@@ -87,7 +87,7 @@ function fish_user_key_bindings
     bind '$' bind_dollar
 end
 
-alias ls exa
+alias ls "exa --icons"
 alias bake "docker buildx bake"
 alias venv virtualenv
 if test -f /usr/local/bin/brew 

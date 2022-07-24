@@ -14,6 +14,8 @@
   "editor.codeActionsOnSave": {
     "source.organizeImports": true
   },
+  "editor.fontFamily": "FiraCode Nerd Font",
+  "editor.fontLigatures": true,
   "editor.fontSize": 14,
   "editor.formatOnSave": true,
   "editor.quickSuggestions": {
