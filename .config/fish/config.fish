@@ -94,6 +94,7 @@ if test -f /usr/local/bin/brew
   alias ibrew 'arch -x86_64 /usr/local/bin/brew'
 end
 alias df duf
+alias v nvim
 
 # https://github.com/jhillyerd/plugin-git/blob/44a1eb5856cea43e4c01318120c1d4e1823d1e34/functions/__git.init.fish#L3
 function __abbr

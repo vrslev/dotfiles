@@ -9,13 +9,13 @@
 !.config/iterm2/com.googlecode.iterm2.plist
 !.config/iterm2/GitHub Dark.itermcolors
 !.config/iterm2/GitHub Light.itermcolors
+!.config/nvim
+!.config/nvim/**
 !.config/pip
 !.config/pip/pip.conf
 !.config/starship.toml
 !.config/wezterm
-!.config/wezterm/*
-!.config/wezterm/colors
-!.config/wezterm/colors/*
+!.config/wezterm/**
 !.docker
 !.docker/daemon.json
 !.docker/features.json
