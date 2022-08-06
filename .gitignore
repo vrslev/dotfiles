@@ -1,5 +1,4 @@
 *
-
 !.config
 !.config/fish
 !.config/fish/config.fish
@@ -13,6 +12,10 @@
 !.config/pip
 !.config/pip/pip.conf
 !.config/starship.toml
+!.config/wezterm
+!.config/wezterm/*
+!.config/wezterm/colors
+!.config/wezterm/colors/*
 !.docker
 !.docker/daemon.json
 !.docker/features.json
