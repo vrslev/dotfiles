@@ -1,4 +1,4 @@
-vim.o.guicursor = ""
+--vim.o.guicursor = ""
 vim.o.nu = true
 vim.o.modeline = true
 
@@ -20,3 +20,7 @@ vim.g.mapleader = " "
 
 vim.o.swapfile = true
 vim.o.undofile = true
+
+vim.o.clipboard = "unnamed"
+
+vim.o.ignorecase = true
