@@ -7,6 +7,21 @@
 - link:
     ~/.config/fish/config.fish: config/fish/config.fish
     ~/.config/fish/fish_plugins: config/fish/fish_plugins
+    ~/.config/nvim: config/nvim
+    ~/.config/pip/pip.conf: config/pip/pip.conf
+    ~/.config/wezterm: config/wezterm
+    ~/.config/starship.toml: config/starship.toml
+    ~/.docker/daemon.json: docker/daemon.json
+    ~/.docker/features.json: docker/features.json
+    ~/Library/Application Support/Code/User/settings.json: vscode/settings.json
+    ~/.gitconfig:
+    ~/.hushlogin:
+
+# - shell:
+    # - [code --list-extensions >vscode/extensions.txt, Saving VS Code extensions]
+    # - [./macos, Apply macOS defaults]
+    # - [brew bundle dump -f --file ~/Brewfile --mas --no-lock, Saving Brew installs]
+
 
 # - shell:
 #     - fisher update

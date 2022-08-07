@@ -22,7 +22,7 @@ eval (starship init fish)
 # Add pipx binaries
 set -x PATH $HOME/.local/bin $PATH
 # Add scipts
-set -x PATH $HOME/bin $PATH
+set -x PATH ~/code/dotfiles/bin $PATH
 # Add cargo
 set -x PATH $HOME/.cargo/bin $PATH
 # Prevent python from writing byte code
