@@ -1,9 +1,4 @@
 # Init brew env
-if test -f /usr/local/bin/brew
-    # intel
-    eval (/usr/local/bin/brew shellenv)
-end
-
 if test -f /opt/homebrew/bin/brew
     # arm64
     eval (/opt/homebrew/bin/brew shellenv)
@@ -85,9 +80,6 @@ end
 alias ls "exa --icons"
 alias bake "docker buildx bake"
 alias venv virtualenv
-if test -f /usr/local/bin/brew 
-  alias ibrew 'arch -x86_64 /usr/local/bin/brew'
-end
 alias df duf
 alias v nvim
 
