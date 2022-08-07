@@ -1,7 +1,0 @@
-#!/usr/bin/env fish
-
-echo Backing up VS Code settings
-,backup-vscode
-
-echo Bumping Homebrew installs
-,brewfile
