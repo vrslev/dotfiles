@@ -1,0 +1,19 @@
+- defaults:
+    link:
+      relink: true
+
+- clean: ["~"]
+
+- link:
+    ~/.config/fish/config.fish: config/fish/config.fish
+    ~/.config/fish/fish_plugins: config/fish/fish_plugins
+
+# - shell:
+#     - fisher update
+
+# - create:
+#     - ~/downloads
+#     - ~/.vim/undo-history
+
+- shell:
+    - [git submodule update --init --recursive, Installing submodules]
