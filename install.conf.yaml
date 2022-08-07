@@ -16,19 +16,3 @@
     ~/Library/Application Support/Code/User/settings.json: vscode/settings.json
     ~/.gitconfig:
     ~/.hushlogin:
-
-# - shell:
-    # - [code --list-extensions >vscode/extensions.txt, Saving VS Code extensions]
-    # - [./macos, Apply macOS defaults]
-    # - [brew bundle dump -f --file ~/Brewfile --mas --no-lock, Saving Brew installs]
-
-
-# - shell:
-#     - fisher update
-
-# - create:
-#     - ~/downloads
-#     - ~/.vim/undo-history
-
-- shell:
-    - [git submodule update --init --recursive, Installing submodules]
