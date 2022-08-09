@@ -24,6 +24,8 @@ set -x PATH $HOME/.cargo/bin $PATH
 set -x PYTHONDONTWRITEBYTECODE 1
 # Set language
 set -x LC_ALL en_US.utf8
+# Set non-legacy mode for fish plugin jethrokuan/fzf
+set -U FZF_LEGACY_KEYBINDINGS 0
 
 # No greeting when starting an interactive shell
 function fish_greeting
@@ -82,6 +84,7 @@ alias bake "docker buildx bake"
 alias venv virtualenv
 alias df duf
 alias v nvim
+alias b bat
 
 # https://github.com/jhillyerd/plugin-git/blob/44a1eb5856cea43e4c01318120c1d4e1823d1e34/functions/__git.init.fish#L3
 function __abbr
