@@ -87,14 +87,6 @@ alias v nvim
 alias bat="bat --theme=\$(defaults read -globalDomain AppleInterfaceStyle &> /dev/null && echo default || echo GitHub)"
 alias b bat
 
-# https://github.com/jhillyerd/plugin-git/blob/44a1eb5856cea43e4c01318120c1d4e1823d1e34/functions/__git.init.fish#L3
-function __abbr
-    set -l name $argv[1]
-    set -l body $argv[2..-1]
-    abbr -a $name $body
-    set -a __git_plugin_abbreviations $name
-end
-
-__abbr g git
-__abbr pc pre-commit
-__abbr dco "docker compose"
+abbr g git
+abbr pc pre-commit
+abbr dco "docker compose"
