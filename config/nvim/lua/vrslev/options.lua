@@ -21,6 +21,4 @@ vim.g.mapleader = " "
 vim.o.swapfile = true
 vim.o.undofile = true
 
-vim.o.clipboard = "unnamed"
-
 vim.o.ignorecase = true
