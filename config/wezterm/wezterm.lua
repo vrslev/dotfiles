@@ -20,7 +20,7 @@ end)
 
 return {
     check_for_updates = false,
-    font = wezterm.font 'FiraCode Nerd Font',
+    font = wezterm.font 'JetBrains Mono',
     font_size = 14,
   hyperlink_rules = {
     -- Linkify things that look like URLs and the host has a TLD name.
