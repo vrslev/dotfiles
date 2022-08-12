@@ -84,6 +84,7 @@ alias bake "docker buildx bake"
 alias venv virtualenv
 alias df duf
 alias v nvim
+alias bat="bat --theme=\$(defaults read -globalDomain AppleInterfaceStyle &> /dev/null && echo default || echo GitHub)"
 alias b bat
 
 # https://github.com/jhillyerd/plugin-git/blob/44a1eb5856cea43e4c01318120c1d4e1823d1e34/functions/__git.init.fish#L3
