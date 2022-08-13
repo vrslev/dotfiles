@@ -22,3 +22,20 @@ vim.o.swapfile = true
 vim.o.undofile = true
 
 vim.o.ignorecase = true
+
+-- format on save
+vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = "<buffer>",
+    callback = vim.lsp.buf.formatting_sync,
+})
+
+-- Add borders to windows
+vim.lsp.handlers['textDoclument/hover'] = vim.lsp.with(
+    -- TODO: Doesn't work
+    vim.lsp.handlers.hover,
+    {border = 'rounded'}
+)
+vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
+    vim.lsp.handlers.signature_help,
+    {border = 'rounded'}
+)
