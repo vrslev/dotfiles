@@ -31,11 +31,16 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 
 -- Add borders to windows
 vim.lsp.handlers['textDoclument/hover'] = vim.lsp.with(
-    -- TODO: Doesn't work
+-- TODO: Doesn't work
     vim.lsp.handlers.hover,
-    {border = 'rounded'}
+    { border = 'rounded' }
 )
 vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
     vim.lsp.handlers.signature_help,
-    {border = 'rounded'}
+    { border = 'rounded' }
 )
+
+local arrow_keys = { "<Up>", "<Left>", "<Right>", "<Down>" }
+for _, key in pairs(arrow_keys) do
+    vim.cmd("noremap " .. key .. " <Nop>")
+end
