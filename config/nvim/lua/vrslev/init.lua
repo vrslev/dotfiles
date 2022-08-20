@@ -13,4 +13,5 @@ if not bootstrapping then
     require("vrslev.filetree")
     require("vrslev.fuzzy_finder")
     require("vrslev.lsp")
+    require("vrslev.session")
 end

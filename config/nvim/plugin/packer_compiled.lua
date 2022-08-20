@@ -79,6 +79,11 @@ _G.packer_plugins = {
     path = "/Users/lev/.local/share/nvim/site/pack/packer/start/LuaSnip",
     url = "https://github.com/L3MON4D3/LuaSnip"
   },
+  ["auto-session"] = {
+    loaded = true,
+    path = "/Users/lev/.local/share/nvim/site/pack/packer/start/auto-session",
+    url = "https://github.com/rmagatti/auto-session"
+  },
   ["cmp-cmdline"] = {
     loaded = true,
     path = "/Users/lev/.local/share/nvim/site/pack/packer/start/cmp-cmdline",

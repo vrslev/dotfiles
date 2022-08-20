@@ -69,6 +69,7 @@ packer.startup(function(use)
     }
 
     use 'numToStr/Comment.nvim'
+    use 'rmagatti/auto-session'
 
     if packer_bootstrap then
         packer.sync()
