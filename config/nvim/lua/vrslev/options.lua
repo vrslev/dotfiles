@@ -23,6 +23,7 @@ vim.o.undofile = true
 vim.o.ignorecase = true
 
 vim.cmd "set noshowmode"
+vim.cmd "set shm+=I"
 
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 
