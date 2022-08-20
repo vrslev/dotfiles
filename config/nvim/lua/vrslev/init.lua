@@ -1,6 +1,6 @@
 pcall(require, "impatient")
 require("vrslev.options")
-local bootstrapping = require("vrslev.packer")
+local bootstrapping = require("vrslev.plugins")
 
 if not bootstrapping then
     -- UI module should be loaded after treesitter to adjust rainbow brackets theming
