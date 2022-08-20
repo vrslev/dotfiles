@@ -27,6 +27,8 @@ set -x LC_ALL en_US.utf8
 # Set non-legacy mode for fish plugin jethrokuan/fzf
 set -U FZF_LEGACY_KEYBINDINGS 0
 
+set -x DARK_MODE (defaults read -globalDomain AppleInterfaceStyle 2>/dev/null | grep Dark)
+
 # No greeting when starting an interactive shell
 function fish_greeting
 end

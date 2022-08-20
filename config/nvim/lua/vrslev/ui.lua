@@ -1,14 +1,11 @@
-local os_is_dark = vim.call('system', 'defaults read -globalDomain AppleInterfaceStyle'):find('Dark') ~= nil
-local theme_style = os_is_dark and "dark" or "light"
 
 require('illuminate').configure {}
-
 for _, group in pairs({ "IlluminatedWordText", "IlluminatedWordRead", "IlluminatedWordWrite" }) do
     vim.api.nvim_set_hl(0, group, { link = "Visual" })
 end
 
 require('github-theme').setup {
-    theme_style = theme_style,
+    theme_style = vim.env.DARK_MODE and "dark" or "light",
     dark_float = true,
     sidebars = { "packer", "mason", "trouble" },
     overrides = function(c)
