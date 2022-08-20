@@ -1,0 +1,91 @@
+#!/usr/bin/env python3.10
+
+import os
+import shutil
+import subprocess
+import sys
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Callable, Generic, TypeVar
+
+TaskFn = TypeVar("TaskFn", bound=Callable[[], None])
+
+
+@dataclass
+class Task(Generic[TaskFn]):
+    """
+    Task has `msg` that print before running the `fn`.
+    `AssertionError`s from `fn` execution will be pretty printed and the program will return 1 status code.
+    """
+
+    msg: str
+    fn: TaskFn
+
+
+def task(message: str) -> Callable[[TaskFn], Task[TaskFn]]:
+    return lambda fn: Task(message, fn)
+
+
+def run_tasks(*tasks: tuple[Task]) -> int:
+    try:
+        for task in tasks:
+            print(f"- {task.msg}")
+            task.fn()
+    except AssertionError as err:
+        print(f"\nError: {err}", file=sys.stderr)
+        return 1
+
+    print("\nDone!")
+    return 0
+
+
+@task("Making Time Machine backup")
+def make_tm_backup():
+    subprocess.check_output(["tmutil", "startbackup", "--block"])
+
+
+def get_strict_path(path: str) -> Path:
+    res = Path(path).expanduser()
+    assert res.exists(), f"{res} not found"
+    return res
+
+
+def get_userbackup_path(path: str) -> Path:
+    dir = get_strict_path("/Volumes/Drive/userbackup")
+    return dir / path
+
+
+@task("Copying Things 3 database")
+def copy_things3_database():
+    src = get_strict_path(
+        "~/Library/Group Containers/JLMPQHK86H.com.culturedcode.ThingsMac/Things Database.thingsdatabase"
+    )
+    dst = get_userbackup_path("things3.thingsdatabase")
+
+    if dst.exists():
+        shutil.rmtree(dst, ignore_errors=True)
+    shutil.copytree(src, dst)
+
+
+@task("Copying KeePass database")
+def copy_keepass_database():
+    src = get_strict_path(
+        "~/Library/Mobile Documents/iCloud~com~strongbox/Documents/Personal.kdbx"
+    )
+    dst = get_userbackup_path("keepass.kdbx")
+
+    if dst.exists():
+        os.remove(dst)
+    shutil.copy(src, dst)
+
+
+def main() -> int:
+    return run_tasks(
+        copy_things3_database,
+        copy_keepass_database,
+        make_tm_backup,
+    )
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
