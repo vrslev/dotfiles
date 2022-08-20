@@ -26,6 +26,8 @@ vim.cmd "set noshowmode"
 
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 
+vim.o.cursorline = true
+
 -- format on save
 vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = "<buffer>",

@@ -2,6 +2,7 @@ local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.n
 packer_bootstrap = false
 
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
+    print("Installing packer")
   packer_bootstrap = vim.fn.system {
     'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path
 }
@@ -15,17 +16,23 @@ packer.startup(function(use)
     use "wbthomason/packer.nvim"
 
     use 'lewis6991/impatient.nvim'
-    use "projekt0n/github-nvim-theme"
-    use {"nvim-lualine/lualine.nvim", config = function() require("vrslev.plugins.lualine") end}
+
+    -- UI
+    use {
+        "projekt0n/github-nvim-theme",
+        "nvim-lualine/lualine.nvim",
+        'RRethy/vim-illuminate',
+        "lukas-reineke/indent-blankline.nvim"
+    }
+
     use "gpanders/editorconfig.nvim"
     use 'nvim-lua/plenary.nvim'
-    use {'nvim-telescope/telescope.nvim', config = function() require("vrslev.plugins.telescope") end}
+    use 'nvim-telescope/telescope.nvim'
     use {
         "nvim-neo-tree/neo-tree.nvim",
-        requires = {"MunifTanjim/nui.nvim"},
-        config = function() require("vrslev.plugins.neo-tree") end,
+        "MunifTanjim/nui.nvim",
     }
-    use {"windwp/nvim-autopairs", config = function() require("vrslev.plugins.nvim-autopairs") end}
+    use "windwp/nvim-autopairs"
 
     use {
         {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"},
@@ -59,6 +66,8 @@ packer.startup(function(use)
         
         "onsails/lspkind.nvim"
     }
+
+    use 'numToStr/Comment.nvim'
 
     if packer_bootstrap then
         packer.sync()
