@@ -9,4 +9,5 @@ if not bootstrapping then
     require("vrslev.lsp")
     require("vrslev.telescope")
     require("vrslev.treesitter")
+    require("vrslev.filetree")
 end

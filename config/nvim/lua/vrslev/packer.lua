@@ -10,19 +10,23 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
   vim.cmd [[autocmd User PackerComplete quitall]]
 end
 
-require("packer").init({
+require("packer").init {
     autoremove = true,
-})
+}
 require("packer").startup(function(use)
     use "wbthomason/packer.nvim"
 
     use 'lewis6991/impatient.nvim'
     use "projekt0n/github-nvim-theme"
-
-    use ("nvim-treesitter/nvim-treesitter", {
-        run = ":TSUpdate"
-    })
+    use "gpanders/editorconfig.nvim"
+    use 'nvim-lua/plenary.nvim'
+    use 'nvim-telescope/telescope.nvim'
+    use "nvim-lualine/lualine.nvim"
+    
     use {
+        {"nvim-treesitter/nvim-treesitter",
+        run = ":TSUpdate"
+        },
         "nvim-treesitter/nvim-treesitter-textobjects",
         "nvim-treesitter/nvim-treesitter-context"
     }
@@ -35,8 +39,8 @@ require("packer").startup(function(use)
         "jose-elias-alvarez/null-ls.nvim",
         
         "ray-x/lsp_signature.nvim",
-        { "folke/trouble.nvim", "kyazdani42/nvim-web-devicons" },
         "j-hui/fidget.nvim",
+        { "folke/trouble.nvim", "kyazdani42/nvim-web-devicons" },
         {"RishabhRD/lspactions", 'nvim-lua/popup.nvim'}
     }
     
@@ -55,14 +59,14 @@ require("packer").startup(function(use)
     }
 
     use {
-        'nvim-telescope/telescope.nvim',
-        'nvim-lua/plenary.nvim'
+        "nvim-neo-tree/neo-tree.nvim",
+        "MunifTanjim/nui.nvim",
     }
 
-    use "gpanders/editorconfig.nvim"
-
-    use "nvim-lualine/lualine.nvim"
-
+    use {
+        "windwp/nvim-autopairs",
+        config = function() require("nvim-autopairs").setup() end
+    }
     if packer_bootstrap then
         require("packer").sync()
     end

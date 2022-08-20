@@ -9,12 +9,6 @@ local lsp_configs = {
                 telemetry = { enable = false },
                 runtime = {
                     version = 'LuaJIT',
-                    path = (function()
-                        local path = vim.split(package.path, ';')
-                        table.insert(path, 'lua/?.lua')
-                        table.insert(path, 'lua/?/init.lua')
-                        return path
-                    end)()
                 },
                 diagnostics = {
                     globals = { 'vim' },
