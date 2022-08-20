@@ -29,6 +29,9 @@ vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 
 vim.o.cursorline = true
 
+vim.o.splitright = true
+vim.o.splitbelow = true
+
 -- format on save
 vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = "<buffer>",

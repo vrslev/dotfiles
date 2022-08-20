@@ -174,6 +174,11 @@ _G.packer_plugins = {
     path = "/Users/lev/.local/share/nvim/site/pack/packer/start/neo-tree.nvim",
     url = "https://github.com/nvim-neo-tree/neo-tree.nvim"
   },
+  ["neoscroll.nvim"] = {
+    loaded = true,
+    path = "/Users/lev/.local/share/nvim/site/pack/packer/start/neoscroll.nvim",
+    url = "https://github.com/karb94/neoscroll.nvim"
+  },
   ["nui.nvim"] = {
     loaded = true,
     path = "/Users/lev/.local/share/nvim/site/pack/packer/start/nui.nvim",
