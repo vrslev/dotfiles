@@ -1,4 +1,3 @@
---vim.o.guicursor = ""
 vim.o.nu = true
 vim.o.modeline = true
 
@@ -23,24 +22,24 @@ vim.o.undofile = true
 
 vim.o.ignorecase = true
 
+vim.cmd "set noshowmode"
+
+vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
+
 -- format on save
 vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = "<buffer>",
-    callback = vim.lsp.buf.formatting_sync,
+    callback = function()
+        vim.lsp.buf.formatting_sync()
+    end,
 })
-
--- Add borders to windows
-vim.lsp.handlers['textDoclument/hover'] = vim.lsp.with(
--- TODO: Doesn't work
-    vim.lsp.handlers.hover,
-    { border = 'rounded' }
-)
-vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
-    vim.lsp.handlers.signature_help,
-    { border = 'rounded' }
-)
 
 local arrow_keys = { "<Up>", "<Left>", "<Right>", "<Down>" }
 for _, key in pairs(arrow_keys) do
     vim.cmd("noremap " .. key .. " <Nop>")
 end
+
+-- Move around buffers
+vim.keymap.set("n", "<leader>n", "<cmd>bn<cr>")
+vim.keymap.set("n", "<leader>p", "<cmd>bp<cr>")
+vim.keymap.set("n", "<leader>d", "<cmd>bd<cr>")

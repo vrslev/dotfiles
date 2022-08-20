@@ -74,6 +74,11 @@ _G.packer_plugins = {
     path = "/Users/lev/.local/share/nvim/site/pack/packer/start/LuaSnip",
     url = "https://github.com/L3MON4D3/LuaSnip"
   },
+  ["cmp-cmdline"] = {
+    loaded = true,
+    path = "/Users/lev/.local/share/nvim/site/pack/packer/start/cmp-cmdline",
+    url = "https://github.com/hrsh7th/cmp-cmdline"
+  },
   ["cmp-nvim-lsp"] = {
     loaded = true,
     path = "/Users/lev/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp",
@@ -99,6 +104,11 @@ _G.packer_plugins = {
     path = "/Users/lev/.local/share/nvim/site/pack/packer/start/editorconfig.nvim",
     url = "https://github.com/gpanders/editorconfig.nvim"
   },
+  ["fidget.nvim"] = {
+    loaded = true,
+    path = "/Users/lev/.local/share/nvim/site/pack/packer/start/fidget.nvim",
+    url = "https://github.com/j-hui/fidget.nvim"
+  },
   ["friendly-snippets"] = {
     loaded = true,
     path = "/Users/lev/.local/share/nvim/site/pack/packer/start/friendly-snippets",
@@ -113,6 +123,16 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/lev/.local/share/nvim/site/pack/packer/start/impatient.nvim",
     url = "https://github.com/lewis6991/impatient.nvim"
+  },
+  ["lsp_signature.nvim"] = {
+    loaded = true,
+    path = "/Users/lev/.local/share/nvim/site/pack/packer/start/lsp_signature.nvim",
+    url = "https://github.com/ray-x/lsp_signature.nvim"
+  },
+  lspactions = {
+    loaded = true,
+    path = "/Users/lev/.local/share/nvim/site/pack/packer/start/lspactions",
+    url = "https://github.com/RishabhRD/lspactions"
   },
   ["lspkind.nvim"] = {
     loaded = true,
@@ -164,6 +184,11 @@ _G.packer_plugins = {
     path = "/Users/lev/.local/share/nvim/site/pack/packer/start/nvim-treesitter-context",
     url = "https://github.com/nvim-treesitter/nvim-treesitter-context"
   },
+  ["nvim-treesitter-textobjects"] = {
+    loaded = true,
+    path = "/Users/lev/.local/share/nvim/site/pack/packer/start/nvim-treesitter-textobjects",
+    url = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects"
+  },
   ["nvim-web-devicons"] = {
     loaded = true,
     path = "/Users/lev/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
@@ -179,10 +204,20 @@ _G.packer_plugins = {
     path = "/Users/lev/.local/share/nvim/site/pack/packer/start/plenary.nvim",
     url = "https://github.com/nvim-lua/plenary.nvim"
   },
+  ["popup.nvim"] = {
+    loaded = true,
+    path = "/Users/lev/.local/share/nvim/site/pack/packer/start/popup.nvim",
+    url = "https://github.com/nvim-lua/popup.nvim"
+  },
   ["telescope.nvim"] = {
     loaded = true,
     path = "/Users/lev/.local/share/nvim/site/pack/packer/start/telescope.nvim",
     url = "https://github.com/nvim-telescope/telescope.nvim"
+  },
+  ["trouble.nvim"] = {
+    loaded = true,
+    path = "/Users/lev/.local/share/nvim/site/pack/packer/start/trouble.nvim",
+    url = "https://github.com/folke/trouble.nvim"
   }
 }
 
