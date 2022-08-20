@@ -38,6 +38,7 @@ packer.startup(function(use)
         {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"},
         "nvim-treesitter/nvim-treesitter-textobjects",
         "nvim-treesitter/nvim-treesitter-context",
+        "p00f/nvim-ts-rainbow",
     }
 
     use {

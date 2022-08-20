@@ -26,6 +26,20 @@ require('nvim-treesitter.configs').setup {
           include_surrounding_whitespace = true,
         },
     },
+    rainbow = {
+      enable = true,
+      extended_mode = true,
+      max_file_lines = 1000,
+      termcolors = {
+        "Blue",
+        "White",
+        "Magenta",
+        "Red",
+        "Yellow",
+        "Green",
+        "Cyan",
+    }
+    }
 }
 
 require('treesitter-context').setup()
