@@ -3,7 +3,7 @@
 	email = mail@vrslev.com
 
 [core]
-	editor = nano
+	editor = nvim
 
 [help]
 	autoCorrect = 1
