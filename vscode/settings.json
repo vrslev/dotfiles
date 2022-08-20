@@ -74,7 +74,7 @@
   "typescript.validate.enable": true,
   "window.autoDetectColorScheme": true,
   "window.newWindowDimensions": "maximized",
-  "workbench.colorTheme": "GitHub Dark",
+  "workbench.colorTheme": "GitHub Light",
   "workbench.editorAssociations": {
     "*.ipynb": "jupyter-notebook",
     "*.state": "default",
@@ -83,5 +83,6 @@
   "workbench.fontAliasing": "antialiased",
   "workbench.list.smoothScrolling": true,
   "workbench.preferredDarkColorTheme": "GitHub Dark",
-  "workbench.preferredLightColorTheme": "GitHub Light"
+  "workbench.preferredLightColorTheme": "GitHub Light",
+  "security.workspace.trust.enabled": false
 }
