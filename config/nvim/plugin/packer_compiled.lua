@@ -174,11 +174,6 @@ _G.packer_plugins = {
     path = "/Users/lev/.local/share/nvim/site/pack/packer/start/neo-tree.nvim",
     url = "https://github.com/nvim-neo-tree/neo-tree.nvim"
   },
-  ["neoscroll.nvim"] = {
-    loaded = true,
-    path = "/Users/lev/.local/share/nvim/site/pack/packer/start/neoscroll.nvim",
-    url = "https://github.com/karb94/neoscroll.nvim"
-  },
   ["nui.nvim"] = {
     loaded = true,
     path = "/Users/lev/.local/share/nvim/site/pack/packer/start/nui.nvim",
@@ -258,6 +253,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/lev/.local/share/nvim/site/pack/packer/start/vim-illuminate",
     url = "https://github.com/RRethy/vim-illuminate"
+  },
+  ["which-key.nvim"] = {
+    loaded = true,
+    path = "/Users/lev/.local/share/nvim/site/pack/packer/start/which-key.nvim",
+    url = "https://github.com/folke/which-key.nvim"
   }
 }
 

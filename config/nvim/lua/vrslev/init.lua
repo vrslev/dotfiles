@@ -6,7 +6,7 @@ if not bootstrapping then
     -- UI module should be loaded after treesitter to adjust rainbow brackets theming
     require("vrslev.treesitter")
     require("vrslev.ui")
-    
+
     require("vrslev.autopairs")
     require("vrslev.cmp")
     require("vrslev.commenter")
@@ -14,4 +14,5 @@ if not bootstrapping then
     require("vrslev.fuzzy_finder")
     require("vrslev.lsp")
     require("vrslev.session")
+    require("vrslev.which_key")
 end
