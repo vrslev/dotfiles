@@ -32,14 +32,6 @@ vim.o.cursorline = true
 vim.o.splitright = true
 vim.o.splitbelow = true
 
--- format on save
-vim.api.nvim_create_autocmd("BufWritePre", {
-    pattern = "<buffer>",
-    callback = function()
-        vim.lsp.buf.formatting_sync()
-    end,
-})
-
 local arrow_keys = { "<Up>", "<Left>", "<Right>", "<Down>" }
 for _, key in pairs(arrow_keys) do
     vim.cmd("noremap " .. key .. " <Nop>")

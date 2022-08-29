@@ -90,7 +90,7 @@ cmp.setup {
     window = {
         documentation = cmp.config.window.bordered(),
     },
-    experimental = { ghost_text = true },
+    experimental = { ghost_text = false },
 }
 
 

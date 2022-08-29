@@ -1,109 +1,35 @@
-require("mason").setup()
-require('mason-lspconfig').setup {
-    automatic_installation = true
+require('lsp-setup').setup {
+    mappings = {
+        gd = 'lua require("telescope.builtin").lsp_definitions()',
+        gD = 'lua vim.lsp.buf.declaration()',
+        gi = 'lua require("telescope.builtin").lsp_implementations()',
+        gl = 'lua require("lspactions").diagnostic.show_line_diagnostics()',
+        gr = 'lua require("telescope.builtin").lsp_references()',
+        gt = 'lua require("telescope.builtin").lsp_type_definitions()',
+        K = 'lua vim.lsp.buf.hover()',
+        ['<C-k>'] = 'lua vim.lsp.buf.signature_help()',
+        ['<F2>'] = 'lua require("lspactions").rename()',
+        ['<F4>'] = 'lua require("lspactions").code_action()',
+        ['<space>t'] = 'lua require("trouble").open()',
+        ['[d'] = 'lua require("lspactions").diagnostic.goto_prev()',
+        [']d'] = 'lua require("lspactions").diagnostic.goto_next()',
+    },
+    servers = {
+        -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+        html = {},
+        pyright = {},
+        rust_analyzer = {},
+        sumneko_lua = require("lua-dev").setup(),
+        taplo = {},
+    },
 }
+
 require("mason-tool-installer").setup {
     ensure_installed = {
         "black",
         "isort",
         "prettier",
     },
-}
-
-local lspconfig = require('lspconfig')
-local telescope_builtin = require("telescope.builtin")
-local lspactions = require("lspactions")
-
-local keybindings = {
-    -- Displays hover information about the symbol under the cursor
-    { 'n', 'K', vim.lsp.buf.hover },
-
-    -- Jump to the definition
-    { 'n', 'gd', telescope_builtin.lsp_definitions },
-
-    -- Jump to declaration
-    { 'n', 'gD', vim.lsp.buf.declaration },
-
-    -- Lists all the implementations for the symbol under the cursor
-    { 'n', 'gi', telescope_builtin.lsp_implementations },
-
-    -- Jumps to the definition of the type symbol
-    { 'n', 'gt', telescope_builtin.lsp_type_definitions },
-
-    -- Lists all the references
-    { 'n', 'gr', telescope_builtin.lsp_references },
-
-    -- Displays a function's signature information
-    { 'n', '<C-k>', vim.lsp.buf.signature_help },
-
-    -- Renames all references to the symbol under the cursor
-    { 'n', '<F2>', lspactions.rename },
-
-    -- Selects a code action available at the current cursor position
-    { 'n', '<F4>', lspactions.code_action },
-    { 'x', '<F4>', lspactions.range_code_action },
-
-    -- Show diagnostics in a floating window
-    { 'n', 'gl', lspactions.diagnostic.show_line_diagnostics },
-
-    -- Move to the previous diagnostic
-    { 'n', '[d', lspactions.diagnostic.goto_prev },
-
-    -- Move to the next diagnostic
-    { 'n', ']d', lspactions.diagnostic.goto_next },
-
-    { 'n', '<leader>t', require("trouble").open },
-}
-
-local function setup_keybindings()
-    local opts = { buffer = true }
-
-    for _, item in pairs(keybindings) do
-        vim.keymap.set(item[1], item[2], item[3], opts)
-    end
-end
-
-lspconfig.util.default_config = vim.tbl_deep_extend(
-    'force',
-    lspconfig.util.default_config,
-    {
-        capabilities = require('cmp_nvim_lsp').update_capabilities(
-            vim.lsp.protocol.make_client_capabilities()
-        ),
-        on_attach = function()
-            setup_keybindings()
-        end,
-    }
-)
-
-local function setup_servers(servers)
-    for server_name, server_config in pairs(servers) do
-        lspconfig[server_name].setup(server_config)
-    end
-end
-
-setup_servers {
-    html = {},
-    pyright = {},
-    rust_analyzer = {},
-    sumneko_lua = {
-        single_file_support = true,
-        settings = {
-            Lua = {
-                telemetry = { enable = false },
-                runtime = {
-                    version = 'LuaJIT',
-                },
-                diagnostics = {
-                    globals = { 'vim' },
-                },
-                workspace = {
-                    library = vim.api.nvim_get_runtime_file("", true)
-                },
-            },
-        },
-    },
-    taplo = {},
 }
 
 local null_ls = require('null-ls')
