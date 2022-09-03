@@ -82,6 +82,7 @@ function fish_user_key_bindings
 end
 
 alias ls "exa --icons"
+alias l ls
 alias bake "docker buildx bake"
 alias venv virtualenv
 alias df duf
