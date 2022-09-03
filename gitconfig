@@ -20,4 +20,5 @@
 	chm = checkout main
 	cm = commit -m
 	p = push
-	l = log --oneline --decorate --color --graph
+    l = log --oneline --decorate --color --graph
+    d =!git diff --name-only --relative --diff-filter=d | xargs bat --diff
