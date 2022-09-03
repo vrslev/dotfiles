@@ -1,4 +1,3 @@
-
 require('illuminate').configure {}
 for _, group in pairs({ "IlluminatedWordText", "IlluminatedWordRead", "IlluminatedWordWrite" }) do
     vim.api.nvim_set_hl(0, group, { link = "Visual" })
@@ -10,14 +9,18 @@ require('github-theme').setup {
     sidebars = { "packer", "mason", "trouble" },
     overrides = function(c)
         -- https://github.com/p00f/nvim-ts-rainbow/issues/81#issuecomment-1058124957
-        local rainbow = {c.bright_blue, c.bright_orange, c.bright_magenta, c.bright_red, c.bright_yellow, c.bright_green,  c.bright_cyan}
+        local rainbow = { c.bright_blue, c.bright_orange, c.bright_magenta, c.bright_red, c.bright_yellow, c.bright_green,
+            c.bright_cyan }
 
         for idx, color in ipairs(rainbow) do
             -- print(("hi rainbowcol%d guifg=%s"):format(idx, color))
             vim.cmd(("hi rainbowcol%d guifg=%s"):format(idx, color))
         end
 
-        return {}
+        return {
+            CursorLine = { bg = c.bg2 }
+        }
+
     end,
 }
 

@@ -19,12 +19,10 @@ packer.startup(function(use)
     use 'lewis6991/impatient.nvim'
 
     -- UI
-    use {
-        "projekt0n/github-nvim-theme",
-        "nvim-lualine/lualine.nvim",
-        'RRethy/vim-illuminate',
-        "lukas-reineke/indent-blankline.nvim"
-    }
+    use "projekt0n/github-nvim-theme"
+    use "nvim-lualine/lualine.nvim"
+    use 'RRethy/vim-illuminate'
+    use "lukas-reineke/indent-blankline.nvim"
 
     -- Tree-sitter
     use { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate", requires = {
