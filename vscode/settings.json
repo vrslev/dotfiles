@@ -14,7 +14,7 @@
   "editor.codeActionsOnSave": {
     "source.organizeImports": true
   },
-  "editor.fontFamily": "FiraCode Nerd Font",
+  "editor.fontFamily": "JetBrains Mono",
   "editor.fontLigatures": true,
   "editor.fontSize": 14,
   "editor.formatOnSave": true,
@@ -74,7 +74,7 @@
   "typescript.validate.enable": true,
   "window.autoDetectColorScheme": true,
   "window.newWindowDimensions": "maximized",
-  "workbench.colorTheme": "GitHub Light",
+  "workbench.colorTheme": "GitHub Dark",
   "workbench.editorAssociations": {
     "*.ipynb": "jupyter-notebook",
     "*.state": "default",
