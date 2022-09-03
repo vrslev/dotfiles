@@ -76,7 +76,12 @@ alias bake "docker buildx bake"
 alias venv virtualenv
 alias df duf
 alias v nvim
-alias bat="bat --theme=\$(defaults read -globalDomain AppleInterfaceStyle &> /dev/null && echo default || echo GitHub)"
+
+if [ "$DARK_MODE" = "Dark" ]
+    alias bat "bat --theme='Visual Studio Dark+'"
+else
+    alias bat "bat --theme GitHub"
+end
 alias b bat
 
 abbr g git
