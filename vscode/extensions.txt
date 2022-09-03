@@ -35,7 +35,6 @@ ritwickdey.LiveServer
 rust-lang.rust-analyzer
 samuelcolvin.jinjahtml
 skyapps.fish-vscode
-softwaredotcom.swdc-vscode
 VisualStudioExptTeam.vscodeintellicode
 Vue.volar
 Vue.vscode-typescript-vue-plugin
