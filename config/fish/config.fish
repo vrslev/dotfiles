@@ -83,6 +83,7 @@ alias venv virtualenv
 alias df duf
 alias v nvim
 alias b bat
+alias watch viddy
 
 abbr g git
 abbr pc pre-commit
