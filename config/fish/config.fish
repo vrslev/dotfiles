@@ -31,6 +31,12 @@ set -U FZF_LEGACY_KEYBINDINGS 0
 
 set -x DARK_MODE (defaults read -globalDomain AppleInterfaceStyle 2>/dev/null | grep Dark)
 
+if [ "$DARK_MODE" = "Dark" ]
+    set -x BAT_THEME "Visual Studio Dark+"
+else
+    set -x BAT_THEME GitHub
+end
+
 # No greeting when starting an interactive shell
 function fish_greeting
 end
@@ -76,12 +82,6 @@ alias bake "docker buildx bake"
 alias venv virtualenv
 alias df duf
 alias v nvim
-
-if [ "$DARK_MODE" = "Dark" ]
-    alias bat "bat --theme='Visual Studio Dark+'"
-else
-    alias bat "bat --theme GitHub"
-end
 alias b bat
 
 abbr g git
