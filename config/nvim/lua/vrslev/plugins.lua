@@ -72,7 +72,6 @@ packer.startup(function(use)
     }
     use "windwp/nvim-autopairs"
     use 'numToStr/Comment.nvim'
-    use 'rmagatti/auto-session'
     use 'folke/which-key.nvim'
 
     if packer_bootstrap then
