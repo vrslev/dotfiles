@@ -9,11 +9,12 @@
     ~/.config/fish/fish_plugins: config/fish/fish_plugins
     ~/.config/nvim: config/nvim
     ~/.config/pip/pip.conf: config/pip/pip.conf
-    ~/.config/wezterm: config/wezterm
     ~/.config/starship.toml: config/starship.toml
+    ~/.config/wezterm: config/wezterm
     ~/.docker/daemon.json: docker/daemon.json
     ~/.docker/features.json: docker/features.json
-    ~/Library/Application Support/Code/User/settings.json: vscode/settings.json
-    ~/Library/Application Support/viddy.toml: viddy.toml
     ~/.gitconfig:
     ~/.hushlogin:
+    ~/Library/Application Support/Code/User/keybindings.json: vscode/keybindings.json
+    ~/Library/Application Support/Code/User/settings.json: vscode/settings.json
+    ~/Library/Application Support/viddy.toml: viddy.toml

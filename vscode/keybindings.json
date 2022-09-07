@@ -1,0 +1,26 @@
+[
+  {
+    // to ←
+    "key": "ctrl+0",
+    "when": "!sideBarFocus",
+    "command": "workbench.action.focusSideBar"
+  },
+  {
+    // from →
+    "key": "ctrl+0",
+    "when": "sideBarFocus",
+    "command": "workbench.action.focusActiveEditorGroup"
+  },
+  {
+    "key": "cmd+alt+b",
+    "command": "workbench.action.toggleActivityBarVisibility"
+  },
+  {
+    "key": "cmd+e cmd+e",
+    "command": "workbench.action.focusActiveEditorGroup"
+  },
+  {
+    "key": "ctrl+shift+m",
+    "command": "workbench.action.toggleMaximizedPanel"
+  }
+]

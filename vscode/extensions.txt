@@ -2,7 +2,6 @@ bradlc.vscode-tailwindcss
 bungcip.better-toml
 csstools.postcss
 dbaeumer.vscode-eslint
-deibit.devdocs
 eamodio.gitlens
 ecmel.vscode-html-css
 EditorConfig.EditorConfig
@@ -12,11 +11,9 @@ GitHub.github-vscode-theme
 GitHub.remotehub
 GitHub.vscode-pull-request-github
 golang.go
-Gruntfuggly.todo-tree
 hangxingliu.vscode-nginx-conf-hint
 hashicorp.terraform
 mikestead.dotenv
-mrorz.language-gettext
 ms-azuretools.vscode-docker
 ms-python.black-formatter
 ms-python.isort
@@ -35,6 +32,6 @@ ritwickdey.LiveServer
 rust-lang.rust-analyzer
 samuelcolvin.jinjahtml
 skyapps.fish-vscode
-VisualStudioExptTeam.vscodeintellicode
+usernamehw.errorlens
 Vue.volar
 Vue.vscode-typescript-vue-plugin
