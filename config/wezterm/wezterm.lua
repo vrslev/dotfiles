@@ -7,7 +7,7 @@ end
 return {
     check_for_updates = false,
     color_scheme = scheme_for_appearance(wezterm.gui.get_appearance()),
-    font = wezterm.font 'JetBrains Mono',
+    font = wezterm.font 'FiraCode Nerd Font',
     font_size = 14,
     hyperlink_rules = {
         -- Linkify things that look like URLs and the host has a TLD name.
