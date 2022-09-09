@@ -29,7 +29,7 @@
   },
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
-  "explorer.decorations.badges": false,
+  "explorer.decorations.colors": false,
   "explorer.openEditors.visible": 0,
   "extensions.ignoreRecommendations": true,
   "files.associations": {
