@@ -22,5 +22,19 @@
   {
     "key": "ctrl+shift+m",
     "command": "workbench.action.toggleMaximizedPanel"
+  },
+  {
+    "key": "cmd+k p",
+    "command": "commandId",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "cmd+k cmd+p",
+    "command": "python.execInTerminal"
+  },
+  {
+    "key": "shift+enter",
+    "when": "editorFocus",
+    "command": "editor.action.openLink"
   }
 ]

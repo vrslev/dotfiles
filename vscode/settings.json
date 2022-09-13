@@ -46,7 +46,9 @@
   "git.autofetch": true,
   "git.confirmSync": false,
   "git.enableSmartCommit": true,
-  "git.ignoredRepositories": ["/opt/homebrew"],
+  "git.ignoredRepositories": [
+    "/opt/homebrew"
+  ],
   "gitlens.codeLens.enabled": false,
   "gitlens.currentLine.enabled": false,
   "gitlens.hovers.enabled": false,
@@ -82,7 +84,10 @@
   "gitlens.plusFeatures.enabled": false,
   "gitlens.showWelcomeOnInstall": false,
   "gitlens.statusBar.enabled": false,
-  "isort.args": ["--profile", "black"],
+  "isort.args": [
+    "--profile",
+    "black"
+  ],
   "liveServer.settings.donotShowInfoMsg": true,
   "liveServer.settings.donotVerifyTags": true,
   "problems.showCurrentInStatus": true,
@@ -96,6 +101,7 @@
   "python.testing.pytestEnabled": true,
   "redhat.telemetry.enabled": false,
   "rust-analyzer.inlayHints.typeHints.enable": false,
+  "rust-analyzer.lens.enable": false,
   "security.workspace.trust.enabled": false,
   "security.workspace.trust.untrustedFiles": "open",
   "sortJSON.contextMenu": {
@@ -117,12 +123,12 @@
   "terminal.integrated.minimumContrastRatio": 1,
   "terminal.integrated.showExitAlert": false,
   "terminal.integrated.tabs.hideCondition": "never",
-  "todo-tree.highlights.enabled": false,
+  "testExplorer.useNativeTesting": true,
   "typescript.updateImportsOnFileMove.enabled": "always",
   "window.autoDetectColorScheme": true,
   "window.newWindowDimensions": "maximized",
   "workbench.activityBar.visible": false,
-  "workbench.colorTheme": "GitHub Light Default",
+  "workbench.colorTheme": "GitHub Dark Default",
   "workbench.editor.tabCloseButton": "off",
   "workbench.editorAssociations": {
     "*.ipynb": "jupyter-notebook",
