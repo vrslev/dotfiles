@@ -1,7 +1,7 @@
 local wezterm = require 'wezterm'
 
 local function scheme_for_appearance(appearance)
-    return appearance:find 'Dark' and "GitHub Dark" or "GitHub Light"
+    return appearance:find 'Dark' and "GitHub Dark Default" or "GitHub Light Default"
 end
 
 return {
