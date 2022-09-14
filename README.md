@@ -1,4 +1,4 @@
-My dotfiles: macOS, Wezterm, Fish, Neovim, and VS Code.
+My dotfiles: macOS, Wezterm, Fish, and VS Code.
 
 I use [dotbot](https://github.com/anishathalye/dotbot/), so it is easy to set everything up:
 
