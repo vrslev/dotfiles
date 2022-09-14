@@ -3,7 +3,13 @@
 	email = mail@vrslev.com
 
 [core]
-	editor = nvim
+	editor = nano
+
+[diff]
+    tool = vscode
+
+[difftool "vscode"]
+    cmd = code --wait --diff $LOCAL $REMOTE
 
 [help]
 	autoCorrect = 1
