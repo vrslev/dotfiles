@@ -2,11 +2,14 @@
   "[dockerfile]": {
     "editor.defaultFormatter": "ms-azuretools.vscode-docker"
   },
-  "[html][javascript][json][jsonc][markdown][typescript][vue][yaml]": {
+  "[html][javascript][json][jsonc][markdown][typescript][typescriptreact][vue][yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[python]": {
     "editor.defaultFormatter": "ms-python.black-formatter"
+  },
+  "[rust]": {
+    "editor.tabSize": 4
   },
   "diffEditor.codeLens": true,
   "diffEditor.ignoreTrimWhitespace": false,
