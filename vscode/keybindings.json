@@ -36,5 +36,18 @@
     "key": "shift+enter",
     "when": "editorFocus",
     "command": "editor.action.openLink"
+  },
+  {
+    "key": "cmd+k cmd+a",
+    "when": "editorLangId == rust",
+    "command": "rust-analyzer.runSingle",
+    "args": {
+      "label": "cargo",
+      "kind": "cargo",
+      "args": {
+        "cargoArgs": ["test"],
+        "executableArgs": []
+      }
+    }
   }
 ]
