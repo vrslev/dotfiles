@@ -1,32 +1,30 @@
 #!/usr/bin/env python3.10
+# pyright: strict
 
-import os
 import shutil
 import subprocess
 import sys
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Callable, Generic, TypeVar
-
-TaskFn = TypeVar("TaskFn", bound=Callable[[], None])
+from typing import Callable
 
 
 @dataclass
-class Task(Generic[TaskFn]):
+class Task:
     """
     Task has `msg` that print before running the `fn`.
     `AssertionError`s from `fn` execution will be pretty printed and the program will return 1 status code.
     """
 
     msg: str
-    fn: TaskFn
+    fn: Callable[[], None]
 
 
-def task(message: str) -> Callable[[TaskFn], Task[TaskFn]]:
+def task(message: str) -> Callable[[Callable[[], None]], Task]:
     return lambda fn: Task(message, fn)
 
 
-def run_tasks(*tasks: tuple[Task]) -> int:
+def run_tasks(*tasks: Task) -> int:
     try:
         for task in tasks:
             print(f"- {task.msg}")
@@ -41,7 +39,7 @@ def run_tasks(*tasks: tuple[Task]) -> int:
 
 @task("Making Time Machine backup")
 def make_tm_backup():
-    subprocess.check_output(["tmutil", "startbackup", "--block"])
+    subprocess.check_call(["tmutil", "startbackup", "--block"])
 
 
 def get_strict_path(path: str) -> Path:
@@ -75,7 +73,7 @@ def copy_keepass_database():
     dst = get_userbackup_path("keepass.kdbx")
 
     if dst.exists():
-        os.remove(dst)
+        dst.unlink()
     shutil.copy(src, dst)
 
 
