@@ -18,7 +18,6 @@
     "source.fixAll": true,
     "source.organizeImports": true
   },
-  "editor.cursorBlinking": "solid",
   "editor.fontFamily": "FiraCode Nerd Font",
   "editor.fontLigatures": true,
   "editor.fontSize": 14,
@@ -131,7 +130,7 @@
   "window.autoDetectColorScheme": true,
   "window.newWindowDimensions": "maximized",
   "workbench.activityBar.visible": false,
-  "workbench.colorTheme": "GitHub Dark Default",
+  "workbench.colorTheme": "GitHub Light Default",
   "workbench.editor.tabCloseButton": "off",
   "workbench.editorAssociations": {
     "*.ipynb": "jupyter-notebook",
