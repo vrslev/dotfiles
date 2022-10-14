@@ -84,6 +84,7 @@ alias df duf
 alias v nvim
 alias b bat
 alias watch viddy
+alias cd z
 
 abbr g git
 abbr pc pre-commit

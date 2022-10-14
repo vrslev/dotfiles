@@ -1,5 +1,4 @@
 bradlc.vscode-tailwindcss
-bungcip.better-toml
 csstools.postcss
 dbaeumer.vscode-eslint
 eamodio.gitlens
@@ -26,12 +25,14 @@ ms-vscode-remote.remote-ssh
 ms-vscode-remote.remote-ssh-edit
 ms-vscode.cpptools
 ms-vscode.remote-repositories
+ms-vscode.test-adapter-converter
 redhat.vscode-yaml
 richie5um2.vscode-sort-json
 ritwickdey.LiveServer
 rust-lang.rust-analyzer
 samuelcolvin.jinjahtml
 skyapps.fish-vscode
+tamasfe.even-better-toml
 usernamehw.errorlens
 Vue.volar
 Vue.vscode-typescript-vue-plugin

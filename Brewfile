@@ -5,8 +5,11 @@ tap "homebrew/cask-versions"
 tap "homebrew/command-not-found"
 tap "homebrew/core"
 tap "homebrew/services"
+tap "pulumi/tap"
 tap "wez/wezterm"
+brew "awscli"
 brew "bat"
+brew "black"
 brew "bpython"
 brew "cloc"
 brew "cookiecutter"
@@ -16,6 +19,7 @@ brew "dotbot"
 brew "duf"
 brew "exa"
 brew "fd"
+brew "srt"
 brew "ffmpeg"
 brew "fish"
 brew "fisher"
@@ -30,6 +34,7 @@ brew "httpie"
 brew "hyperfine"
 brew "iperf"
 brew "ipython"
+brew "isort"
 brew "jq"
 brew "loc"
 brew "mariadb"
@@ -53,6 +58,7 @@ brew "rustup-init"
 brew "shellcheck"
 brew "starship"
 brew "telnet"
+brew "terraform"
 brew "tldr"
 brew "tmate"
 brew "tmux"
@@ -72,10 +78,23 @@ cask "docker"
 cask "google-chrome"
 cask "iterm2"
 cask "protonvpn"
-cask "telegram"
 cask "the-unarchiver"
 cask "transmission"
 cask "wezterm"
 cask "windscribe"
 cask "yandex-cloud-cli"
 cask "zoom"
+mas "AudioBookBinder", id: 413969927
+mas "Disk Speed Test", id: 425264550
+mas "GarageBand", id: 682658836
+mas "Keynote", id: 409183694
+mas "Numbers", id: 409203825
+mas "Pages", id: 409201541
+mas "Pixelmator Pro", id: 1289583905
+mas "Reeder", id: 1529448980
+mas "Refined GitHub", id: 1519867270
+mas "Strongbox", id: 897283731
+mas "Telegram", id: 747648890
+mas "Things", id: 904280696
+mas "Wipr", id: 1320666476
+mas "WireGuard", id: 1451685025
