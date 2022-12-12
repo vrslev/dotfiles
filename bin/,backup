@@ -37,9 +37,9 @@ def run_tasks(*tasks: Task) -> int:
     return 0
 
 
-@task("Making Time Machine backup")
-def make_tm_backup():
-    subprocess.check_call(["tmutil", "startbackup", "--block"])
+@task("Starting Time Machine backup")
+def start_tm_backup():
+    subprocess.check_call(["tmutil", "startbackup"])
 
 
 def get_strict_path(path: str) -> Path:
@@ -77,11 +77,22 @@ def copy_keepass_database():
     shutil.copy(src, dst)
 
 
+@task("Copying Obsidian vault")
+def copy_obsidian_vault():
+    src = get_strict_path(
+        "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/"
+    )
+    dst = get_userbackup_path("obsidian")
+    subprocess.check_call(["rm", "-rf", dst])
+    subprocess.check_call(["cp", "-r", src, dst])
+
+
 def main() -> int:
     return run_tasks(
+        start_tm_backup,
         copy_things3_database,
         copy_keepass_database,
-        make_tm_backup,
+        copy_obsidian_vault,
     )
 
 
