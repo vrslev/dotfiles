@@ -122,12 +122,11 @@
   "terminal.integrated.minimumContrastRatio": 1,
   "terminal.integrated.showExitAlert": false,
   "terminal.integrated.tabs.hideCondition": "never",
-  "testExplorer.useNativeTesting": true,
   "typescript.updateImportsOnFileMove.enabled": "always",
   "window.autoDetectColorScheme": true,
   "window.newWindowDimensions": "maximized",
   "workbench.activityBar.visible": false,
-  "workbench.colorTheme": "GitHub Dark Default",
+  "workbench.colorTheme": "GitHub Light Default",
   "workbench.editor.tabCloseButton": "off",
   "workbench.editorAssociations": {
     "*.ipynb": "jupyter-notebook",
