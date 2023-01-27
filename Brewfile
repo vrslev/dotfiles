@@ -94,7 +94,6 @@ mas "Pages", id: 409201541
 mas "Pixelmator Pro", id: 1289583905
 mas "Reeder", id: 1529448980
 mas "Refined GitHub", id: 1519867270
-mas "Streaks", id: 963034692
 mas "Strongbox", id: 897283731
 mas "Telegram", id: 747648890
 mas "Things", id: 904280696
