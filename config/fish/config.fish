@@ -11,7 +11,7 @@ else
     set -x EDITOR nano
 end
 
-pyenv init - | source
+rtx activate fish | source
 starship init fish | source
 zoxide init fish | source
 wezterm shell-completion --shell fish | source
@@ -36,6 +36,8 @@ if [ "$DARK_MODE" = "Dark" ]
 else
     set -x BAT_THEME GitHub
 end
+
+set -x PIPX_DEFAULT_PYTHON "$(rtx which python)"
 
 # No greeting when starting an interactive shell
 function fish_greeting
