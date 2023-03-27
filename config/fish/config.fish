@@ -25,7 +25,9 @@ set -x PATH $HOME/.cargo/bin $PATH
 # Prevent python from writing byte code
 set -x PYTHONDONTWRITEBYTECODE 1
 # Set language
-set -x LC_ALL en_US.utf8
+set -x LANG en_US.UTF-8
+set -x LANGUAGE $LANG
+set -x LC_ALL $LANG
 # Set non-legacy mode for fish plugin jethrokuan/fzf
 set -U FZF_LEGACY_KEYBINDINGS 0
 
