@@ -49,6 +49,7 @@
   "git.confirmSync": false,
   "git.enableSmartCommit": true,
   "git.ignoredRepositories": ["/opt/homebrew"],
+  "githubPullRequests.pushBranch": "always",
   "gitlens.codeLens.enabled": false,
   "gitlens.currentLine.enabled": false,
   "gitlens.hovers.enabled": false,
@@ -128,7 +129,7 @@
   "window.autoDetectColorScheme": true,
   "window.newWindowDimensions": "maximized",
   "workbench.activityBar.visible": false,
-  "workbench.colorTheme": "GitHub Dark Default",
+  "workbench.colorTheme": "GitHub Light Default",
   "workbench.editor.tabCloseButton": "off",
   "workbench.editorAssociations": {
     "*.ipynb": "jupyter-notebook",
