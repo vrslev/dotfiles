@@ -56,7 +56,7 @@ def get_userbackup_path(path: str) -> Path:
 @task("Copying Things 3 database")
 def copy_things3_database():
     src = get_strict_path(
-        "~/Library/Group Containers/JLMPQHK86H.com.culturedcode.ThingsMac/Things Database.thingsdatabase"
+        "~/Library/Group Containers/JLMPQHK86H.com.culturedcode.ThingsMac/ThingsData-RDQXG/Things Database.thingsdatabase"
     )
     dst = get_userbackup_path("things3.thingsdatabase")
 
