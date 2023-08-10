@@ -1,7 +1,4 @@
 #!/bin/bash
 
-echo Saving VS Code extensions
-code --list-extensions >vscode/extensions.txt
-
 echo Saving Brew installs
-brew bundle dump -f --mas --no-lock
+brew bundle dump -f --no-lock
