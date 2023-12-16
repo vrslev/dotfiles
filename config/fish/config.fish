@@ -11,7 +11,6 @@ else
     set -x EDITOR nano
 end
 
-rtx activate fish | source
 starship init fish | source
 zoxide init fish | source
 wezterm shell-completion --shell fish | source
@@ -38,8 +37,6 @@ if [ "$DARK_MODE" = "Dark" ]
 else
     set -x BAT_THEME GitHub
 end
-
-set -x PIPX_DEFAULT_PYTHON "$(rtx which python)"
 
 # No greeting when starting an interactive shell
 function fish_greeting
@@ -93,3 +90,18 @@ alias cd z
 abbr g git
 abbr pc pre-commit
 abbr dco "docker compose"
+
+# Created by `userpath` on 2023-12-16 14:49:38
+set PATH $PATH /Users/lev/Library/Application Support/hatch/pythons/3.8/python/bin
+
+# Created by `userpath` on 2023-12-16 14:49:42
+set PATH $PATH /Users/lev/Library/Application Support/hatch/pythons/3.9/python/bin
+
+# Created by `userpath` on 2023-12-16 14:49:45
+set PATH $PATH /Users/lev/Library/Application Support/hatch/pythons/3.10/python/bin
+
+# Created by `userpath` on 2023-12-16 14:49:48
+set PATH $PATH /Users/lev/Library/Application Support/hatch/pythons/3.11/python/bin
+
+# Created by `userpath` on 2023-12-16 14:49:53
+set PATH $PATH /Users/lev/Library/Application Support/hatch/pythons/3.12/python/bin

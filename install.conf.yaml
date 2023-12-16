@@ -14,6 +14,5 @@
     ~/.docker/features.json: docker/features.json
     ~/.gitconfig:
     ~/.hushlogin:
-    ~/.tool-versions:
     ~/Library/Application Support/Code/User/keybindings.json: vscode/keybindings.json
     ~/Library/Application Support/Code/User/settings.json: vscode/settings.json
