@@ -1,0 +1,10 @@
+bat
+cargo-update
+exa
+hyperfine
+killport
+procs
+rye
+starship
+trunk
+wasm-bindgen-cli

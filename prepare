@@ -1,4 +1,7 @@
 #!/bin/bash
 
-echo Saving Brew installs
-brew bundle dump -f --no-lock
+set -e
+set -x
+
+python3 tools/dump.py
+brew bundle dump -f

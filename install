@@ -1,10 +1,25 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 set -e
+set -x
 
 DOTBOT_DIR="dotbot"
 
+# update dotbot
 git -C "$DOTBOT_DIR" submodule sync --quiet --recursive
 git submodule update --init --recursive "$DOTBOT_DIR"
 
+# apply dotfiles
 "$DOTBOT_DIR/bin/dotbot" -c install.conf.yaml "${@}"
+
+# update python interpreters
+hatch python install all --update --private
+
+# update pipx
+pipx reinstall-all
+
+# update brew packages
+brew upgrade --greedy
+
+# install cargo packages
+cargo install-update --all --git

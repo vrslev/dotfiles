@@ -1,0 +1,17 @@
+black
+bpython
+cookiecutter
+glances
+hatch
+httpie
+httpx
+ipython
+isort
+maturin
+mypy
+poetry
+pre-commit
+pyupgrade
+virtualenv
+watchfiles
+yt-dlp

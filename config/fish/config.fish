@@ -12,7 +12,6 @@ else
 end
 
 starship init fish | source
-zoxide init fish | source
 wezterm shell-completion --shell fish | source
 
 # Add pipx binaries
@@ -21,6 +20,11 @@ set -x PATH ~/.local/bin $PATH
 set -x PATH ~/code/dotfiles/bin $PATH
 # Add cargo
 set -x PATH ~/.cargo/bin $PATH
+
+# Add python interpreters provided by hatch
+for dir in ~/Library/Application\ Support/hatch/pythons/*/python/bin
+    set -x PATH $dir $PATH
+end
 
 # Prevent python from writing byte code
 set -x PYTHONDONTWRITEBYTECODE 1
@@ -31,13 +35,13 @@ set -x LC_ALL $LANG
 # Set non-legacy mode for fish plugin jethrokuan/fzf
 set -U FZF_LEGACY_KEYBINDINGS 0
 
-set -x DARK_MODE (defaults read -globalDomain AppleInterfaceStyle 2>/dev/null | grep Dark)
+set -x BAT_THEME "Visual Studio Dark+"
 
-if [ "$DARK_MODE" = "Dark" ]
-    set -x BAT_THEME "Visual Studio Dark+"
-else
-    set -x BAT_THEME GitHub
-end
+set -x PIPX_DEFAULT_PYTHON "$(hatch python find 3.12)"
+
+set -x GOPATH ~/.go
+
+set -x HOMEBREW_BUNDLE_NO_LOCK 1
 
 # No greeting when starting an interactive shell
 function fish_greeting
@@ -80,13 +84,10 @@ end
 
 alias ls "exa --icons"
 alias l ls
-alias bake "docker buildx bake"
 alias venv virtualenv
-alias df duf
-alias v nvim
 alias b bat
-alias watch viddy
 alias cd z
+alias py python3
 
 abbr g git
 abbr pc pre-commit
