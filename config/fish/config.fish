@@ -16,11 +16,12 @@ zoxide init fish | source
 wezterm shell-completion --shell fish | source
 
 # Add pipx binaries
-set -x PATH $HOME/.local/bin $PATH
+set -x PATH ~/.local/bin $PATH
 # Add scipts
 set -x PATH ~/code/dotfiles/bin $PATH
 # Add cargo
-set -x PATH $HOME/.cargo/bin $PATH
+set -x PATH ~/.cargo/bin $PATH
+
 # Prevent python from writing byte code
 set -x PYTHONDONTWRITEBYTECODE 1
 # Set language
@@ -90,18 +91,3 @@ alias cd z
 abbr g git
 abbr pc pre-commit
 abbr dco "docker compose"
-
-# Created by `userpath` on 2023-12-16 14:49:38
-set PATH $PATH /Users/lev/Library/Application Support/hatch/pythons/3.8/python/bin
-
-# Created by `userpath` on 2023-12-16 14:49:42
-set PATH $PATH /Users/lev/Library/Application Support/hatch/pythons/3.9/python/bin
-
-# Created by `userpath` on 2023-12-16 14:49:45
-set PATH $PATH /Users/lev/Library/Application Support/hatch/pythons/3.10/python/bin
-
-# Created by `userpath` on 2023-12-16 14:49:48
-set PATH $PATH /Users/lev/Library/Application Support/hatch/pythons/3.11/python/bin
-
-# Created by `userpath` on 2023-12-16 14:49:53
-set PATH $PATH /Users/lev/Library/Application Support/hatch/pythons/3.12/python/bin
