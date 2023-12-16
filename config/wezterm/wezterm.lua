@@ -1,12 +1,8 @@
 local wezterm = require 'wezterm'
 
-local function scheme_for_appearance(appearance)
-    return appearance:find 'Dark' and "GitHub Dark Default" or "GitHub Light Default"
-end
-
 return {
     check_for_updates = false,
-    color_scheme = scheme_for_appearance(wezterm.gui.get_appearance()),
+    color_scheme = "GitHub Dark Default",
     font = wezterm.font 'FiraCode Nerd Font',
     font_size = 14,
     hyperlink_rules = {
@@ -37,22 +33,6 @@ return {
         {
             regex = [[\b\w+://(?:[\d]{1,3}\.){3}[\d]{1,3}\S*\b]],
             format = '$0',
-        },
-
-        -- Make task numbers clickable
-        -- The first matched regex group is captured in $1.
-        {
-            regex = [[\b[tT](\d+)\b]],
-            format = 'https://example.com/tasks/?t=$1',
-        },
-
-        -- Make username/project paths clickable. This implies paths like the following are for GitHub.
-        -- ( "nvim-treesitter/nvim-treesitter" | wbthomason/packer.nvim | wez/wezterm | "wez/wezterm.git" )
-        -- As long as a full URL hyperlink regex exists above this it should not match a full URL to
-        -- GitHub or GitLab / BitBucket (i.e. https://gitlab.com/user/project.git is still a whole clickable URL)
-        {
-            regex = [[["]?([\w\d]{1}[-\w\d]+)(/){1}([-\w\d\.]+)["]?]],
-            format = 'https://www.github.com/$1/$3',
         },
     },
     initial_cols = 120,
