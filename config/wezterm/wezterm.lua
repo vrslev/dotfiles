@@ -1,8 +1,12 @@
 local wezterm = require 'wezterm'
 
+local function scheme_for_appearance(appearance)
+    return appearance:find 'Dark' and "GitHub Dark Default" or "GitHub Light Default"
+end
+
 return {
     check_for_updates = false,
-    color_scheme = "GitHub Dark Default",
+    color_scheme = scheme_for_appearance(wezterm.gui.get_appearance()),
     font = wezterm.font 'FiraCode Nerd Font',
     font_size = 14,
     hyperlink_rules = {

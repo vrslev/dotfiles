@@ -35,11 +35,17 @@ set -x LC_ALL $LANG
 # Set non-legacy mode for fish plugin jethrokuan/fzf
 set -U FZF_LEGACY_KEYBINDINGS 0
 
-set -x BAT_THEME "Visual Studio Dark+"
-
 set -x GOPATH ~/.go
 
 set -x HOMEBREW_BUNDLE_NO_LOCK 1
+
+set -x DARK_MODE (defaults read -globalDomain AppleInterfaceStyle 2>/dev/null | grep Dark)
+
+if [ "$DARK_MODE" = "Dark" ]
+    set -x BAT_THEME "Visual Studio Dark+"
+else
+    set -x BAT_THEME GitHub
+end
 
 # No greeting when starting an interactive shell
 function fish_greeting
