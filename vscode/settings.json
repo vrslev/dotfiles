@@ -112,7 +112,6 @@
   "terminal.integrated.showExitAlert": false,
   "terminal.integrated.tabs.hideCondition": "never",
   "typescript.updateImportsOnFileMove.enabled": "always",
-  "window.autoDetectColorScheme": true,
   "window.newWindowDimensions": "maximized",
   "workbench.colorTheme": "GitHub Dark Default",
   "workbench.editor.enablePreview": false,
