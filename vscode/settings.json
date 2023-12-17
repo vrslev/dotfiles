@@ -6,7 +6,7 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[python]": {
-    "editor.defaultFormatter": "ms-python.black-formatter"
+    "editor.defaultFormatter": "charliermarsh.ruff"
   },
   "[rust]": {
     "editor.tabSize": 4
@@ -89,8 +89,10 @@
   "liveServer.settings.donotShowInfoMsg": true,
   "liveServer.settings.donotVerifyTags": true,
   "problems.showCurrentInStatus": true,
+  "python.analysis.autoFormatStrings": true,
   "python.analysis.autoImportCompletions": true,
   "python.analysis.diagnosticMode": "workspace",
+  "python.analysis.gotoDefinitionInStringLiteral": true,
   "python.analysis.indexing": true,
   "python.analysis.inlayHints.functionReturnTypes": true,
   "python.analysis.inlayHints.pytestParameters": true,
@@ -113,7 +115,8 @@
   "terminal.integrated.tabs.hideCondition": "never",
   "typescript.updateImportsOnFileMove.enabled": "always",
   "window.newWindowDimensions": "maximized",
-  "workbench.colorTheme": "GitHub Dark Default",
+  "workbench.activityBar.location": "top",
+  "workbench.colorTheme": "GitHub Light Default",
   "workbench.editor.enablePreview": false,
   "workbench.editor.tabActionCloseVisibility": false,
   "workbench.editor.tabCloseButton": "off",
@@ -125,10 +128,10 @@
   "workbench.fontAliasing": "antialiased",
   "workbench.layoutControl.enabled": false,
   "workbench.list.smoothScrolling": true,
+  "workbench.preferredLightColorTheme": "GitHub Light Default",
   "workbench.sideBar.location": "right",
   "workbench.startupEditor": "none",
   "workbench.tips.enabled": false,
   "zenMode.centerLayout": false,
-  "zenMode.fullScreen": false,
-  "workbench.activityBar.location": "top"
+  "zenMode.fullScreen": false
 }
