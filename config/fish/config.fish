@@ -37,8 +37,6 @@ set -U FZF_LEGACY_KEYBINDINGS 0
 
 set -x BAT_THEME "Visual Studio Dark+"
 
-set -x PIPX_DEFAULT_PYTHON "$(hatch python find 3.12)"
-
 set -x GOPATH ~/.go
 
 set -x HOMEBREW_BUNDLE_NO_LOCK 1
@@ -86,9 +84,24 @@ alias ls "exa --icons"
 alias l ls
 alias venv virtualenv
 alias b bat
-alias cd z
 alias py python3
+alias gen-py ~/code/python-template/generate.py
 
 abbr g git
 abbr pc pre-commit
 abbr dco "docker compose"
+
+# Created by `userpath` on 2023-12-17 08:23:29
+set PATH $PATH /Users/lev/Library/Application Support/hatch/pythons/bins/3.8/python/bin
+
+# Created by `userpath` on 2023-12-17 08:23:33
+set PATH $PATH /Users/lev/Library/Application Support/hatch/pythons/bins/3.9/python/bin
+
+# Created by `userpath` on 2023-12-17 08:27:32
+set PATH $PATH /Users/lev/Library/Application Support/hatch/pythons/pypy2.7/pypy2.7-v7.3.12-macos_arm64/bin
+
+# Created by `userpath` on 2023-12-17 08:27:36
+set PATH $PATH /Users/lev/Library/Application Support/hatch/pythons/pypy3.9/pypy3.9-v7.3.12-macos_arm64/bin
+
+# Created by `userpath` on 2023-12-17 08:27:41
+set PATH $PATH /Users/lev/Library/Application Support/hatch/pythons/pypy3.10/pypy3.10-v7.3.12-macos_arm64/bin
