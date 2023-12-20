@@ -10,8 +10,6 @@
     ~/.config/pip/pip.conf: config/pip/pip.conf
     ~/.config/starship.toml: config/starship.toml
     ~/.config/wezterm: config/wezterm
-    ~/.docker/daemon.json: docker/daemon.json
-    ~/.docker/features.json: docker/features.json
     ~/.gitconfig:
     ~/.hushlogin:
     ~/Library/Application Support/Code/User/keybindings.json: vscode/keybindings.json
