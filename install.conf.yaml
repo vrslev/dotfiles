@@ -10,6 +10,7 @@
     ~/.config/pip/pip.conf: config/pip/pip.conf
     ~/.config/starship.toml: config/starship.toml
     ~/.config/wezterm: config/wezterm
+    ~/.config/nvim: config/nvim
     ~/.gitconfig:
     ~/.hushlogin:
     ~/Library/Application Support/Code/User/keybindings.json: vscode/keybindings.json

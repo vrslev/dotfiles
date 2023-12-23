@@ -55,7 +55,7 @@ end
 # Add !! and !$
 # https://github.com/fish-shell/fish-shell/issues/288#issuecomment-591679913
 function bind_bang
-    switch (commandline --current-token)[-1]
+    switch (commandline --current-token)[-2]
     case "!"
         commandline --current-token -- $history[1]
         commandline --function repaint
@@ -88,6 +88,7 @@ end
 
 alias ls "exa --icons"
 alias l ls
+alias v nvim
 alias venv virtualenv
 alias b bat
 alias py python3
