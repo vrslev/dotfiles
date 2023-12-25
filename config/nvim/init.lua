@@ -1,3 +1,8 @@
+-- Inspired by:
+-- https://github.com/ThePrimeagen/init.lua
+-- https://github.com/LazyVim/LazyVim
+-- https://github.com/nvim-lua/kickstart.nvim
+
 vim.g.mapleader = ' '
 vim.g.maplocalleader = '\\'
 
@@ -94,33 +99,79 @@ require("lazy").setup({
             end,
         },
         {
-            'nvim-lualine/lualine.nvim',
+            'echasnovski/mini.statusline',
+            priority = 900,
             dependencies = { 'nvim-tree/nvim-web-devicons' },
             config = function()
-                require("lualine").setup({
-                    sections = {
-                        lualine_x = {},
-                    },
-                    options = {
-                        section_separators = '',
-                        component_separators = '|',
-                        globalstatus = true,
-                    }
-                })
+                local statusline = require("mini.statusline")
+
+                local function active()
+                    local mode, mode_hl = statusline.section_mode({ trunc_width = 120 })
+                    local git           = statusline.section_git({ trunc_width = 75 })
+                    local diagnostics   = statusline.section_diagnostics({ trunc_width = 75 })
+                    local filename      = statusline.section_filename({ trunc_width = 140 })
+                    local location      = statusline.section_location({ trunc_width = 75 })
+                    local search        = statusline.section_searchcount({ trunc_width = 75 })
+
+                    return statusline.combine_groups({
+                        { hl = mode_hl,                 strings = { mode } },
+                        { hl = 'MiniStatuslineDevinfo', strings = { git, diagnostics } },
+                        '%<', -- Mark general truncate point
+                        { hl = 'MiniStatuslineFilename', strings = { filename } },
+                        '%=', -- End left alignment
+                        { hl = mode_hl,                  strings = { search, location } },
+                    })
+                end
+
+                statusline.setup({ content = { active = active } })
             end
         },
         {
-            "lukas-reineke/indent-blankline.nvim",
+            "echasnovski/mini.indentscope",
             event = lazyfile,
             config = function()
-                require("ibl").setup({ indent = { char = "│" } })
+                require('mini.indentscope').setup({
+                    draw = {
+                        delay = 0,
+                        animation = require('mini.indentscope').gen_animation.none(),
+                    },
+                    mappings = {
+                        object_scope = '',
+                        object_scope_with_border = '',
+                        goto_top = '',
+                        goto_bottom = '',
+                    },
+                    symbol = "│"
+                })
             end
         },
 
         -- completion
         {
+            "L3MON4D3/LuaSnip",
+            dependencies = {
+                "rafamadriz/friendly-snippets",
+                config = function()
+                    require("luasnip.loaders.from_vscode").lazy_load()
+                end,
+            },
+            keys = {
+                {
+                    "<tab>",
+                    function()
+                        return require("luasnip").jumpable(1) and "<Plug>luasnip-jump-next" or "<tab>"
+                    end,
+                    expr = true,
+                    silent = true,
+                    mode = "i",
+                },
+                { "<tab>",   function() require("luasnip").jump(1) end,  mode = "s" },
+                { "<s-tab>", function() require("luasnip").jump(-1) end, mode = { "i", "s" } },
+            },
+        },
+        {
             'hrsh7th/nvim-cmp',
-            event = "InsertEnter",
+            event = lazyfile,
             dependencies = {
                 'hrsh7th/cmp-nvim-lsp',
                 "hrsh7th/cmp-buffer",
@@ -136,7 +187,7 @@ require("lazy").setup({
                     completion = {
                         completeopt = 'menu,menuone,noinsert'
                     },
-                    mapping = cmp.mapping.preset.insert({
+                    mapping = {
                         -- `Enter` key to confirm completion
                         ['<CR>'] = cmp.mapping.confirm({ select = false }),
 
@@ -146,11 +197,11 @@ require("lazy").setup({
                         -- Scroll up and down in the completion documentation
                         ['<C-u>'] = cmp.mapping.scroll_docs(-4),
                         ['<C-d>'] = cmp.mapping.scroll_docs(4),
-                    }),
+                    },
                     sources = cmp.config.sources({
                         {
                             name = "nvim_lsp",
-                            entry_filter = function(entry, ctx)
+                            entry_filter = function(entry)
                                 local types = require("cmp.types")
                                 local kind = types.lsp.CompletionItemKind
                                     [entry:get_kind()]
@@ -265,12 +316,6 @@ require("lazy").setup({
                         vim.keymap.set("n", "<leader>vrr", vim.lsp.buf.references, opts)
                         vim.keymap.set("n", "<leader>vrn", vim.lsp.buf.rename, opts)
                         vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
-
-                        vim.api.nvim_create_autocmd('BufWritePre', {
-                            buffer = event.buf,
-                            desc = "Format on save",
-                            callback = vim.lsp.buf.format,
-                        })
                     end
                 })
 
@@ -312,163 +357,59 @@ require("lazy").setup({
                 })
             end
         },
-        --     'VonHeikemen/lsp-zero.nvim',
-        -- {
-        --     branch = 'v3.x',
-        --     dependencies = {
-        --         'williamboman/mason.nvim',
-        --         'williamboman/mason-lspconfig.nvim',
-        --         'neovim/nvim-lspconfig',
-        --         'folke/neodev.nvim',
-        --         'hrsh7th/nvim-cmp',
-        --         'L3MON4D3/LuaSnip',
-        --         "ray-x/lsp_signature.nvim",
-        --         "windwp/nvim-autopairs",
-        --     },
-        --     config = function()
-        --         local lsp_zero = require('lsp-zero')
-
-        --         lsp_zero.on_attach(function(client, bufnr)
-        --             local opts = { buffer = bufnr }
-
-        --             vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-        --             vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-        --             vim.keymap.set("n", "<leader>vws", vim.lsp.buf.workspace_symbol, opts)
-        --             vim.keymap.set("n", "<leader>vd", vim.diagnostic.open_float, opts)
-        --             vim.keymap.set("n", "[d", vim.diagnostic.goto_next, opts)
-        --             vim.keymap.set("n", "]d", vim.diagnostic.goto_prev, opts)
-        --             vim.keymap.set("n", "<leader>vca", vim.lsp.buf.code_action, opts)
-        --             vim.keymap.set("n", "<leader>vrr", vim.lsp.buf.references, opts)
-        --             vim.keymap.set("n", "<leader>vrn", vim.lsp.buf.rename, opts)
-        --             vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
-        --         end)
-
-        --         lsp_zero.format_on_save({
-        --             format_opts = {
-        --                 async = false,
-        --                 timeout_ms = 10000,
-        --             },
-        --             servers = {
-        --                 ['taplo'] = { 'toml' },
-        --                 ['html'] = { 'html' },
-        --                 ['ruff_lsp'] = { 'python' },
-        --                 ['yamlls'] = { 'yaml' },
-        --                 ['tsserver'] = { 'javascript', 'typescript' },
-        --                 ['rust_analyzer'] = { 'rust' },
-        --                 ['lua_ls'] = { 'lua' },
-        --             }
-        --         })
-
-        --         require('mason').setup({})
-        --         require('mason-lspconfig').setup({
-        --             ensure_installed = {
-        --                 'taplo',
-        --                 'html',
-        --                 'pyright',
-        --                 'ruff_lsp',
-        --                 'rust_analyzer',
-        --                 'lua_ls',
-        --                 'tsserver',
-        --                 'yamlls',
-        --             },
-        --             handlers = {
-        --                 lsp_zero.default_setup,
-        --                 lua_ls = function()
-        --                     require("neodev").setup()
-        --                     require('lspconfig').lua_ls.setup(lsp_zero.nvim_lua_ls())
-        --                 end,
-        --             },
-        --         })
-
-        --         local cmp = require('cmp')
-        --         local cmp_action = require('lsp-zero').cmp_action()
-
-        --         cmp.setup({
-        --             sources = {
-        --                 {
-        --                     name = "nvim_lsp",
-        --                     entry_filter = function(entry, ctx)
-        --                         local types = require("cmp.types")
-        --                         local kind = types.lsp.CompletionItemKind
-        --                             [entry:get_kind()]
-        --                         return kind ~= "Text"
-        --                     end
-        --                 },
-        --             },
-
-        --             enabled = function()
-        --                 -- disable completion in comments
-        --                 local context = require 'cmp.config.context'
-        --                 -- keep command mode completion enabled when cursor is in a comment
-        --                 if vim.api.nvim_get_mode().mode == 'c' then
-        --                     return true
-        --                 else
-        --                     return not context.in_treesitter_capture("comment")
-        --                         and not context.in_syntax_group("Comment")
-        --                 end
-        --             end,
-        --             preselect = 'item',
-        --             completion = {
-        --                 completeopt = 'menu,menuone,noinsert'
-        --             },
-        --             mapping = cmp.mapping.preset.insert({
-        --                 -- `Enter` key to confirm completion
-        --                 ['<CR>'] = cmp.mapping.confirm({ select = false }),
-
-        --                 -- Ctrl+Space to trigger completion menu
-        --                 ['<C-Space>'] = cmp.mapping.complete(),
-
-        --                 -- Navigate between snippet placeholder
-        --                 ['<C-f>'] = cmp_action.luasnip_jump_forward(),
-        --                 ['<C-b>'] = cmp_action.luasnip_jump_backward(),
-
-        --                 -- Scroll up and down in the completion documentation
-        --                 ['<C-u>'] = cmp.mapping.scroll_docs(-4),
-        --                 ['<C-d>'] = cmp.mapping.scroll_docs(4),
-        --             })
-        --         })
-        --         cmp.setup.cmdline({ '/', '?' }, {
-        --             mapping = cmp.mapping.preset.cmdline(),
-        --             sources = {
-        --                 { name = 'buffer' }
-        --             }
-        --         })
-        --         cmp.setup.cmdline(':', {
-        --             mapping = cmp.mapping.preset.cmdline(),
-        --             sources = cmp.config.sources({ { name = 'path' }
-        --             }, {
-        --                 { name = 'cmdline' }
-        --             })
-        --         })
-
-        --         require("nvim-autopairs").setup()
-        --         local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-
-        --         cmp.event:on(
-        --             'confirm_done',
-        --             cmp_autopairs.on_confirm_done()
-        --         )
-
-        --         require('lsp_signature').setup({ hint_prefix = "" })
-        --     end
-        -- },
 
         -- Misc
+        {
+            'stevearc/conform.nvim',
+            event = "VeryLazy",
+            config = function()
+                require("conform").setup({ format_on_save = { timeout_ms = 10000, lsp_fallback = true } })
+
+                vim.api.nvim_create_autocmd("BufWritePre", {
+                    pattern = "*",
+                    callback = function(args)
+                        require("conform").format({ bufnr = args.buf })
+                    end,
+                })
+            end
+        },
+        { "echasnovski/mini.comment", event = "VeryLazy", opts = {} },
+        { "echasnovski/mini.pairs",   event = "VeryLazy", opts = {} },
         {
             'nvim-telescope/telescope.nvim',
             branch = '0.1.x',
             dependencies = { 'nvim-lua/plenary.nvim' },
+            cmd = "Telescope",
             config = function()
                 local builtin = require('telescope.builtin')
                 vim.keymap.set('n', '<leader>ff', builtin.find_files)
             end
         },
+        { "sontungexpt/url-open", cmd = "URLOpenUnderCursor", opts = {} },
         {
-            "sontungexpt/url-open",
+            "folke/noice.nvim",
             event = "VeryLazy",
-            cmd = "URLOpenUnderCursor",
-            opts = {}
+            opts = {
+                cmdline = { enabled = false },
+                messages = { enabled = false },
+                lsp = { progress = { enabled = false } },
+                presets = {
+                    bottom_search = true,         -- use a classic bottom cmdline for search
+                    command_palette = true,       -- position the cmdline and popupmenu together
+                    long_message_to_split = true, -- long messages will be sent to a split
+                    lsp_doc_border = false,       -- add a border to hover docs and signature help
+                },
+            },
+            dependencies = {
+                "MunifTanjim/nui.nvim",
+                "rcarriga/nvim-notify",
+            }
         },
+        {
+            "lewis6991/gitsigns.nvim",
+            event = lazyfile,
+            opts = {}
+        }
     },
 
     { install = { colorscheme = { theme, "habamax" } } }
