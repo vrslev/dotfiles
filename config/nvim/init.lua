@@ -34,6 +34,7 @@ vim.o.sidescrolloff = 8
 vim.o.laststatus = 3
 vim.o.cmdheight = 0
 vim.o.showcmd = false
+vim.o.completeopt = 'menu,menuone,noinsert'
 
 for _, mode in pairs({ 'n', 'i', 'v', 'x' }) do
     for _, key in pairs({ '<Up>', '<Down>', '<Left>', '<Right>' }) do
@@ -171,7 +172,7 @@ require("lazy").setup({
         },
         {
             'hrsh7th/nvim-cmp',
-            event = lazyfile,
+            event = { "InsertEnter", "CmdlineEnter" },
             dependencies = {
                 'hrsh7th/cmp-nvim-lsp',
                 "hrsh7th/cmp-buffer",
@@ -183,13 +184,8 @@ require("lazy").setup({
                 local cmp = require('cmp')
 
                 cmp.setup({
-                    preselect = 'item',
-                    completion = {
-                        completeopt = 'menu,menuone,noinsert'
-                    },
                     mapping = {
-                        -- `Enter` key to confirm completion
-                        ['<CR>'] = cmp.mapping.confirm({ select = false }),
+                        ['<C-y>'] = cmp.mapping.confirm({ select = false }),
 
                         -- Ctrl+Space to trigger completion menu
                         ['<C-Space>'] = cmp.mapping.complete(),
@@ -212,13 +208,12 @@ require("lazy").setup({
                     }),
                     enabled = function()
                         -- disable completion in comments
-                        local context = require 'cmp.config.context'
                         -- keep command mode completion enabled when cursor is in a comment
                         if vim.api.nvim_get_mode().mode == 'c' then
                             return true
                         else
-                            return not context.in_treesitter_capture("comment")
-                                and not context.in_syntax_group("Comment")
+                            return not cmp.config.context.in_treesitter_capture("comment")
+                                and not cmp.config.context.in_syntax_group("Comment")
                         end
                     end,
                     snippet = {
