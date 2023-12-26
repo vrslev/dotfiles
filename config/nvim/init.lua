@@ -195,16 +195,9 @@ require("lazy").setup({
                         ['<C-d>'] = cmp.mapping.scroll_docs(4),
                     },
                     sources = cmp.config.sources({
-                        {
-                            name = "nvim_lsp",
-                            entry_filter = function(entry)
-                                local types = require("cmp.types")
-                                local kind = types.lsp.CompletionItemKind
-                                    [entry:get_kind()]
-                                return kind ~= "Text"
-                            end
-                        },
+                        { name = "nvim_lsp" },
                         { name = "luasnip" },
+                        { name = "path },
                     }),
                     enabled = function()
                         -- disable completion in comments
