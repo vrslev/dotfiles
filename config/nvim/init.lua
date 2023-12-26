@@ -228,6 +228,15 @@ require("lazy").setup({
                 })
             end
         },
+        {
+          "ray-x/lsp_signature.nvim",
+          event = "VeryLazy",
+          opts = {
+            bind = false,  -- disable border
+            fix_pos = true,
+            hint_enable = false,
+          }
+        },
 
         -- Treesitter
         {
@@ -380,26 +389,7 @@ require("lazy").setup({
                 vim.keymap.set('n', '<leader>ff', builtin.find_files)
             end
         },
-        { "sontungexpt/url-open", cmd = "URLOpenUnderCursor", opts = {} },
-        {
-            "folke/noice.nvim",
-            event = "VeryLazy",
-            opts = {
-                cmdline = { enabled = false },
-                messages = { enabled = false },
-                lsp = { progress = { enabled = false } },
-                presets = {
-                    bottom_search = true,         -- use a classic bottom cmdline for search
-                    command_palette = true,       -- position the cmdline and popupmenu together
-                    long_message_to_split = true, -- long messages will be sent to a split
-                    lsp_doc_border = false,       -- add a border to hover docs and signature help
-                },
-            },
-            dependencies = {
-                "MunifTanjim/nui.nvim",
-                "rcarriga/nvim-notify",
-            }
-        },
+        { "sontungexpt/url-open", cmd = "URLOpenUnderCursor", opts = {}},
         {
             "lewis6991/gitsigns.nvim",
             event = lazyfile,
