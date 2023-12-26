@@ -359,7 +359,17 @@ require("lazy").setup({
             end
         },
         { "echasnovski/mini.comment", event = "VeryLazy", opts = {} },
-        { "echasnovski/mini.pairs",   event = "VeryLazy", opts = {} },
+        {
+            'windwp/nvim-autopairs',
+            event = "InsertEnter",
+            config = function()
+                require("nvim-autopairs").setup({ check_ts = true })
+                require('cmp').event:on(
+                  'confirm_done',
+                  require('nvim-autopairs.completion.cmp').on_confirm_done()
+                )
+            end
+        },
         {
             'nvim-telescope/telescope.nvim',
             branch = '0.1.x',
