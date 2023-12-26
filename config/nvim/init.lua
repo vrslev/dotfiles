@@ -184,20 +184,16 @@ require("lazy").setup({
                 local cmp = require('cmp')
 
                 cmp.setup({
-                    mapping = {
-                        ['<C-y>'] = cmp.mapping.confirm({ select = false }),
-
-                        -- Ctrl+Space to trigger completion menu
-                        ['<C-Space>'] = cmp.mapping.complete(),
-
-                        -- Scroll up and down in the completion documentation
+                    mapping = cmp.mapping.preset.insert({
                         ['<C-u>'] = cmp.mapping.scroll_docs(-4),
                         ['<C-d>'] = cmp.mapping.scroll_docs(4),
-                    },
+                    }),
                     sources = cmp.config.sources({
                         { name = "nvim_lsp" },
                         { name = "luasnip" },
                         { name = "path },
+                    }, {
+                        { name = 'buffer' },
                     }),
                     enabled = function()
                         -- disable completion in comments
