@@ -146,6 +146,11 @@ require("lazy").setup({
                 })
             end
         },
+        {
+            "lewis6991/gitsigns.nvim",
+            event = lazyfile,
+            opts = {}
+        },
 
         -- completion
         {
@@ -389,12 +394,8 @@ require("lazy").setup({
                 vim.keymap.set('n', '<leader>ff', builtin.find_files)
             end
         },
-        { "sontungexpt/url-open", cmd = "URLOpenUnderCursor", opts = {}},
-        {
-            "lewis6991/gitsigns.nvim",
-            event = lazyfile,
-            opts = {}
-        }
+        { "sontungexpt/url-open", cmd = "URLOpenUnderCursor", opts = {} },
+        { "tpope/vim-fugitive", cmd = "Git" },
     },
 
     { install = { colorscheme = { theme, "habamax" } } }
