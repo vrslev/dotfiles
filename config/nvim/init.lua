@@ -396,6 +396,11 @@ require("lazy").setup({
         },
         { "sontungexpt/url-open", cmd = "URLOpenUnderCursor", opts = {} },
         { "tpope/vim-fugitive", cmd = "Git" },
+        {
+            "folke/which-key.nvim",
+            event = "VeryLazy",
+            opts = {},
+        },
     },
 
     { install = { colorscheme = { theme, "habamax" } } }
