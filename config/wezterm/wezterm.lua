@@ -8,7 +8,7 @@ return {
     check_for_updates = false,
     color_scheme = scheme_for_appearance(wezterm.gui.get_appearance()),
     font = wezterm.font 'FiraCode Nerd Font',
-    font_size = 14,
+    font_size = 16,
     hyperlink_rules = {
         -- Linkify things that look like URLs and the host has a TLD name.
         -- Compiled-in default. Used if you don't specify any hyperlink_rules.
