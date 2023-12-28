@@ -8,7 +8,7 @@ return {
     check_for_updates = false,
     color_scheme = scheme_for_appearance(wezterm.gui.get_appearance()),
     font = wezterm.font 'FiraCode Nerd Font',
-    font_size = 16,
+    font_size = 15,
     hyperlink_rules = {
         -- Linkify things that look like URLs and the host has a TLD name.
         -- Compiled-in default. Used if you don't specify any hyperlink_rules.
@@ -39,9 +39,10 @@ return {
             format = '$0',
         },
     },
-    initial_cols = 120,
+    initial_cols = 130,
     initial_rows = 36,
-    window_decorations = "NONE",
+    window_decorations = "RESIZE",
+    enable_tab_bar = true,
     keys = {
         {
             key = 'f',
@@ -54,5 +55,6 @@ return {
         right = 0,
         top = 0,
         bottom = 0
-    }
+    },
+    line_height = 1.1
 }
