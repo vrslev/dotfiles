@@ -312,7 +312,7 @@ local coding = {
             {
                 "<leader>lf",
                 function()
-                    require("conform").format({ async = true })
+                    require("conform").format({ async = true, lsp_fallback = true })
                 end,
                 mode = "",
                 desc = "Format buffer",
@@ -374,6 +374,12 @@ local integrations = {
             { "<leader>ss", "<Cmd>Telescope live_grep<CR>" },
         },
     },
+    {
+        "m4xshen/hardtime.nvim",
+        event = "VeryLazy",
+        dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+        opts = {}
+    },
 }
 
 ---@type LazySpec[]
@@ -384,4 +390,5 @@ return {
     lsp,
     coding,
     integrations,
+
 }
