@@ -48,12 +48,7 @@ local appearance = {
         "echasnovski/mini.indentscope",
         event = "VeryLazy",
         opts = {
-            draw = {
-                delay = 0,
-                animation = function()
-                    return 0
-                end,
-            },
+            draw = { delay = 0, animation = function() return 0 end },
             mappings = {
                 object_scope = "",
                 object_scope_with_border = "",
@@ -119,7 +114,7 @@ local completion = {
                 mapping = cmp.mapping.preset.insert({
                     ["<C-u>"] = cmp.mapping.scroll_docs(-4),
                     ["<C-d>"] = cmp.mapping.scroll_docs(4),
-                    ["<C-g"] = cmp.mapping.complete(),
+                    ["<C-g>"] = cmp.mapping.complete(),
                 }),
                 sources = cmp.config.sources({
                     { name = "nvim_lsp" },
@@ -162,16 +157,7 @@ local completion = {
                     { name = "cmdline", max_item_count = 15 },
                 }),
             })
-
-            cmp.event:on("confirm_done", require("nvim-autopairs.completion.cmp").on_confirm_done())
         end,
-    },
-    {
-        "windwp/nvim-autopairs",
-        event = "InsertEnter",
-        opts = {
-            check_ts = true,
-        },
     },
 }
 
@@ -350,6 +336,9 @@ local coding = {
     },
     { "echasnovski/mini.comment",   event = "VeryLazy", opts = {} },
     { "echasnovski/mini.bracketed", event = "VeryLazy", opts = {} },
+    { "echasnovski/mini.move",      event = "VeryLazy", opts = {} },
+    { "echasnovski/mini.operators", event = "VeryLazy", opts = {} },
+    { "echasnovski/mini.pairs",     event = "VeryLazy", opts = {} },
 }
 
 ---@type LazySpec[]

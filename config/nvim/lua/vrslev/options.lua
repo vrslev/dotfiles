@@ -42,7 +42,6 @@ vim.o.spell = true
 vim.o.scrolloff = 8
 vim.o.sidescrolloff = 8
 
-vim.o.laststatus = 3
 vim.o.cmdheight = 0
 vim.o.showcmd = false
 vim.o.showmode = false
