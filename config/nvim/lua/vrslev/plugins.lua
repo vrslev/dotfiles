@@ -218,6 +218,7 @@ local lsp = {
 		opts = {
 			ensure_installed = {
 				"stylua",
+				"ruff",
 			},
 		},
 		config = function(_, opts)
@@ -367,6 +368,7 @@ local coding = {
 			-- https://github.com/stevearc/conform.nvim/tree/master#options
 			formatters_by_ft = {
 				lua = { "stylua" },
+				python = { "ruff" },
 				["*"] = { "insert_newline" },
 				["_"] = { "trim_whitespace" },
 			},
