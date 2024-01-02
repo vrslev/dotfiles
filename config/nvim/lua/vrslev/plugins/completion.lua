@@ -94,6 +94,8 @@ return {
 					{ name = "cmdline", max_item_count = 15 },
 				}),
 			})
+
+			cmp.setup.filetype("markdown", { enabled = false })
 		end,
 	},
 }
