@@ -11,10 +11,6 @@ else
     set -x EDITOR nano
 end
 
-zoxide init fish | source
-starship init fish | source
-wezterm shell-completion --shell fish | source
-
 # Add pipx binaries
 set -x PATH ~/.local/bin $PATH
 # Add scipts
@@ -26,6 +22,10 @@ set -x PATH ~/.cargo/bin $PATH
 for dir in ~/Library/Application\ Support/hatch/pythons/*/python/bin
     set -x PATH $dir $PATH
 end
+
+zoxide init fish | source
+starship init fish | source
+wezterm shell-completion --shell fish | source
 
 # Prevent python from writing byte code
 set -x PYTHONDONTWRITEBYTECODE 1

@@ -1,3 +1,4 @@
+apply-user-defaults
 bat
 cargo-update
 exa
@@ -8,3 +9,4 @@ rye
 starship
 trunk
 wasm-bindgen-cli
+zoxide
