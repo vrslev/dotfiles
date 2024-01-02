@@ -12,6 +12,7 @@
     ~/.config/wezterm: config/wezterm
     ~/.config/nvim: config/nvim
     ~/.gitconfig:
+    ~/.gitignore:
     ~/.hushlogin:
     ~/Library/Application Support/Code/User/keybindings.json: vscode/keybindings.json
     ~/Library/Application Support/Code/User/settings.json: vscode/settings.json
