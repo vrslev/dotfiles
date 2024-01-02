@@ -11,6 +11,7 @@ else
     set -x EDITOR nano
 end
 
+zoxide init fish | source
 starship init fish | source
 wezterm shell-completion --shell fish | source
 
@@ -89,11 +90,11 @@ end
 alias ls "exa --icons"
 alias l ls
 alias v nvim
+alias cd z
 alias venv virtualenv
 alias b bat
 alias py python3
 alias gen-py ~/code/python-template/generate.py
-
 abbr g git
 abbr pc pre-commit
 abbr dco "docker compose"
