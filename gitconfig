@@ -3,19 +3,13 @@
 	email = mail@vrslev.com
 
 [core]
-	editor = nano
+	editor = nvim
 
 [diff]
-    tool = vscode
-
-[difftool "vscode"]
-    cmd = code --wait --diff $LOCAL $REMOTE
+    tool = nvim
 
 [merge]
-  tool = code
-
-[mergetool "code"]
-  cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
+  tool = nvim
 
 [help]
 	autoCorrect = 1
