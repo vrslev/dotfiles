@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+defaults write com.apple.security.authorization ignoreArd -bool TRUE
+
+sudo su root -c 'chmod +w /etc/pam.d/sudo \
+    && echo "auth       sufficient     pam_tid.so\n$(cat /etc/pam.d/sudo)" > /etc/pam.d/sudo \
+    && chmod -w /etc/pam.d/sudo'
