@@ -12,6 +12,7 @@ init:
 		done
 
 macos:
+	defaults -currentHost write -g AppleFontSmoothing -int 0
 	sudo apply-user-defaults macos.yaml
 
 link:
@@ -19,10 +20,11 @@ link:
 	git submodule update --init --recursive dotbot
 	dotbot/bin/dotbot -c install.conf.yaml
 
-update:
+dump:
 	python3.12 tools/dump.py
 	brew bundle dump -f
 
+update:
 	git -C dotbot submodule sync --quiet --recursive
 	git submodule update --init --recursive dotbot
 
@@ -34,4 +36,5 @@ update:
 	cargo install-update --all --git
 	pipx upgrade-all
 
-all: macos link update
+all: macos link dump update
+

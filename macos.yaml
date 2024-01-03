@@ -1,7 +1,7 @@
 NSGlobalDomain:
   NSWindowResizeTime: 0.001 # Fast window resize
-  KeyRepeat: 0.02 # Fast keyboard repeat rate
-  InitialKeyRepeat: -int 10
+  KeyRepeat: 1 # Fast keyboard repeat rate
+  InitialKeyRepeat: 10
 
   # Expand panels by default
   NSNavPanelExpandedStateForSaveMode: true

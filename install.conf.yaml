@@ -12,8 +12,8 @@
     ~/.config/starship.toml: config/starship.toml
     ~/.config/wezterm: config/wezterm
     ~/.config/nvim: config/nvim
-    ~/.gitconfig:
-    ~/.gitignore:
-    ~/.hushlogin:
-    ~/Library/Application Support/Code/User/keybindings.json: vscode/keybindings.json
-    ~/Library/Application Support/Code/User/settings.json: vscode/settings.json
+    ~/.config/git/config: config/git/config
+    ~/.config/git/ignore: config/git/ignore
+    ~/.hushlogin: config/hushlogin
+    ~/Library/Application Support/Code/User/keybindings.json: config/vscode/keybindings.json
+    ~/Library/Application Support/Code/User/settings.json: config/vscode/settings.json
