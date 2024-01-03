@@ -21,8 +21,7 @@ return {
 			-- https://github.com/stevearc/conform.nvim/tree/master#options
 			formatters_by_ft = {
 				lua = { "stylua" },
-				python = { "ruff" },
-				["*"] = { "insert_newline" },
+				python = { "ruff_format" },
 				["_"] = { "trim_whitespace" },
 			},
 			format_on_save = {
