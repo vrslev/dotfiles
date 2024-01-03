@@ -90,6 +90,7 @@ return {
 				yamlls = {},
 				docker_compose_language_service = {},
 				dockerls = {},
+				json_lsp = {},
 			}
 
 			local function add_mappings(bufnr)
