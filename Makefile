@@ -3,11 +3,11 @@ init:
 	brew bundle
 	rustup-init --no-modify-path -y
 
-	for tool in `cat tools/cargo.txt`; do \
+	for tool in `cat deps-cargo.txt`; do \
 		cargo binstall $$tool || cargo install $$tool; \
 		done
 
-	for tool in `cat tools/pipx.txt`; do \
+	for tool in `cat deps-pipx.txt`; do \
 		pipx install $$tool; \
 		done
 
@@ -16,18 +16,13 @@ macos:
 	sudo apply-user-defaults macos.yaml
 
 link:
-	git -C dotbot submodule sync --quiet --recursive
-	git submodule update --init --recursive dotbot
-	dotbot/bin/dotbot -c install.conf.yaml
+	python3.12 link.py
 
 dump:
-	python3.12 tools/dump.py
+	python3.12 deps.py
 	brew bundle dump -f
 
 update:
-	git -C dotbot submodule sync --quiet --recursive
-	git submodule update --init --recursive dotbot
-
 	brew upgrade --greedy
 
 	rustup update
