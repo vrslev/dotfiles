@@ -33,6 +33,7 @@ return {
 	},
 	{ "echasnovski/mini.comment", event = "VeryLazy", opts = {} },
 	{ "echasnovski/mini.bracketed", event = "VeryLazy", opts = {} },
+	{ "echasnovski/mini.surround", event = "VeryLazy", opts = {} },
 	{ "echasnovski/mini.move", event = "VeryLazy", opts = {} },
 	{ "echasnovski/mini.operators", event = "VeryLazy", opts = {} },
 	{ "echasnovski/mini.pairs", event = "VeryLazy", opts = {} },
