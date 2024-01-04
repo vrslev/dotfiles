@@ -10,6 +10,7 @@ return {
 			ensure_installed = {
 				"stylua",
 				"ruff",
+				"prettier",
 			},
 		},
 		config = function(_, opts)
@@ -90,7 +91,7 @@ return {
 				yamlls = {},
 				docker_compose_language_service = {},
 				dockerls = {},
-				json_lsp = {},
+				jsonls = {},
 			}
 
 			local function add_mappings(bufnr)
