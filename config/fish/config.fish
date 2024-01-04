@@ -95,6 +95,7 @@ alias venv virtualenv
 alias b bat
 alias py python3
 alias gen-py ~/code/python-template/generate.py
+alias gr "cd $(git rev-parse --show-toplevel)"
 abbr g git
 abbr pc pre-commit
 abbr dco "docker compose"
