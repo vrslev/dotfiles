@@ -44,6 +44,7 @@ return {
 			"hrsh7th/cmp-cmdline",
 			"hrsh7th/cmp-nvim-lsp-signature-help",
 			"saadparwaiz1/cmp_luasnip",
+            "lukas-reineke/cmp-under-comparator",
 		},
 		config = function()
 			local cmp = require("cmp")
@@ -76,6 +77,19 @@ return {
 					expand = function(args)
 						require("luasnip").lsp_expand(args.body)
 					end,
+				},
+				sorting = {
+                    priority_weight = 1.0,
+					comparators = {
+						cmp.config.compare.offset,
+						cmp.config.compare.exact,
+						cmp.config.compare.score,
+						require("cmp-under-comparator").under,
+						cmp.config.compare.kind,
+						cmp.config.compare.sort_text,
+						cmp.config.compare.length,
+						cmp.config.compare.order,
+					},
 				},
 			})
 
