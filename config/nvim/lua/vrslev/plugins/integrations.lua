@@ -32,6 +32,16 @@ return {
 		},
 	},
 	{
+		"folke/trouble.nvim",
+		event = "VeryLazy",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		cmd = { "TroubleToggle", "Trouble" },
+		keys = {
+			{ "<leader>lx", "<cmd>TroubleToggle<cr>", desc = "Toggle Trouble" },
+		},
+		opts = {},
+	},
+	{
 		"m4xshen/hardtime.nvim",
 		event = "VeryLazy",
 		dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
