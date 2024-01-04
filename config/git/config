@@ -28,5 +28,6 @@
 	cm = commit -m
 	p = push
     l = log --oneline --decorate --color --graph
-    d =!git diff --name-only --relative --diff-filter=d | xargs bat --diff
+    d = diff
+    ds = diff --staged
     st = status
