@@ -15,7 +15,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-local theme = vim.env.DARK_MODE and "github_dark_dimmed" or "github_light"
+local theme = vim.env.DARK_MODE and "tokyonight-moon" or "tokyonight-day"
 
 require("lazy").setup("vrslev.plugins", {
 	install = {

@@ -21,21 +21,26 @@ end
 ---@type LazySpec[]
 return {
 	{
-		"projekt0n/github-nvim-theme",
+		"folke/tokyonight.nvim",
 		priority = 1000,
-		main = "github-theme",
-		opts = {
-			darken = {
-				floats = true,
-			},
-			groups = {
-				all = {
-					DiagnosticHint = { fg = "fg0" },
-					TSDefinitionUsage = { bg = "bg2" },
-				},
-			},
-		},
+		opts = {},
 	},
+	-- {
+	-- 	"projekt0n/github-nvim-theme",
+	-- 	priority = 1000,
+	-- 	main = "github-theme",
+	-- 	opts = {
+	-- 		darken = {
+	-- 			floats = true,
+	-- 		},
+	-- 		groups = {
+	-- 			all = {
+	-- 				DiagnosticHint = { fg = "fg0" },
+	-- 				TSDefinitionUsage = { bg = "bg2" },
+	-- 			},
+	-- 		},
+	-- 	},
+	-- },
 	{
 		"echasnovski/mini.statusline",
 		priority = 900,
