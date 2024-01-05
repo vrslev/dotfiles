@@ -95,22 +95,8 @@ alias venv virtualenv
 alias b bat
 alias py python3
 alias gen-py ~/code/python-template/generate.py
-alias gr "cd $(git rev-parse --show-toplevel)"
+alias gr 'cd $(git rev-parse --show-toplevel)'
 abbr g git
 abbr pc pre-commit
 abbr dco "docker compose"
 
-# Created by `userpath` on 2023-12-17 08:23:29
-set PATH $PATH /Users/lev/Library/Application Support/hatch/pythons/bins/3.8/python/bin
-
-# Created by `userpath` on 2023-12-17 08:23:33
-set PATH $PATH /Users/lev/Library/Application Support/hatch/pythons/bins/3.9/python/bin
-
-# Created by `userpath` on 2023-12-17 08:27:32
-set PATH $PATH /Users/lev/Library/Application Support/hatch/pythons/pypy2.7/pypy2.7-v7.3.12-macos_arm64/bin
-
-# Created by `userpath` on 2023-12-17 08:27:36
-set PATH $PATH /Users/lev/Library/Application Support/hatch/pythons/pypy3.9/pypy3.9-v7.3.12-macos_arm64/bin
-
-# Created by `userpath` on 2023-12-17 08:27:41
-set PATH $PATH /Users/lev/Library/Application Support/hatch/pythons/pypy3.10/pypy3.10-v7.3.12-macos_arm64/bin
