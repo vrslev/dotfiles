@@ -22,7 +22,9 @@ return {
 			formatters_by_ft = {
 				lua = { "stylua" },
 				python = { "ruff_format" },
-				yaml = { "prettier" },
+				javascript = { "prettierd" },
+				typescript = { "prettierd" },
+				yaml = { "prettierd" },
 				["_"] = { "trim_whitespace" },
 			},
 			format_on_save = {

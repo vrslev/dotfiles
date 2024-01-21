@@ -44,7 +44,8 @@ return {
 			"hrsh7th/cmp-cmdline",
 			"hrsh7th/cmp-nvim-lsp-signature-help",
 			"saadparwaiz1/cmp_luasnip",
-            "lukas-reineke/cmp-under-comparator",
+			"lukas-reineke/cmp-under-comparator",
+			{ dir = "~/code/cmp-pypi" },
 		},
 		config = function()
 			local cmp = require("cmp")
@@ -57,9 +58,10 @@ return {
 				}),
 				sources = cmp.config.sources({
 					{ name = "nvim_lsp" },
+                    { name = "nvim_lsp_signature_help" },
 					{ name = "luasnip" },
 					{ name = "path" },
-					{ name = "nvim_lsp_signature_help" },
+					{ name = "pypi" },
 				}, {
 					{ name = "buffer" },
 				}),
@@ -79,7 +81,7 @@ return {
 					end,
 				},
 				sorting = {
-                    priority_weight = 1.0,
+					priority_weight = 1.0,
 					comparators = {
 						cmp.config.compare.offset,
 						cmp.config.compare.exact,

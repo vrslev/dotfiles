@@ -1,7 +1,16 @@
 ---@type LazySpec[]
 return {
 	{ "neovim/nvim-lspconfig", lazy = true },
-	{ "folke/neodev.nvim", filetypes = { "lua", "vim" }, opts = {} },
+	{
+		"folke/neodev.nvim",
+		filetypes = { "lua", "vim" },
+		opts = {
+			override = function(_, library)
+				library.enabled = true
+				library.plugins = true
+			end,
+		},
+	},
 	{
 		"williamboman/mason.nvim",
 		cmd = "Mason",
@@ -10,7 +19,7 @@ return {
 			ensure_installed = {
 				"stylua",
 				"ruff",
-				"prettier",
+				"prettierd",
 			},
 		},
 		config = function(_, opts)
@@ -81,9 +90,9 @@ return {
 				lua_ls = {
 					settings = {
 						Lua = {
-							runtime = { version = "LuaJIT" },
-							diagnostics = { globals = { "vim" } },
-							workspace = { library = { vim.env.VIMRUNTIME } },
+							completion = {
+								callSnippet = "Replace",
+							},
 						},
 					},
 				},
@@ -92,6 +101,7 @@ return {
 				docker_compose_language_service = {},
 				dockerls = {},
 				jsonls = {},
+				cssls = {},
 			}
 
 			local function add_mappings(bufnr)
@@ -104,9 +114,15 @@ return {
 				map("K", vim.lsp.buf.hover, "Hover documentation")
 				map("gd", telescope.lsp_definitions, "Go to definition")
 				map("gi", telescope.lsp_implementations, "Go to implementation")
-				map("gr", function() require("trouble").toggle("lsp_references") end, "Go to references")
-				map("<leader>ld", function() require("trouble").toggle("document_diagnostics") end, "Open document diagnostics")
-				map("<leader>lw", function() require("trouble").toggle("workspace_diagnostics") end, "Open workspace diagnostics")
+				map("gr", function()
+					require("trouble").toggle("lsp_references")
+				end, "Go to references")
+				map("<leader>ld", function()
+					require("trouble").toggle("document_diagnostics")
+				end, "Open document diagnostics")
+				map("<leader>lw", function()
+					require("trouble").toggle("workspace_diagnostics")
+				end, "Open workspace diagnostics")
 				map("<leader>la", vim.lsp.buf.code_action, "LSP actions")
 				map("<leader>lr", vim.lsp.buf.rename, "LSP rename")
 				map("<C-h>", vim.lsp.buf.signature_help, "Hover signature documentation", "i")

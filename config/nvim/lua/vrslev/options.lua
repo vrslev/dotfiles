@@ -29,7 +29,6 @@ vim.o.smartcase = true
 
 vim.o.undofile = true
 
-
 --
 -- Personal preferences
 --
