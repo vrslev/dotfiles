@@ -1,9 +1,19 @@
 {
-  "$schema": "vscode://schemas/settings/user",
+  "[dockerfile]": {
+    "editor.defaultFormatter": "ms-azuretools.vscode-docker"
+  },
   "[html][javascript][json][jsonc][markdown][typescript][typescriptreact][vue][yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff"
+  },
+  "[rust]": {
+    "editor.tabSize": 4
+  },
+  "diffEditor.codeLens": true,
   "diffEditor.ignoreTrimWhitespace": false,
+  "diffEditor.renderSideBySide": false,
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit",
     "source.organizeImports": "explicit"
@@ -11,34 +21,23 @@
   "editor.fontFamily": "FiraCode Nerd Font",
   "editor.fontLigatures": true,
   "editor.fontSize": 14,
-  "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
-  "editor.formatOnSaveMode": "file",
-  "editor.formatOnType": true,
   "editor.minimap.enabled": false,
-  "editor.scrollbar.horizontalScrollbarSize": 7,
-  "editor.scrollbar.verticalScrollbarSize": 7,
-  "editor.tokenColorCustomizations": {
-    "textMateRules": [
-      {
-        "scope": "keyword.other.dotenv",
-        "settings": {
-          "foreground": "#FF000000"
-        }
-      }
-    ]
-  },
+  "editor.quickSuggestionsDelay": 0,
+  "editor.unicodeHighlight.ambiguousCharacters": false,
   "emmet.includeLanguages": {
-    "jinja-html": "html"
+    "jinja-html": "html",
+    "postcss": "css"
   },
-  "errorLens.enabledDiagnosticLevels": ["error", "warning"],
-  "errorLens.messageBackgroundMode": "message",
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
-  "explorer.confirmPasteNative": false,
+  "explorer.decorations.colors": false,
+  "extensions.ignoreRecommendations": true,
   "files.associations": {
+    "*.hcl": "terraform-vars",
     ".env*": "dotenv"
   },
+  "files.autoGuessEncoding": true,
   "files.autoSave": "afterDelay",
   "files.autoSaveDelay": 300,
   "files.exclude": {
@@ -49,17 +48,53 @@
   "git.autofetch": true,
   "git.confirmSync": false,
   "git.enableSmartCommit": true,
-  "githubPullRequests.defaultMergeMethod": "squash",
-  "githubPullRequests.notifications": "pullRequests",
-  "githubPullRequests.pullBranch": "always",
+  "git.ignoredRepositories": ["/opt/homebrew"],
   "githubPullRequests.pushBranch": "always",
+  "gitlens.codeLens.enabled": false,
+  "gitlens.currentLine.enabled": false,
+  "gitlens.hovers.enabled": false,
+  "gitlens.menus": {
+    "editor": false,
+    "editorGroup": false,
+    "editorTab": false,
+    "explorer": false,
+    "scm": {
+      "graph": true
+    },
+    "scmGroup": {
+      "compare": true,
+      "openClose": true,
+      "stash": true
+    },
+    "scmGroupInline": {
+      "stash": true
+    },
+    "scmItem": {
+      "clipboard": true,
+      "compare": true,
+      "history": true,
+      "remote": false,
+      "stash": true
+    },
+    "scmItemInline": {},
+    "scmRepository": {
+      "authors": true,
+      "graph": false
+    }
+  },
+  "gitlens.plusFeatures.enabled": false,
+  "gitlens.showWelcomeOnInstall": false,
+  "gitlens.statusBar.enabled": false,
+  "isort.args": ["--profile", "black"],
+  "isort.serverEnabled": false,
   "liveServer.settings.donotShowInfoMsg": true,
   "liveServer.settings.donotVerifyTags": true,
+  "problems.showCurrentInStatus": true,
   "python.analysis.autoFormatStrings": true,
   "python.analysis.autoImportCompletions": true,
   "python.analysis.diagnosticMode": "workspace",
-  "python.analysis.fixAll": ["source.unusedImports"],
   "python.analysis.gotoDefinitionInStringLiteral": true,
+  "python.analysis.indexing": true,
   "python.analysis.inlayHints.functionReturnTypes": true,
   "python.analysis.inlayHints.pytestParameters": true,
   "python.analysis.useLibraryCodeForTypes": false,
@@ -68,13 +103,14 @@
   "redhat.telemetry.enabled": false,
   "rust-analyzer.check.command": "clippy",
   "rust-analyzer.inlayHints.typeHints.enable": false,
-  "scm.diffDecorations": "gutter",
+  "rust-analyzer.lens.enable": false,
   "security.workspace.trust.enabled": false,
+  "security.workspace.trust.untrustedFiles": "open",
   "telemetry.telemetryLevel": "off",
   "terminal.external.osxExec": "Wezterm.app",
   "terminal.integrated.copyOnSelection": true,
   "terminal.integrated.defaultProfile.osx": "fish",
-  "terminal.integrated.fontSize": 14,
+  "terminal.integrated.fontSize": 13,
   "terminal.integrated.minimumContrastRatio": 1,
   "terminal.integrated.showExitAlert": false,
   "terminal.integrated.tabs.hideCondition": "never",
@@ -82,13 +118,32 @@
   "window.autoDetectColorScheme": true,
   "window.newWindowDimensions": "maximized",
   "workbench.activityBar.location": "top",
+  "workbench.colorTheme": "GitHub Light Default",
   "workbench.editor.enablePreview": false,
+  "workbench.editor.tabActionCloseVisibility": false,
+  "workbench.editorAssociations": {
+    "*.ipynb": "jupyter-notebook",
+    "*.state": "default",
+    "git-rebase-todo": "default"
+  },
+  "workbench.fontAliasing": "antialiased",
   "workbench.layoutControl.enabled": false,
   "workbench.list.smoothScrolling": true,
-  "workbench.settings.openDefaultSettings": true,
+  "workbench.preferredDarkColorTheme": "GitHub Dark Default",
+  "workbench.preferredLightColorTheme": "GitHub Light Default",
   "workbench.sideBar.location": "right",
   "workbench.startupEditor": "none",
   "workbench.tips.enabled": false,
   "zenMode.centerLayout": false,
-  "zenMode.fullScreen": false
+  "zenMode.fullScreen": false,
+  "editor.tokenColorCustomizations": {
+    "textMateRules": [
+      {
+        "scope": "keyword.other.dotenv",
+        "settings": {
+          "foreground": "#FF000000"
+        }
+      }
+    ]
+  }
 }

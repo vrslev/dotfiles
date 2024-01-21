@@ -1,12 +1,12 @@
 {
     ".config/fish/config.fish": null,
     ".config/fish/fish_plugins": null,
+    ".config/git/config": null,
+    ".config/nvim": null,
     ".config/pip/pip.conf": null,
     ".config/starship.toml": null,
     ".config/wezterm": null,
-    ".config/nvim": null,
-    ".config/git/config": null,
-    ".config/git/ignore": null,
+    ".gitignore": "config/git/ignore",
     ".hushlogin": "config/hushlogin",
     "Library/Application Support/Code/User/keybindings.json": "config/vscode/keybindings.json",
     "Library/Application Support/Code/User/settings.json": "config/vscode/settings.json"
