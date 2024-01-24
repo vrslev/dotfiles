@@ -50,6 +50,8 @@ mas "Wipr", id: 1320666476
 mas "WireGuard", id: 1451685025
 vscode "bradlc.vscode-tailwindcss"
 vscode "charliermarsh.ruff"
+vscode "Codeium.codeium"
+vscode "cstrap.python-snippets"
 vscode "dotenv.dotenv-vscode"
 vscode "ecmel.vscode-html-css"
 vscode "EditorConfig.EditorConfig"
