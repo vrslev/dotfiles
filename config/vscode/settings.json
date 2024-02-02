@@ -4,6 +4,10 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "codeium.enableCodeLens": false,
+  "codeium.enableConfig": {
+    "*": true,
+    "markdown": true
+  },
   "diffEditor.ignoreTrimWhitespace": false,
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit",
@@ -19,6 +23,7 @@
   "editor.minimap.enabled": false,
   "editor.scrollbar.horizontalScrollbarSize": 7,
   "editor.scrollbar.verticalScrollbarSize": 7,
+  "editor.stickyScroll.enabled": true,
   "editor.tokenColorCustomizations": {
     "textMateRules": [
       {
@@ -42,6 +47,7 @@
   },
   "files.autoSave": "afterDelay",
   "files.autoSaveDelay": 300,
+  "files.autoSaveWhenNoErrors": true,
   "files.exclude": {
     "**/__pycache__": true
   },
