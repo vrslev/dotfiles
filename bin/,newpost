@@ -1,0 +1,7 @@
+#!/usr/bin/env fish
+
+set filename content/posts/$argv[1].md
+
+cd ~/code/vrslev.com
+hugo new $filename
+code $filename
