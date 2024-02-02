@@ -19,5 +19,18 @@
     "key": "shift+enter",
     "when": "editorFocus",
     "command": "editor.action.openLink"
+  },
+  {
+    "key": "cmd+k a",
+    "command": "explorer.newFile"
+  },
+  {
+    "key": "cmd+k shift+a",
+    "command": "explorer.newFolder"
+  },
+  {
+    "key": "cmd+i",
+    "command": "-codeium.openCodeiumCommand",
+    "when": "codeium.commandEnabled && editorTextFocus && !inlineSuggestionsVisible"
   }
 ]

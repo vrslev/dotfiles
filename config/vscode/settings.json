@@ -3,6 +3,7 @@
   "[html][javascript][json][jsonc][markdown][typescript][typescriptreact][vue][yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "codeium.enableCodeLens": false,
   "diffEditor.ignoreTrimWhitespace": false,
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit",
@@ -81,7 +82,6 @@
   "window.autoDetectColorScheme": true,
   "window.newWindowDimensions": "maximized",
   "workbench.activityBar.location": "top",
-  "workbench.colorTheme": "Default Light Modern",
   "workbench.editor.editorActionsLocation": "titleBar",
   "workbench.editor.enablePreview": false,
   "workbench.layoutControl.enabled": false,
