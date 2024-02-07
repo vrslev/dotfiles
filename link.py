@@ -1,10 +1,10 @@
-from pathlib import Path
 import json
+from pathlib import Path
 
 repo = Path(__file__).parent
 
 with open(repo / "link.json") as f:
-    link_map: dict[str, str | None] = json.load(f)
+    link_map: dict[str, str | None] = json.load(f)  # pyright: ignore
 
 for conf_dest, conf_src in link_map.items():
     if conf_src is None:
