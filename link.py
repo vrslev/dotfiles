@@ -19,10 +19,12 @@ for conf_dest, conf_src in link_map.items():
         target = dest.readlink()
 
         if target == src:
-            print(f"already linked: {conf_dest} -> {conf_src}")
+            pass
         else:
-            print(f"was linked before: {conf_dest} -> {target}")
+            print(f"was linked to different target: {conf_dest} -> {target}")
     else:
         dest.parent.mkdir(parents=True, exist_ok=True)
         dest.symlink_to(src)
         print(f"created link: {conf_dest} -> {conf_src}")
+
+print("Done!")
