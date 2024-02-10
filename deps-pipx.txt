@@ -8,6 +8,7 @@ maturin
 poetry
 pre-commit
 pypi-command-line
+ruff
 virtualenv
 watchfiles
 yt-dlp
