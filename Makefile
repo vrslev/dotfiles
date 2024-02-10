@@ -1,6 +1,11 @@
 .PHONY:
-init:
+init: install link macos
+
+update: macos link dump update-packages
+
+install:
 	brew bundle
+
 	rustup-init --no-modify-path -y
 
 	for tool in `cat deps-cargo.txt`; do \
@@ -11,8 +16,9 @@ init:
 		pipx install $$tool; \
 		done
 
+	hatch python install all --private
+
 macos:
-	defaults -currentHost write -g AppleFontSmoothing -int 0
 	sudo apply-user-defaults macos.yaml
 
 link:
@@ -20,16 +26,15 @@ link:
 
 dump:
 	python3.12 deps.py
-	brew bundle dump -f
+	brew bundle dump --force
+	python3.12 clean-brewfile.py
 
-update:
+update-packages:
 	brew upgrade --greedy
-
 	rustup update
 	hatch python install all --update --private
-
 	cargo install-update --all --git
 	pipx upgrade-all
 
-all: macos link dump update
-
+personal:
+	brew bundle --file Brewfile.personal
