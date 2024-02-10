@@ -44,7 +44,8 @@
   "explorer.confirmDragAndDrop": false,
   "explorer.confirmPasteNative": false,
   "files.associations": {
-    ".env*": "dotenv"
+    ".env*": "dotenv",
+    "Brewfile-*": "ruby"
   },
   "files.autoSave": "afterDelay",
   "files.autoSaveDelay": 300,
