@@ -100,3 +100,6 @@ abbr g git
 abbr pc pre-commit
 abbr dco "docker compose"
 
+if test -f ~/.fish_profile
+  source ~/.fish_profile
+end
