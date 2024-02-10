@@ -37,6 +37,7 @@
   "emmet.includeLanguages": {
     "jinja-html": "html"
   },
+  "emmet.triggerExpansionOnTab": true,
   "errorLens.enabledDiagnosticLevels": ["error", "warning"],
   "errorLens.messageBackgroundMode": "message",
   "explorer.confirmDelete": false,
@@ -62,6 +63,7 @@
   "githubPullRequests.pushBranch": "always",
   "liveServer.settings.donotShowInfoMsg": true,
   "liveServer.settings.donotVerifyTags": true,
+  "markdown.preview.typographer": true,
   "python.analysis.autoFormatStrings": true,
   "python.analysis.autoImportCompletions": true,
   "python.analysis.diagnosticMode": "workspace",
@@ -75,6 +77,20 @@
   "redhat.telemetry.enabled": false,
   "rust-analyzer.check.command": "clippy",
   "rust-analyzer.inlayHints.typeHints.enable": false,
+  "saveAndRun": {
+    "commands": [
+      {
+        "cmd": "ruff check --config=${workspaceFolder}/pyproject.toml ${file}",
+        "match": ".py",
+        "silent": true
+      },
+      {
+        "cmd": "ruff format --config=${workspaceFolder}/pyproject.toml ${file}",
+        "match": ".py",
+        "silent": true
+      }
+    ]
+  },
   "scm.diffDecorations": "gutter",
   "security.workspace.trust.enabled": false,
   "terminal.external.osxExec": "Wezterm.app",
@@ -87,7 +103,9 @@
   "typescript.updateImportsOnFileMove.enabled": "always",
   "window.autoDetectColorScheme": true,
   "window.newWindowDimensions": "maximized",
+  "window.systemColorTheme": "auto",
   "workbench.activityBar.location": "top",
+  "workbench.colorTheme": "Default Light Modern",
   "workbench.editor.editorActionsLocation": "titleBar",
   "workbench.editor.enablePreview": false,
   "workbench.layoutControl.enabled": false,
