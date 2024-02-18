@@ -31,3 +31,12 @@
     d = diff
     ds = diff --staged
     st = status
+
+[rerere]
+	enabled = true
+
+[column]
+	ui = auto
+
+[branch]
+	sort = -committerdate
