@@ -1,5 +1,4 @@
 brew "go"
-brew "fzf"
 brew "neovim"
 cask "orbstack"
 cask "blackhole-2ch"
