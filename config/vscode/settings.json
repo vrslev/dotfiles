@@ -3,12 +3,16 @@
   "[html][javascript][json][jsonc][markdown][typescript][typescriptreact][vue][yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff"
+  },
   "codeium.enableCodeLens": false,
   "codeium.enableConfig": {
     "*": true,
     "markdown": true
   },
   "diffEditor.ignoreTrimWhitespace": false,
+  "dotenv.enableAutocloaking": false,
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit",
     "source.organizeImports": "explicit"
@@ -24,16 +28,6 @@
   "editor.scrollbar.horizontalScrollbarSize": 7,
   "editor.scrollbar.verticalScrollbarSize": 7,
   "editor.stickyScroll.enabled": true,
-  "editor.tokenColorCustomizations": {
-    "textMateRules": [
-      {
-        "scope": "keyword.other.dotenv",
-        "settings": {
-          "foreground": "#FF000000"
-        }
-      }
-    ]
-  },
   "emmet.includeLanguages": {
     "jinja-html": "html"
   },
@@ -45,12 +39,15 @@
   "explorer.confirmPasteNative": false,
   "files.associations": {
     ".env*": "dotenv",
+    ".fish_profile": "fish",
     "Brewfile-*": "ruby"
   },
   "files.autoSave": "afterDelay",
   "files.autoSaveDelay": 300,
-  "files.autoSaveWhenNoErrors": true,
   "files.exclude": {
+    "**/.mypy_cache": true,
+    "**/.pytest_cache": true,
+    "**/.ruff_cache": true,
     "**/__pycache__": true
   },
   "files.trimFinalNewlines": true,
@@ -58,6 +55,7 @@
   "git.autofetch": true,
   "git.confirmSync": false,
   "git.enableSmartCommit": true,
+  "git.openRepositoryInParentFolders": "always",
   "githubPullRequests.defaultMergeMethod": "squash",
   "githubPullRequests.notifications": "pullRequests",
   "githubPullRequests.pullBranch": "always",
@@ -65,10 +63,13 @@
   "liveServer.settings.donotShowInfoMsg": true,
   "liveServer.settings.donotVerifyTags": true,
   "markdown.preview.typographer": true,
+  "mypy-type-checker.importStrategy": "fromEnvironment",
+  "mypy-type-checker.preferDaemon": true,
+  "mypy-type-checker.reportingScope": "workspace",
+  "pylint.importStrategy": "fromEnvironment",
   "python.analysis.autoFormatStrings": true,
   "python.analysis.autoImportCompletions": true,
   "python.analysis.diagnosticMode": "workspace",
-  "python.analysis.fixAll": ["source.unusedImports"],
   "python.analysis.gotoDefinitionInStringLiteral": true,
   "python.analysis.inlayHints.functionReturnTypes": true,
   "python.analysis.inlayHints.pytestParameters": true,
@@ -78,20 +79,6 @@
   "redhat.telemetry.enabled": false,
   "rust-analyzer.check.command": "clippy",
   "rust-analyzer.inlayHints.typeHints.enable": false,
-  "saveAndRun": {
-    "commands": [
-      {
-        "cmd": "ruff check --config=${workspaceFolder}/pyproject.toml ${file}",
-        "match": ".py",
-        "silent": true
-      },
-      {
-        "cmd": "ruff format --config=${workspaceFolder}/pyproject.toml ${file}",
-        "match": ".py",
-        "silent": true
-      }
-    ]
-  },
   "scm.diffDecorations": "gutter",
   "security.workspace.trust.enabled": false,
   "terminal.external.osxExec": "Wezterm.app",
