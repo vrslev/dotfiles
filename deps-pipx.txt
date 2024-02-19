@@ -9,6 +9,8 @@ poetry
 pre-commit
 pypi-command-line
 ruff
+sqlfluff
+uv
 virtualenv
 watchfiles
 yt-dlp
