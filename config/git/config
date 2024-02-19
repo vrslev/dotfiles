@@ -3,14 +3,14 @@
 	email = mail@vrslev.com
 
 [core]
-	editor = nvim
+	editor = code
 	excludesfile = ~/.gitignore
 
 [diff]
-    tool = nvim
+    tool = code
 
 [merge]
-  tool = nvim
+  tool = code
 
 [help]
 	autoCorrect = 1
@@ -40,3 +40,6 @@
 
 [branch]
 	sort = -committerdate
+	
+[fetch]
+	prune = true
