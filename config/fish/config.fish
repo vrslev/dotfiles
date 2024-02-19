@@ -93,7 +93,8 @@ alias ls "exa --icons"
 alias l ls
 alias v nvim
 alias cd z
-alias venv virtualenv
+alias pip 'uv pip'
+alias venv 'uv venv'
 alias b bat
 alias py python3
 alias gen-py ~/code/python-template/generate.py
