@@ -17,6 +17,8 @@ set -x PATH ~/.local/bin $PATH
 set -x PATH ~/code/dotfiles/bin $PATH
 # Add cargo
 set -x PATH ~/.cargo/bin $PATH
+# Add Rancher
+set -x PATH ~/.rd/bin $PATH
 
 # Add python interpreters provided by hatch
 for dir in ~/Library/Application\ Support/hatch/pythons/*/python/bin
@@ -99,6 +101,7 @@ alias gr 'cd $(git rev-parse --show-toplevel)'
 abbr g git
 abbr pc pre-commit
 abbr dco "docker compose"
+abbr po poetry
 
 if test -f ~/.fish_profile
   source ~/.fish_profile
