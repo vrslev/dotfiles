@@ -2,6 +2,10 @@
 	name = Lev Vereshchagin
 	email = mail@vrslev.com
 
+# Work config
+[includeIf "gitdir:~/web/"]
+    path = ~/web/.gitconfig
+
 [core]
 	editor = code
 	excludesfile = ~/.gitignore
@@ -40,6 +44,6 @@
 
 [branch]
 	sort = -committerdate
-	
+
 [fetch]
 	prune = true
