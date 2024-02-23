@@ -46,8 +46,10 @@ set -x DARK_MODE (defaults read -globalDomain AppleInterfaceStyle 2>/dev/null | 
 
 if [ "$DARK_MODE" = "Dark" ]
     set -x BAT_THEME "Visual Studio Dark+"
+    set -x DELTA_FEATURES "dark"
 else
     set -x BAT_THEME GitHub
+    set -x DELTA_FEATURES "light"
 end
 
 # No greeting when starting an interactive shell

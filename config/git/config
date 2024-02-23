@@ -8,19 +8,19 @@
 
 [core]
 	editor = code
-	excludesfile = ~/.gitignore
+	pager = delta
 
 [diff]
     tool = code
+    colorMoved = default
 
 [merge]
-  tool = code
+  	tool = code
+	conflictstyle = diff3
 
 [help]
-	autoCorrect = 1
+	autoCorrect = 10
 
-[color]
-	ui = auto
 
 [init]
 	defaultBranch = main
@@ -39,11 +39,30 @@
 [rerere]
 	enabled = true
 
-[column]
-	ui = auto
-
 [branch]
 	sort = -committerdate
 
 [fetch]
 	prune = true
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true    # use n and N to move between diff sections
+    # light = true      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+	true-color = always
+
+[delta "light"]
+    light = true
+    syntax-theme = GitHub
+
+[delta "dark"]
+    dark = true
+    syntax-theme = Visual Studio Dark+
+
+[color]
+	ui = auto
+
+[column]
+	ui = auto

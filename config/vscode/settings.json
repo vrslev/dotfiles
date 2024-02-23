@@ -91,7 +91,6 @@
   "typescript.updateImportsOnFileMove.enabled": "always",
   "window.autoDetectColorScheme": true,
   "window.newWindowDimensions": "maximized",
-  "window.systemColorTheme": "auto",
   "workbench.activityBar.location": "top",
   "workbench.colorTheme": "Default Light Modern",
   "workbench.editor.editorActionsLocation": "titleBar",
