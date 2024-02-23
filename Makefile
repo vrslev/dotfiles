@@ -37,4 +37,4 @@ update-packages:
 	pipx upgrade-all
 
 personal:
-	brew bundle --file Brewfile.personal
+	brew bundle --file Brewfile-personal
