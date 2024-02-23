@@ -2,6 +2,7 @@ apply-user-defaults
 bat
 cargo-update
 exa
+git-delta
 hyperfine
 killport
 procs
