@@ -11,6 +11,8 @@
     "*": true,
     "markdown": true
   },
+  "continue.showInlineTip": false,
+  "continue.telemetryEnabled": false,
   "diffEditor.ignoreTrimWhitespace": false,
   "dotenv.enableAutocloaking": false,
   "editor.codeActionsOnSave": {
@@ -28,6 +30,9 @@
   "editor.scrollbar.horizontalScrollbarSize": 7,
   "editor.scrollbar.verticalScrollbarSize": 7,
   "editor.stickyScroll.enabled": true,
+  "editor.tokenColorCustomizations": {
+    "textMateRules": []
+  },
   "emmet.includeLanguages": {
     "jinja-html": "html"
   },
@@ -45,11 +50,11 @@
   "files.autoSave": "afterDelay",
   "files.autoSaveDelay": 300,
   "files.exclude": {
+    "**/.coverage*": true,
     "**/.mypy_cache": true,
     "**/.pytest_cache": true,
     "**/.ruff_cache": true,
     "**/__pycache__": true,
-    "**/.coverage*": true,
     "**/coverage.xml": true
   },
   "files.trimFinalNewlines": true,
@@ -62,12 +67,20 @@
   "githubPullRequests.notifications": "pullRequests",
   "githubPullRequests.pullBranch": "always",
   "githubPullRequests.pushBranch": "always",
+  "gitlab.aiAssistedCodeSuggestions.enabled": false,
+  "gitlab.duoChat.enabled": false,
+  "inference.custom.model": "codellama:7b-code",
+  "inference.maxTokens": 2048,
+  "inference.model": "custom",
   "liveServer.settings.donotShowInfoMsg": true,
   "liveServer.settings.donotVerifyTags": true,
   "markdown.preview.typographer": true,
   "mypy-type-checker.importStrategy": "fromEnvironment",
   "mypy-type-checker.preferDaemon": true,
   "mypy-type-checker.reportingScope": "workspace",
+  "privy.customModel": "deepseek-coder:1.3b-instruct",
+  "privy.indexRepository.enabled": true,
+  "privy.model": "custom",
   "pylint.importStrategy": "fromEnvironment",
   "python.analysis.autoFormatStrings": true,
   "python.analysis.autoImportCompletions": true,
