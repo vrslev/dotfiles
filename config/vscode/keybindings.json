@@ -32,5 +32,13 @@
     "key": "cmd+i",
     "command": "-codeium.openCodeiumCommand",
     "when": "codeium.commandEnabled && editorTextFocus && !inlineSuggestionsVisible"
+  },
+  {
+    "key": "cmd+m",
+    "command": "-continue.focusContinueInput"
+  },
+  {
+    "key": "shift+cmd+m",
+    "command": "-continue.focusContinueInputWithoutClear"
   }
 ]
