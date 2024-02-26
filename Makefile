@@ -1,7 +1,7 @@
 .PHONY:
 init: install link macos
 
-update: macos link dump update-packages
+update: install link dump update-packages
 
 install:
 	brew bundle
