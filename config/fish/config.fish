@@ -2,6 +2,7 @@
 if test -f /opt/homebrew/bin/brew
     # arm64
     eval (/opt/homebrew/bin/brew shellenv)
+    set -x CPPFLAGS "-I/opt/homebrew/include -L/opt/homebrew/lib"
 end
 
 # Preferred editor for local and remote sessions
