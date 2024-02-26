@@ -11,6 +11,7 @@
     "*": true,
     "markdown": true
   },
+  "continue.enableTabAutocomplete": true,
   "continue.showInlineTip": false,
   "continue.telemetryEnabled": false,
   "diffEditor.ignoreTrimWhitespace": false,
@@ -81,6 +82,7 @@
   "privy.customModel": "deepseek-coder:1.3b-instruct",
   "privy.indexRepository.enabled": true,
   "privy.model": "custom",
+  "privy.syntaxHighlighting.useVisualStudioCodeColors": true,
   "pylint.importStrategy": "fromEnvironment",
   "python.analysis.autoFormatStrings": true,
   "python.analysis.autoImportCompletions": true,
@@ -107,6 +109,7 @@
   "window.autoDetectColorScheme": true,
   "window.newWindowDimensions": "maximized",
   "workbench.activityBar.location": "top",
+  "workbench.colorTheme": "Default Light Modern",
   "workbench.editor.editorActionsLocation": "titleBar",
   "workbench.editor.enablePreview": false,
   "workbench.layoutControl.enabled": false,
