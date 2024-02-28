@@ -106,7 +106,7 @@ abbr g git
 abbr pc pre-commit
 abbr dco "docker compose"
 abbr po poetry
-abbr t task
+abbr j just
 
 if test -f ~/.fish_profile
   source ~/.fish_profile

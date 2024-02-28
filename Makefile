@@ -9,7 +9,7 @@ install:
 	rustup-init --no-modify-path -y
 
 	for tool in `cat deps-cargo.txt`; do \
-		cargo binstall $$tool || cargo install $$tool; \
+		cargo binstall -y $$tool || cargo install $$tool; \
 		done
 
 	for tool in `cat deps-pipx.txt`; do \

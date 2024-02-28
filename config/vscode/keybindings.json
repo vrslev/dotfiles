@@ -40,5 +40,9 @@
   {
     "key": "shift+cmd+m",
     "command": "-continue.focusContinueInputWithoutClear"
+  },
+  {
+    "key": "cmd+i",
+    "command": "-continue.quickEdit"
   }
 ]

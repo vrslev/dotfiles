@@ -31,7 +31,7 @@
 [alias]
 	a = add
 	ch = checkout
-	chm = checkout main
+	chm = !git checkout main || git checkout master
 	cm = commit -m
 	p = push
     l = log --oneline --decorate --color --graph
