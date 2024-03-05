@@ -1,3 +1,0 @@
-#!/usr/bin/env fish
-
-http https://pypi.org/pypi/$argv[1]/json | jq ".releases | to_entries | .[-5:] | from_entries | keys | reverse"
