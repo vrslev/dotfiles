@@ -44,5 +44,15 @@
   {
     "key": "cmd+i",
     "command": "-continue.quickEdit"
+  },
+  {
+    "key": "f3",
+    "command": "editor.action.rename",
+    "when": "editorHasRenameProvider && editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "f2",
+    "command": "-editor.action.rename",
+    "when": "editorHasRenameProvider && editorTextFocus && !editorReadonly"
   }
 ]
