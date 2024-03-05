@@ -24,20 +24,21 @@
 [help]
 	autoCorrect = 10
 
-
 [init]
 	defaultBranch = main
 
 [alias]
 	a = add
 	ch = checkout
-	chm = !git checkout main || git checkout master
+	main = !git checkout main || git checkout master
 	cm = commit -m
 	p = push
     l = log --oneline --decorate --color --graph
     d = diff
     ds = diff --staged
     st = status
+	rm-merged = !git branch --format '%(refname:short) %(upstream:track)' | awk '$2 == \"[gone]\" { print $1 }' | xargs -r git branch -D
+	sync = !git main && git pull --prune && git rm-merged
 
 [rerere]
 	enabled = true
@@ -48,12 +49,17 @@
 [fetch]
 	prune = true
 
+[pull]
+	rebase = true
+
+[push]
+	autoSetupRemote = true
+
 [interactive]
     diffFilter = delta --color-only
 
 [delta]
-    navigate = true    # use n and N to move between diff sections
-    # light = true      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+    navigate = true
 	true-color = always
 
 [delta "light"]
