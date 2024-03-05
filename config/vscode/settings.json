@@ -6,11 +6,6 @@
   "[python]": {
     "editor.defaultFormatter": "charliermarsh.ruff"
   },
-  "codeium.enableCodeLens": false,
-  "codeium.enableConfig": {
-    "*": true,
-    "markdown": true
-  },
   "continue.enableTabAutocomplete": true,
   "continue.showInlineTip": false,
   "continue.telemetryEnabled": false,
@@ -75,19 +70,12 @@
   "gitlens.plusFeatures.enabled": false,
   "gitlens.showWelcomeOnInstall": false,
   "gitlens.statusBar.enabled": false,
-  "inference.custom.model": "codellama:7b-code",
-  "inference.maxTokens": 2048,
-  "inference.model": "custom",
   "liveServer.settings.donotShowInfoMsg": true,
   "liveServer.settings.donotVerifyTags": true,
   "markdown.preview.typographer": true,
   "mypy-type-checker.importStrategy": "fromEnvironment",
   "mypy-type-checker.preferDaemon": true,
   "mypy-type-checker.reportingScope": "workspace",
-  "privy.customModel": "deepseek-coder:1.3b-instruct",
-  "privy.indexRepository.enabled": true,
-  "privy.model": "custom",
-  "privy.syntaxHighlighting.useVisualStudioCodeColors": true,
   "pylint.importStrategy": "fromEnvironment",
   "python.analysis.autoFormatStrings": true,
   "python.analysis.autoImportCompletions": true,
