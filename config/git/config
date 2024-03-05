@@ -55,6 +55,9 @@
 [push]
 	autoSetupRemote = true
 
+[rebase]
+	autoStash = true
+
 [interactive]
     diffFilter = delta --color-only
 
