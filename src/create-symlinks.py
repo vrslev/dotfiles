@@ -1,9 +1,9 @@
 import json
 from pathlib import Path
 
-repo = Path(__file__).parent
+repo = Path(__file__).parent.parent
 
-with open(repo / "link.json") as f:
+with open(repo / "config" / "symlinks.json") as f:
     link_map: dict[str, str | None] = json.load(f)  # pyright: ignore
 
 for conf_dest, conf_src in link_map.items():

@@ -25,7 +25,12 @@ def overwrite_file(path: Path, content: str) -> None:
 
 def save_packages_list(package_manager_name: str, packages: list[str]) -> None:
     print(f"Saved {package_manager_name} packages: {packages}")
-    path = Path(__file__).parent / f"deps-{package_manager_name}.txt"
+    path = (
+        Path(__file__).parent.parent
+        / "config"
+        / "packages"
+        / f"{package_manager_name}.txt"
+    )
     overwrite_file(path, "\n".join(packages))
 
 

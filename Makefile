@@ -1,12 +1,11 @@
 .PHONY:
 init: install link macos
-
 update: install link dump update-packages
 
 install:
-	brew bundle
-
+	brew bundle --file config/packages/Brewfile
 	rustup-init --no-modify-path -y
+	hatch python install all --private
 
 	for tool in `cat deps-cargo.txt`; do \
 		cargo binstall -y $$tool || cargo install $$tool; \
@@ -16,25 +15,23 @@ install:
 		pipx install $$tool; \
 		done
 
-	hatch python install all --private
-
-macos:
-	sudo apply-user-defaults macos.yaml
-
-link:
-	python3.12 link.py
-
-dump:
-	python3.12 deps.py
-	brew bundle dump --force
-	python3.12 clean-brewfile.py
-
 update-packages:
-	brew upgrade --greedy
+	brew bundle --file config/packages/Brewfile
 	rustup update
 	hatch python install all --update --private
 	cargo install-update --all --git
 	pipx upgrade-all
 
-personal:
-	brew bundle --file Brewfile-personal
+install-personal:
+	brew bundle --file config/packages/Brewfile-personal
+
+macos:
+	sudo apply-user-defaults config/macos.yaml
+
+link:
+	python3.12 src/create-symlinks.py
+
+dump:
+	python3.12 src/save-packages.py
+	brew bundle dump --file config/packages/Brewfile --force
+	python3.12 src/clean-brewfile.py

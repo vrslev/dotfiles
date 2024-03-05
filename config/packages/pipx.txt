@@ -1,7 +1,6 @@
 bpython
 cookiecutter
 glances
-hatch
 httpie
 ipython
 maturin
