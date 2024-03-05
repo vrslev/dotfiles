@@ -12,8 +12,7 @@ else
     set -x EDITOR nano
 end
 
-# Add pipx binaries
-set -x PATH ~/.local/bin $PATH
+set -x PATH ~/.local/bin $PATH  # Add pipx binaries
 # Add scipts
 set -x PATH ~/code/dotfiles/bin $PATH
 # Add cargo
@@ -94,13 +93,14 @@ end
 
 alias ls "exa --icons"
 alias l ls
-alias v nvim
+alias ll "ls --long --all"
 alias cd z
-alias pip 'uv pip'
-alias venv 'uv venv'
-alias b bat
+alias c z
+alias ca bat
+alias pip "uv pip"
+alias venv "uv venv"
+alias python python3
 alias py python3
-alias gen-py ~/code/python-template/generate.py
 alias gr 'cd $(git rev-parse --show-toplevel)'
 abbr g git
 abbr pc pre-commit
