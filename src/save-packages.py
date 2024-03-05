@@ -34,10 +34,5 @@ def save_packages_list(package_manager_name: str, packages: list[str]) -> None:
     overwrite_file(path, "\n".join(packages))
 
 
-def main() -> None:
-    save_packages_list("cargo", list(get_cargo_packages()))
-    save_packages_list("pipx", list(get_pipx_packages()))
-
-
-if __name__ == "__main__":
-    main()
+save_packages_list("cargo", list(get_cargo_packages()))
+save_packages_list("pipx", list(get_pipx_packages()))
