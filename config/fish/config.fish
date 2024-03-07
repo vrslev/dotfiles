@@ -10,7 +10,10 @@ fish_add_path ~/code/dotfiles/bin\
     ~/.local/bin\
     ~/.cargo/bin\
     ~/.rd/bin\
-    pythons[-1..1]
+
+for dir in ~/Library/Application\ Support/hatch/pythons/*/python/bin
+    fish_add_path $dir
+end
 
 zoxide init fish | source
 starship init fish | source
