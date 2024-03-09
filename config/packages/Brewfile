@@ -32,7 +32,6 @@ brew "macos-trash"
 brew "mas"
 brew "ollama", restart_service: true
 brew "pipx"
-brew "poetry"
 brew "postgresql@14"
 brew "pre-commit"
 brew "procs"

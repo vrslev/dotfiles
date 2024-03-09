@@ -1,4 +1,5 @@
 maturin
+poetry
 pypi-command-line
 refurb
 watchfiles

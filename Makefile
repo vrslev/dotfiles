@@ -1,6 +1,6 @@
 .PHONY:
 init: install link macos
-update: install link dump update-packages
+update: update-packages link dump
 
 install:
 	brew bundle --file config/packages/Brewfile
@@ -15,7 +15,11 @@ update-packages:
 	brew bundle --file config/packages/Brewfile
 	rustup update
 	hatch python install all --update --private
-	cargo install-update --all --git
+
+	for tool in `cat config/packages/pipx.txt`; do \
+		pipx install $$tool; \
+		done
+
 	pipx upgrade-all
 
 install-personal:
