@@ -1,5 +1,4 @@
 editor = "/usr/local/bin/code"
-line-height = 1.1
 confirm-before-quit = false
 
 [adaptive-theme]
