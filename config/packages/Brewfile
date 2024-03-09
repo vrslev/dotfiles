@@ -34,8 +34,8 @@ cask "maccy"
 cask "monitorcontrol"
 cask "rancher"
 cask "rectangle"
+cask "rio"
 cask "the-unarchiver"
-cask "vanilla"
 cask "visual-studio-code"
 cask "wezterm"
 mas "Keynote", id: 409183694
@@ -48,7 +48,6 @@ mas "Things", id: 904280696
 mas "Wipr", id: 1320666476
 vscode "bradlc.vscode-tailwindcss"
 vscode "charliermarsh.ruff"
-vscode "continue.continue"
 vscode "cstrap.python-snippets"
 vscode "dotenv.dotenv-vscode"
 vscode "eamodio.gitlens"

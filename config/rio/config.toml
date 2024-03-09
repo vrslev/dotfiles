@@ -1,0 +1,15 @@
+editor = "/usr/local/bin/code"
+line-height = 1.1
+confirm-before-quit = false
+
+[adaptive-theme]
+light = "github-light"
+dark = "vscode-dark"
+
+[window]
+width = 1200
+height = 800
+
+[fonts]
+size = 20
+family = "FiraCode Nerd Font"

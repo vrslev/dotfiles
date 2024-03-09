@@ -1,10 +1,9 @@
 {
     ".config/fish/config.fish": null,
     ".config/fish/fish_plugins": null,
-    ".config/git/config": null,
-    ".config/git/ignore": null,
-    ".config/nvim": null,
+    ".config/git": null,
     ".config/pip/pip.conf": null,
+    ".config/rio": null,
     ".config/starship.toml": null,
     ".config/wezterm": null,
     ".hushlogin": "config/hushlogin",
