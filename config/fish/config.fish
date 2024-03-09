@@ -135,7 +135,7 @@ end
 bind ! bind_bang
 bind '$' bind_dollar
 
-alias ls "exa --icons"
+alias ls "eza --icons"
 alias l ls
 alias ll "ls --long --all"
 alias cd z

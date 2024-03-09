@@ -3,13 +3,6 @@ from pathlib import Path
 from typing import Iterable
 
 
-def get_cargo_packages() -> Iterable[str]:
-    out = subprocess.check_output(("cargo", "install", "--list"))
-    for line in out.decode().splitlines():
-        if not line.startswith(" "):
-            yield line.split(" ")[0]
-
-
 def get_pipx_packages() -> Iterable[str]:
     out = subprocess.check_output(("pipx", "list", "--short"))
     for line in out.decode().splitlines():
@@ -34,5 +27,4 @@ def save_packages_list(package_manager_name: str, packages: list[str]) -> None:
     overwrite_file(path, "\n".join(packages))
 
 
-save_packages_list("cargo", list(get_cargo_packages()))
 save_packages_list("pipx", list(get_pipx_packages()))

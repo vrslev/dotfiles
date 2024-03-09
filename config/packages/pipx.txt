@@ -1,16 +1,4 @@
-bpython
-cookiecutter
-glances
-httpie
-ipython
 maturin
-poetry
-pre-commit
 pypi-command-line
 refurb
-ruff
-sqlfluff
-uv
-virtualenv
 watchfiles
-yt-dlp

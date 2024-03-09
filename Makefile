@@ -7,11 +7,7 @@ install:
 	rustup-init --no-modify-path -y
 	hatch python install all --private
 
-	for tool in `cat deps-cargo.txt`; do \
-		cargo binstall -y $$tool || cargo install $$tool; \
-		done
-
-	for tool in `cat deps-pipx.txt`; do \
+	for tool in `cat config/packages/pipx.txt`; do \
 		pipx install $$tool; \
 		done
 
