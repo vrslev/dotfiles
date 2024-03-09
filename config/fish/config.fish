@@ -93,6 +93,7 @@ alias venv "uv venv"
 alias python python3
 alias py python3
 alias gr 'cd $(git rev-parse --show-toplevel)'
+alias ds 'du -sh'
 
 abbr g git
 abbr pc pre-commit
