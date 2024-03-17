@@ -1,6 +1,6 @@
 .PHONY:
 init: install link macos
-update: update-packages link dump
+update: dump update-packages link
 
 install:
 	brew bundle --file config/packages/Brewfile
