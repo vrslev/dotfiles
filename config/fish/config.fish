@@ -11,6 +11,7 @@ end
 
 zoxide init fish | source
 starship init fish | source
+fzf --fish | source
 
 if test -f ~/.fish_profile
   source ~/.fish_profile
@@ -96,10 +97,8 @@ set -gx DARK_MODE (defaults read -globalDomain AppleInterfaceStyle 2>/dev/null)
 
 if test "$DARK_MODE" = Dark
     set -gx BAT_THEME Visual Studio Dark+
-    set -gx DELTA_FEATURES dark
 else
     set -gx BAT_THEME GitHub
-    set -gx DELTA_FEATURES light
 end
 
 # Aliases and abbreviations

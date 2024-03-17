@@ -1,5 +1,8 @@
 {
   "$schema": "vscode://schemas/settings/user",
+  "[dockerfile]": {
+    "editor.defaultFormatter": "ms-azuretools.vscode-docker"
+  },
   "[html][javascript][json][jsonc][markdown][typescript][typescriptreact][vue][yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -71,6 +74,7 @@
   "gitlens.plusFeatures.enabled": false,
   "gitlens.showWelcomeOnInstall": false,
   "gitlens.statusBar.enabled": false,
+  "hadolint.cliOptions": ["--ignore=DL3045"],
   "hadolint.hadolintPath": "/opt/homebrew/bin/hadolint",
   "liveServer.settings.donotShowInfoMsg": true,
   "liveServer.settings.donotVerifyTags": true,

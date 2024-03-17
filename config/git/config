@@ -63,15 +63,6 @@
 
 [delta]
     navigate = true
-	true-color = always
-
-[delta "light"]
-    light = true
-    syntax-theme = GitHub
-
-[delta "dark"]
-    dark = true
-    syntax-theme = Visual Studio Dark+
 
 [color]
 	ui = auto
