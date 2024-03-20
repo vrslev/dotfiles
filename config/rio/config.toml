@@ -12,3 +12,6 @@ height = 800
 [fonts]
 size = 20
 family = "FiraCode Nerd Font"
+
+[navigation]
+use-current-path = true
