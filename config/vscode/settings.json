@@ -1,10 +1,19 @@
 {
   "$schema": "vscode://schemas/settings/user",
+  "[css][scss][less]": {
+    "editor.defaultFormatter": "vscode.css-language-features"
+  },
   "[dockerfile]": {
     "editor.defaultFormatter": "ms-azuretools.vscode-docker"
   },
-  "[html][javascript][json][jsonc][markdown][typescript][typescriptreact][vue][yaml]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
+  "[javascript][javascriptreact][typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[json][jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
   },
   "[python]": {
     "editor.defaultFormatter": "charliermarsh.ruff"
@@ -25,6 +34,7 @@
   "editor.formatOnSave": true,
   "editor.formatOnSaveMode": "file",
   "editor.formatOnType": true,
+  "editor.linkedEditing": true,
   "editor.minimap.enabled": false,
   "editor.scrollbar.horizontalScrollbarSize": 7,
   "editor.scrollbar.verticalScrollbarSize": 7,
@@ -36,7 +46,10 @@
     "jinja-html": "html"
   },
   "emmet.triggerExpansionOnTab": true,
-  "errorLens.enabledDiagnosticLevels": ["error", "warning"],
+  "errorLens.enabledDiagnosticLevels": [
+    "error",
+    "warning"
+  ],
   "errorLens.messageBackgroundMode": "message",
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
@@ -74,7 +87,9 @@
   "gitlens.plusFeatures.enabled": false,
   "gitlens.showWelcomeOnInstall": false,
   "gitlens.statusBar.enabled": false,
-  "hadolint.cliOptions": ["--ignore=DL3045"],
+  "hadolint.cliOptions": [
+    "--ignore=DL3045"
+  ],
   "hadolint.hadolintPath": "/opt/homebrew/bin/hadolint",
   "liveServer.settings.donotShowInfoMsg": true,
   "liveServer.settings.donotVerifyTags": true,
@@ -97,7 +112,7 @@
   "rust-analyzer.inlayHints.typeHints.enable": false,
   "scm.diffDecorations": "gutter",
   "security.workspace.trust.enabled": false,
-  "terminal.external.osxExec": "Wezterm.app",
+  "terminal.external.osxExec": "Rio.app",
   "terminal.integrated.copyOnSelection": true,
   "terminal.integrated.defaultProfile.osx": "fish",
   "terminal.integrated.fontSize": 14,
@@ -116,7 +131,7 @@
   "workbench.list.smoothScrolling": true,
   "workbench.settings.openDefaultSettings": true,
   "workbench.sideBar.location": "right",
-  "workbench.startupEditor": "readme",
+  "workbench.startupEditor": "none",
   "workbench.tips.enabled": false,
   "zenMode.centerLayout": false,
   "zenMode.fullScreen": false
