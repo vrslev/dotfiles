@@ -147,6 +147,8 @@ alias py python3
 alias gr 'cd $(git rev-parse --show-toplevel)'
 alias ds 'du -sh'
 alias posix 'exec bash -c "$argv; exec fish"'
+alias start-docker 'open -a "/Applications/Rancher Desktop.app" --background --args --application.startInBackground=true'
+alias stop-docker 'rdctl shutdown'
 
 abbr g git
 abbr pc pre-commit
