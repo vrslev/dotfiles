@@ -75,6 +75,9 @@
   "git.autofetch": true,
   "git.confirmSync": false,
   "git.enableSmartCommit": true,
+  "git.ignoredRepositories": [
+    "/opt/homebrew"
+  ],
   "git.mergeEditor": true,
   "git.openRepositoryInParentFolders": "always",
   "git.replaceTagsWhenPull": true,
