@@ -132,6 +132,9 @@
   "workbench.activityBar.location": "top",
   "workbench.colorTheme": "Default Light Modern",
   "workbench.editor.editorActionsLocation": "titleBar",
+  "workbench.editorAssociations": {
+    "git-rebase-todo": "default"
+  },
   "workbench.layoutControl.enabled": false,
   "workbench.list.smoothScrolling": true,
   "workbench.settings.openDefaultSettings": true,
