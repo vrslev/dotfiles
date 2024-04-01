@@ -4,7 +4,7 @@ update: update-packages link
 
 install:
 	brew bundle --file config/packages/Brewfile
-	rustup-init --no-modify-path -y
+	# rustup-init --no-modify-path -y
 	hatch python install all --private
 
 	for tool in `cat config/packages/pipx.txt`; do \
@@ -13,7 +13,7 @@ install:
 
 update-packages:
 	brew bundle --file config/packages/Brewfile
-	rustup update
+	# rustup update
 	hatch python install all --update --private
 
 	for tool in `cat config/packages/pipx.txt`; do \
