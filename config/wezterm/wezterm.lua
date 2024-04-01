@@ -41,8 +41,8 @@ config.initial_rows = 36
 config.window_decorations = "RESIZE"
 config.enable_tab_bar = true
 config.keys = {
-	{ key = 'UpArrow', mods = 'SHIFT', action = wezterm.action.ScrollToPrompt(-1) },
-	{ key = 'DownArrow', mods = 'SHIFT', action = wezterm.action.ScrollToPrompt(1) },
+	{ key = 'UpArrow', mods = 'CMD', action = wezterm.action.ScrollToPrompt(-1) },
+	{ key = 'DownArrow', mods = 'CMD', action = wezterm.action.ScrollToPrompt(1) },
 }
 config.window_padding = {
 	left = 0,
