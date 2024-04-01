@@ -40,9 +40,6 @@
 	rm-merged = !git branch --format '%(refname:short) %(upstream:track)' | awk '$2 == \"[gone]\" { print $1 }' | xargs -r git branch -D
 	sync = !git main && git pull --prune && git rm-merged
 
-[rerere]
-	enabled = true
-
 [branch]
 	sort = -committerdate
 
