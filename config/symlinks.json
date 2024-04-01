@@ -3,7 +3,6 @@
     ".config/fish/fish_plugins": null,
     ".config/git": null,
     ".config/pip/pip.conf": null,
-    ".config/rio": null,
     ".config/starship.toml": null,
     ".config/wezterm": null,
     ".hushlogin": "config/hushlogin",

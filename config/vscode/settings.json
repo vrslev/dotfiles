@@ -117,7 +117,7 @@
   "rust-analyzer.inlayHints.typeHints.enable": false,
   "scm.diffDecorations": "gutter",
   "security.workspace.trust.enabled": false,
-  "terminal.external.osxExec": "Rio.app",
+  "terminal.external.osxExec": "Wezterm.app",
   "terminal.integrated.copyOnSelection": true,
   "terminal.integrated.defaultProfile.osx": "fish",
   "terminal.integrated.fontSize": 14,
