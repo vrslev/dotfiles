@@ -18,9 +18,6 @@
   "[python]": {
     "editor.defaultFormatter": "charliermarsh.ruff"
   },
-  "continue.enableTabAutocomplete": true,
-  "continue.showInlineTip": false,
-  "continue.telemetryEnabled": false,
   "diffEditor.ignoreTrimWhitespace": false,
   "dotenv.enableAutocloaking": false,
   "editor.codeActionsOnSave": {
@@ -70,6 +67,7 @@
     "**/__pycache__": true,
     "**/coverage.xml": true
   },
+  "files.insertFinalNewline": true,
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
   "git.autofetch": true,
@@ -123,12 +121,10 @@
   "terminal.integrated.minimumContrastRatio": 1,
   "terminal.integrated.showExitAlert": false,
   "terminal.integrated.tabs.hideCondition": "never",
-  "twinny.chatModelName": "deepseek-coder:instruct",
-  "twinny.fimModelName": "deepseek-coder:base",
   "typescript.updateImportsOnFileMove.enabled": "always",
   "window.autoDetectColorScheme": true,
   "window.newWindowDimensions": "maximized",
-  "workbench.activityBar.location": "top",
+  "workbench.activityBar.location": "bottom",
   "workbench.colorTheme": "Default Light Modern",
   "workbench.editor.editorActionsLocation": "titleBar",
   "workbench.editorAssociations": {
