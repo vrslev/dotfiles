@@ -23,7 +23,6 @@ function link_to_dot
     link "$argv[1]" ".$argv[1]"
 end
 
-link config/hushlogin .hushlogin
 link config/vscode/keybindings.json "Library/Application Support/Code/User/keybindings.json"
 link config/vscode/settings.json "Library/Application Support/Code/User/settings.json"
 link_to_dot config/fish/config.fish
