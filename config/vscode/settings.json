@@ -36,6 +36,9 @@
   "editor.scrollbar.horizontalScrollbarSize": 7,
   "editor.scrollbar.verticalScrollbarSize": 7,
   "editor.stickyScroll.enabled": true,
+  "editor.tokenColorCustomizations": {
+    "textMateRules": []
+  },
   "emmet.includeLanguages": {
     "jinja-html": "html"
   },
