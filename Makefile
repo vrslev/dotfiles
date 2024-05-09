@@ -8,7 +8,6 @@ macos:
 
 link:
 	fish config/create-symlinks.fish
-	# python3.12 src/create-symlinks.py
 
 install-personal:
 	cat $(MAIN_BREWFILE) $(PERSONAL_BREWFILE) | brew bundle --file -
