@@ -5,7 +5,7 @@ function link
         return
     end
 
-    set destination $HOME/$argv[2]
+    set destination "$HOME/$argv[2]"
 
     set linked_to (readlink $destination)
     if test -n "$linked_to"
@@ -20,7 +20,7 @@ function link
 end
 
 function link_to_dot
-    link $argv[1] .$argv[1]
+    link "$argv[1]" ".$argv[1]"
 end
 
 link config/hushlogin .hushlogin
