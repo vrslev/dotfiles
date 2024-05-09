@@ -21,4 +21,5 @@ install-work:
 
 dump:
 	brew bundle dump --file $(MAIN_BREWFILE) --force
-	python3.12 src/clean-brewfile.py
+	grep --invert-match --line-regexp -f $(PERSONAL_BREWFILE) $(MAIN_BREWFILE) >$(MAIN_BREWFILE).tmp
+	mv $(MAIN_BREWFILE).tmp $(MAIN_BREWFILE)
