@@ -91,14 +91,6 @@ set -gx LC_ALL $LANG
 set -gx GOPATH ~/.go
 set -gx HOMEBREW_BUNDLE_NO_LOCK 1
 
-set -gx DARK_MODE (defaults read -globalDomain AppleInterfaceStyle 2>/dev/null)
-
-if test "$DARK_MODE" = Dark
-    set -gx BAT_THEME Visual Studio Dark+
-else
-    set -gx BAT_THEME GitHub
-end
-
 # Aliases and abbreviations
 
 # Add !$ (https://github.com/fish-shell/fish-shell/issues/288#issuecomment-591679913)
