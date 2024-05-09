@@ -89,7 +89,7 @@ set -gx HOMEBREW_BUNDLE_NO_LOCK 1
 
 # Aliases and abbreviations
 function __last_history_item; echo $history[1]; end
-abbr -a !! --position anywhere __last_history_item
+abbr -a !! --position anywhere --function __last_history_item
 
 function __last_history_arg
   commandline -f backward-delete-char
