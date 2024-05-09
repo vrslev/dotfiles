@@ -32,7 +32,7 @@ brew "mise"
 brew "mprocs"
 brew "ollama", restart_service: true
 brew "pipx"
-brew "postgresql"
+brew "postgresql@14"
 brew "pre-commit"
 brew "procs"
 brew "pyenv"
