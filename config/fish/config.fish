@@ -1,23 +1,21 @@
-# $PATH and essentials
-if test -f /opt/homebrew/bin/brew
-  echo No brew installed
-  exit
+# Essentials
+if ! test -f /opt/homebrew/bin/brew
+  echo No brew installed!
+  exit 1
 end
+
 /opt/homebrew/bin/brew shellenv | source
-
-fish_add_path ~/code/dotfiles/bin ~/.rd/bin
-
 mise activate fish | source
 zoxide init fish | source
 starship init fish | source
 fzf --fish | source
 
+fish_add_path ~/code/dotfiles/bin ~/.rd/bin
 if test -f ~/.fish_profile
   source ~/.fish_profile
 end
 
-function fish_greeting # No greeting when starting an interactive shell
-end
+set fish_greeting  # Disable greeting when startup
 
 # Enable shell integration for terminal emulators, it doesn't work by default when using starship
 # https://github.com/wez/wezterm/issues/115
@@ -78,13 +76,10 @@ if status --is-interactive
   end
 end
 
-# Environment variables
-if test -n $SSH_CONNECTION
-    set -gx EDITOR code
-else
-    set -gx EDITOR nano
-end
-
+set -gx CPPFLAGS -I/opt/homebrew/include -L/opt/homebrew/lib
+set -gx PIPX_HOME ~/.local/pipx
+set -gx PIPX_BIN_DIR ~/.local/bin
+set -gx EDITOR code
 set -gx PYTHONDONTWRITEBYTECODE 1
 set -gx LANG en_US.UTF-8
 set -gx LANGUAGE $LANG
