@@ -13,9 +13,6 @@ starship init fish | source
 fzf --fish | source
 
 fish_add_path ~/code/dotfiles/bin ~/.rd/bin
-if test -f ~/.fish_profile
-  source ~/.fish_profile
-end
 
 set -gx LANG en_US.UTF-8
 set -gx LANGUAGE $LANG
