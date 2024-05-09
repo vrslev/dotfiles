@@ -1,22 +1,3 @@
-# Essentials
-if ! test -f /opt/homebrew/bin/brew
-  echo No brew installed!
-  exit 1
-end
-
-/opt/homebrew/bin/brew shellenv | source
-mise activate fish | source
-zoxide init fish | source
-starship init fish | source
-fzf --fish | source
-
-fish_add_path ~/code/dotfiles/bin ~/.rd/bin
-if test -f ~/.fish_profile
-  source ~/.fish_profile
-end
-
-set fish_greeting  # Disable greeting when startup
-
 # Enable shell integration for terminal emulators, it doesn't work by default when using starship
 # https://github.com/wez/wezterm/issues/115
 # https://github.com/PerBothner/DomTerm/blob/master/tools/shell-integration.fish
@@ -75,6 +56,22 @@ if status --is-interactive
     end
   end
 end
+
+# Essentials
+set fish_greeting  # Disable greeting when startup
+if ! test -f /opt/homebrew/bin/brew
+  echo No brew installed!
+  exit 1
+end
+
+/opt/homebrew/bin/brew shellenv | source
+mise activate fish | source
+zoxide init fish | source
+starship init fish | source
+fzf --fish | source
+
+fish_add_path ~/code/dotfiles/bin ~/.rd/bin
+if test -f ~/.fish_profile; source ~/.fish_profile; end
 
 set -gx CPPFLAGS -I/opt/homebrew/include -L/opt/homebrew/lib
 set -gx PIPX_HOME ~/.local/pipx
