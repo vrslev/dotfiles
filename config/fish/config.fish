@@ -118,3 +118,4 @@ abbr pc pre-commit
 abbr po poetry
 abbr py python3
 abbr t task
+abbr tra trash
