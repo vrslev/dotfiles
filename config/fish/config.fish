@@ -100,22 +100,20 @@ end
 abbr -a !\$ --position anywhere --function __last_history_arg
 
 alias ls "eza --icons"
-alias l ls
 alias ll "ls --long --all"
 alias cd z
 alias c z
-alias ca bat
-alias pip "uv pip"
-alias venv "uv venv"
 alias python python3
-alias py python3
+alias venv "uv venv"
 alias gr 'cd $(git rev-parse --show-toplevel)'
 alias ds 'du -sh'
 alias posix 'exec bash -c "$argv; exec fish"'
-alias stop-docker 'rdctl shutdown'
 
-abbr g git
-abbr pc pre-commit
 abbr dco "docker compose"
-abbr po poetry
+abbr g git
 abbr j just
+abbr l ls
+abbr pc pre-commit
+abbr po poetry
+abbr py python3
+abbr t task
