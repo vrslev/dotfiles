@@ -24,9 +24,6 @@ set -gx EDITOR code
 
 set -gx CPPFLAGS -I/opt/homebrew/include -L/opt/homebrew/lib
 set -gx PYTHONDONTWRITEBYTECODE 1
-set -gx PIPX_HOME ~/.local/pipx
-set -gx PIPX_BIN_DIR ~/.local/bin
-set -gx GOPATH ~/.go
 
 # Enable shell integration for terminal emulators, it doesn't work by default when using starship
 # https://github.com/wez/wezterm/issues/115
