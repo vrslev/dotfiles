@@ -113,14 +113,3 @@ abbr po poetry
 abbr py python3
 abbr t task
 abbr tra trash
-
-function work-repo
-    set path (echo $argv[1] | rg -o '\w/(\w+[^?]+)' -r '$1')
-    set dir (dirname ~/web/$path)
-
-    mkdir -p $dir
-    cd $dir
-
-    git clone $argv
-    cd (basename $path .git)
-end
