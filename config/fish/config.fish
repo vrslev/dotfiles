@@ -4,11 +4,9 @@ if test -f /opt/homebrew/bin/brew
     set -gx CPPFLAGS -I/opt/homebrew/include -L/opt/homebrew/lib
 end
 
-fish_add_path ~/code/dotfiles/bin ~/.local/bin ~/.cargo/bin ~/.rd/bin
-for dir in "~/Library/Application Support/hatch/pythons/*/python/bin"
-    fish_add_path $dir
-end
+fish_add_path ~/code/dotfiles/bin ~/.rd/bin
 
+mise activate fish | source
 zoxide init fish | source
 starship init fish | source
 fzf --fish | source
