@@ -1,5 +1,5 @@
 function link
-    set source_ "$PWD/$argv[1]"
+    set source_ "$PWD/config/$argv[1]"
     if ! test -e $source_
         echo "Source file doesn't exist: $argv[1]"
         return
@@ -20,13 +20,13 @@ function link
 end
 
 function link_to_dot
-    link "$argv[1]" ".$argv[1]"
+    link "$argv[1]" ".config/$argv[1]"
 end
 
-link config/vscode/keybindings.json "Library/Application Support/Code/User/keybindings.json"
-link config/vscode/settings.json "Library/Application Support/Code/User/settings.json"
-link_to_dot config/fish/config.fish
-link_to_dot config/git
-link_to_dot config/mise
-link_to_dot config/starship.toml
-link_to_dot config/wezterm
+link vscode/keybindings.json "Library/Application Support/Code/User/keybindings.json"
+link vscode/settings.json "Library/Application Support/Code/User/settings.json"
+link_to_dot fish/config.fish
+link_to_dot git
+link_to_dot mise
+link_to_dot starship.toml
+link_to_dot wezterm
