@@ -85,6 +85,9 @@
   "githubPullRequests.pushBranch": "always",
   "gitlab.aiAssistedCodeSuggestions.enabled": false,
   "gitlab.duoChat.enabled": false,
+  "gitlens.ai.experimental.openai.model": "codellama:7b-instruct",
+  "gitlens.ai.experimental.openai.url": "http://0.0.0.0:11434/v1/chat/completions",
+  "gitlens.ai.experimental.provider": "openai",
   "gitlens.codeLens.enabled": false,
   "gitlens.currentLine.enabled": false,
   "gitlens.plusFeatures.enabled": false,
@@ -97,9 +100,17 @@
   "liveServer.settings.donotShowInfoMsg": true,
   "liveServer.settings.donotVerifyTags": true,
   "markdown.preview.typographer": true,
+  "mypy-type-checker.args": [
+    "--cache-fine-grained"
+  ],
+  "mypy-type-checker.ignorePatterns": [
+    "**/.mypy_cache",
+    "**/.venv"
+  ],
   "mypy-type-checker.importStrategy": "fromEnvironment",
   "mypy-type-checker.preferDaemon": true,
   "mypy-type-checker.reportingScope": "workspace",
+  "mypy.runUsingActiveInterpreter": true,
   "pylint.importStrategy": "fromEnvironment",
   "python.analysis.autoFormatStrings": true,
   "python.analysis.autoImportCompletions": true,
@@ -108,6 +119,7 @@
   "python.analysis.inlayHints.functionReturnTypes": true,
   "python.analysis.inlayHints.pytestParameters": true,
   "python.diagnostics.sourceMapsEnabled": true,
+  "python.terminal.activateEnvironment": false,
   "python.testing.pytestEnabled": true,
   "redhat.telemetry.enabled": false,
   "rust-analyzer.check.command": "clippy",
@@ -122,6 +134,9 @@
   "terminal.integrated.showExitAlert": false,
   "terminal.integrated.tabs.hideCondition": "never",
   "typescript.updateImportsOnFileMove.enabled": "always",
+  "vs-kubernetes": {
+    "vs-kubernetes.crd-code-completion": "disabled"
+  },
   "window.autoDetectColorScheme": true,
   "window.newWindowDimensions": "maximized",
   "workbench.activityBar.location": "bottom",
