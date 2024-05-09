@@ -2,7 +2,6 @@
     ".config/fish/config.fish": null,
     ".config/git": null,
     ".config/mise": null,
-    ".config/pip/pip.conf": null,
     ".config/starship.toml": null,
     ".config/wezterm": null,
     ".hushlogin": "config/hushlogin",
