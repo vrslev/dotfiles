@@ -59,6 +59,7 @@ end
 
 # Essentials
 set fish_greeting  # Disable greeting when startup
+
 if ! test -f /opt/homebrew/bin/brew
   echo No brew installed!
   exit 1
@@ -75,16 +76,16 @@ if test -f ~/.fish_profile
   source ~/.fish_profile
 end
 
-set -gx CPPFLAGS -I/opt/homebrew/include -L/opt/homebrew/lib
-set -gx PIPX_HOME ~/.local/pipx
-set -gx PIPX_BIN_DIR ~/.local/bin
-set -gx EDITOR code
-set -gx PYTHONDONTWRITEBYTECODE 1
 set -gx LANG en_US.UTF-8
 set -gx LANGUAGE $LANG
 set -gx LC_ALL $LANG
+set -gx EDITOR code
+
+set -gx CPPFLAGS -I/opt/homebrew/include -L/opt/homebrew/lib
+set -gx PYTHONDONTWRITEBYTECODE 1
+set -gx PIPX_HOME ~/.local/pipx
+set -gx PIPX_BIN_DIR ~/.local/bin
 set -gx GOPATH ~/.go
-set -gx HOMEBREW_BUNDLE_NO_LOCK 1
 
 # Aliases and abbreviations
 function __last_history_item

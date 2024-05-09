@@ -2,10 +2,7 @@ cask "orbstack"
 cask "blackhole-2ch"
 cask "daisydisk"
 cask "google-chrome"
-cask "obs"
 cask "transmission"
-cask "zoom"
 mas "HiSuite", id: 1232508288
 mas "Outline", id: 1356178125
 mas "Pixelmator Pro", id: 1289583905
-mas "WireGuard", id: 1451685025
