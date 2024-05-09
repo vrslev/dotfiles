@@ -109,6 +109,7 @@ alias gr 'cd $(git rev-parse --show-toplevel)'
 alias ds 'du -sh'
 alias posix 'exec bash -c "$argv; exec fish"'
 
+abbr b brew
 abbr dco "docker compose"
 abbr g git
 abbr j just
