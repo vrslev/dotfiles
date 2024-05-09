@@ -1,6 +1,14 @@
 My dotfiles: macOS, Wezterm, Fish, Neovim and VS Code.
 
-Install:
+Install Homebrew and Fish:
+
+```sh
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+brew install fish
+chsh -s /opt/homebrew/bin/fish
+```
+
+Install dotfiles:
 
 ```sh
 cd

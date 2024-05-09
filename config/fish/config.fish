@@ -1,8 +1,9 @@
 # $PATH and essentials
 if test -f /opt/homebrew/bin/brew
-    /opt/homebrew/bin/brew shellenv | source
-    set -gx CPPFLAGS -I/opt/homebrew/include -L/opt/homebrew/lib
+  echo No brew installed
+  exit
 end
+/opt/homebrew/bin/brew shellenv | source
 
 fish_add_path ~/code/dotfiles/bin ~/.rd/bin
 
