@@ -1,0 +1,61 @@
+defaults write NSGlobalDomain NSWindowResizeTime -float 0.001 # Fast window resize
+
+# Fast keyboard repeat rate
+defaults write NSGlobalDomain KeyRepeat -int 1
+defaults write NSGlobalDomain InitialKeyRepeat -int 10
+
+# Expand save panel by default
+defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
+defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
+
+# No animations when opening or closing windows
+defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
+defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true
+defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool false
+
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+
+defaults write com.apple.finder QuitMenuItem -bool true # Allow quitting via ⌘ + Q
+defaults write com.apple.finder DisableAllAnimations -bool true
+defaults write com.apple.finder ShowStatusBar -bool true
+defaults write com.apple.finder _FXSortFoldersFirst -bool true             # Folders on top when sorting by name
+defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"        # Search the current folder by default
+defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false # No warning when changing a file extension
+defaults write com.apple.finder FXPreferredViewStyle -string "clmv"        # List view in all Finder windows by default
+
+# Open a new Finder window when a volume is mounted
+defaults write com.apple.finder OpenWindowForNewRemovableDisk -bool true
+defaults write com.apple.frameworks.diskimages auto-open-ro-root -bool true
+defaults write com.apple.frameworks.diskimages auto-open-rw-root -bool true
+
+# No disk image verification
+defaults write com.apple.frameworks.diskimages skip-verify -bool true
+defaults write com.apple.frameworks.diskimages skip-verify-locked -bool true
+defaults write com.apple.frameworks.diskimages skip-verify-remote -bool true
+
+defaults write com.apple.dock tilesize -int 36                     # Small Dock icons
+defaults write com.apple.dock launchanim -bool false               # No animation when opening apps from the Dock
+defaults write com.apple.dock expose-animation-duration -float 0.1 # Fast Mission Control animations
+defaults write com.apple.dock autohide-delay -float 0
+defaults write com.apple.dock autohide-time-modifier -float 0 # No animation when hiding/showing the Dock
+defaults write com.apple.dock show-recents -bool false
+defaults write com.apple.dock size-immutable -bool true
+
+defaults write com.apple.Safari AutoOpenSafeDownloads -bool false
+defaults write com.apple.Safari FindOnPageMatchesWordStartsOnly -bool false # Use Contains instead of Starts With in search
+
+# Block pop-ups
+defaults write com.apple.Safari WebKitJavaScriptCanOpenWindowsAutomatically -bool false
+defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaScriptCanOpenWindowsAutomatically -bool false
+
+defaults write com.apple.Safari SendDoNotTrackHTTPHeader -bool true
+
+defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
+
+defaults write com.apple.LaunchServices LSQuarantine -bool false # No “Are you sure you want to open this application?” dialog
+
+# No .DS_Store files on network or USB volumes
+defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
+
+defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
