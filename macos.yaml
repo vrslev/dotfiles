@@ -47,11 +47,6 @@ com.apple.Safari:
   AutoOpenSafeDownloads: false
   FindOnPageMatchesWordStartsOnly: false # Use Contains instead of Starts With in search
 
-  # Enable the Develop menu and the Web Inspector in Safari
-  IncludeDevelopMenu: true
-  WebKitDeveloperExtrasEnabledPreferenceKey: true
-  com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled: true
-
   # Block pop-ups
   WebKitJavaScriptCanOpenWindowsAutomatically: false
   com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaScriptCanOpenWindowsAutomatically: false
