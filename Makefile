@@ -1,25 +1,23 @@
-MAIN_BREWFILE=config/packages/Brewfile
-PERSONAL_BREWFILE=config/packages/Brewfile-personal
 HOMEBREW_BUNDLE_NO_LOCK=1
 
 .PHONY:
 macos:
-	sudo apply-user-defaults config/macos.yaml
+	sudo apply-user-defaults macos.yaml
 
 link:
-	fish config/create-symlinks.fish
+	fish create-symlinks.fish
 
 install-personal:
-	cat $(MAIN_BREWFILE) $(PERSONAL_BREWFILE) | brew bundle --file -
-	cat $(MAIN_BREWFILE) $(PERSONAL_BREWFILE) | brew bundle cleanup --file - --force
+	cat Brewfile Brewfile-personal | brew bundle --file -
+	cat Brewfile Brewfile-personal | brew bundle cleanup --file - --zap --force
 	mise upgrade
 
 install-work:
-	brew bundle --file $(MAIN_BREWFILE)
-	brew bundle cleanup --file $(MAIN_BREWFILE) --force
+	brew bundle --file Brewfile
+	brew bundle cleanup --file Brewfile --zap --force
 	mise upgrade
 
 dump:
-	brew bundle dump --file $(MAIN_BREWFILE) --force
-	grep --invert-match --line-regexp -f $(PERSONAL_BREWFILE) $(MAIN_BREWFILE) >$(MAIN_BREWFILE).tmp
-	mv $(MAIN_BREWFILE).tmp $(MAIN_BREWFILE)
+	brew bundle dump --file Brewfile --force
+	grep --invert-match --line-regexp -f Brewfile-personal Brewfile >Brewfile.tmp
+	mv Brewfile.tmp Brewfile
