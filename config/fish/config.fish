@@ -71,7 +71,9 @@ starship init fish | source
 fzf --fish | source
 
 fish_add_path ~/code/dotfiles/bin ~/.rd/bin
-if test -f ~/.fish_profile; source ~/.fish_profile; end
+if test -f ~/.fish_profile
+  source ~/.fish_profile
+end
 
 set -gx CPPFLAGS -I/opt/homebrew/include -L/opt/homebrew/lib
 set -gx PIPX_HOME ~/.local/pipx
@@ -85,7 +87,9 @@ set -gx GOPATH ~/.go
 set -gx HOMEBREW_BUNDLE_NO_LOCK 1
 
 # Aliases and abbreviations
-function __last_history_item; echo $history[1]; end
+function __last_history_item
+  echo $history[1]
+end
 abbr -a !! --position anywhere --function __last_history_item
 
 function __last_history_arg
