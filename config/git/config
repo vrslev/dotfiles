@@ -2,27 +2,8 @@
 	name = Lev Vereshchagin
 	email = mail@vrslev.com
 
-# Work config
-[includeIf "gitdir:~/web/"]
+[includeIf "gitdir:~/web/"]  # Work config
     path = ~/web/.gitconfig
-
-[core]
-	editor = code
-	pager = delta
-
-[diff]
-    tool = vscode
-    colorMoved = default
-
-[difftool "vscode"]
-    cmd = code --wait --diff $LOCAL $REMOTE
-
-[merge]
-  	tool = code
-	conflictstyle = diff3
-
-[help]
-	autoCorrect = 10
 
 [init]
 	defaultBranch = main
@@ -43,9 +24,6 @@
 [rerere]
 	enabled = true
 
-[branch]
-	sort = -committerdate
-
 [fetch]
 	prune = true
 
@@ -57,6 +35,33 @@
 
 [rebase]
 	autoStash = true
+
+[branch]
+	sort = -committerdate
+
+[help]
+	autoCorrect = 10
+
+[core]
+	editor = code --wait
+	pager = delta
+
+[diff]
+    tool = vscode
+    colorMoved = default
+
+[difftool "vscode"]
+    cmd = code --wait --diff $LOCAL $REMOTE
+
+[merge]
+  	tool = vscode
+	conflictstyle = diff3
+
+[merge]
+	tool = vscode
+
+[mergetool "vscode"]
+	cmd = code --wait $MERGED
 
 [interactive]
     diffFilter = delta --color-only
