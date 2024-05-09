@@ -3,7 +3,7 @@ HOMEBREW_BUNDLE_NO_LOCK=1
 .PHONY: macos
 
 macos:
-	sudo sh macos.sh
+	sudo sh set-macos-defaults.sh
 
 link:
 	fish create-symlinks.fish
