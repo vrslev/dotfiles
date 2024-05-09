@@ -36,9 +36,6 @@
   "editor.scrollbar.horizontalScrollbarSize": 7,
   "editor.scrollbar.verticalScrollbarSize": 7,
   "editor.stickyScroll.enabled": true,
-  "editor.tokenColorCustomizations": {
-    "textMateRules": []
-  },
   "emmet.includeLanguages": {
     "jinja-html": "html"
   },
@@ -97,8 +94,6 @@
     "--ignore=DL3045"
   ],
   "hadolint.hadolintPath": "/opt/homebrew/bin/hadolint",
-  "liveServer.settings.donotShowInfoMsg": true,
-  "liveServer.settings.donotVerifyTags": true,
   "markdown.preview.typographer": true,
   "mypy-type-checker.args": [
     "--cache-fine-grained"
@@ -110,8 +105,6 @@
   "mypy-type-checker.importStrategy": "fromEnvironment",
   "mypy-type-checker.preferDaemon": true,
   "mypy-type-checker.reportingScope": "workspace",
-  "mypy.runUsingActiveInterpreter": true,
-  "pylint.importStrategy": "fromEnvironment",
   "python.analysis.autoFormatStrings": true,
   "python.analysis.autoImportCompletions": true,
   "python.analysis.diagnosticMode": "workspace",
@@ -120,7 +113,6 @@
   "python.analysis.inlayHints.pytestParameters": true,
   "python.diagnostics.sourceMapsEnabled": true,
   "python.terminal.activateEnvironment": false,
-  "python.testing.pytestEnabled": true,
   "redhat.telemetry.enabled": false,
   "rust-analyzer.check.command": "clippy",
   "rust-analyzer.inlayHints.typeHints.enable": false,
@@ -135,7 +127,9 @@
   "terminal.integrated.tabs.hideCondition": "never",
   "typescript.updateImportsOnFileMove.enabled": "always",
   "vs-kubernetes": {
-    "vs-kubernetes.crd-code-completion": "disabled"
+    "vs-kubernetes.crd-code-completion": "disabled",
+    "vs-kubernetes.disable-context-info-status-bar": true,
+    "vs-kubernetes.disable-namespace-info-status-bar": true
   },
   "window.autoDetectColorScheme": true,
   "window.newWindowDimensions": "maximized",
@@ -147,7 +141,6 @@
   },
   "workbench.layoutControl.enabled": false,
   "workbench.list.smoothScrolling": true,
-  "workbench.settings.openDefaultSettings": true,
   "workbench.sideBar.location": "right",
   "workbench.startupEditor": "none",
   "workbench.tips.enabled": false,
