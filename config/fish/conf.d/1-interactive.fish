@@ -12,7 +12,7 @@ fzf --fish | source
 function brew
   command brew $argv; and\
   switch $argv[1]
-    case install uninstall tap untap
+    case install uninstall reinstall tap untap
       brew-dump
   end
 end
