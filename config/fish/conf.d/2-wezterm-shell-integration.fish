@@ -1,7 +1,7 @@
 # Enable shell integration for terminal emulators, it doesn't work by default when using starship
 # https://github.com/wez/wezterm/issues/115
 # https://github.com/PerBothner/DomTerm/blob/master/tools/shell-integration.fish
-if status --is-interactive; and string match -q "$TERM_PROGRAM" "WezTerm"
+if status is-interactive; and string match -q "$TERM_PROGRAM" "WezTerm"
   set _fishprompt_aid "fish"$fish_pid
   set _fishprompt_started 0
   # empty if running; or a numeric exit code; or CANCEL
@@ -13,7 +13,7 @@ if status --is-interactive; and string match -q "$TERM_PROGRAM" "WezTerm"
   function _fishprompt_start --on-event fish_prompt
     set _fishprompt_prompt_count (math $_fishprompt_prompt_count + 1)
     # don't use post-exec, because it is called *before* omitted-newline output
-    if [ -n "$_fishprompt_postexec" ]
+    if test -n "$_fishprompt_postexec"
       printf "\033]133;D;%s;aid=%s\007" "$_fishprompt_postexec" $_fishprompt_aid
     end
     printf "\033]133;A;aid=%s;cl=m\007" $_fishprompt_aid
@@ -27,7 +27,7 @@ if status --is-interactive; and string match -q "$TERM_PROGRAM" "WezTerm"
   end
 
   function _fishprompt_preexec --on-event fish_preexec
-    if [ "$_fishprompt_started" = "1" ]
+    if test "$_fishprompt_started" = "1"
       printf "\033]133;C;\007"
     end
     set _fishprompt_started 0
@@ -44,7 +44,7 @@ if status --is-interactive; and string match -q "$TERM_PROGRAM" "WezTerm"
   end
 
   function _fishprompt_exit --on-process %self
-    if [ "$_fishprompt_started" = "1" ]
+    if test "$_fishprompt_started" = "1"
       printf "\033]133;Z;aid=%s\007" $_fishprompt_aid
     end
   end
