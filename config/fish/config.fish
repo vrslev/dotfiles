@@ -7,9 +7,8 @@ if ! test -f /opt/homebrew/bin/brew
 end
 
 /opt/homebrew/bin/brew shellenv | source
-mise activate fish | source
 zoxide init fish | source
-starship init fish | source
+starship init fish --print-full-init | source
 fzf --fish | source
 
 fish_add_path (dirname (dirname (dirname (readlink (status --current-filename)))))/bin ~/.rd/bin
