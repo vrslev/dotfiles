@@ -20,24 +20,24 @@ end
 function __last_history_item
   echo $history[1]
 end
-abbr -a !! --position anywhere --function __last_history_item
+abbr --add !! --position anywhere --function __last_history_item
 
 function __last_history_arg
   commandline -f backward-delete-char
   commandline -f history-token-search-backward
 end
-abbr -a !\$ --position anywhere --function __last_history_arg
+abbr --add !\$ --position anywhere --function __last_history_arg
 
-abbr b brew
-abbr dco "docker compose"
-abbr g git
-abbr j just
-abbr l ls
-abbr pc pre-commit
-abbr po poetry
-abbr py python3
-abbr t task
-abbr tra trash
+abbr --add b brew
+abbr --add dco "docker compose"
+abbr --add g git
+abbr --add j just
+abbr --add l ls
+abbr --add pc pre-commit
+abbr --add po poetry
+abbr --add py python3
+abbr --add t task
+abbr --add tra trash
 
 alias c z
 alias cd z
