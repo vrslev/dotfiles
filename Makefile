@@ -1,9 +1,9 @@
 .PHONY: macos
 macos:
-	sudo sh set-macos-defaults.sh
+	sudo ./set-macos-defaults
 
 link:
-	fish create-symlinks.fish
+	./create-symlinks
 
 install-personal:
 	brew update

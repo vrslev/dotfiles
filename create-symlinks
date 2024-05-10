@@ -1,3 +1,5 @@
+#!/usr/bin/env fish
+
 function link
     set source_ "$PWD/config/$argv[1]"
     if ! test -e $source_

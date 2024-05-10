@@ -1,3 +1,5 @@
+#!/usr/bin/env fish
+
 defaults write NSGlobalDomain NSWindowResizeTime -float 0.001 # Fast window resize
 
 # Fast keyboard repeat rate
