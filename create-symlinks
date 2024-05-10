@@ -27,7 +27,7 @@ end
 
 link vscode/keybindings.json "Library/Application Support/Code/User/keybindings.json"
 link vscode/settings.json "Library/Application Support/Code/User/settings.json"
-link_to_dot fish/config.fish
+link_to_dot fish/conf.d
 link_to_dot git
 link_to_dot mise
 link_to_dot starship.toml

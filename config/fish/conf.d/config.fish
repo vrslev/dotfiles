@@ -10,8 +10,7 @@ end
 zoxide init fish | source
 starship init fish --print-full-init | source
 fzf --fish | source
-
-fish_add_path (dirname (dirname (dirname (readlink (status --current-filename)))))/bin ~/.rd/bin
+fish_add_path (dirname (dirname (dirname (readlink (dirname (status --current-filename))))))/bin ~/.rd/bin
 
 set -gx LANG en_US.UTF-8
 set -gx LANGUAGE $LANG
@@ -28,7 +27,7 @@ set -gx HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK 1
 # Enable shell integration for terminal emulators, it doesn't work by default when using starship
 # https://github.com/wez/wezterm/issues/115
 # https://github.com/PerBothner/DomTerm/blob/master/tools/shell-integration.fish
-if status --is-interactive
+if status --is-interactive; and string match -q "$TERM_PROGRAM" "WezTerm"
   set _fishprompt_aid "fish"$fish_pid
   set _fishprompt_started 0
   # empty if running; or a numeric exit code; or CANCEL

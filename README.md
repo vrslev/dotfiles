@@ -23,7 +23,7 @@ mkdir code
 git clone https://github.com/vrslev/dotfiles code/dotfiles
 cd code/dotfiles
 
+make install-personal  # or make install-work
 make macos
 make link
-make install-personal  # or make install-work
 ```
