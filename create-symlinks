@@ -25,9 +25,10 @@ function link_to_dot
     link "$argv[1]" ".config/$argv[1]"
 end
 
+link continue/config.json ".continue/config.json"
+link pypoetry/config.toml "Library/Application Support/pypoetry/config.toml"
 link vscode/keybindings.json "Library/Application Support/Code/User/keybindings.json"
 link vscode/settings.json "Library/Application Support/Code/User/settings.json"
-link pypoetry/config.toml "Library/Application Support/pypoetry/config.toml"
 link_to_dot fish/conf.d
 link_to_dot git
 link_to_dot mise

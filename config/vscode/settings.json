@@ -18,7 +18,9 @@
   "[python]": {
     "editor.defaultFormatter": "charliermarsh.ruff"
   },
-  "continue.enableTabAutocomplete": false,
+  "continue.enableTabAutocomplete": true,
+  "continue.showInlineTip": false,
+  "continue.telemetryEnabled": false,
   "diffEditor.ignoreTrimWhitespace": false,
   "dotenv.enableAutocloaking": false,
   "editor.codeActionsOnSave": {

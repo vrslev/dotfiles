@@ -1,0 +1,33 @@
+{
+  "models": [
+    {
+      "title": "Llama 3 Instruct",
+      "provider": "ollama",
+      "model": "llama3:instruct"
+    }
+  ],
+  "customCommands": [
+    {
+      "name": "test",
+      "prompt": "{{{ input }}}\n\nWrite a comprehensive set of unit tests for the selected code. It should setup, run tests that check for correctness including important edge cases, and teardown. Ensure that the tests are complete and sophisticated. Give the tests just as chat output, don't edit any file.",
+      "description": "Write unit tests for highlighted code"
+    }
+  ],
+  "tabAutocompleteModel": {
+    "title": "Starcoder2 3b",
+    "provider": "ollama",
+    "model": "starcoder2:3b"
+  },
+  "allowAnonymousTelemetry": false,
+  "contextProviders": [
+    {
+      "name": "code"
+    },
+    {
+      "name": "docs"
+    },
+    {
+      "name": "diff"
+    }
+  ]
+}
