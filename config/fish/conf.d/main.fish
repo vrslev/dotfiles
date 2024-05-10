@@ -10,6 +10,29 @@ set -gx LC_ALL $LANG
 set -gx EDITOR code
 set -gx PYTHONDONTWRITEBYTECODE 1
 
+# ----
+/opt/homebrew/bin/brew shellenv | source
+set -gx HOMEBREW_BUNDLE_NO_LOCK 1
+set -gx HOMEBREW_NO_ANALYTICS 1
+set -gx HOMEBREW_NO_AUTO_UPDATE 1
+set -gx HOMEBREW_NO_ENV_HINTS 1
+set -gx HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK 1
+set -gx CPPFLAGS -I/opt/homebrew/include -L/opt/homebrew/lib
+
+function brew
+  command brew $argv; and\
+  switch $argv[1]
+    case install uninstall tap untap
+      brew-dump
+  end
+end
+
+zoxide init fish | source
+starship init fish --print-full-init | source
+fzf --fish | source
+fish_add_path (dirname (dirname (dirname (readlink (dirname (status --current-filename))))))/bin ~/.rd/bin
+
+# ---
 function __last_history_item
   echo $history[1]
 end
@@ -41,25 +64,3 @@ alias ls "eza --icons"
 alias posix 'exec bash -c "$argv; exec fish"'
 alias python python3
 alias venv "uv venv"
-
-# ----
-/opt/homebrew/bin/brew shellenv | source
-set -gx HOMEBREW_BUNDLE_NO_LOCK 1
-set -gx HOMEBREW_NO_ANALYTICS 1
-set -gx HOMEBREW_NO_AUTO_UPDATE 1
-set -gx HOMEBREW_NO_ENV_HINTS 1
-set -gx HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK 1
-set -gx CPPFLAGS -I/opt/homebrew/include -L/opt/homebrew/lib
-
-function brew
-  command brew $argv; and\
-  switch $argv[1]
-    case install uninstall tap untap
-      brew-dump
-  end
-end
-
-zoxide init fish | source
-starship init fish --print-full-init | source
-fzf --fish | source
-fish_add_path (dirname (dirname (dirname (readlink (dirname (status --current-filename))))))/bin ~/.rd/bin
