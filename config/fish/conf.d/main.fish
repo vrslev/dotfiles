@@ -1,3 +1,8 @@
+if ! test -f /opt/homebrew/bin/brew
+  echo No brew installed!
+  exit 1
+end
+
 set fish_greeting  # Disable greeting on startup
 set -gx LANG en_US.UTF-8
 set -gx LANGUAGE $LANG
@@ -38,10 +43,6 @@ alias python python3
 alias venv "uv venv"
 
 # ----
-if ! test -f /opt/homebrew/bin/brew
-  echo No brew installed!
-  exit 1
-end
 /opt/homebrew/bin/brew shellenv | source
 set -gx HOMEBREW_BUNDLE_NO_LOCK 1
 set -gx HOMEBREW_NO_ANALYTICS 1
