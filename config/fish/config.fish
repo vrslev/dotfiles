@@ -21,8 +21,10 @@ set -gx EDITOR code
 set -gx CPPFLAGS -I/opt/homebrew/include -L/opt/homebrew/lib
 set -gx PYTHONDONTWRITEBYTECODE 1
 set -gx HOMEBREW_BUNDLE_NO_LOCK 1
+set -gx HOMEBREW_NO_ANALYTICS 1
+set -gx HOMEBREW_NO_AUTO_UPDATE 1
 set -gx HOMEBREW_NO_ENV_HINTS 1
-
+set -gx HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK 1
 
 # Enable shell integration for terminal emulators, it doesn't work by default when using starship
 # https://github.com/wez/wezterm/issues/115
@@ -120,7 +122,6 @@ function brew
   command brew $argv; and\
   switch $argv[1]
     case install uninstall tap untap
-      # todo: fix personal vs work
-      brew bundle dump --force --file ~/code/dotfiles/Brewfile
+      brew-dump
   end
 end

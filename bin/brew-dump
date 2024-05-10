@@ -1,0 +1,12 @@
+#!/usr/bin/env fish
+
+set dotfiles ~/code/dotfiles
+set main_brewfile $dotfiles/Brewfile
+set personal_brewfile $dotfiles/Brewfile-personal
+set temp_brewfile $dotfiles/Brewfile.tmp
+
+# todo: fix personal vs work
+
+brew bundle dump --file $main_brewfile --force
+grep --invert-match --line-regexp -f $personal_brewfile $main_brewfile >$temp_brewfile
+mv $temp_brewfile $main_brewfile
