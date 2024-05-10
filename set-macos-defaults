@@ -1,4 +1,4 @@
-#!/usr/bin/env fish
+#!/opt/homebrew/bin/fish
 
 defaults write NSGlobalDomain NSWindowResizeTime -float 0.001 # Fast window resize
 

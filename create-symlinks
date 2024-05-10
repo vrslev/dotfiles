@@ -1,4 +1,4 @@
-#!/usr/bin/env fish
+#!/opt/homebrew/bin/fish
 
 function link
     set source_ "$PWD/config/$argv[1]"
@@ -18,7 +18,7 @@ function link
     end
 
     echo "Linked $argv[1] -> ~/$argv[2]"
-    ln -sf $source_ $destination
+    ln -sF $source_ $destination
 end
 
 function link_to_dot
