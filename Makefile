@@ -1,7 +1,4 @@
-export HOMEBREW_BUNDLE_NO_LOCK = 1
-
 .PHONY: macos
-
 macos:
 	sudo sh set-macos-defaults.sh
 
