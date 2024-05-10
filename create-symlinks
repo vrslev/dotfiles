@@ -2,7 +2,7 @@
 
 function link
     set source_ "$PWD/config/$argv[1]"
-    if ! test -e $source_
+    if not test -e $source_
         echo "Source file doesn't exist: $argv[1]"
         return
     end
