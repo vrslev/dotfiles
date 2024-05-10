@@ -18,6 +18,7 @@
   "[python]": {
     "editor.defaultFormatter": "charliermarsh.ruff"
   },
+  "continue.enableTabAutocomplete": false,
   "diffEditor.ignoreTrimWhitespace": false,
   "dotenv.enableAutocloaking": false,
   "editor.codeActionsOnSave": {
@@ -124,9 +125,14 @@
   "terminal.external.osxExec": "Wezterm.app",
   "terminal.integrated.copyOnSelection": true,
   "terminal.integrated.defaultProfile.osx": "fish",
+  "terminal.integrated.detectLocale": "off",
+  "terminal.integrated.enableImages": true,
   "terminal.integrated.fontSize": 14,
+  "terminal.integrated.hideOnStartup": "whenEmpty",
+  "terminal.integrated.inheritEnv": false,
   "terminal.integrated.minimumContrastRatio": 1,
   "terminal.integrated.showExitAlert": false,
+  "terminal.integrated.stickyScroll.enabled": true,
   "terminal.integrated.tabs.hideCondition": "never",
   "typescript.updateImportsOnFileMove.enabled": "always",
   "vs-kubernetes": {
@@ -148,6 +154,5 @@
   "workbench.startupEditor": "none",
   "workbench.tips.enabled": false,
   "zenMode.centerLayout": false,
-  "zenMode.fullScreen": false,
-  "continue.enableTabAutocomplete": false
+  "zenMode.fullScreen": false
 }
