@@ -5,7 +5,6 @@ PIPX_BIN_DIR = "~/.local/bin"
 [tools]
 python = ["3.12", "3.11", "3.10", "3.9", "3.8"]
 node = "lts"
-go = "latest"
 usage = "latest"
 "pipx:maturin" = "latest"
 "pipx:poetry" = "latest"

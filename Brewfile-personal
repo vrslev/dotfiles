@@ -1,5 +1,4 @@
 cask "orbstack"
-cask "blackhole-2ch"
 cask "daisydisk"
 cask "google-chrome"
 cask "transmission"
