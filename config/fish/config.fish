@@ -12,7 +12,7 @@ zoxide init fish | source
 starship init fish | source
 fzf --fish | source
 
-fish_add_path ~/code/dotfiles/bin ~/.rd/bin
+fish_add_path (dirname (dirname (dirname (readlink (status --current-filename)))))/bin ~/.rd/bin
 
 set -gx LANG en_US.UTF-8
 set -gx LANGUAGE $LANG

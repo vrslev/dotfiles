@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 
-set dotfiles ~/code/dotfiles
+set dotfiles (dirname (dirname (status --current-filename)))
 set main_brewfile $dotfiles/Brewfile
 set personal_brewfile $dotfiles/Brewfile-personal
 set temp_brewfile $dotfiles/Brewfile.tmp
