@@ -3,5 +3,6 @@
 set filename content/posts/$argv[1].md
 
 cd ~/code/vrslev.com
+code .
 hugo new $filename
 code $filename
