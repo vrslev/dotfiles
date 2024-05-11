@@ -1,9 +1,14 @@
 {
   "models": [
     {
-      "title": "Llama 3 Instruct",
+      "title": "Llama 3",
       "provider": "ollama",
-      "model": "llama3:instruct"
+      "model": "llama3"
+    },
+    {
+      "title": "Ollama",
+      "provider": "ollama",
+      "model": "AUTODETECT"
     }
   ],
   "customCommands": [
@@ -29,5 +34,8 @@
     {
       "name": "diff"
     }
-  ]
+  ],
+  "embeddingsProvider": {
+    "provider": "transformers.js"
+  }
 }
