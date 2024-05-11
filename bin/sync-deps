@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -euo pipefail
+set -x
+
+brew update
+brew bundle --file Brewfile
+mise upgrade
+brew bundle cleanup --file Brewfile --zap --force &
+mise prune --yes &

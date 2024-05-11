@@ -7,7 +7,6 @@ Here are:
 - Scripts at [`bin`](bin).
 - Always-fresh-and-tidy configuration for development tools at [`config`](config). Most of the files [are linked](./link-config-files) to `~/.config`. Also [`Brewfile`](Brewfile).
 - macOS defaults at [`set-macos-defaults`](set-macos-defaults) that make using it snappier and less annoying.
-- [`Makefile`](Makefile) to bootstrap and synchronize everything.
 
 ## Getting started
 
@@ -36,9 +35,9 @@ cd code/dotfiles
 Install dotfiles:
 
 ```sh
-make install
-make link
-make macos
+./bin/sync-deps
+./link-config-files
+sudo ./set-macos-defaults
 ```
 
 Restart the computer to apply macOS defaults.
