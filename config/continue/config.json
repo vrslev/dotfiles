@@ -1,11 +1,6 @@
 {
   "models": [
     {
-      "title": "Llama 3",
-      "provider": "ollama",
-      "model": "llama3"
-    },
-    {
       "title": "Ollama",
       "provider": "ollama",
       "model": "AUTODETECT"
@@ -19,7 +14,7 @@
     }
   ],
   "tabAutocompleteModel": {
-    "title": "Starcoder2 3b",
+    "title": "Starcoder-2 3b",
     "provider": "ollama",
     "model": "starcoder2:3b"
   },
