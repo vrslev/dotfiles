@@ -3,7 +3,7 @@ macos:
 	sudo ./set-macos-defaults
 
 link:
-	./create-symlinks
+	./link-config-files
 
 install-personal:
 	brew update
