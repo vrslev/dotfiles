@@ -1,6 +1,6 @@
 cask "orbstack"
 cask "daisydisk"
-cask "google-chrome"
+cask "google-chrome" if system 'test "$(hostname -s)" = "Levs-MacBook-Air"'
 cask "transmission"
 mas "HiSuite", id: 1232508288
 mas "Outline", id: 1356178125
