@@ -1,76 +1,76 @@
 [user]
-	name = Lev Vereshchagin
-	email = mail@vrslev.com
+  name = Lev Vereshchagin
+  email = mail@vrslev.com
 
 [includeIf "gitdir:~/web/"]  # Work config
-    path = ~/web/.gitconfig
+  path = ~/web/.gitconfig
 
 [init]
-	defaultBranch = main
+  defaultBranch = main
 
 [alias]
-	a = add
-	ch = checkout
-	main = !git checkout main || git checkout master
-	cm = commit -m
-	p = push
-    l = log --oneline --decorate --color --graph
-    d = diff
-    ds = diff --staged
-    st = status
-	rm-merged = !git branch --format '%(refname:short) %(upstream:track)' | awk '$2 == \"[gone]\" { print $1 }' | xargs -r git branch -D
-	sync = !git main && git pull --prune && git rm-merged
+  a = add
+  ch = checkout
+  main = !git checkout main || git checkout master
+  cm = commit -m
+  p = push
+  l = log --oneline --decorate --color --graph
+  d = diff
+  ds = diff --staged
+  st = status
+  rm-merged = !git branch --format '%(refname:short) %(upstream:track)' | awk '$2 == \"[gone]\" { print $1 }' | xargs -r git branch -D
+  sync = !git main && git pull --prune && git rm-merged
 
 [rerere]
-	enabled = true
+  enabled = true
 
 [fetch]
-	prune = true
+  prune = true
 
 [pull]
-	rebase = true
+  rebase = true
 
 [push]
-	autoSetupRemote = true
+  autoSetupRemote = true
 
 [rebase]
-	autoStash = true
+  autoStash = true
 
 [branch]
-	sort = -committerdate
+  sort = -committerdate
 
 [help]
-	autoCorrect = 10
+  autoCorrect = 10
 
 [core]
-	editor = code --wait
-	pager = delta
+  editor = code --wait
+  pager = delta
 
 [diff]
-    tool = vscode
-    colorMoved = default
+  tool = vscode
+  colorMoved = default
 
 [difftool "vscode"]
-    cmd = code --wait --diff $LOCAL $REMOTE
+  cmd = code --wait --diff $LOCAL $REMOTE
 
 [merge]
-  	tool = vscode
-	conflictstyle = diff3
+  tool = vscode
+  conflictstyle = diff3
 
 [merge]
-	tool = vscode
+  tool = vscode
 
 [mergetool "vscode"]
-	cmd = code --wait $MERGED
+  cmd = code --wait $MERGED
 
 [interactive]
-    diffFilter = delta --color-only
+  diffFilter = delta --color-only
 
 [delta]
-    navigate = true
+  navigate = true
 
 [color]
-	ui = auto
+  ui = auto
 
 [column]
-	ui = auto
+  ui = auto
