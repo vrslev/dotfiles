@@ -5,7 +5,7 @@ I use macOS, [Visual Studio Code](https://code.visualstudio.com), [WezTerm](http
 Here are:
 
 - Scripts at [`bin`](bin).
-- Always-fresh-and-tidy configuration for development tools at [`config`](config). Most of the files [are linked](./link-config-files) to `~/.config`. Also [`Brewfile`](Brewfile) and [`Brewfile-personal`](Brewfile-personal).
+- Always-fresh-and-tidy configuration for development tools at [`config`](config). Most of the files [are linked](./link-config-files) to `~/.config`. Also [`Brewfile`](Brewfile).
 - macOS defaults at [`set-macos-defaults`](set-macos-defaults) that make using it snappier and less annoying.
 - [`Makefile`](Makefile) to bootstrap and synchronize everything.
 
@@ -33,8 +33,12 @@ git clone https://github.com/vrslev/dotfiles code/dotfiles
 cd code/dotfiles
 ```
 
-Run `make install-work` to install packages listed in [`Brewfile`](Brewfile), or `make install-personal` to get packages from [`Brewfile-personal`](Brewfile-personal) as well.
+Install dotfiles:
 
-Run `make link` to symlink config files.
+```sh
+make install
+make link
+make macos
+```
 
-Run `make macos` to set macOS defaults and restart the computer to apply them.
+Restart the computer to apply macOS defaults.

@@ -13,7 +13,7 @@ function brew
   command brew $argv; and\
   switch $argv[1]
     case install uninstall reinstall tap untap
-      brew-dump
+      brew bundle dump --file $DOTFILES_ROOT/Brewfile --force
   end
 end
 

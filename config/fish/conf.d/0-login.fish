@@ -24,4 +24,5 @@ set -gx CPPFLAGS -I/opt/homebrew/include -L/opt/homebrew/lib
 # hack for vscode
 mise hook-env --shell fish | source
 
-fish_add_path (dirname (dirname (dirname (readlink (dirname (status --current-filename))))))/bin ~/.rd/bin
+set -gx DOTFILES_ROOT (dirname (dirname (dirname (readlink (dirname (status --current-filename))))))
+fish_add_path $DOTFILES_ROOT/bin ~/.rd/bin

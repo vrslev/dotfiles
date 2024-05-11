@@ -38,18 +38,24 @@ brew "watch"
 brew "xh"
 brew "yq"
 brew "zoxide"
+cask "daisydisk"
 cask "flux"
 cask "font-fira-code-nerd-font"
 cask "monitorcontrol"
+cask "orbstack"
 cask "postman"
 cask "rancher"
 cask "rectangle"
 cask "the-unarchiver"
+cask "transmission"
 cask "visual-studio-code"
 cask "wezterm"
+mas "HiSuite", id: 1232508288
 mas "Keynote", id: 409183694
 mas "Numbers", id: 409203825
+mas "Outline", id: 1356178125
 mas "Pages", id: 409201541
+mas "Pixelmator Pro", id: 1289583905
 mas "Reeder", id: 1529448980
 mas "Strongbox", id: 897283731
 mas "Telegram", id: 747648890
