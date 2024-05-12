@@ -1,6 +1,3 @@
-[python]
-python_binary = ["py"]
-
 [aws]
 disabled = true
 
