@@ -3,7 +3,7 @@ set -euo pipefail
 set -x
 
 brew update
-brew bundle --file Brewfile
+brew bundle --file $DOTFILES_ROOT/Brewfile
 mise upgrade
-brew bundle cleanup --file Brewfile --zap --force &
+brew bundle cleanup --file $DOTFILES_ROOT/Brewfile --zap --force &
 mise prune --yes &
