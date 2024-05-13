@@ -21,8 +21,10 @@ set -gx HOMEBREW_NO_ENV_HINTS 1
 set -gx HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK 1
 set -gx CPPFLAGS -I/opt/homebrew/include -L/opt/homebrew/lib
 
-# hack for vscode
-mise hook-env --shell fish | source
+# allow vscode to detect tools
+if test "$VSCODE_RESOLVING_ENVIRONMENT" = 1
+  mise hook-env --shell fish | source
+end
 
 set -gx DOTFILES_ROOT (dirname (dirname (dirname (readlink (dirname (status --current-filename))))))
 fish_add_path $DOTFILES_ROOT/bin ~/.rd/bin
