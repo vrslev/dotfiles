@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-set -xeuo pipefail
-
-brew update
-brew bundle --file $DOTFILES_ROOT/Brewfile
-mise upgrade
-brew bundle cleanup --file $DOTFILES_ROOT/Brewfile --zap --force &
-mise prune --yes &

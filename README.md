@@ -35,7 +35,7 @@ cd code/dotfiles
 Install dotfiles:
 
 ```sh
-./bin/sync-deps
+./sync-deps
 ./link-config-files
 sudo ./set-macos-defaults
 ```
