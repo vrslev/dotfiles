@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -xeuo pipefail
+
+git pull
+./link-config-files
+sync-deps
