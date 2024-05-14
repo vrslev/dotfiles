@@ -29,11 +29,6 @@
     "command": "explorer.newFolder"
   },
   {
-    "key": "cmd+i",
-    "command": "-codeium.openCodeiumCommand",
-    "when": "codeium.commandEnabled && editorTextFocus && !inlineSuggestionsVisible"
-  },
-  {
     "key": "cmd+m",
     "command": "-continue.focusContinueInput"
   },
@@ -58,5 +53,15 @@
   {
     "key": "ctrl+alt+o",
     "command": "workbench.action.addRootFolder"
+  },
+  {
+    "key": "cmd+k cmd+w",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        "workbench.files.action.collapseExplorerFolders",
+        "workbench.action.closeAllEditors"
+      ]
+    }
   }
 ]
