@@ -1,18 +1,23 @@
 #!/usr/bin/env fish
 
-function is_starting
+set stopped_appeared_count 0
+while true
     set response (rdctl api -X GET /v1/backend_state 2>/dev/null)
     if test -z "$response"
-        return
+        pgrep "Rancher Desktop" >/dev/null || open -a "Rancher Desktop" --background
     end
 
-    set starting (echo $response | yq -p=json '.vmState == "STARTING"')
-    if test "$starting" != "true"
-        return 1
+    set vm_state (echo $response | yq -p=json '.vmState')
+
+    if test "$vm_state" = "STOPPED"
+        set stopped_appeared_count (math $stopped_appeared_count + 1)
+        if test "$stopped_appeared_count" -eq 1
+            exit
+        end
+    else if test "$vm_state" != "STARTING" && test "$vm_state" != "null"
+        exit
     end
-end
-while is_starting
+
     echo -ne "\rEngine is starting..."
-    pgrep "Rancher Desktop" >/dev/null || open -a "Rancher Desktop" --background
     sleep 0.3
 end
