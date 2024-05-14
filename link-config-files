@@ -25,7 +25,9 @@ function link_to_dot
     link "$argv[1]" ".$argv[1]"
 end
 
+link config/bashrc .bashrc
 link config/continue/config.json .continue/config.json
+link config/hushlogin .hushlogin
 link config/pypoetry/config.toml "Library/Application Support/pypoetry/config.toml"
 link config/vscode/keybindings.json "Library/Application Support/Code/User/keybindings.json"
 link config/vscode/settings.json "Library/Application Support/Code/User/settings.json"
