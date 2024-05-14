@@ -43,8 +43,8 @@ alias c z
 alias cd z
 alias ds 'du -sh'
 alias gr 'cd $(git rev-parse --show-toplevel)'
-alias lss "eza --icons"
-alias ls "lss --long --all"
+alias ls "eza --icons --all"
+alias ll "ls --long"
 alias posix 'exec bash -c "$argv; exec fish"'
 alias python python3
 alias venv "uv venv"
