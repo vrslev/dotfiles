@@ -20,6 +20,7 @@
 
 [rerere]
   enabled = true
+  autoupdate = true
 
 [fetch]
   prune = true
@@ -67,7 +68,7 @@
   navigate = true
 
 [color]
-  ui = auto
+  ui = true
 
 [column]
   ui = auto
