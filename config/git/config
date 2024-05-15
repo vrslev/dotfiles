@@ -2,6 +2,9 @@
   name = Lev Vereshchagin
   email = mail@vrslev.com
 
+[includeIf "gitdir:~/web/"]  # Work config
+  path = ~/web/.gitconfig
+
 [init]
   defaultBranch = main
 
