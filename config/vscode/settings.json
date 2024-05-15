@@ -93,6 +93,7 @@
   "gitlens.ai.experimental.provider": "openai",
   "gitlens.codeLens.enabled": false,
   "gitlens.currentLine.enabled": false,
+  "gitlens.launchpad.indicator.enabled": false,
   "gitlens.plusFeatures.enabled": false,
   "gitlens.showWelcomeOnInstall": false,
   "gitlens.statusBar.enabled": false,
