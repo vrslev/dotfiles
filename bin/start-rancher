@@ -1,23 +1,33 @@
-#!/usr/bin/env fish
+#!/usr/bin/env python3.12
+import json
+import subprocess
+import time
 
-set stopped_appeared_count 0
-while true
-    set response (rdctl api -X GET /v1/backend_state 2>/dev/null)
-    if test -z "$response"
-        pgrep "Rancher Desktop" >/dev/null || open -a "Rancher Desktop" --background
-    end
+if not subprocess.check_output(["/bin/sh", "-c", "pgrep Rancher Desktop; exit 0"]):
+    subprocess.run(
+        [
+            "open",
+            "-a",
+            "/Applications/Rancher Desktop.app",
+            "--background",
+            "--args",
+            "--application.startInBackground=true",
+        ]
+    )
+    time.sleep(7)
 
-    set vm_state (echo $response | yq -p=json '.vmState')
+while True:
+    try:
+        state_raw = subprocess.check_output(
+            ["rdctl", "api", "-X", "GET", "/v1/backend_state"],
+            stderr=subprocess.DEVNULL,
+        )
+    except subprocess.CalledProcessError:
+        pass
+    else:
+        state = json.loads(state_raw)
+        if state.get("vmState") != "STARTING":
+            break
 
-    if test "$vm_state" = "STOPPED"
-        set stopped_appeared_count (math $stopped_appeared_count + 1)
-        if test "$stopped_appeared_count" -eq 1
-            exit
-        end
-    else if test "$vm_state" != "STARTING" && test "$vm_state" != "null"
-        exit
-    end
-
-    echo -ne "\rEngine is starting..."
-    sleep 0.3
-end
+    print("Engine is starting...", end="\r")
+    time.sleep(0.3)
