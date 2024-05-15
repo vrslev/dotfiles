@@ -38,6 +38,7 @@ abbr --add po poetry
 abbr --add py python3
 abbr --add t task
 abbr --add tra trash
+abbr --add ranc --position anywhere "start-rancher &&"
 
 alias c z
 alias cd z
