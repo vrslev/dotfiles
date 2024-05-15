@@ -7,7 +7,7 @@ set fish_greeting  # Disable greeting on startup
 
 zoxide init fish | source
 starship init fish --print-full-init | source
-atuin init fish | source
+atuin init fish --disable-up-arrow | source
 
 function brew
   command brew $argv; and\
