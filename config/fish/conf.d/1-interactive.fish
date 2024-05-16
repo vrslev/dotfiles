@@ -1,4 +1,3 @@
-
 if not status is-interactive; or not test -f /opt/homebrew/bin/brew
   exit
 end
@@ -13,7 +12,7 @@ function brew
   command brew $argv; and\
   switch $argv[1]
     case install uninstall reinstall tap untap
-      brew bundle dump --file $DOTFILES_ROOT/Brewfile --force
+      brew-dump
   end
 end
 

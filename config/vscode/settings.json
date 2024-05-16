@@ -102,9 +102,6 @@
   ],
   "hadolint.hadolintPath": "/opt/homebrew/bin/hadolint",
   "markdown.preview.typographer": true,
-  "mypy-type-checker.args": [
-    "--cache-fine-grained"
-  ],
   "mypy-type-checker.ignorePatterns": [
     "**/.mypy_cache",
     "**/.venv"
@@ -112,6 +109,7 @@
   "mypy-type-checker.importStrategy": "fromEnvironment",
   "mypy-type-checker.preferDaemon": true,
   "mypy-type-checker.reportingScope": "workspace",
+  "mypy.runUsingActiveInterpreter": true,
   "python.analysis.autoFormatStrings": true,
   "python.analysis.autoImportCompletions": true,
   "python.analysis.diagnosticMode": "workspace",

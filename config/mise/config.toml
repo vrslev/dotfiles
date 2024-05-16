@@ -7,6 +7,7 @@ usage = "latest"
 "pipx:pypi-command-line" = "latest"
 "pipx:watchfiles" = "latest"
 "cargo:cargo-insta" = "latest"
+"pipx:mypy" = "latest"
 
 [settings]
 experimental = true
