@@ -1,0 +1,8 @@
+#!/usr/bin/env fish
+
+echo \
+'[env]
+_.python.venv = ".venv"' \
+>.mise.local.toml
+
+mise trust .mise.local.toml

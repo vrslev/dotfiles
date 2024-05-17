@@ -11,3 +11,7 @@ usage = "latest"
 
 [settings]
 experimental = true
+trusted_config_paths = [
+    "~/.config/mise/config.toml",
+    "~/code/dotfiles/config/mise/config.toml",
+]
