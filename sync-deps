@@ -1,8 +1,20 @@
 #!/usr/bin/env bash
 set -xeuo pipefail
 
-brew update
+bash -c '
+set -xeuo pipefail
+brew update &
 brew bundle --file Brewfile
+brew upgrade --greedy
+wait
+brew bundle cleanup --file Brewfile --zap --force
+brew cleanup
+' &
+
+bash -c '
+set -xeuo pipefail
 mise upgrade
-brew bundle cleanup --file Brewfile --zap --force &
-mise prune --yes &
+mise prune --yes
+' &
+
+wait
