@@ -6,5 +6,3 @@ git pull
 
 ./link-config-files
 ./sync-deps
-
-code .
