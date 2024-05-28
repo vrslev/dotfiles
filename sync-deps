@@ -3,10 +3,9 @@ set -xeuo pipefail
 
 bash -c '
 set -xeuo pipefail
-brew update &
+brew update
 brew bundle --file Brewfile
-brew upgrade --greedy
-wait
+brew upgrade --greedy-latest
 brew bundle cleanup --file Brewfile --zap --force
 brew cleanup
 ' &
