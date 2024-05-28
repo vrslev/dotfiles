@@ -23,5 +23,6 @@ config.window_padding = {
 	bottom = 0,
 }
 config.line_height = 1.1
+config.quit_when_all_windows_are_closed = false
 
 return config
