@@ -11,7 +11,6 @@ config.font_size = 15
 config.initial_cols = 130
 config.initial_rows = 36
 config.window_decorations = "RESIZE"
-config.enable_tab_bar = true
 config.keys = {
 	{ key = 'UpArrow', mods = 'CMD', action = wezterm.action.ScrollToPrompt(-1) },
 	{ key = 'DownArrow', mods = 'CMD', action = wezterm.action.ScrollToPrompt(1) },
