@@ -19,7 +19,8 @@ set -gx HOMEBREW_NO_ANALYTICS 1
 set -gx HOMEBREW_NO_AUTO_UPDATE 1
 set -gx HOMEBREW_NO_ENV_HINTS 1
 set -gx HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK 1
-set -gx CPPFLAGS -I/opt/homebrew/include -L/opt/homebrew/lib
+set -gx CPPFLAGS -I/opt/homebrew/include
+set -gx LDFLAGS -L/opt/homebrew/lib
 
 # allow vscode to detect tools
 if test "$VSCODE_RESOLVING_ENVIRONMENT" = 1
