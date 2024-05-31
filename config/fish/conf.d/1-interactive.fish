@@ -8,14 +8,6 @@ zoxide init fish | source
 starship init fish --print-full-init | source
 fzf --fish | source
 
-function brew
-  command brew $argv; and\
-  switch $argv[1]
-    case install uninstall reinstall tap untap
-      brew-dump
-  end
-end
-
 function __last_history_item
   echo $history[1]
 end

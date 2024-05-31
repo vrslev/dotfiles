@@ -1,2 +1,2 @@
 #!/usr/bin/env fish
-_start-rancher && ~/.rd/bin/docker $argv
+_start-rancher; and ~/.rd/bin/docker $argv

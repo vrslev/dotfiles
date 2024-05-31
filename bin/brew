@@ -1,0 +1,5 @@
+#!/usr/bin/env fish
+/opt/homebrew/bin/brew $argv; and switch $argv[1]
+    case install uninstall reinstall tap untap
+        _brew-dump
+end
