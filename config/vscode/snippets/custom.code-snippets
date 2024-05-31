@@ -1,0 +1,12 @@
+{
+	"# type: ignore[]": {
+		"scope": "python",
+		"prefix": "ti",
+		"body": "# type: ignore[$1]"
+	},
+	"typing.Final": {
+		"scope": "python",
+		"prefix": "fn",
+		"body": "typing.Final"
+	}
+}
