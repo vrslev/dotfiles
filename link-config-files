@@ -31,7 +31,6 @@ link config/hushlogin .hushlogin
 link config/pypoetry/config.toml "Library/Application Support/pypoetry/config.toml"
 link config/vscode/keybindings.json "Library/Application Support/Code/User/keybindings.json"
 link config/vscode/settings.json "Library/Application Support/Code/User/settings.json"
-link_to_dot config/atuin
 link_to_dot config/fish/conf.d
 link_to_dot config/git
 link_to_dot config/mise

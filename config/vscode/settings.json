@@ -139,7 +139,8 @@
   "vs-kubernetes": {
     "vs-kubernetes.crd-code-completion": "disabled",
     "vs-kubernetes.disable-context-info-status-bar": true,
-    "vs-kubernetes.disable-namespace-info-status-bar": true
+    "vs-kubernetes.disable-namespace-info-status-bar": true,
+    "vs-kubernetes.enable-minimal-workflow": true
   },
   "window.autoDetectColorScheme": true,
   "window.newWindowDimensions": "maximized",
