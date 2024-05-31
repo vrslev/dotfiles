@@ -1,11 +1,14 @@
 [bypass_all]
 
 [proxy_list]
-(^|\.)openai\.com$
-(^|\.)chatgpt\.com$
-(^|\.)oaistatic\.com$
-(^|\.)launchdarkly\.com$
-(^|\.)open-ai-chat-omega\.vercel\.app$
-(^|\.)oaiusercontent\.com$
+||openai.com
+||chatgpt.com
+||oaistatic.com
+||launchdarkly.com
+||open-ai-chat-omega.vercel.app
+||oaiusercontent.com
 
-(^|\.)medium\.com$
+||medium.com
+||twitter.com
+||twimg.com
+||x.com
