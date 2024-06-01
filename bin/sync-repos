@@ -1,12 +1,12 @@
 #!/usr/bin/env fish
 
-set dirs_without_git_dir
-set repos_without_remote_heads
-set synced_repos
-set repos_failed_to_sync
+function print_status_name
+    echo (string replace --all _ " " "$argv")
+end
 
-function log_progress
-    echo (set_color yellow)$argv(set_color normal)
+function push_status
+    set --append $argv[1] $argv[2]
+    echo (set_color yellow)(print_status_name $argv[1])(set_color normal)\n
 end
 
 if test -n "$argv[1]"
@@ -14,6 +14,11 @@ if test -n "$argv[1]"
 else
     set root_dir .
 end
+
+set no_git_dir
+set no_remote_heads
+set synced
+set sync_failed
 
 for repo_dir in $root_dir/*
     if not test -d $repo_dir
@@ -23,39 +28,25 @@ for repo_dir in $root_dir/*
     echo (set_color --bold magenta)$repo_dir(set_color normal)
 
     if not test -d $repo_dir/.git
-        log_progress not a git repo
-        set --append dirs_without_git_dir $repo_dir
-        echo
+        push_status no_git_dir $repo_dir
         continue
     end
 
     if not git -C $repo_dir ls-remote --heads --quiet --exit-code &>/dev/null
-        log_progress no remote heads
-        set --append repos_without_remote_heads $repo_dir
-        echo
+        push_status no_remote_heads $repo_dir
         continue
     end
 
-    log_progress syncing
-
     if git -C $repo_dir sync
-        set --append synced_repos $repo_dir
-        log_progress synced
+        push_status synced $repo_dir
     else
-        log_progress failed to sync
-        set --append repos_failed_to_sync $repo_dir
-    end
-
-    echo
-end
-
-function print_result
-    if test -n "$argv[2..-1]"
-        echo \n(set_color --bold blue)$argv[1]:(set_color normal)
-        printf "%s\n" $argv[2..-1]
+        push_status sync_failed $repo_dir
     end
 end
-print_result "synced" $synced_repos
-print_result "failed to sync" $repos_failed_to_sync
-print_result "not git repos" $dirs_without_git_dir
-print_result "repos without remote heads" $repos_without_remote_heads
+
+for one_summary in synced sync_failed no_git_dir no_remote_heads
+    if test -n "$$one_summary"
+        echo \n(set_color --bold blue)(print_status_name $one_summary):(set_color normal)
+        printf "%s\n" $$one_summary
+    end
+end
