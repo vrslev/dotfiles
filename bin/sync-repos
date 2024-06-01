@@ -1,0 +1,61 @@
+#!/usr/bin/env fish
+
+set dirs_without_git_dir
+set repos_without_remote_heads
+set synced_repos
+set repos_failed_to_sync
+
+function log_progress
+    echo (set_color yellow)$argv(set_color normal)
+end
+
+if test -n "$argv[1]"
+    set root_dir "$argv[1]"
+else
+    set root_dir .
+end
+
+for repo_dir in $root_dir/*
+    if not test -d $repo_dir
+        continue
+    end
+
+    echo (set_color --bold magenta)$repo_dir(set_color normal)
+
+    if not test -d $repo_dir/.git
+        log_progress not a git repo
+        set --append dirs_without_git_dir $repo_dir
+        echo
+        continue
+    end
+
+    if not git -C $repo_dir ls-remote --heads --quiet --exit-code &>/dev/null
+        log_progress no remote heads
+        set --append repos_without_remote_heads $repo_dir
+        echo
+        continue
+    end
+
+    log_progress syncing
+
+    if git -C $repo_dir sync
+        set --append synced_repos $repo_dir
+        log_progress synced
+    else
+        log_progress failed to sync
+        set --append repos_failed_to_sync $repo_dir
+    end
+
+    echo
+end
+
+function print_result
+    if test -n "$argv[2..-1]"
+        echo \n(set_color --bold blue)$argv[1]:(set_color normal)
+        printf "%s\n" $argv[2..-1]
+    end
+end
+print_result "synced" $synced_repos
+print_result "failed to sync" $repos_failed_to_sync
+print_result "not git repos" $dirs_without_git_dir
+print_result "repos without remote heads" $repos_without_remote_heads
