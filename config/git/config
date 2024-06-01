@@ -11,7 +11,7 @@
 [alias]
   a = add
   ch = checkout
-  main = !git checkout main || git checkout master
+  main = !git switch main 2>/dev/null || git switch master 2>/dev/null
   cm = commit -m
   p = push
   l = log --oneline --decorate --color --graph
