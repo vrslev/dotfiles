@@ -46,7 +46,7 @@ end
 
 for one_summary in synced sync_failed no_git_dir no_remote_heads
     if test -n "$$one_summary"
-        echo \n(set_color --bold blue)(print_status_name $one_summary):(set_color normal)
+        echo (set_color --bold blue)(print_status_name $one_summary):(set_color normal)
         printf "%s\n" $$one_summary
     end
 end
