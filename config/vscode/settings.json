@@ -18,7 +18,6 @@
   "[python]": {
     "editor.defaultFormatter": "charliermarsh.ruff"
   },
-  "continue.enableTabAutocomplete": true,
   "continue.showInlineTip": false,
   "continue.telemetryEnabled": false,
   "diffEditor.ignoreTrimWhitespace": false,
@@ -101,6 +100,7 @@
     "--ignore=DL3045"
   ],
   "hadolint.hadolintPath": "/opt/homebrew/bin/hadolint",
+  "javascript.updateImportsOnFileMove.enabled": "always",
   "markdown.preview.typographer": true,
   "mypy-type-checker.ignorePatterns": [
     "**/.mypy_cache",
