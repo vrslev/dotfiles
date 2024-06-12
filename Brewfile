@@ -23,7 +23,6 @@ brew "killport"
 brew "macos-trash"
 brew "mas"
 brew "mise"
-brew "mypy"
 brew "ollama", restart_service: true
 brew "pipx"
 brew "poetry"
