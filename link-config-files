@@ -1,34 +1,29 @@
 #!/usr/bin/python3
 # pyright: strict
 import json
-import os.path
+import os
 from pathlib import Path
 from typing import Dict, Optional
 
-repo = Path(__file__).parent
+REPO_PATH = Path(__file__).parent
+with open(REPO_PATH / "symlinks.json") as f:
+    config: Dict[str, Optional[str]] = json.load(f)
 
-with open(repo / "symlinks.json") as f:
-    link_map: Dict[str, Optional[str]] = json.load(f)
-
-for conf_dest, conf_src in link_map.items():
-    if conf_src is None:
-        parts = Path(conf_dest).parts
+for small_destination, small_source in config.items():
+    if small_source is None:
+        parts = Path(small_destination).parts
         root = parts[0][1:] if parts[0].startswith(".") else parts[0]
-        conf_src = Path(root).joinpath(*parts[1:])
+        small_source = Path(root).joinpath(*parts[1:])
 
-    src = repo / conf_src
-    dest = Path.home() / conf_dest
+    full_source = REPO_PATH / small_source
+    full_destination = Path.home() / small_destination
 
-    if dest.is_symlink() or dest.exists():
-        target = Path(os.readlink(dest))
-
-        if target == src:
-            pass
-        else:
-            print(f"was linked to different target: {conf_dest} -> {target}")
+    if full_destination.is_symlink() or full_destination.exists():
+        if full_source != (linked_to := Path(os.readlink(full_destination))):
+            print(f"was linked to different target: {small_destination} -> {linked_to}")
     else:
-        dest.parent.mkdir(parents=True, exist_ok=True)
-        dest.symlink_to(src)
-        print(f"created link: {conf_dest} -> {conf_src}")
+        full_destination.parent.mkdir(parents=True, exist_ok=True)
+        full_destination.symlink_to(full_source)
+        print(f"created link: {small_destination} -> {small_source}")
 
 print("Done!")
