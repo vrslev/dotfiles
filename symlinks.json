@@ -2,7 +2,6 @@
     ".bashrc": "config/bashrc",
     ".config/fish/conf.d": null,
     ".config/git": null,
-    ".config/jj": null,
     ".config/mise": null,
     ".config/starship.toml": null,
     ".config/wezterm": null,
@@ -12,5 +11,6 @@
     "Library/Application Support/Code/User/keybindings.json": "config/vscode/keybindings.json",
     "Library/Application Support/Code/User/settings.json": "config/vscode/settings.json",
     "Library/Application Support/Code/User/snippets": "config/vscode/snippets",
+    "Library/Application Support/jj": "config/jj",
     "Library/Application Support/pypoetry/config.toml": "config/pypoetry/config.toml"
 }
