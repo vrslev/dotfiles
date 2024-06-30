@@ -1,0 +1,7 @@
+[ui]
+editor = "code -w"
+merge-editor = "vscode"
+diff.tool = ["difft", "--color=always", "$left", "$right"]
+
+[git]
+auto-local-branch = true
