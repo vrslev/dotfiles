@@ -3,9 +3,7 @@ local wezterm = require("wezterm")
 local config = {}
 
 config.check_for_updates = false
--- Google (light) (terminal.sexy) or Vs Code Light+ (Gogh) are also good
--- config.color_scheme = wezterm.gui.get_appearance():find("Dark") and "Vs Code Dark+ (Gogh)" or "Google (light) (terminal.sexy)"
-config.color_scheme = "Vs Code Dark+ (Gogh)"
+config.color_scheme = wezterm.gui.get_appearance():find("Dark") and "Vs Code Dark+ (Gogh)" or "Google (light) (terminal.sexy)"
 config.font = wezterm.font("FiraCode Nerd Font")
 config.font_size = 15
 config.initial_cols = 130
