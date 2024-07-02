@@ -1,6 +1,6 @@
 [ui]
 editor = "code -w"
-diff.tool = ["sh", "-c", "COMPARE_FOLDERS=DIFF code --wait $left $right"]
+diff.tool = ["difft", "--color=always", "$left", "$right"]
 
 [git]
 auto-local-branch = true
