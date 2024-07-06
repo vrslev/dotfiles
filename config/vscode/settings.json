@@ -87,6 +87,7 @@
   "githubPullRequests.pushBranch": "always",
   "gitlab.aiAssistedCodeSuggestions.enabled": false,
   "gitlab.duoChat.enabled": false,
+  "gitlab.showPipelineUpdateNotifications": true,
   "gitlens.ai.experimental.openai.model": "codellama:7b-instruct",
   "gitlens.ai.experimental.openai.url": "http://0.0.0.0:11434/v1/chat/completions",
   "gitlens.ai.experimental.provider": "openai",
