@@ -5,6 +5,7 @@ defaults write NSGlobalDomain NSWindowResizeTime -float 0.001 # Fast window resi
 # Fast keyboard repeat rate
 defaults write NSGlobalDomain KeyRepeat -int 1
 defaults write NSGlobalDomain InitialKeyRepeat -int 10
+defaults write -g ApplePressAndHoldEnabled -bool false
 
 # Expand save panel by default
 defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
