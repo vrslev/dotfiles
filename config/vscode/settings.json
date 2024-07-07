@@ -1,6 +1,6 @@
 {
   "$schema": "vscode://schemas/settings/user",
-  "[css][scss][less]": {
+  "[css]": {
     "editor.defaultFormatter": "vscode.css-language-features"
   },
   "[dockerfile]": {
@@ -9,14 +9,29 @@
   "[html]": {
     "editor.defaultFormatter": "vscode.html-language-features"
   },
-  "[javascript][javascriptreact][typescript]": {
+  "[javascript]": {
     "editor.defaultFormatter": "vscode.typescript-language-features"
   },
-  "[json][jsonc]": {
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[json]": {
     "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[less]": {
+    "editor.defaultFormatter": "vscode.css-language-features"
   },
   "[python]": {
     "editor.defaultFormatter": "charliermarsh.ruff"
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "vscode.css-language-features"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
   },
   "continue.showInlineTip": false,
   "continue.telemetryEnabled": false,
