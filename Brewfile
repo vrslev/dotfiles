@@ -67,6 +67,8 @@ mas "Pixelmator Pro", id: 1289583905
 mas "Reeder", id: 1529448980
 mas "Strongbox", id: 897283731
 mas "Things", id: 904280696
+vscode "amodio.tsl-problem-matcher"
+vscode "biomejs.biome"
 vscode "bradlc.vscode-tailwindcss"
 vscode "charliermarsh.ruff"
 vscode "continue.continue"
