@@ -21,5 +21,6 @@ config.window_padding = {
 }
 config.line_height = 1.1
 config.quit_when_all_windows_are_closed = false
+config.window_close_confirmation = "NeverPrompt"
 
 return config
