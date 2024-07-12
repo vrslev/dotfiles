@@ -135,6 +135,10 @@
   "python.diagnostics.sourceMapsEnabled": true,
   "python.terminal.activateEnvironment": false,
   "redhat.telemetry.enabled": false,
+  "ruff.lint.ignore": [
+    "F841"
+  ],
+  "ruff.nativeServer": true,
   "ruff.showSyntaxErrors": false,
   "rust-analyzer.check.command": "clippy",
   "rust-analyzer.inlayHints.typeHints.enable": false,
