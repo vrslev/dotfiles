@@ -1,3 +1,4 @@
+tap "guywaldman/tap"
 tap "homebrew/bundle"
 tap "homebrew/services"
 brew "bat"
@@ -44,6 +45,7 @@ brew "watch"
 brew "xh"
 brew "yq"
 brew "zoxide"
+brew "guywaldman/tap/magic-cli"
 cask "arc"
 cask "daisydisk"
 cask "finch"
@@ -66,6 +68,7 @@ mas "Pages", id: 409201541
 mas "Pixelmator Pro", id: 1289583905
 mas "Reeder", id: 1529448980
 mas "Strongbox", id: 897283731
+mas "Telegram", id: 747648890
 mas "Things", id: 904280696
 vscode "amodio.tsl-problem-matcher"
 vscode "biomejs.biome"

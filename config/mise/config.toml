@@ -4,6 +4,8 @@ node = "lts"
 usage = "latest"
 "pipx:maturin" = "latest"
 "cargo:cargo-insta" = "latest"
+go = "latest"
+"go:github.com/yusufcanb/tlm" = "latest"
 
 [settings]
 experimental = true
