@@ -1,6 +1,7 @@
 tap "guywaldman/tap"
 tap "homebrew/bundle"
 tap "homebrew/services"
+brew "aichat"
 brew "bat"
 brew "cargo-binstall"
 brew "cookiecutter"
