@@ -33,6 +33,7 @@
   "[typescript]": {
     "editor.defaultFormatter": "vscode.typescript-language-features"
   },
+  "continue.enableTabAutocomplete": true,
   "continue.showInlineTip": false,
   "continue.telemetryEnabled": false,
   "diffEditor.ignoreTrimWhitespace": false,
@@ -144,6 +145,9 @@
   "rust-analyzer.inlayHints.typeHints.enable": false,
   "scm.diffDecorations": "gutter",
   "security.workspace.trust.enabled": false,
+  "settingsSync.ignoredSettings": [
+    "continue.enableTabAutocomplete"
+  ],
   "terminal.external.osxExec": "Wezterm.app",
   "terminal.integrated.copyOnSelection": true,
   "terminal.integrated.defaultProfile.osx": "fish",
