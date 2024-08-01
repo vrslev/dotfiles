@@ -1,2 +1,2 @@
 #!/usr/bin/env fish
-_start-rancher; and ~/.rd/bin/docker $argv
+orbctl start &>/dev/null; and /usr/local/bin/docker $argv

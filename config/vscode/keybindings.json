@@ -70,7 +70,6 @@
     "command": "runCommands",
     "args": {
       "commands": [
-
         "workbench.action.files.save",
         "workbench.action.terminal.newInActiveWorkspace",
         "workbench.action.terminal.toggleTerminal",
@@ -89,7 +88,6 @@
     "command": "runCommands",
     "args": {
       "commands": [
-
         "workbench.action.files.save",
         "workbench.action.terminal.newInActiveWorkspace",
         {
@@ -102,7 +100,7 @@
     }
   },
   {
-    "key": "shift+`",
+    "key": "ctrl+alt+`",
     "command": "workbench.action.terminal.newInActiveWorkspace",
     "when": "terminalProcessSupported"
   }
