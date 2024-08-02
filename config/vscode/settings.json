@@ -36,6 +36,7 @@
   "continue.enableTabAutocomplete": true,
   "continue.showInlineTip": false,
   "continue.telemetryEnabled": false,
+  "diffEditor.experimental.useTrueInlineView": true,
   "diffEditor.ignoreTrimWhitespace": false,
   "dotenv.enableAutocloaking": false,
   "editor.codeActionsOnSave": {
