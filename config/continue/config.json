@@ -32,5 +32,6 @@
   ],
   "embeddingsProvider": {
     "provider": "transformers.js"
-  }
+  },
+  "docs": []
 }

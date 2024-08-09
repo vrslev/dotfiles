@@ -145,6 +145,9 @@
   "rust-analyzer.check.command": "clippy",
   "rust-analyzer.inlayHints.typeHints.enable": false,
   "scm.diffDecorations": "gutter",
+  "scm.repositories.sortOrder": "name",
+  "scm.showHistoryGraph": false,
+  "scm.workingSets.enabled": true,
   "security.workspace.trust.enabled": false,
   "settingsSync.ignoredSettings": [
     "continue.enableTabAutocomplete"
