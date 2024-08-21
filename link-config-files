@@ -16,7 +16,7 @@ for small_destination, small_source in config.items():
         small_source = Path(root).joinpath(*parts[1:])
 
     full_source = REPO_PATH / small_source
-    full_destination = Path.home() / small_destination
+    full_destination = Path(small_destination) if small_destination.startswith("/") else Path.home() / small_destination
 
     if full_destination.is_symlink() or full_destination.exists():
         if full_source != (linked_to := Path(os.readlink(full_destination))):

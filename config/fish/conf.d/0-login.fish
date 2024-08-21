@@ -28,4 +28,4 @@ if test "$VSCODE_RESOLVING_ENVIRONMENT" = 1
 end
 
 set -gx DOTFILES_ROOT (dirname (dirname (dirname (readlink (dirname (status --current-filename))))))
-fish_add_path -g $DOTFILES_ROOT/bin ~/.cargo/bin
+fish_add_path -g $DOTFILES_ROOT/bin ~/.local/bin ~/.cargo/bin

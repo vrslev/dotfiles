@@ -65,41 +65,6 @@
     }
   },
   {
-    "key": "ctrl+shift+t",
-    "when": "editorLangId == 'python'",
-    "command": "runCommands",
-    "args": {
-      "commands": [
-        "workbench.action.files.save",
-        "workbench.action.terminal.newInActiveWorkspace",
-        "workbench.action.terminal.toggleTerminal",
-        {
-          "command": "workbench.action.terminal.sendSequence",
-          "args": {
-            "text": "${userHome}/code/auto-typing-final/.venv/bin/auto-typing-final ${file}\u000Dexit\u000D"
-          }
-        }
-      ]
-    }
-  },
-  {
-    "key": "ctrl+shift+u",
-    "when": "editorLangId == 'python'",
-    "command": "runCommands",
-    "args": {
-      "commands": [
-        "workbench.action.files.save",
-        "workbench.action.terminal.newInActiveWorkspace",
-        {
-          "command": "workbench.action.terminal.sendSequence",
-          "args": {
-            "text": "${userHome}/code/auto-typing-final/.venv/bin/auto-typing-final ${file}\u000D"
-          }
-        }
-      ]
-    }
-  },
-  {
     "key": "ctrl+alt+`",
     "command": "workbench.action.terminal.newInActiveWorkspace",
     "when": "terminalProcessSupported"

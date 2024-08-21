@@ -46,6 +46,7 @@
 [core]
   editor = code --wait
   pager = delta
+	hooksPath = /Users/Shared/.git_hooks
 
 [diff]
   tool = vscode

@@ -1,0 +1,17 @@
+#!/bin/bash
+set -eo pipefail
+
+commit_msg_file=$1
+commit_source=$2
+
+if ! test -z "$commit_source"
+then
+  exit 0
+fi
+
+generated_commit_msg="$(uv run -q ~/code/dotfiles/bin/generate-commit-msg.py)"
+echo "Generated commit message: \"$generated_commit_msg\""
+
+echo "$generated_commit_msg
+$(cat $commit_msg_file)
+" >"$1"
