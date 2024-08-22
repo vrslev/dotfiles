@@ -104,16 +104,15 @@
   "githubPullRequests.pushBranch": "always",
   "gitlab.aiAssistedCodeSuggestions.enabled": false,
   "gitlab.duoChat.enabled": false,
-  "gitlab.showPipelineUpdateNotifications": true,
+  "gitlens.ai.experimental.generateCommitMessage.enabled": false,
+  "gitlens.cloudPatches.enabled": false,
   "gitlens.codeLens.enabled": false,
   "gitlens.currentLine.enabled": false,
-  "gitlens.launchpad.indicator.enabled": false,
+  "gitlens.launchpad.indicator.polling.enabled": false,
   "gitlens.plusFeatures.enabled": false,
   "gitlens.showWelcomeOnInstall": false,
   "gitlens.statusBar.enabled": false,
-  "hadolint.cliOptions": [
-    "--ignore=DL3045"
-  ],
+  "gitlens.views.commits.avatars": false,
   "hadolint.hadolintPath": "/opt/homebrew/bin/hadolint",
   "javascript.updateImportsOnFileMove.enabled": "always",
   "markdown.preview.typographer": true,
@@ -125,19 +124,22 @@
   "mypy-type-checker.preferDaemon": true,
   "mypy-type-checker.reportingScope": "workspace",
   "mypy.runUsingActiveInterpreter": true,
+  "prettier.requireConfig": true,
   "python.analysis.autoFormatStrings": true,
   "python.analysis.autoImportCompletions": true,
+  "python.analysis.cacheLSPData": true,
   "python.analysis.diagnosticMode": "workspace",
+  "python.analysis.extraCommitChars": true,
   "python.analysis.gotoDefinitionInStringLiteral": true,
   "python.analysis.inlayHints.functionReturnTypes": true,
   "python.analysis.inlayHints.pytestParameters": true,
+  "python.createEnvironment.trigger": "off",
   "python.diagnostics.sourceMapsEnabled": true,
   "python.terminal.activateEnvironment": false,
   "redhat.telemetry.enabled": false,
   "ruff.lint.ignore": [
     "F841"
   ],
-  "ruff.nativeServer": true,
   "ruff.showSyntaxErrors": false,
   "rust-analyzer.check.command": "clippy",
   "rust-analyzer.inlayHints.typeHints.enable": false,
@@ -146,8 +148,8 @@
   "scm.showHistoryGraph": false,
   "scm.workingSets.enabled": true,
   "security.workspace.trust.enabled": false,
-  "settingsSync.ignoredSettings": [
-    "continue.enableTabAutocomplete"
+  "settingsSync.ignoredExtensions": [
+    "continue.continue"
   ],
   "terminal.external.osxExec": "Wezterm.app",
   "terminal.integrated.copyOnSelection": true,
