@@ -70,12 +70,12 @@
     "when": "terminalProcessSupported"
   },
   {
-    "key": "cmd+shift+enter",
+    "key": "cmd+ctrl+enter",
     "command": "runCommands",
     "args": {
       "commands": [
         "git.commit",
-        // "git.push"
+        "git.push"
       ]
     },
     "when": "workbench.scm.active"
