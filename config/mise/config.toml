@@ -6,7 +6,6 @@ usage = "latest"
 "cargo:cargo-insta" = "latest"
 go = "latest"
 "go:github.com/yusufcanb/tlm" = "latest"
-"npm:opencommit" = "latest"
 
 [settings]
 experimental = true
