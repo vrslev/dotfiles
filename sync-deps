@@ -12,9 +12,9 @@ brew cleanup
 
 bash -c '
 set -xeuo pipefail
-mise upgrade
+mise upgrade --yes
 mise prune --yes
-mise reshim
+mise reshim --yes
 ' &
 
 wait
