@@ -18,9 +18,11 @@ for small_destination, small_source in config.items():
     full_source = REPO_PATH / small_source
     full_destination = Path(small_destination) if small_destination.startswith("/") else Path.home() / small_destination
 
-    if full_destination.is_symlink() or full_destination.exists():
+    if full_destination.is_symlink():
         if full_source != (linked_to := Path(os.readlink(full_destination))):
             print(f"was linked to different target: {small_destination} -> {linked_to}")
+    elif full_destination.exists():
+        print(f"already exists: {small_destination}")
     else:
         full_destination.parent.mkdir(parents=True, exist_ok=True)
         full_destination.symlink_to(full_source)

@@ -10,7 +10,7 @@ Here are:
 
 ## Getting started
 
-Install [Homebrew](https://brew.sh):
+Open terminal and install [Homebrew](https://brew.sh):
 
 ```sh
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -19,12 +19,12 @@ Install [Homebrew](https://brew.sh):
 Set up Fish:
 
 ```sh
-brew install fish
+/opt/homebrew/bin/brew install fish
 sudo /bin/bash -c "echo /opt/homebrew/bin/fish >>/etc/shells"
 chsh -s /opt/homebrew/bin/fish
 ```
 
-Restart your shell, then clone this repository:
+Open another terminal tab and clone this repository:
 
 ```sh
 mkdir code
@@ -32,11 +32,18 @@ git clone https://github.com/vrslev/dotfiles code/dotfiles
 cd code/dotfiles
 ```
 
+Install dependencies for the first time:
+
+```sh
+eval (/opt/homebrew/bin/brew shellenv)
+/opt/homebrew/bin/brew bundle --file Brewfile --no-restart
+```
+
 Install dotfiles:
 
 ```sh
-./sync-deps
 ./link-config-files
+./sync-deps
 sudo ./set-macos-defaults
 ```
 
