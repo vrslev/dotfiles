@@ -36,7 +36,7 @@ Install dependencies for the first time:
 
 ```sh
 eval (/opt/homebrew/bin/brew shellenv)
-/opt/homebrew/bin/brew bundle --file Brewfile --no-restart
+/opt/homebrew/bin/brew bundle --file Brewfile --no-restart --no-lock
 ```
 
 Install dotfiles:
