@@ -14,7 +14,7 @@
     }
   ],
   "tabAutocompleteModel": {
-    "title": "Starcoder-2 3b",
+    "title": "Starcoder 3b",
     "provider": "ollama",
     "model": "starcoder2:3b"
   },
@@ -31,7 +31,8 @@
     }
   ],
   "embeddingsProvider": {
-    "provider": "transformers.js"
+    "provider": "ollama",
+    "model": "nomic-embed-text"
   },
   "docs": []
 }
