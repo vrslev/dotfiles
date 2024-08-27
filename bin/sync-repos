@@ -1,52 +1,69 @@
-#!/usr/bin/env fish
+#!/usr/bin/env python3.12
+# pyright: strict
+import enum
+import subprocess
+import sys
+from pathlib import Path
 
-function print_status_name
-    echo (string replace --all _ " " "$argv")
-end
 
-function push_status
-    set --append $argv[1] $argv[2]
-    echo (set_color yellow)(print_status_name $argv[1])(set_color normal)\n
-end
+class SyncStatus(enum.Enum):
+    synced = "synced"
+    sync_failed = "sync failed"
+    no_remote_heads = "no remote heads"
 
-if test -n "$argv[1]"
-    set root_dir "$argv[1]"
-else
-    set root_dir .
-end
 
-set no_git_dir
-set no_remote_heads
-set synced
-set sync_failed
+def process_directory(repo_dir: Path) -> SyncStatus:
+    if (
+        subprocess.run(
+            [
+                "git",
+                "-C",
+                str(repo_dir),
+                "ls-remote",
+                "--heads",
+                "--quiet",
+                "--exit-code",
+            ],
+            stdout=subprocess.DEVNULL,
+        ).returncode
+        != 0
+    ):
+        return SyncStatus.no_remote_heads
 
-for repo_dir in $root_dir/*
-    if not test -d $repo_dir
-        continue
-    end
+    if subprocess.run(["git", "-C", str(repo_dir), "sync"]).returncode == 0:
+        return SyncStatus.synced
+    return SyncStatus.sync_failed
 
-    echo (set_color --bold magenta)$repo_dir(set_color normal)
 
-    if not test -d $repo_dir/.git
-        push_status no_git_dir $repo_dir
-        continue
-    end
+def main() -> int:
+    root_path = Path(sys.argv[1] if len(sys.argv) > 1 else ".")
+    results: dict[SyncStatus, list[Path]] = {
+        SyncStatus.synced: [],
+        SyncStatus.sync_failed: [],
+        SyncStatus.no_remote_heads: [],
+    }
 
-    if not git -C $repo_dir ls-remote --heads --quiet --exit-code &>/dev/null
-        push_status no_remote_heads $repo_dir
-        continue
-    end
+    for child_path in root_path.rglob("*"):
+        if not (child_path.is_dir() and (child_path / ".git").is_dir()):
+            continue
 
-    if git -C $repo_dir sync
-        push_status synced $repo_dir
-    else
-        push_status sync_failed $repo_dir
-    end
-end
+        print(f"\033[95m{child_path.relative_to(root_path)}\033[0m")
+        status = process_directory(child_path)
+        results[status].append(child_path)
+        print(f"\033[93m{status.value}\033[0m")
+        print()
 
-for one_summary in synced sync_failed no_git_dir no_remote_heads
-    if test -n "$$one_summary"
-        echo (set_color --bold blue)(print_status_name $one_summary):(set_color normal)
-        printf "%s\n" $$one_summary
-    end
-end
+    for status, paths in results.items():
+        if paths:
+            print(f"\033[94m{status.value}:\033[0m")
+            print("\n".join(str(v.relative_to(root_path)) for v in paths))
+
+    return (
+        1
+        if results[SyncStatus.sync_failed] or results[SyncStatus.no_remote_heads]
+        else 0
+    )
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
