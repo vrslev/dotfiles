@@ -21,6 +21,7 @@ set -gx HOMEBREW_NO_ENV_HINTS 1
 set -gx HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK 1
 set -gx CPPFLAGS -I/opt/homebrew/include
 set -gx LDFLAGS -L/opt/homebrew/lib
+set -gx UV_NATIVE_TLS true
 
 # allow vscode to detect tools
 if test "$VSCODE_RESOLVING_ENVIRONMENT" = 1
