@@ -29,7 +29,6 @@ brew "just"
 brew "killport"
 brew "macos-trash"
 brew "mas"
-brew "maturin"
 brew "mise"
 brew "mprocs"
 brew "ollama", restart_service: true

@@ -2,6 +2,7 @@
 python = ["3.12", "3.11", "3.10", "3.9", "3.8"]
 node = "lts"
 usage = "latest"
+"pipx:maturin" = "latest"
 "cargo:cargo-insta" = "latest"
 go = "latest"
 "go:github.com/yusufcanb/tlm" = "latest"
@@ -12,3 +13,4 @@ trusted_config_paths = [
     "~/.config/mise/config.toml",
     "~/code/dotfiles/config/mise/config.toml",
 ]
+pipx_uvx = true
