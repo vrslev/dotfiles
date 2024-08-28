@@ -1,0 +1,2 @@
+#!/usr/bin/env fish
+uv venv && poetry export --without-hashes --with dev -f requirements.txt | uv pip install --no-deps -r - && poetry install --only-root
