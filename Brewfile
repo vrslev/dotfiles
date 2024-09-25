@@ -62,6 +62,7 @@ cask "the-unarchiver"
 cask "transmission"
 cask "visual-studio-code"
 cask "wezterm"
+cask "zed"
 mas "HiSuite", id: 1232508288
 mas "Keynote", id: 409183694
 mas "Numbers", id: 409203825
