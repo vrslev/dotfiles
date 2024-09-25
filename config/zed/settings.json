@@ -1,0 +1,100 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette
+{
+  "base_keymap": "VSCode",
+  "features": {
+    "inline_completion_provider": "copilot"
+  },
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
+  },
+  "ui_font_size": 16,
+  "buffer_font_size": 16,
+  "theme": {
+    "mode": "system",
+    "light": "One Light",
+    "dark": "One Dark"
+  },
+  "autosave": {
+    "after_delay": {
+      "milliseconds": 100
+    }
+  },
+  "show_call_status_icon": false,
+  "terminal": {
+    "font_family": "FiraCode Nerd Font",
+    "copy_on_select": true,
+    "font_size": 14
+  },
+  "languages": {
+    "Python": {
+      "language_servers": ["pyright", "ruff", "pylsp"],
+      "code_actions_on_format": {
+        "source.fixAll.ruff": true,
+        "source.organizeImports.ruff": true
+      },
+      "formatter": [{ "language_server": { "name": "ruff" } }]
+    }
+  },
+  "lsp": {
+    // sadly, mypy support for pylsp is subpar
+    "pylsp": {
+      "initialization_options": {
+        "settings": {
+          "python": {
+            "pythonPath": ".venv/bin/python"
+          }
+        }
+      },
+      "settings": {
+        "plugins": {
+          "rope": {
+            "enabled": true
+          },
+          "pylint": {
+            "enabled": false
+          },
+          "pycodestyle": {
+            "enabled": false
+          },
+          "jedi_symbols": {
+            "enabled": true
+          },
+          "jedi_definition": {
+            "enabled": true
+          },
+          "jedi_references": {
+            "enabled": true
+          },
+          "jedi_hover": {
+            "enabled": true
+          },
+          "jedi_completion": {
+            "enabled": true
+          },
+          "jedi_signature_help": {
+            "enablded": true
+          },
+          "jedi": {
+            "environment": {
+              "PYTHONPATH": ".venv"
+            }
+          },
+          "pylsp_mypy": {
+            "live_mode": true,
+            "enabled": true,
+            "dmypy": true,
+            "overrides": ["--python-executable", ".venv/bin/python", true]
+          }
+        }
+      }
+    }
+  }
+}

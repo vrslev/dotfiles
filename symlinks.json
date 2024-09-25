@@ -1,17 +1,20 @@
 {
     ".bashrc": "config/bashrc",
-    ".default-python-packages": "config/default-python-packages",
     ".config/fish/conf.d": null,
     ".config/git": null,
     ".config/mise": null,
     ".config/starship.toml": null,
     ".config/wezterm": null,
+    ".config/zed/keymap.json": null,
+    ".config/zed/settings.json": null,
+    ".config/zed/tasks.json": null,
     ".continue/config.json": "config/continue/config.json",
+    ".default-python-packages": "config/default-python-packages",
     ".hushlogin": "config/hushlogin",
-    "code/.mise.toml": "config/mise/personal-repos-config.toml",
     "Library/Application Support/Code/User/keybindings.json": "config/vscode/keybindings.json",
     "Library/Application Support/Code/User/settings.json": "config/vscode/settings.json",
     "Library/Application Support/Code/User/snippets": "config/vscode/snippets",
     "Library/Application Support/jj": "config/jj",
-    "Library/Application Support/pypoetry/config.toml": "config/pypoetry/config.toml"
+    "Library/Application Support/pypoetry/config.toml": "config/pypoetry/config.toml",
+    "code/.mise.toml": "config/mise/personal-repos-config.toml"
 }
