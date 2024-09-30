@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -xeuo pipefail
+
+# https://github.com/vscode-kubernetes-tools/vscode-kubernetes-tools/issues/839
+echo echo \"{}\" > /usr/local/bin/vscode-kubectl-stub
+chmod +x /usr/local/bin/vscode-kubectl-stub

@@ -169,6 +169,7 @@
     "vs-kubernetes.disable-namespace-info-status-bar": true,
     "vs-kubernetes.enable-minimal-workflow": true
   },
+  "vscode-kubernetes.kubectl-path": "/usr/local/bin/vscode-kubectl-stub",
   "window.autoDetectColorScheme": true,
   "window.newWindowDimensions": "maximized",
   "workbench.activityBar.location": "bottom",
