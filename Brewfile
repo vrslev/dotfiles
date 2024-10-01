@@ -74,12 +74,14 @@ mas "Reeder", id: 1529448980
 mas "Strongbox", id: 897283731
 mas "Telegram", id: 747648890
 mas "Things", id: 904280696
+mas "Wipr", id: 1320666476
 vscode "amodio.tsl-problem-matcher"
 vscode "biomejs.biome"
 vscode "bradlc.vscode-tailwindcss"
 vscode "charliermarsh.ruff"
 vscode "continue.continue"
 vscode "dbaeumer.vscode-eslint"
+vscode "dnicolson.binary-plist"
 vscode "dotenv.dotenv-vscode"
 vscode "eamodio.gitlens"
 vscode "ecmel.vscode-html-css"
