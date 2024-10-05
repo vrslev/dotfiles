@@ -50,6 +50,7 @@
   "editor.formatOnSave": true,
   "editor.formatOnSaveMode": "file",
   "editor.formatOnType": true,
+  "editor.inlayHints.maximumLength": 0,
   "editor.linkedEditing": true,
   "editor.minimap.enabled": false,
   "editor.scrollbar.horizontalScrollbarSize": 7,
