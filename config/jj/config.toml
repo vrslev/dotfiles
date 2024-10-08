@@ -1,6 +1,0 @@
-[ui]
-editor = "code -w"
-diff.tool = ["difft", "--color=always", "$left", "$right"]
-
-[git]
-auto-local-branch = true

@@ -27,7 +27,6 @@ abbr --add l ls
 abbr --add pc pre-commit
 abbr --add po poetry
 abbr --add py python3
-abbr --add t task
 abbr --add tra trash
 
 alias c z
