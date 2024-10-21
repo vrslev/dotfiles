@@ -40,7 +40,7 @@
 		"copy_on_select": true,
 		"font_size": 14
 	},
-	// "format_on_save": "on", // TODO
+	"format_on_save": "on",
 	"languages": {
 		"Python": {
 			"language_servers": ["pyright", "ruff", "pylsp"],
@@ -109,6 +109,15 @@
 				"python.analysis": {
 					"diagnosticMode": "workspace",
 					"typeCheckingMode": "off"
+				}
+			}
+		},
+		"ruff": {
+			"initialization_options": {
+				"settings": {
+					"lint": {
+						"ignore": ["F841"]
+					}
 				}
 			}
 		},
