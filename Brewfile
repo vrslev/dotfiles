@@ -20,6 +20,7 @@ brew "ollama", restart_service: true
 brew "poetry"
 brew "postgresql@14"
 brew "rustup"
+brew "shellcheck"
 brew "telnet"
 brew "tree"
 brew "uv"
@@ -40,6 +41,7 @@ cask "transmission"
 cask "visual-studio-code"
 cask "wezterm"
 cask "zed"
+mas "GarageBand", id: 682658836
 mas "HiSuite", id: 1232508288
 mas "Keynote", id: 409183694
 mas "Numbers", id: 409203825
@@ -83,6 +85,7 @@ vscode "skellock.just"
 vscode "skyapps.fish-vscode"
 vscode "styled-components.vscode-styled-components"
 vscode "tamasfe.even-better-toml"
+vscode "tekumara.typos-vscode"
 vscode "tomoki1207.pdf"
 vscode "usernamehw.errorlens"
 vscode "vrslev.auto-typing-final"
