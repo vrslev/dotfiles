@@ -31,4 +31,4 @@ if test -z "$DIRENV_INITIALIZED"
 end
 
 set -gx DOTFILES_ROOT (dirname (dirname (dirname (readlink (dirname (status --current-filename))))))
-fish_add_path -g $DOTFILES_ROOT/bin ~/.local/bin ~/.cargo/bin
+fish_add_path -g ~/.local/bin ~/.cargo/bin
