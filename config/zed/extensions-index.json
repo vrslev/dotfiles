@@ -1,0 +1,479 @@
+{
+  "extensions": {
+    "biome": {
+      "manifest": {
+        "id": "biome",
+        "name": "Biome",
+        "version": "0.1.3",
+        "schema_version": 1,
+        "description": "Biome support for Zed",
+        "repository": "https://github.com/biomejs/biome-zed",
+        "authors": [
+          "biomejs <biomejs.dev>"
+        ],
+        "lib": {
+          "kind": "Rust",
+          "version": "0.0.6"
+        },
+        "themes": [],
+        "languages": [],
+        "grammars": {},
+        "language_servers": {
+          "biome": {
+            "language": "JavaScript",
+            "languages": [
+              "JavaScript",
+              "JSX",
+              "TypeScript",
+              "TSX",
+              "Vue.js",
+              "Astro",
+              "Svelte",
+              "JSON",
+              "JSONC",
+              "CSS",
+              "GraphQL"
+            ],
+            "language_ids": {
+              "JSON": "json",
+              "JSX": "javascriptreact",
+              "Astro": "astro",
+              "CSS": "css",
+              "TypeScript": "typescript",
+              "JavaScript": "javascript",
+              "Vue.js": "vuejs",
+              "Svelte": "svelte",
+              "TSX": "typescriptreact",
+              "JSONC": "jsonc",
+              "GraphQL": "graphql"
+            },
+            "code_action_kinds": null
+          }
+        },
+        "slash_commands": {},
+        "indexed_docs_providers": {},
+        "snippets": null
+      },
+      "dev": false
+    },
+    "docker-compose": {
+      "manifest": {
+        "id": "docker-compose",
+        "name": "Docker Compose",
+        "version": "0.1.0",
+        "schema_version": 1,
+        "description": "Syntax highlighting for Docker Compose files",
+        "repository": "https://github.com/eth0net/zed-docker-compose",
+        "authors": [
+          "eth0net <eth0net@pm.me>"
+        ],
+        "lib": {
+          "kind": "Rust",
+          "version": "0.0.6"
+        },
+        "themes": [],
+        "languages": [],
+        "grammars": {},
+        "language_servers": {
+          "docker-compose": {
+            "language": "YAML",
+            "languages": [],
+            "language_ids": {},
+            "code_action_kinds": null
+          }
+        },
+        "slash_commands": {},
+        "indexed_docs_providers": {},
+        "snippets": null
+      },
+      "dev": false
+    },
+    "env": {
+      "manifest": {
+        "id": "env",
+        "name": "env",
+        "version": "0.0.1",
+        "schema_version": 1,
+        "description": "🔐 Environment support. ✰ and report issues ➩",
+        "repository": "https://github.com/zarifpour/zed-env",
+        "authors": [
+          "Daniel Zarifpour <z@rifpour.xyz>"
+        ],
+        "lib": {
+          "kind": null,
+          "version": null
+        },
+        "themes": [],
+        "languages": [
+          "languages/env"
+        ],
+        "grammars": {
+          "env": {
+            "repository": "https://github.com/zarifpour/tree-sitter-dotenv",
+            "rev": "a854096808a5c1da0de998b31e5887995a98a89f",
+            "path": null
+          }
+        },
+        "language_servers": {},
+        "slash_commands": {},
+        "indexed_docs_providers": {},
+        "snippets": null
+      },
+      "dev": false
+    },
+    "github-theme": {
+      "manifest": {
+        "id": "github-theme",
+        "name": "Github Theme",
+        "version": "0.1.1",
+        "schema_version": 1,
+        "description": "GitHub themes for Zed",
+        "repository": "https://github.com/PyaeSoneAungRgn/github-zed-theme",
+        "authors": [
+          "Pyae Sone Aung <pyaesoneaungrgn@gmail.com>",
+          "Clay Tercek"
+        ],
+        "lib": {
+          "kind": null,
+          "version": null
+        },
+        "themes": [
+          "themes/github_theme.json"
+        ],
+        "languages": [],
+        "grammars": {},
+        "language_servers": {},
+        "slash_commands": {},
+        "indexed_docs_providers": {},
+        "snippets": null
+      },
+      "dev": false
+    },
+    "html": {
+      "manifest": {
+        "id": "html",
+        "name": "HTML",
+        "version": "0.1.3",
+        "schema_version": 1,
+        "description": "HTML support.",
+        "repository": "https://github.com/zed-industries/zed",
+        "authors": [
+          "Isaac Clayton <slightknack@gmail.com>"
+        ],
+        "lib": {
+          "kind": "Rust",
+          "version": "0.1.0"
+        },
+        "themes": [],
+        "languages": [
+          "languages/html"
+        ],
+        "grammars": {
+          "html": {
+            "repository": "https://github.com/tree-sitter/tree-sitter-html",
+            "rev": "bfa075d83c6b97cd48440b3829ab8d24a2319809",
+            "path": null
+          }
+        },
+        "language_servers": {
+          "vscode-html-language-server": {
+            "language": "HTML",
+            "languages": [],
+            "language_ids": {
+              "CSS": "css",
+              "HTML": "html"
+            },
+            "code_action_kinds": null
+          }
+        },
+        "slash_commands": {},
+        "indexed_docs_providers": {},
+        "snippets": null
+      },
+      "dev": false
+    },
+    "just": {
+      "manifest": {
+        "id": "just",
+        "name": "Justfile",
+        "version": "0.1.3",
+        "schema_version": 1,
+        "description": "Justfile syntax highlighting",
+        "repository": "https://github.com/jackTabsCode/zed-just",
+        "authors": [
+          "Jack T. <jack@jackt.space>"
+        ],
+        "lib": {
+          "kind": null,
+          "version": null
+        },
+        "themes": [],
+        "languages": [
+          "languages/just"
+        ],
+        "grammars": {
+          "just": {
+            "repository": "https://github.com/IndianBoy42/tree-sitter-just",
+            "rev": "792717c262df6d6fa285c1136a11c23cedadcb0c",
+            "path": null
+          }
+        },
+        "language_servers": {},
+        "slash_commands": {},
+        "indexed_docs_providers": {},
+        "snippets": null
+      },
+      "dev": false
+    },
+    "log": {
+      "manifest": {
+        "id": "log",
+        "name": "LOG",
+        "version": "0.0.6",
+        "schema_version": 1,
+        "description": "Syntax highlighting for log files.",
+        "repository": "https://github.com/nervenes/zed-log",
+        "authors": [
+          "nervenes",
+          "notpeter",
+          "d1y"
+        ],
+        "lib": {
+          "kind": null,
+          "version": null
+        },
+        "themes": [],
+        "languages": [
+          "languages/log"
+        ],
+        "grammars": {
+          "log": {
+            "repository": "https://github.com/Tudyx/tree-sitter-log",
+            "rev": "62cfe307e942af3417171243b599cc7deac5eab9",
+            "path": null
+          }
+        },
+        "language_servers": {},
+        "slash_commands": {},
+        "indexed_docs_providers": {},
+        "snippets": null
+      },
+      "dev": false
+    },
+    "pylsp": {
+      "manifest": {
+        "id": "pylsp",
+        "name": "Python LSP",
+        "version": "0.0.1",
+        "schema_version": 1,
+        "description": "python-lsp extension for Zed",
+        "repository": "https://github.com/rgbkrk/python-lsp-zed-extension",
+        "authors": [
+          "Kyle Kelley <rgbkrk@gmail.com>"
+        ],
+        "lib": {
+          "kind": "Rust",
+          "version": "0.0.6"
+        },
+        "themes": [],
+        "languages": [],
+        "grammars": {},
+        "language_servers": {
+          "pylsp": {
+            "language": null,
+            "languages": [
+              "Python"
+            ],
+            "language_ids": {},
+            "code_action_kinds": null
+          }
+        },
+        "slash_commands": {},
+        "indexed_docs_providers": {},
+        "snippets": null
+      },
+      "dev": false
+    },
+    "ruff": {
+      "manifest": {
+        "id": "ruff",
+        "name": "Ruff",
+        "version": "0.1.0",
+        "schema_version": 1,
+        "description": "Support for Ruff, the Python linter and formatter",
+        "repository": "https://github.com/zed-industries/zed",
+        "authors": [],
+        "lib": {
+          "kind": "Rust",
+          "version": "0.1.0"
+        },
+        "themes": [],
+        "languages": [],
+        "grammars": {},
+        "language_servers": {
+          "ruff": {
+            "language": null,
+            "languages": [
+              "Python"
+            ],
+            "language_ids": {},
+            "code_action_kinds": null
+          }
+        },
+        "slash_commands": {},
+        "indexed_docs_providers": {},
+        "snippets": null
+      },
+      "dev": false
+    },
+    "toml": {
+      "manifest": {
+        "id": "toml",
+        "name": "TOML",
+        "version": "0.1.1",
+        "schema_version": 1,
+        "description": "TOML support.",
+        "repository": "https://github.com/zed-industries/zed",
+        "authors": [
+          "Max Brunsfeld <max@zed.dev>",
+          "Ammar Arif <evergreenkary@gmail.com>"
+        ],
+        "lib": {
+          "kind": "Rust",
+          "version": "0.0.6"
+        },
+        "themes": [],
+        "languages": [
+          "languages/toml"
+        ],
+        "grammars": {
+          "toml": {
+            "repository": "https://github.com/tree-sitter/tree-sitter-toml",
+            "rev": "342d9be207c2dba869b9967124c679b5e6fd0ebe",
+            "path": null
+          }
+        },
+        "language_servers": {
+          "taplo": {
+            "language": "TOML",
+            "languages": [],
+            "language_ids": {},
+            "code_action_kinds": null
+          }
+        },
+        "slash_commands": {},
+        "indexed_docs_providers": {},
+        "snippets": null
+      },
+      "dev": false
+    }
+  },
+  "themes": {
+    "Github Dark": {
+      "extension": "github-theme",
+      "path": "themes/github_theme.json"
+    },
+    "Github Dark Colorblind": {
+      "extension": "github-theme",
+      "path": "themes/github_theme.json"
+    },
+    "Github Dark Dimmed": {
+      "extension": "github-theme",
+      "path": "themes/github_theme.json"
+    },
+    "Github Dark High Contrast": {
+      "extension": "github-theme",
+      "path": "themes/github_theme.json"
+    },
+    "Github Dark Tritanopia": {
+      "extension": "github-theme",
+      "path": "themes/github_theme.json"
+    },
+    "Github Light": {
+      "extension": "github-theme",
+      "path": "themes/github_theme.json"
+    },
+    "Github Light Colorblind": {
+      "extension": "github-theme",
+      "path": "themes/github_theme.json"
+    },
+    "Github Light High Contrast": {
+      "extension": "github-theme",
+      "path": "themes/github_theme.json"
+    },
+    "Github Light Tritanopia": {
+      "extension": "github-theme",
+      "path": "themes/github_theme.json"
+    }
+  },
+  "languages": {
+    "HTML": {
+      "extension": "html",
+      "path": "languages/html",
+      "matcher": {
+        "path_suffixes": [
+          "html",
+          "htm",
+          "shtml"
+        ],
+        "first_line_pattern": null
+      },
+      "grammar": "html"
+    },
+    "Just": {
+      "extension": "just",
+      "path": "languages/just",
+      "matcher": {
+        "path_suffixes": [
+          "justfile",
+          "Justfile",
+          "JUSTFILE",
+          ".justfile",
+          ".Justfile",
+          ".JUSTFILE",
+          ".just"
+        ],
+        "first_line_pattern": null
+      },
+      "grammar": "just"
+    },
+    "LOG": {
+      "extension": "log",
+      "path": "languages/log",
+      "matcher": {
+        "path_suffixes": [
+          "log"
+        ],
+        "first_line_pattern": null
+      },
+      "grammar": "log"
+    },
+    "TOML": {
+      "extension": "toml",
+      "path": "languages/toml",
+      "matcher": {
+        "path_suffixes": [
+          "Cargo.lock",
+          "toml"
+        ],
+        "first_line_pattern": null
+      },
+      "grammar": "toml"
+    },
+    "env": {
+      "extension": "env",
+      "path": "languages/env",
+      "matcher": {
+        "path_suffixes": [
+          "conf",
+          "env",
+          "envrc",
+          "example",
+          "local"
+        ],
+        "first_line_pattern": null
+      },
+      "grammar": "env"
+    }
+  }
+}
