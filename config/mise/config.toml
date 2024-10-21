@@ -1,7 +1,5 @@
 [env]
-_.path = [
-    "~/code/dotfiles/bin"
-]
+_.path = ["~/code/dotfiles/bin"]
 
 [tools]
 python = ["3.13", "3.12", "3.11", "3.10", "3.9", "3.8"]
@@ -29,6 +27,7 @@ go = "latest"
 "pipx:maturin" = "latest"
 "pipx:pre-commit" = "latest"
 "pipx:sqlfluff" = "latest"
+"pipx:python-lsp-server[all]" = { version = "latest", uvx_args = "--with pylsp-mypy" }
 
 [settings]
 experimental = true

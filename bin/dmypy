@@ -1,0 +1,6 @@
+#!/usr/bin/env fish
+if test -x .venv/bin/dmypy
+    .venv/bin/dmypy $argv
+else
+    dmypy $argv
+end

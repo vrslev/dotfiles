@@ -88,7 +88,6 @@
             }
           },
           "pylsp_mypy": {
-            "live_mode": true,
             "enabled": true,
             "dmypy": true,
             "overrides": ["--python-executable", ".venv/bin/python", true]
