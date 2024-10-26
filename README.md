@@ -42,9 +42,9 @@ cd code/dotfiles
 Install dependencies for the first time:
 
 ```sh
-mise up --yes --jobs=16
 eval (/opt/homebrew/bin/brew shellenv)
 /opt/homebrew/bin/brew bundle --file config/Brewfile --no-restart --no-lock
+mise up --yes --jobs=16
 ```
 
 Install dotfiles:
