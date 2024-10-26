@@ -18,10 +18,6 @@ Open terminal and install [Homebrew](https://brew.sh):
 
 Install [mise](https://mise.jdx.dev):
 
-```sh
-curl https://mise.run | sh
-```
-
 Set up Fish:
 
 ```sh
@@ -29,6 +25,11 @@ Set up Fish:
 sudo /bin/bash -c "echo /opt/homebrew/bin/fish >>/etc/shells"
 chsh -s /opt/homebrew/bin/fish
 ```
+
+```sh
+curl https://mise.run | sh
+```
+
 
 Open another terminal tab and clone this repository:
 
@@ -41,6 +42,7 @@ cd code/dotfiles
 Install dependencies for the first time:
 
 ```sh
+mise up --yes --jobs=16
 eval (/opt/homebrew/bin/brew shellenv)
 /opt/homebrew/bin/brew bundle --file config/Brewfile --no-restart --no-lock
 ```
