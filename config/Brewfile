@@ -9,6 +9,7 @@ brew "graphviz"
 brew "mas"
 brew "ollama", restart_service: true
 brew "postgresql@14"
+brew "rust"
 brew "telnet"
 brew "tree"
 brew "watch"
