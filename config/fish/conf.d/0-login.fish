@@ -31,4 +31,3 @@ if not set --query DIRENV_INITIALIZED
 end
 
 set -gx DOTFILES_ROOT (dirname (dirname (dirname (readlink (dirname (status --current-filename))))))
-fish_add_path -g ~/.local/bin ~/.cargo/bin

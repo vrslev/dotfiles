@@ -1,5 +1,5 @@
 [env]
-_.path = ["~/code/dotfiles/bin"]
+_.path = ["~/code/dotfiles/bin", "~/.local/bin", "~/.cargo/bin"]
 
 [tools]
 python = ["3.13", "3.12", "3.11", "3.10", "3.9", "3.8"]
