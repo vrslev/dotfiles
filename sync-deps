@@ -5,7 +5,7 @@ bash -c '
 set -xeuo pipefail
 brew update
 brew bundle --file ./config/Brewfile
-brew upgrade --greedy-latest
+brew upgrade --greedy
 brew bundle cleanup --file ./config/Brewfile --zap --force
 brew cleanup
 ' &
