@@ -27,7 +27,6 @@ set -gx MISE_ENVIRONMENT dev  # tell mise to use ~/.config/mise/config.dev.toml
 # allow vscode to detect tools
 if not set --query DIRENV_INITIALIZED
   ~/.local/bin/mise hook-env --shell fish | source
-  set -gx DIRENV_INITIALIZED 1
 end
 
 set -gx DOTFILES_ROOT (dirname (dirname (dirname (readlink (dirname (status --current-filename))))))

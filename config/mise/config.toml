@@ -1,5 +1,6 @@
 [env]
 _.path = ["~/code/dotfiles/bin", "~/.local/bin", "~/.cargo/bin"]
+DIRENV_INITIALIZED = 1
 
 [tools]
 python = ["3.13", "3.12", "3.11", "3.10", "3.9", "3.8"]
