@@ -17,19 +17,18 @@ UV_NATIVE_TLS = "true"
 DOTFILES_ROOT = "{{env.HOME}}/code/dotfiles"
 
 [tools]
-cargo-binstall = "latest"
-go = "latest"
-node = "latest"
-python = ["3.13", "3.12", "3.11", "3.10", "3.9", "3.8"]
 "ubi:astral-sh/uv" = "latest"
-
+cargo-binstall = "latest"
+eza = "latest"
 gh = { version = "latest", exe = "gh" }
+go = "latest"
 hadolint = "latest"
 helmfile = "latest"
+node = "latest"
+python = ["3.13", "3.12", "3.11", "3.10", "3.9", "3.8"]
 shellcheck = "latest"
 usage = "latest"
 yq = "latest"
-"cargo:eza" = "latest"
 "npm:http-server" = "latest"
 "pipx:cookiecutter" = "latest"
 "pipx:glances" = "latest"
