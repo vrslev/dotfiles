@@ -29,6 +29,13 @@ helmfile = "latest"
 "pipx:sqlfluff" = "latest"
 "pipx:python-lsp-server[all]" = { version = "latest", uvx_args = "--with pylsp-mypy" }
 "pipx:poetry" = "latest"
+yq = "latest"
+"ubi:cli/cli" = { version = "latest", exe = "gh" }
+"ubi:junegunn/fzf" = "latest"
+"ubi:gohugoio/hugo" = "latest"
+shellcheck = "latest"
+"ubi:astral-sh/uv" = "latest"
+
 
 [settings]
 experimental = true
