@@ -1,6 +1,21 @@
 [env]
 _.path = ["~/code/dotfiles/bin", "~/.local/bin", "~/.cargo/bin"]
 DIRENV_INITIALIZED = 1
+LANG = "en_US.UTF-8"
+LANGUAGE = "{{env.LANG}}"
+LC_ALL = "{{env.LANG}}"
+EDITOR = "code"
+PYTHONDONTWRITEBYTECODE = 1
+HOMEBREW_BUNDLE_NO_LOCK = 1
+HOMEBREW_NO_ANALYTICS = 1
+HOMEBREW_NO_AUTO_UPDATE = 1
+HOMEBREW_NO_ENV_HINTS = 1
+HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK = 1
+CPPFLAGS = "-I{{env.HOMEBREW_PREFIX}}/include"
+LDFLAGS = "-L{{env.HOMEBREW_PREFIX}}/lib"
+UV_NATIVE_TLS = "true"
+MISE_ENVIRONMENT ="dev"  # tell mise to use ~/.config/mise/config.dev.toml
+DOTFILES_ROOT = "{{env.HOME}}/code/dotfiles"
 
 [tools]
 python = ["3.13", "3.12", "3.11", "3.10", "3.9", "3.8"]
