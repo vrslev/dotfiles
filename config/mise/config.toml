@@ -63,3 +63,4 @@ trusted_config_paths = [
     "~/code/dotfiles/config/mise/config.local.toml",
 ]
 pipx_uvx = true
+jobs = 8

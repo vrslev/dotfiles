@@ -9,7 +9,7 @@
     ".config/zed/settings.json": null,
     ".config/zed/tasks.json": null,
     ".continue/config.json": "config/continue/config.json",
-    ".default-python-packages": "config/default-python-packages",
+    ".default-python-packages": "config/mise/default-python-packages",
     ".hushlogin": "config/hushlogin",
     "Library/Application Support/Code/User/keybindings.json": "config/vscode/keybindings.json",
     "Library/Application Support/Code/User/settings.json": "config/vscode/settings.json",
