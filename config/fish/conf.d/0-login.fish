@@ -26,7 +26,7 @@ set -gx MISE_ENVIRONMENT dev  # tell mise to use ~/.config/mise/config.dev.toml
 
 # allow vscode to detect tools
 if test -z "$DIRENV_INITIALIZED"
-  mise hook-env --shell fish | source
+  ~/.local/bin/mise hook-env --shell fish | source
   set -gx DIRENV_INITIALIZED 1
 end
 
