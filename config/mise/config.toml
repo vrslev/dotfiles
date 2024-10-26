@@ -19,7 +19,6 @@ DOTFILES_ROOT = "{{env.HOME}}/code/dotfiles"
 [tools]
 usage = "latest"
 python = ["3.13", "3.12", "3.11", "3.10", "3.9", "3.8"]
-node = "lts"
 go = "latest"
 bat = "latest"
 hadolint = "latest"
@@ -52,6 +51,7 @@ yq = "latest"
 shellcheck = "latest"
 "ubi:astral-sh/uv" = "latest"
 cargo-binstall = "latest"
+node = "latest"
 
 [settings]
 experimental = true
