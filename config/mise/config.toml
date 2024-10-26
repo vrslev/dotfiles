@@ -17,7 +17,6 @@ UV_NATIVE_TLS = "true"
 DOTFILES_ROOT = "{{env.HOME}}/code/dotfiles"
 
 [tools]
-"ubi:astral-sh/uv" = "latest"
 cargo-binstall = "latest"
 eza = "latest"
 gh = { version = "latest", exe = "gh" }
@@ -30,15 +29,9 @@ shellcheck = "latest"
 usage = "latest"
 yq = "latest"
 "npm:http-server" = "latest"
-"pipx:cookiecutter" = "latest"
-"pipx:glances" = "latest"
-"pipx:maturin" = "latest"
-"pipx:poetry" = "latest"
-"pipx:pre-commit" = "latest"
-"pipx:python-lsp-server[all]" = { version = "latest", uvx_args = "--with pylsp-mypy" }
-"pipx:sqlfluff" = "latest"
 "spm:sindresorhus/macos-trash" = "latest"
 "ubi:ajeetdsouza/zoxide" = "latest"
+"ubi:astral-sh/uv" = "latest"
 "ubi:BurntSushi/ripgrep" = "latest"
 "ubi:casey/just" = "latest"
 "ubi:dandavison/delta" = "latest"
@@ -53,6 +46,14 @@ yq = "latest"
 "ubi:sharkdp/hyperfine" = "latest"
 "ubi:starship/starship" = "latest"
 "ubi:XAMPPRocky/tokei" = "latest"
+
+"pipx:cookiecutter" = "latest"
+"pipx:glances" = "latest"
+"pipx:maturin" = "latest"
+"pipx:poetry" = "latest"
+"pipx:pre-commit" = "latest"
+"pipx:python-lsp-server[all]" = { version = "latest", uvx_args = "--with pylsp-mypy" }
+"pipx:sqlfluff" = "latest"
 
 [settings]
 jobs = 8
