@@ -55,8 +55,9 @@ yq = "latest"
 "ubi:starship/starship" = "latest"
 "ubi:XAMPPRocky/tokei" = "latest"
 
-
 [settings]
+jobs = 8
+pipx_uvx = true
 experimental = true
 trusted_config_paths = [
     "~/.config/mise/config.toml",
@@ -64,5 +65,3 @@ trusted_config_paths = [
     "~/code/dotfiles/config/mise/config.toml",
     "~/code/dotfiles/config/mise/config.local.toml",
 ]
-pipx_uvx = true
-jobs = 8
