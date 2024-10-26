@@ -17,14 +17,20 @@ UV_NATIVE_TLS = "true"
 DOTFILES_ROOT = "{{env.HOME}}/code/dotfiles"
 
 [tools]
-usage = "latest"
-python = ["3.13", "3.12", "3.11", "3.10", "3.9", "3.8"]
-go = "latest"
 bat = "latest"
+cargo-binstall = "latest"
+gh = { version = "latest", exe = "gh" }
+go = "latest"
 hadolint = "latest"
 helmfile = "latest"
+node = "latest"
+python = ["3.13", "3.12", "3.11", "3.10", "3.9", "3.8"]
+shellcheck = "latest"
+usage = "latest"
+yq = "latest"
 "cargo:cargo-insta" = "latest"
 "cargo:eza" = "latest"
+"cargo:fd-find" = "latest"
 "cargo:git-delta" = "latest"
 "cargo:hyperfine" = "latest"
 "cargo:just" = "latest"
@@ -35,24 +41,18 @@ helmfile = "latest"
 "cargo:tokei" = "latest"
 "cargo:xh" = "latest"
 "cargo:zoxide" = "latest"
-"cargo:fd-find" = "latest"
 "npm:http-server" = "latest"
 "pipx:cookiecutter" = "latest"
 "pipx:glances" = "latest"
 "pipx:maturin" = "latest"
-"pipx:pre-commit" = "latest"
-"pipx:sqlfluff" = "latest"
-"pipx:python-lsp-server[all]" = { version = "latest", uvx_args = "--with pylsp-mypy" }
 "pipx:poetry" = "latest"
-yq = "latest"
-"ubi:cli/cli" = { version = "latest", exe = "gh" }
-"ubi:junegunn/fzf" = "latest"
-"ubi:gohugoio/hugo" = "latest"
-shellcheck = "latest"
-"ubi:astral-sh/uv" = "latest"
-cargo-binstall = "latest"
-node = "latest"
+"pipx:pre-commit" = "latest"
+"pipx:python-lsp-server[all]" = { version = "latest", uvx_args = "--with pylsp-mypy" }
+"pipx:sqlfluff" = "latest"
 "spm:sindresorhus/macos-trash" = "latest"
+"ubi:astral-sh/uv" = "latest"
+"ubi:gohugoio/hugo" = "latest"
+"ubi:junegunn/fzf" = "latest"
 
 [settings]
 experimental = true
