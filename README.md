@@ -16,6 +16,12 @@ Open terminal and install [Homebrew](https://brew.sh):
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
+Install [mise](https://mise.jdx.dev):
+
+```sh
+curl https://mise.run | sh
+```
+
 Set up Fish:
 
 ```sh
