@@ -6,7 +6,6 @@ brew "ffmpeg"
 brew "fish"
 brew "git"
 brew "graphviz"
-brew "macos-trash"
 brew "mas"
 brew "ollama", restart_service: true
 brew "postgresql@14"

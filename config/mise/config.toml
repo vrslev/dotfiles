@@ -52,6 +52,7 @@ shellcheck = "latest"
 "ubi:astral-sh/uv" = "latest"
 cargo-binstall = "latest"
 node = "latest"
+"spm:sindresorhus/macos-trash" = "latest"
 
 [settings]
 experimental = true
