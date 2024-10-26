@@ -12,6 +12,7 @@ brew cleanup
 
 bash -c '
 set -xeuo pipefail
+mise self-update --yes
 mise upgrade --yes
 mise prune --yes
 mise reshim --yes
