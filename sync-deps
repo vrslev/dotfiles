@@ -4,9 +4,9 @@ set -xeuo pipefail
 bash -c '
 set -xeuo pipefail
 brew update
-brew bundle --file Brewfile
+brew bundle --file ./config/Brewfile
 brew upgrade --greedy-latest
-brew bundle cleanup --file Brewfile --zap --force
+brew bundle cleanup --file ./config/Brewfile --zap --force
 brew cleanup
 ' &
 

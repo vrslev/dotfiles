@@ -5,7 +5,7 @@ I use macOS, [Visual Studio Code](https://code.visualstudio.com), [WezTerm](http
 Here are:
 
 - Scripts at [`bin`](bin).
-- Always-fresh-and-tidy configuration for development tools at [`config`](config). Most of the files [are linked](./link-config-files) to `~/.config`. Dev tools and environment is defined with [`Brewfile`](Brewfile) and [mise config](./config/mise/config.toml)
+- Always-fresh-and-tidy configuration for development tools at [`config`](config). Most of the files [are linked](link-config-files) to `~/.config`. Dev tools and environment is defined with [`Brewfile`](config/Brewfile) and [mise config](config/mise/config.toml)
 - macOS defaults at [`set-macos-defaults`](set-macos-defaults) that make using it snappier and less annoying.
 
 ## Getting started
@@ -42,7 +42,7 @@ Install dependencies for the first time:
 
 ```sh
 eval (/opt/homebrew/bin/brew shellenv)
-/opt/homebrew/bin/brew bundle --file Brewfile --no-restart --no-lock
+/opt/homebrew/bin/brew bundle --file config/Brewfile --no-restart --no-lock
 ```
 
 Install dotfiles:
