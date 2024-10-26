@@ -17,6 +17,7 @@ brew "mise"
 brew "ollama", restart_service: true
 brew "postgresql@14"
 brew "rustup"
+brew "procs"
 brew "shellcheck"
 brew "telnet"
 brew "tree"
