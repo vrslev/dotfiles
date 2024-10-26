@@ -1,12 +1,18 @@
-if not status is-interactive; or not test -f /opt/homebrew/bin/brew
+if not status is-interactive
   exit
 end
 
 set fish_greeting  # Disable greeting on startup
 
-zoxide init fish | source
-starship init fish --print-full-init | source
-fzf --fish | source
+if type -q zoxide
+  zoxide init fish | source
+end
+if type -q starship
+  starship init fish --print-full-init | source
+end
+if type -q fzf
+  fzf --fish | source
+end
 
 function __last_history_item
   echo $history[1]
@@ -20,21 +26,19 @@ end
 abbr --add !\$ --position anywhere --function __last_history_arg
 
 abbr --add b brew
+abbr --add m mise
 abbr --add dco "docker compose"
 abbr --add g git
 abbr --add j just
 abbr --add l ls
-abbr --add pc pre-commit
 abbr --add po poetry
 abbr --add py python3
-abbr --add tra trash
+abbr --add rmt trash
+abbr --add c z
 
-alias c z
 alias cd z
-alias ds 'du -sh'
-alias gr 'cd $(git rev-parse --show-toplevel)'
+alias dir-size 'du -sh'
+alias git-root 'cd $(git rev-parse --show-toplevel)'
 alias ls "eza --icons --all"
 alias ll "ls --long"
 alias posix 'exec bash -c "$argv; exec fish"'
-alias python python3
-alias venv "uv venv"
