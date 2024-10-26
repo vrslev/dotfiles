@@ -4,9 +4,10 @@ _.path = ["~/code/dotfiles/bin"]
 [tools]
 python = ["3.13", "3.12", "3.11", "3.10", "3.9", "3.8"]
 node = "lts"
-usage = "latest"
 go = "latest"
-"cargo:bat" = "latest"
+bat = "latest"
+hadolint = "latest"
+helmfile = "latest"
 "cargo:cargo-insta" = "latest"
 "cargo:eza" = "latest"
 "cargo:git-delta" = "latest"
@@ -28,6 +29,7 @@ go = "latest"
 "pipx:pre-commit" = "latest"
 "pipx:sqlfluff" = "latest"
 "pipx:python-lsp-server[all]" = { version = "latest", uvx_args = "--with pylsp-mypy" }
+"pipx:poetry" = "latest"
 
 [settings]
 experimental = true
