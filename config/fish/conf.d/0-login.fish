@@ -2,7 +2,7 @@ if not status is-login
   exit
 end
 
-if not test -f /opt/homebrew/bin/brew
+if not type -q /opt/homebrew/bin/brew
   echo No brew installed!
   exit 1
 end
