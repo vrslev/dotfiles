@@ -8,6 +8,7 @@ else
   echo "brew not found"
 end
 
+# make sure VS Code can detect tools
 if type -q ~/.local/bin/mise
   if not set --query DIRENV_INITIALIZED
     ~/.local/bin/mise hook-env --shell fish | source
