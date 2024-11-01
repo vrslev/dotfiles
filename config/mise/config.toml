@@ -15,6 +15,7 @@ CPPFLAGS = "-I{{env.HOMEBREW_PREFIX}}/include"
 LDFLAGS = "-L{{env.HOMEBREW_PREFIX}}/lib"
 UV_NATIVE_TLS = "true"
 DOTFILES_ROOT = "{{env.HOME}}/code/dotfiles"
+STARSHIP_LOG = "error"
 
 [tools]
 bat = "latest"
