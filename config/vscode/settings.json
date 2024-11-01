@@ -131,6 +131,7 @@
   "python.analysis.diagnosticMode": "workspace",
   "python.analysis.extraCommitChars": true,
   "python.analysis.gotoDefinitionInStringLiteral": true,
+  "python.analysis.includeAliasesFromUserFiles": true,
   "python.analysis.inlayHints.functionReturnTypes": true,
   "python.analysis.inlayHints.pytestParameters": true,
   "python.createEnvironment.trigger": "off",
