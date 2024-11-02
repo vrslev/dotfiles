@@ -20,9 +20,10 @@ STARSHIP_LOG = "error"
 [tools]
 bat = "latest"
 cargo-binstall = "latest"
+cargo-insta = "latest"
 delta = "latest"
-eza = "latest"
 fd = "latest"
+fzf = "latest"
 gh = { version = "latest", exe = "gh" }
 go = "latest"
 gohugo = "latest"
@@ -30,6 +31,8 @@ hadolint = "latest"
 helmfile = "latest"
 hyperfine = "latest"
 just = "latest"
+killport = "latest"
+mprocs = "latest"
 node = "latest"
 python = ["3.13", "3.12", "3.11", "3.10", "3.9", "3.8"]
 ripgrep = "latest"
@@ -48,10 +51,6 @@ zoxide = "latest"
 "pipx:python-lsp-server[all]" = { version = "latest", uvx_args = "--with pylsp-mypy" }
 "pipx:sqlfluff" = "latest"
 "spm:sindresorhus/macos-trash" = "latest"
-"ubi:jkfran/killport" = "latest"
-"ubi:junegunn/fzf" = "latest"
-"ubi:mitsuhiko/insta" = "latest"
-"ubi:pvolok/mprocs" = "latest"
 
 [settings]
 jobs = 8
