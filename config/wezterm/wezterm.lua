@@ -3,7 +3,23 @@ local wezterm = require("wezterm")
 local config = {}
 
 config.check_for_updates = false
-config.color_scheme = wezterm.gui.get_appearance():find("Dark") and "Vs Code Dark+ (Gogh)" or "Google (light) (terminal.sexy)"
+
+function get_appearance()
+  if wezterm.gui then
+    return wezterm.gui.get_appearance()
+  end
+  return 'Dark'
+end
+
+function scheme_for_appearance(appearance)
+  if appearance:find 'Dark' then
+    return "Vs Code Dark+ (Gogh)"
+  else
+    return "Google (light) (terminal.sexy)"
+  end
+end
+
+config.color_scheme = scheme_for_appearance(get_appearance())
 config.font = wezterm.font("FiraCode Nerd Font")
 config.font_size = 15
 config.initial_cols = 130
