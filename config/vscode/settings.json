@@ -175,7 +175,6 @@
   "window.newWindowDimensions": "maximized",
   "workbench.activityBar.location": "bottom",
   "workbench.colorTheme": "Default Light Modern",
-  "workbench.editor.editorActionsLocation": "titleBar",
   "workbench.editorAssociations": {
     "git-rebase-todo": "default"
   },
