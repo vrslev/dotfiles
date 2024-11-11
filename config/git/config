@@ -10,16 +10,18 @@
 
 [alias]
   a = add
-  ch = checkout
-  main = !git switch main || git switch master
+  sw = switch
+  ch = switch
+  main-branch = !git rev-parse --verify --quiet --abbrev-ref origin/HEAD -- | yq 'sub(\"origin/\", \"\")'
+  main = !git sw "$(git main-branch)"
   cm = commit -m
   p = push
   l = log --oneline --decorate --color --graph
   d = diff
   ds = diff --staged
   st = status
-  rm-merged = !git branch --format '%(refname:short) %(upstream:track)' | awk '$2 == \"[gone]\" { print $1 }' | xargs -r git branch -D
-  sync = !git main && git pull --prune && git rm-merged
+  rm-merged-branches = !git branch --format '%(refname:short) %(upstream:track)' | awk '$2 == \"[gone]\" { print $1 }' | xargs -r git branch -D
+  sync = !git main && git pull --prune && git rm-merged-branches
 
 [rerere]
   enabled = true
