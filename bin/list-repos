@@ -4,7 +4,16 @@ import sys
 from pathlib import Path
 from typing import Iterable
 
-IGNORED_DIRS = ["node_modules", ".venv"]
+IGNORED_DIRS = [
+    "__pycache__",
+    ".git",
+    ".hypothesis",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".venv",
+    "node_modules",
+]
 
 
 def path_should_be_scanned(path: Path) -> bool:
@@ -13,14 +22,20 @@ def path_should_be_scanned(path: Path) -> bool:
     )
 
 
+def is_git_dir(path: Path) -> bool:
+    return (path / ".git").is_dir()
+
+
 def iter_git_repos(path: Path) -> Iterable[Path]:
     if not path_should_be_scanned(path):
         return
+    if is_git_dir(path):
+        yield path
 
     for child_path in path.glob("*"):
         if not path_should_be_scanned(child_path):
             continue
-        if (child_path / ".git").is_dir():
+        if is_git_dir(child_path):
             yield child_path
         for grand_child_path in child_path.glob("*"):
             yield from iter_git_repos(grand_child_path)
