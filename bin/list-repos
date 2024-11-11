@@ -4,16 +4,18 @@ import sys
 from pathlib import Path
 from typing import Iterable
 
-IGNORED_DIRS = [
-    "__pycache__",
-    ".git",
-    ".hypothesis",
-    ".mypy_cache",
-    ".pytest_cache",
-    ".ruff_cache",
-    ".venv",
-    "node_modules",
-]
+IGNORED_DIRS = frozenset(
+    {
+        "__pycache__",
+        ".git",
+        ".hypothesis",
+        ".mypy_cache",
+        ".pytest_cache",
+        ".ruff_cache",
+        ".venv",
+        "node_modules",
+    }
+)
 
 
 def path_should_be_scanned(path: Path) -> bool:
@@ -22,25 +24,29 @@ def path_should_be_scanned(path: Path) -> bool:
     )
 
 
-def is_git_dir(path: Path) -> bool:
-    return (path / ".git").is_dir()
-
-
-def iter_git_repos(path: Path) -> Iterable[Path]:
-    if not path_should_be_scanned(path):
+def iter_paths_with_ignores(root_path: Path) -> Iterable[Path]:
+    if not path_should_be_scanned(root_path):
         return
-    if is_git_dir(path):
-        yield path
+    yield root_path
 
-    for child_path in path.glob("*"):
+    for child_path in root_path.glob("*"):
         if not path_should_be_scanned(child_path):
             continue
-        if is_git_dir(child_path):
-            yield child_path
+        yield child_path
         for grand_child_path in child_path.glob("*"):
             yield from iter_git_repos(grand_child_path)
 
 
-root_path = Path(sys.argv[1] if len(sys.argv) > 1 else ".")
-for child_path in iter_git_repos(root_path):
-    print(child_path, flush=True)
+def iter_git_repos(root_path: Path) -> Iterable[Path]:
+    for child_path in iter_paths_with_ignores(root_path):
+        if (child_path / ".git").is_dir():
+            yield child_path
+
+
+root_paths = (
+    (Path(one_path) for one_path in sys.argv[1:]) if len(sys.argv) > 1 else (Path("."),)
+)
+
+for root_path in root_paths:
+    for child_path in iter_git_repos(root_path):
+        print(child_path, flush=True)

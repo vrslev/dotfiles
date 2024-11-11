@@ -1,2 +1,2 @@
 #!/usr/bin/env fish
-list-repos $argv[1] | parallel 'echo \033\[93m{}\033\[0m && git -C {} sync'
+list-repos $argv | parallel 'echo \033\[93m{}\033\[0m && git -C {} sync'
