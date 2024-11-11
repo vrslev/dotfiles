@@ -9,6 +9,7 @@ brew "git"
 brew "graphviz"
 brew "mas"
 brew "ollama", restart_service: true
+brew "parallel"
 brew "postgresql@14"
 brew "rust"
 brew "telnet"
@@ -29,6 +30,7 @@ cask "transmission"
 cask "visual-studio-code"
 cask "wezterm"
 cask "zed"
+mas "Focusito", id: 1473808464
 mas "GarageBand", id: 682658836
 mas "HiSuite", id: 1232508288
 mas "Keynote", id: 409183694
