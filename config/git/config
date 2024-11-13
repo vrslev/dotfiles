@@ -11,7 +11,7 @@
 [alias]
   a = add
   sw = switch
-  ch = switch
+  swc = switch --create
   main-branch = !git rev-parse --verify --quiet --abbrev-ref origin/HEAD -- | yq 'sub(\"origin/\", \"\")'
   main = !git sw "$(git main-branch)"
   cm = commit -m
