@@ -38,7 +38,7 @@
   },
   {
     "key": "cmd+i",
-    "command": "-continue.quickEdit"
+    "command": "-continue.edit"
   },
   {
     "key": "f3",
