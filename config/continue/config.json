@@ -16,7 +16,7 @@
   "tabAutocompleteModel": {
     "title": "Starcoder 3b",
     "provider": "ollama",
-    "model": "qwen2.5-coder:3b-base"
+    "model": "qwen2.5-coder:1.5b"
   },
   "allowAnonymousTelemetry": false,
   "contextProviders": [
