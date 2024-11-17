@@ -51,6 +51,7 @@ zoxide = "latest"
 "pipx:python-lsp-server[all]" = { version = "latest", uvx_args = "--with pylsp-mypy" }
 "pipx:sqlfluff" = "latest"
 "spm:sindresorhus/macos-trash" = "latest"
+bun = "latest"
 
 [settings]
 jobs = 8
