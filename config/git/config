@@ -48,6 +48,7 @@
 [core]
   editor = code --wait
   pager = delta
+	attributesfile = ~/code/dotfiles/config/git/gitattributes
 
 [diff]
   tool = vscode
@@ -77,3 +78,6 @@
 
 [column]
   ui = auto
+[merge "mergiraf"]
+	name = mergiraf
+	driver = mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P

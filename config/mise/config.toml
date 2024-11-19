@@ -52,6 +52,7 @@ zoxide = "latest"
 "pipx:sqlfluff" = "latest"
 "spm:sindresorhus/macos-trash" = "latest"
 bun = "latest"
+"cargo:mergiraf" = "latest"
 
 [settings]
 jobs = 8
