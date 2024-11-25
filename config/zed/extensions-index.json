@@ -35,21 +35,22 @@
               "GraphQL"
             ],
             "language_ids": {
-              "Astro": "astro",
-              "JavaScript": "javascript",
-              "CSS": "css",
-              "Vue.js": "vuejs",
-              "JSX": "javascriptreact",
-              "JSON": "json",
               "Svelte": "svelte",
-              "TypeScript": "typescript",
+              "JSONC": "jsonc",
               "GraphQL": "graphql",
+              "CSS": "css",
+              "Astro": "astro",
+              "JSON": "json",
               "TSX": "typescriptreact",
-              "JSONC": "jsonc"
+              "JSX": "javascriptreact",
+              "TypeScript": "typescript",
+              "JavaScript": "javascript",
+              "Vue.js": "vuejs"
             },
             "code_action_kinds": null
           }
         },
+        "context_servers": {},
         "slash_commands": {},
         "indexed_docs_providers": {},
         "snippets": null
@@ -82,6 +83,7 @@
             "code_action_kinds": null
           }
         },
+        "context_servers": {},
         "slash_commands": {},
         "indexed_docs_providers": {},
         "snippets": null
@@ -115,6 +117,7 @@
           }
         },
         "language_servers": {},
+        "context_servers": {},
         "slash_commands": {},
         "indexed_docs_providers": {},
         "snippets": null
@@ -143,6 +146,51 @@
         "languages": [],
         "grammars": {},
         "language_servers": {},
+        "context_servers": {},
+        "slash_commands": {},
+        "indexed_docs_providers": {},
+        "snippets": null
+      },
+      "dev": false
+    },
+    "html": {
+      "manifest": {
+        "id": "html",
+        "name": "HTML",
+        "version": "0.1.4",
+        "schema_version": 1,
+        "description": "HTML support.",
+        "repository": "https://github.com/zed-industries/zed",
+        "authors": [
+          "Isaac Clayton <slightknack@gmail.com>"
+        ],
+        "lib": {
+          "kind": "Rust",
+          "version": "0.1.0"
+        },
+        "themes": [],
+        "languages": [
+          "languages/html"
+        ],
+        "grammars": {
+          "html": {
+            "repository": "https://github.com/tree-sitter/tree-sitter-html",
+            "rev": "bfa075d83c6b97cd48440b3829ab8d24a2319809",
+            "path": null
+          }
+        },
+        "language_servers": {
+          "vscode-html-language-server": {
+            "language": "HTML",
+            "languages": [],
+            "language_ids": {
+              "CSS": "css",
+              "HTML": "html"
+            },
+            "code_action_kinds": null
+          }
+        },
+        "context_servers": {},
         "slash_commands": {},
         "indexed_docs_providers": {},
         "snippets": null
@@ -176,6 +224,7 @@
           }
         },
         "language_servers": {},
+        "context_servers": {},
         "slash_commands": {},
         "indexed_docs_providers": {},
         "snippets": null
@@ -211,6 +260,7 @@
           }
         },
         "language_servers": {},
+        "context_servers": {},
         "slash_commands": {},
         "indexed_docs_providers": {},
         "snippets": null
@@ -245,6 +295,7 @@
             "code_action_kinds": null
           }
         },
+        "context_servers": {},
         "slash_commands": {},
         "indexed_docs_providers": {},
         "snippets": null
@@ -277,6 +328,7 @@
             "code_action_kinds": null
           }
         },
+        "context_servers": {},
         "slash_commands": {},
         "indexed_docs_providers": {},
         "snippets": null
@@ -318,6 +370,7 @@
             "code_action_kinds": null
           }
         },
+        "context_servers": {},
         "slash_commands": {},
         "indexed_docs_providers": {},
         "snippets": null
@@ -364,6 +417,19 @@
     }
   },
   "languages": {
+    "HTML": {
+      "extension": "html",
+      "path": "languages/html",
+      "matcher": {
+        "path_suffixes": [
+          "html",
+          "htm",
+          "shtml"
+        ],
+        "first_line_pattern": null
+      },
+      "grammar": "html"
+    },
     "Just": {
       "extension": "just",
       "path": "languages/just",
