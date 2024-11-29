@@ -53,10 +53,10 @@ zoxide = "latest"
 "spm:sindresorhus/macos-trash" = "latest"
 bun = "latest"
 "cargo:mergiraf" = "latest"
+rust = "latest"
 
 [settings]
 jobs = 8
-pipx_uvx = true
 experimental = true
 trusted_config_paths = [
     "~/.config/mise/config.toml",
@@ -64,3 +64,5 @@ trusted_config_paths = [
     "~/code/dotfiles/config/mise/config.toml",
     "~/code/dotfiles/config/mise/config.local.toml",
 ]
+pipx = { uvx = true }
+python = { uv_venv_auto = true }

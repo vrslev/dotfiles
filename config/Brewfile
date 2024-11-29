@@ -11,7 +11,6 @@ brew "mas"
 brew "ollama", restart_service: true
 brew "parallel"
 brew "postgresql@14"
-brew "rust"
 brew "telnet"
 brew "tree"
 brew "uv"
