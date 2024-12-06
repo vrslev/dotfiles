@@ -54,6 +54,7 @@ zoxide = "latest"
 bun = "latest"
 "cargo:mergiraf" = "latest"
 rust = "latest"
+"pipx:pypyp" = "latest"
 
 [settings]
 jobs = 8
@@ -65,4 +66,3 @@ trusted_config_paths = [
     "~/code/dotfiles/config/mise/config.local.toml",
 ]
 pipx = { uvx = true }
-python = { uv_venv_auto = true }

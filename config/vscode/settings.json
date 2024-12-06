@@ -134,6 +134,40 @@
   "python.analysis.gotoDefinitionInStringLiteral": true,
   "python.analysis.inlayHints.functionReturnTypes": true,
   "python.analysis.inlayHints.pytestParameters": true,
+  "python.analysis.packageIndexDepths": [
+    {
+      "depth": 2,
+      "name": "sklearn"
+    },
+    {
+      "depth": 2,
+      "name": "matplotlib"
+    },
+    {
+      "depth": 2,
+      "name": "scipy"
+    },
+    {
+      "depth": 2,
+      "name": "django"
+    },
+    {
+      "depth": 2,
+      "name": "flask"
+    },
+    {
+      "depth": 2,
+      "name": "fastapi"
+    },
+    {
+      "depth": 4,
+      "name": "litestar"
+    },
+    {
+      "depth": 4,
+      "name": "polyfactory"
+    }
+  ],
   "python.createEnvironment.trigger": "off",
   "python.diagnostics.sourceMapsEnabled": true,
   "python.terminal.activateEnvironment": false,
