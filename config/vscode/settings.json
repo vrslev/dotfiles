@@ -181,7 +181,6 @@
   "scm.diffDecorations": "gutter",
   "scm.repositories.sortOrder": "name",
   "scm.showHistoryGraph": false,
-  "scm.workingSets.enabled": true,
   "security.workspace.trust.enabled": false,
   "settingsSync.ignoredExtensions": [
     "continue.continue"
