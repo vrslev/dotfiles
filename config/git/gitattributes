@@ -6,6 +6,7 @@
 *.json merge=mergiraf
 *.yml merge=mergiraf
 *.yaml merge=mergiraf
+*.toml merge=mergiraf
 *.html merge=mergiraf
 *.htm merge=mergiraf
 *.xhtml merge=mergiraf
@@ -17,3 +18,7 @@
 *.hpp merge=mergiraf
 *.cs merge=mergiraf
 *.dart merge=mergiraf
+*.scala merge=mergiraf
+*.sbt merge=mergiraf
+*.ts merge=mergiraf
+*.py merge=mergiraf
