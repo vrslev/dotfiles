@@ -8,7 +8,6 @@
     ".config/zed/keymap.json": null,
     ".config/zed/settings.json": null,
     ".config/zed/tasks.json": null,
-    ".continue/config.json": "config/continue/config.json",
     ".default-python-packages": "config/mise/default-python-packages",
     ".hushlogin": "config/hushlogin",
     "Library/Application Support/Code/User/keybindings.json": "config/vscode/keybindings.json",
