@@ -35,17 +35,17 @@
               "GraphQL"
             ],
             "language_ids": {
+              "CSS": "css",
+              "Astro": "astro",
+              "TSX": "typescriptreact",
               "JSX": "javascriptreact",
+              "TypeScript": "typescript",
               "Vue.js": "vuejs",
+              "JSONC": "jsonc",
               "Svelte": "svelte",
               "JSON": "json",
-              "Astro": "astro",
               "GraphQL": "graphql",
-              "JavaScript": "javascript",
-              "JSONC": "jsonc",
-              "TSX": "typescriptreact",
-              "CSS": "css",
-              "TypeScript": "typescript"
+              "JavaScript": "javascript"
             },
             "code_action_kinds": null
           }
@@ -128,7 +128,7 @@
       "manifest": {
         "id": "github-theme",
         "name": "Github Theme",
-        "version": "0.1.1",
+        "version": "0.1.3",
         "schema_version": 1,
         "description": "GitHub themes for Zed",
         "repository": "https://github.com/PyaeSoneAungRgn/github-zed-theme",
@@ -428,6 +428,7 @@
         ],
         "first_line_pattern": null
       },
+      "hidden": false,
       "grammar": "html"
     },
     "Just": {
@@ -445,6 +446,7 @@
         ],
         "first_line_pattern": null
       },
+      "hidden": false,
       "grammar": "just"
     },
     "LOG": {
@@ -456,6 +458,7 @@
         ],
         "first_line_pattern": null
       },
+      "hidden": false,
       "grammar": "log"
     },
     "TOML": {
@@ -470,6 +473,7 @@
         ],
         "first_line_pattern": null
       },
+      "hidden": false,
       "grammar": "toml"
     },
     "env": {
@@ -485,6 +489,7 @@
         ],
         "first_line_pattern": null
       },
+      "hidden": false,
       "grammar": "env"
     }
   }

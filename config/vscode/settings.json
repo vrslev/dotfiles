@@ -33,6 +33,7 @@
   "[typescript]": {
     "editor.defaultFormatter": "vscode.typescript-language-features"
   },
+  "chat.commandCenter.enabled": false,
   "continue.enableTabAutocomplete": true,
   "continue.pauseTabAutocompleteOnBattery": true,
   "continue.showInlineTip": false,
@@ -57,9 +58,6 @@
   "editor.scrollbar.horizontalScrollbarSize": 7,
   "editor.scrollbar.verticalScrollbarSize": 7,
   "editor.stickyScroll.enabled": true,
-  "editor.tokenColorCustomizations": {
-    "textMateRules": []
-  },
   "emmet.includeLanguages": {
     "jinja-html": "html"
   },
@@ -182,9 +180,6 @@
   "scm.repositories.sortOrder": "name",
   "scm.showHistoryGraph": false,
   "security.workspace.trust.enabled": false,
-  "settingsSync.ignoredExtensions": [
-    "continue.continue"
-  ],
   "terminal.external.osxExec": "Wezterm.app",
   "terminal.integrated.copyOnSelection": true,
   "terminal.integrated.defaultProfile.osx": "fish",
