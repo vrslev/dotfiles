@@ -45,3 +45,6 @@ alias git-root 'cd $(git rev-parse --show-toplevel)'
 alias ls "eza --icons --all"
 alias ll "ls --long"
 alias posix 'exec bash -c "$argv; exec fish"'
+
+# Bind Ctrl + I to show suggestions from fish-ai
+bind \e\[105\;5u _fish_ai_autocomplete_or_fix
