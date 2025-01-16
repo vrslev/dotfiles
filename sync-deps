@@ -6,7 +6,6 @@ brew bundle --file ./config/Brewfile
 brew upgrade --greedy
 brew bundle cleanup --file ./config/Brewfile --zap --force
 brew cleanup
-mise self-update --yes
 mise upgrade --yes
 mise prune --yes
 mise reshim --yes

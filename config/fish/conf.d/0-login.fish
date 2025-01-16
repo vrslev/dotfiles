@@ -9,9 +9,9 @@ else
 end
 
 # make sure VS Code can detect tools
-if type -q ~/.local/bin/mise
+if type -q mise
   if not set --query DIRENV_INITIALIZED
-    ~/.local/bin/mise hook-env --shell fish | source
+    mise hook-env --shell fish | source
   end
 else
   echo "mise not found"
