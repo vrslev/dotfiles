@@ -1,5 +1,6 @@
-#!/usr/bin/env python3.13
+#!/usr/bin/env uvx python@3.13
 # pyright: strict
+from contextlib import suppress
 import sys
 from pathlib import Path
 from typing import Iterable
@@ -39,8 +40,9 @@ def iter_paths_with_ignores(root_path: Path) -> Iterable[Path]:
 
 def iter_git_repos(root_path: Path) -> Iterable[Path]:
     for child_path in iter_paths_with_ignores(root_path):
-        if (child_path / ".git").is_dir():
-            yield child_path
+        with suppress(PermissionError):
+            if (child_path / ".git").is_dir():
+                yield child_path
 
 
 root_paths = (
