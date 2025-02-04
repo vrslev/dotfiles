@@ -27,7 +27,6 @@ fzf = "latest"
 gh = { version = "latest", exe = "gh" }
 go = "latest"
 gohugo = "latest"
-hadolint = "latest"
 helmfile = "latest"
 hyperfine = "latest"
 just = "latest"

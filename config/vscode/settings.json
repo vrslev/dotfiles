@@ -58,6 +58,9 @@
   "editor.scrollbar.horizontalScrollbarSize": 7,
   "editor.scrollbar.verticalScrollbarSize": 7,
   "editor.stickyScroll.enabled": true,
+  "editor.tokenColorCustomizations": {
+    "textMateRules": []
+  },
   "emmet.includeLanguages": {
     "jinja-html": "html"
   },
@@ -102,8 +105,11 @@
   "githubPullRequests.notifications": "pullRequests",
   "githubPullRequests.pullBranch": "always",
   "githubPullRequests.pushBranch": "always",
+  "gitlab.duo.enabledWithoutGitlabProject": false,
   "gitlab.duoChat.enabled": false,
   "gitlab.duoCodeSuggestions.enabled": false,
+  "gitlab.duoCodeSuggestions.openTabsContext": false,
+  "gitlab.keybindingHints.enabled": false,
   "gitlens.ai.experimental.generateCommitMessage.enabled": false,
   "gitlens.cloudPatches.enabled": false,
   "gitlens.codeLens.enabled": false,
@@ -129,6 +135,7 @@
   "python.analysis.autoImportCompletions": true,
   "python.analysis.diagnosticMode": "workspace",
   "python.analysis.extraCommitChars": true,
+  "python.analysis.generateWithTypeAnnotation": true,
   "python.analysis.gotoDefinitionInStringLiteral": true,
   "python.analysis.inlayHints.functionReturnTypes": true,
   "python.analysis.inlayHints.pytestParameters": true,
@@ -166,6 +173,7 @@
       "name": "polyfactory"
     }
   ],
+  "python.analysis.supportRestructuredText": true,
   "python.createEnvironment.trigger": "off",
   "python.diagnostics.sourceMapsEnabled": true,
   "python.terminal.activateEnvironment": false,
@@ -193,6 +201,7 @@
   "terminal.integrated.stickyScroll.enabled": true,
   "terminal.integrated.tabs.hideCondition": "never",
   "typescript.updateImportsOnFileMove.enabled": "always",
+  "typos.config": "~/.config/typos.toml",
   "vs-kubernetes": {
     "vs-kubernetes.crd-code-completion": "disabled",
     "vs-kubernetes.disable-context-info-status-bar": true,
@@ -212,8 +221,5 @@
   "workbench.startupEditor": "none",
   "workbench.tips.enabled": false,
   "zenMode.centerLayout": false,
-  "zenMode.fullScreen": false,
-  "editor.tokenColorCustomizations": {
-    "textMateRules": []
-  }
+  "zenMode.fullScreen": false
 }
