@@ -221,5 +221,7 @@
   "workbench.startupEditor": "none",
   "workbench.tips.enabled": false,
   "zenMode.centerLayout": false,
-  "zenMode.fullScreen": false
+  "zenMode.fullScreen": false,
+  "commitollama.model": "Custom",
+  "commitollama.custom.model": "qwen2.5-coder:1.5b-instruct"
 }
