@@ -1,5 +1,4 @@
 {
-  "$schema": "vscode://schemas/settings/user",
   "[css]": {
     "editor.defaultFormatter": "vscode.css-language-features"
   },
@@ -33,7 +32,10 @@
   "[typescript]": {
     "editor.defaultFormatter": "vscode.typescript-language-features"
   },
+  "$schema": "vscode://schemas/settings/user",
   "chat.commandCenter.enabled": false,
+  "commitollama.custom.model": "qwen2.5-coder:1.5b-instruct",
+  "commitollama.model": "Custom",
   "continue.enableTabAutocomplete": true,
   "continue.pauseTabAutocompleteOnBattery": true,
   "continue.showInlineTip": false,
@@ -45,6 +47,9 @@
     "source.fixAll": "explicit",
     "source.organizeImports": "explicit"
   },
+  "editor.experimental.preferTreeSitter": [
+    "typescript"
+  ],
   "editor.fontFamily": "FiraCode Nerd Font",
   "editor.fontLigatures": true,
   "editor.fontSize": 14,
@@ -82,11 +87,11 @@
   "files.autoSave": "afterDelay",
   "files.autoSaveDelay": 300,
   "files.exclude": {
+    "**/__pycache__": true,
     "**/.coverage*": true,
     "**/.mypy_cache": true,
     "**/.pytest_cache": true,
     "**/.ruff_cache": true,
-    "**/__pycache__": true,
     "**/coverage.xml": true
   },
   "files.insertFinalNewline": true,
@@ -179,7 +184,8 @@
   "python.terminal.activateEnvironment": false,
   "redhat.telemetry.enabled": false,
   "ruff.lint.ignore": [
-    "F841"
+    "F841",
+    "T201"
   ],
   "ruff.showSyntaxErrors": false,
   "rust-analyzer.check.command": "clippy",
@@ -221,7 +227,5 @@
   "workbench.startupEditor": "none",
   "workbench.tips.enabled": false,
   "zenMode.centerLayout": false,
-  "zenMode.fullScreen": false,
-  "commitollama.model": "Custom",
-  "commitollama.custom.model": "qwen2.5-coder:1.5b-instruct"
+  "zenMode.fullScreen": false
 }
