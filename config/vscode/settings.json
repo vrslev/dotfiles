@@ -2,9 +2,6 @@
   "[css]": {
     "editor.defaultFormatter": "vscode.css-language-features"
   },
-  "[dockerfile]": {
-    "editor.defaultFormatter": "ms-azuretools.vscode-docker"
-  },
   "[html]": {
     "editor.defaultFormatter": "vscode.html-language-features"
   },
@@ -36,20 +33,14 @@
   "chat.commandCenter.enabled": false,
   "commitollama.custom.model": "qwen2.5-coder:1.5b-instruct",
   "commitollama.model": "Custom",
-  "continue.enableTabAutocomplete": true,
-  "continue.pauseTabAutocompleteOnBattery": true,
+  "continue.disableQuickFix": true,
   "continue.showInlineTip": false,
   "continue.telemetryEnabled": false,
-  "diffEditor.experimental.useTrueInlineView": true,
   "diffEditor.ignoreTrimWhitespace": false,
-  "dotenv.enableAutocloaking": false,
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit",
     "source.organizeImports": "explicit"
   },
-  "editor.experimental.preferTreeSitter": [
-    "typescript"
-  ],
   "editor.fontFamily": "FiraCode Nerd Font",
   "editor.fontLigatures": true,
   "editor.fontSize": 14,
@@ -63,12 +54,6 @@
   "editor.scrollbar.horizontalScrollbarSize": 7,
   "editor.scrollbar.verticalScrollbarSize": 7,
   "editor.stickyScroll.enabled": true,
-  "editor.tokenColorCustomizations": {
-    "textMateRules": []
-  },
-  "emmet.includeLanguages": {
-    "jinja-html": "html"
-  },
   "emmet.triggerExpansionOnTab": true,
   "errorLens.enabledDiagnosticLevels": [
     "error",
@@ -80,7 +65,6 @@
   "explorer.confirmDragAndDrop": false,
   "explorer.confirmPasteNative": false,
   "files.associations": {
-    ".env*": "dotenv",
     ".fish_profile": "fish",
     "Brewfile-*": "ruby"
   },
@@ -106,25 +90,13 @@
   "git.mergeEditor": true,
   "git.openRepositoryInParentFolders": "always",
   "git.replaceTagsWhenPull": true,
-  "githubPullRequests.defaultMergeMethod": "squash",
-  "githubPullRequests.notifications": "pullRequests",
-  "githubPullRequests.pullBranch": "always",
-  "githubPullRequests.pushBranch": "always",
-  "gitlab.duo.enabledWithoutGitlabProject": false,
-  "gitlab.duoChat.enabled": false,
-  "gitlab.duoCodeSuggestions.enabled": false,
-  "gitlab.duoCodeSuggestions.openTabsContext": false,
-  "gitlab.keybindingHints.enabled": false,
-  "gitlens.ai.experimental.generateCommitMessage.enabled": false,
   "gitlens.cloudPatches.enabled": false,
   "gitlens.codeLens.enabled": false,
   "gitlens.currentLine.enabled": false,
   "gitlens.launchpad.indicator.polling.enabled": false,
   "gitlens.plusFeatures.enabled": false,
-  "gitlens.showWelcomeOnInstall": false,
   "gitlens.statusBar.enabled": false,
   "gitlens.views.commits.avatars": false,
-  "hadolint.hadolintPath": "/opt/homebrew/bin/hadolint",
   "javascript.updateImportsOnFileMove.enabled": "always",
   "markdown.preview.typographer": true,
   "mypy-type-checker.ignorePatterns": [
@@ -147,23 +119,7 @@
   "python.analysis.packageIndexDepths": [
     {
       "depth": 2,
-      "name": "sklearn"
-    },
-    {
-      "depth": 2,
-      "name": "matplotlib"
-    },
-    {
-      "depth": 2,
-      "name": "scipy"
-    },
-    {
-      "depth": 2,
       "name": "django"
-    },
-    {
-      "depth": 2,
-      "name": "flask"
     },
     {
       "depth": 2,
@@ -180,7 +136,6 @@
   ],
   "python.analysis.supportRestructuredText": true,
   "python.createEnvironment.trigger": "off",
-  "python.diagnostics.sourceMapsEnabled": true,
   "python.terminal.activateEnvironment": false,
   "redhat.telemetry.enabled": false,
   "ruff.lint.ignore": [
@@ -192,9 +147,8 @@
   "rust-analyzer.inlayHints.typeHints.enable": false,
   "scm.diffDecorations": "gutter",
   "scm.repositories.sortOrder": "name",
-  "scm.showHistoryGraph": false,
   "security.workspace.trust.enabled": false,
-  "terminal.external.osxExec": "Wezterm.app",
+  "terminal.external.osxExec": "Ghostty.app",
   "terminal.integrated.copyOnSelection": true,
   "terminal.integrated.defaultProfile.osx": "fish",
   "terminal.integrated.detectLocale": "off",
@@ -219,9 +173,6 @@
   "window.newWindowDimensions": "maximized",
   "workbench.activityBar.location": "bottom",
   "workbench.colorTheme": "Default Light Modern",
-  "workbench.editorAssociations": {
-    "git-rebase-todo": "default"
-  },
   "workbench.layoutControl.enabled": false,
   "workbench.list.smoothScrolling": true,
   "workbench.startupEditor": "none",
