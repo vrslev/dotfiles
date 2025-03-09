@@ -61,7 +61,7 @@ experimental = true
 trusted_config_paths = [
     "~/.config/mise/config.toml",
     "~/.config/mise/config.local.toml",
-    "~/code/dotfiles/config/mise/config.toml",
-    "~/code/dotfiles/config/mise/config.local.toml",
+    "~/code/dotfiles/home/.config/mise/config.toml",
+    "~/code/dotfiles/home/.config/mise/config.local.toml",
 ]
 pipx = { uvx = true }

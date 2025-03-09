@@ -3,29 +3,39 @@
 import json
 import os
 from pathlib import Path
-from typing import Dict, Optional
 
 REPO_PATH = Path(__file__).parent
 with open(REPO_PATH / "symlinks.json") as f:
-    config: Dict[str, Optional[str]] = json.load(f)
+    config: list[str] = json.load(f)
+repo_config_paths = set((REPO_PATH / "home").rglob("*"))
+found_repo_config_paths: set[Path] = set()
 
-for small_destination, small_source in config.items():
-    if small_source is None:
-        parts = Path(small_destination).parts
-        root = parts[0][1:] if parts[0].startswith(".") else parts[0]
-        small_source = Path(root).joinpath(*parts[1:])
-
-    full_source = REPO_PATH / small_source
-    full_destination = Path(small_destination) if small_destination.startswith("/") else Path.home() / small_destination
+for destination in config:
+    assert destination.startswith("~/")
+    source = "home/" + destination.removeprefix("~/")
+    full_source = REPO_PATH / source
+    assert full_source.exists()
+    full_destination = Path(destination).expanduser()
 
     if full_destination.is_symlink():
         if full_source != (linked_to := Path(os.readlink(full_destination))):
-            print(f"was linked to different target: {small_destination} -> {linked_to}")
+            print(f"was linked to different target: {destination} -> {linked_to}")
     elif full_destination.exists():
-        print(f"already exists: {small_destination}")
+        print(f"already exists: {destination}")
     else:
         full_destination.parent.mkdir(parents=True, exist_ok=True)
         full_destination.symlink_to(full_source)
-        print(f"created link: {small_destination} -> {small_source}")
+        print(f"created link: {destination} -> {source}")
 
-print("Done!")
+    for one_repo_path in repo_config_paths:
+        if one_repo_path.is_relative_to(full_source) or full_source.is_relative_to(
+            one_repo_path
+        ):
+            found_repo_config_paths.add(one_repo_path)
+
+if untracked_repo_paths := (repo_config_paths - found_repo_config_paths):
+    print("Untracked repo paths:")
+    for one_untracked_repo_path in untracked_repo_paths:
+        print(one_untracked_repo_path.relative_to(REPO_PATH))
+else:
+    print("Done!")

@@ -48,7 +48,7 @@
 [core]
   editor = code --wait
   pager = delta
-	attributesfile = ~/code/dotfiles/config/git/gitattributes
+	attributesfile = ~/.config/git/gitattributes
 
 [diff]
   tool = vscode

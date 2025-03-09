@@ -1,2 +1,2 @@
 #!/usr/bin/env fish
-brew bundle dump --file $DOTFILES_ROOT/config/Brewfile --force
+brew bundle dump --file $DOTFILES_ROOT/Brewfile --force
