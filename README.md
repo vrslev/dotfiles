@@ -5,7 +5,7 @@ I use macOS, [Visual Studio Code](https://code.visualstudio.com), [WezTerm](http
 Here are:
 
 - Scripts at [`bin`](bin).
-- Always-fresh-and-tidy configuration for development tools at [`config`](config). Most of the files [are linked](link-config-files) to `~/.config`. Dev tools and environment is defined with [`Brewfile`](config/Brewfile) and [mise config](config/mise/config.toml)
+- Always-fresh-and-tidy configuration for development tools at [`home`](home). All the files are [linked](link-config-files) to user home directory. Dev tools and environment are defined in [`Brewfile`](Brewfile) and [mise config](home/.config/mise/config.toml)
 - macOS defaults at [`set-macos-defaults`](set-macos-defaults) that make using it snappier and less annoying.
 
 ## Getting started
