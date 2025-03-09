@@ -1,0 +1,49 @@
+#!/usr/bin/env uvx python@3.13
+# pyright: strict
+
+import json
+import os
+import sys
+from pathlib import Path
+
+
+def pretty_path(path: Path) -> Path:
+    return Path("~") / path.relative_to(Path.home())
+
+
+requested_paths_to_untrack = [Path(one_path).absolute() for one_path in sys.argv[1:]]
+REPO_PATH = Path(os.environ["DOTFILES_ROOT"]).expanduser()
+with open(REPO_PATH / "symlinks.json") as f:
+    current_config: list[str] = json.load(f)
+current_config_paths = [Path(one_path).expanduser() for one_path in current_config]
+paths_to_untrack: list[Path] = []
+
+for one_req_path in requested_paths_to_untrack:
+    if one_req_path in current_config_paths:
+        paths_to_untrack.append(one_req_path)
+    else:
+        print(f"{pretty_path(one_req_path)} is not tracked")
+
+new_config = sorted(
+    [
+        str(pretty_path(one_path))
+        for one_path in current_config_paths
+        if one_path not in paths_to_untrack
+    ]
+)
+with open(REPO_PATH / "symlinks.json", "r+") as f:
+    f.seek(0)
+    json.dump(new_config, f, indent=4)
+    f.write("\n")
+    f.truncate()
+
+for one_req_path in paths_to_untrack:
+    new_path = REPO_PATH / "home" / one_req_path.relative_to(Path.home())
+    one_req_path.unlink()
+    new_path.replace(one_req_path)
+    for one_parent in new_path.parents:
+        if list(one_parent.glob("*")):
+            break
+        else:
+            one_parent.rmdir()
+    print(f"moved file: {pretty_path(new_path)} -> {pretty_path(one_req_path)}")
