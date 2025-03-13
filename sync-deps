@@ -2,9 +2,9 @@
 set -xeuo pipefail
 
 brew update
-brew bundle --file ./config/Brewfile
+brew bundle --file Brewfile
 brew upgrade --greedy
-brew bundle cleanup --file ./config/Brewfile --zap --force
+brew bundle cleanup --file Brewfile --zap --force
 brew cleanup
 mise upgrade --yes
 mise prune --yes

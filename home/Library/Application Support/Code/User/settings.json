@@ -64,10 +64,6 @@
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
   "explorer.confirmPasteNative": false,
-  "files.associations": {
-    ".fish_profile": "fish",
-    "Brewfile-*": "ruby"
-  },
   "files.autoSave": "afterDelay",
   "files.autoSaveDelay": 300,
   "files.exclude": {
