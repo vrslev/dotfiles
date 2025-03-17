@@ -53,6 +53,6 @@ if [ -z "$ai_commit_message" ] || [ "$ai_commit_message" = "null" ]; then
 fi
 
 # Amend the commit with the new message (using --no-verify to avoid re-triggering hooks)
-git commit --amend -m "$ai_commit_message" --no-verify
+git commit --amend -m "$ai_commit_message" --no-verify >/dev/null 2>&1
 
 echo "Updated commit message: $ai_commit_message"
