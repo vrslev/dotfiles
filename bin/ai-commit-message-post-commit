@@ -27,7 +27,7 @@ payload=$(cat <<EOF
 {
   "model": "$AICOMMIT_OPENAI_MODEL",
   "messages": [
-    {"role": "system", "content": "Generate a concise and descriptive commit message for the following git diff:"},
+    {"role": "system", "content": "Generate a concise and descriptive commit message for the git diff. Make sure first character of your answer is a letter."},
     {"role": "user", "content": $commit_diff_json}
   ]
 }
