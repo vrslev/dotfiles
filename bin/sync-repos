@@ -1,2 +1,2 @@
 #!/usr/bin/env fish
-list-repos $argv | run-in-dirs - -- git sync
+list-repos $argv | for-dir - -- git sync

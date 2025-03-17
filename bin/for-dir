@@ -1,7 +1,7 @@
 #!/usr/bin/env fish
 # How to run:
-# - `run-in-dirs dir1 dir2 -- 'ls'`
-# - `echo "dir1 dir2" | run-in-dirs - dir3 dir4 -- 'ls'`
+# - `for-dir dir1 dir2 -- 'ls'`
+# - `echo "dir1 dir2" | for-dir - dir3 dir4 -- 'ls'`
 
 set -l dirs_and_command (string split -- -- "$argv")
 set -l dirs (string split -- " " "$dirs_and_command[1]")[..-2]
