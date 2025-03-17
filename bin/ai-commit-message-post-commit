@@ -1,0 +1,58 @@
+#!/bin/bash
+# post-commit hook for AI-generated commit message
+
+# Check that required environment variables are set
+if [ -z "$AICOMMIT_OPENAI_BASE_URL" ] || [ -z "$AICOMMIT_OPENAI_AUTH_HEADER" ] || [ -z "$AICOMMIT_OPENAI_MODEL" ]; then
+  echo "AICOMMIT environment variables not set. Skipping AI commit message generation."
+  exit 0
+fi
+
+# Prevent reprocessing if the commit message was already updated by this hook.
+last_commit_message=$(git log -1 --pretty=%B)
+if echo "$last_commit_message" | grep -q "\[AI commit\]"; then
+  exit 0
+fi
+
+# Get the diff of the last commit
+commit_diff=$(git diff-tree --no-commit-id -p -r HEAD)
+
+# Use jq to properly escape the diff for JSON
+commit_diff_json=$(jq -Rs . <<< "$commit_diff")
+
+# Build the JSON payload for the API request.
+payload=$(cat <<EOF
+{
+  "model": "$AICOMMIT_OPENAI_MODEL",
+  "messages": [
+    {"role": "system", "content": "Generate a concise and descriptive commit message for the git diff. Make sure first character of your answer is a letter."},
+    {"role": "user", "content": $commit_diff_json}
+  ]
+}
+EOF
+)
+
+# Construct the API endpoint URL (assuming the endpoint is under /chat/completions)
+api_url="${AICOMMIT_OPENAI_BASE_URL}/chat/completions"
+
+# Send the request to the AI API using curl
+response=$(curl -sS -X POST "$api_url" \
+  -H "Content-Type: application/json" \
+  -H "${AICOMMIT_OPENAI_AUTH_HEADER}" \
+  -d "$payload")
+
+# Extract the generated commit message from the response using jq.
+ai_commit_message=$(echo "$response" | jq -r '.choices[0].message.content')
+
+# If no valid commit message was returned, exit.
+if [ -z "$ai_commit_message" ] || [ "$ai_commit_message" = "null" ]; then
+  echo "AI did not return a valid commit message. Skipping update."
+  exit 0
+fi
+
+# Append a marker so we do not re-run this hook on the same commit.
+new_commit_message="${ai_commit_message}"
+echo $new_commit_message
+# Amend the commit with the new message (using --no-verify to avoid re-triggering hooks)
+git commit --amend -m "$new_commit_message" --no-verify
+
+echo "Commit message updated with AI-generated suggestion."
