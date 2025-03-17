@@ -3,6 +3,10 @@
 
 set -l dirs_and_command (string split -- -- "$argv")
 set -l dirs (string split -- " " "$dirs_and_command[1]")[..-2]
+if contains '-' $dirs
+    set -l stdin_dirs (cat)
+    set dirs (string join ' ' $dirs $stdin_dirs)
+end
 set -l command $dirs_and_command[2]
 
-echo $dirs | tr ' ' '\n' | parallel "echo \033\[93m{}\033\[0m && pushd {} && eval '$command' && popd"
+echo $dirs | tr ' ' '\n' | parallel "test {} != '-' && echo \033\[93m{}\033\[0m && pushd {} && eval '$command' && popd"
