@@ -9,7 +9,10 @@ fi
 
 # Prevent reprocessing if the commit message was already updated by this hook.
 last_commit_message=$(git log -1 --pretty=%B)
-if echo "$last_commit_message" | grep -q "\[AI commit\]"; then
+
+# Skip if the commit message length is greater than 5 characters
+if [ ${#last_commit_message} -gt 5 ]; then
+  echo "Commit message is more than 5 characters. Skipping AI generation."
   exit 0
 fi
 
@@ -24,7 +27,7 @@ payload=$(cat <<EOF
 {
   "model": "$AICOMMIT_OPENAI_MODEL",
   "messages": [
-    {"role": "system", "content": "Generate a concise and descriptive commit message for the git diff. Make sure first character of your answer is a letter."},
+    {"role": "system", "content": "Generate a concise and descriptive commit message for the following git diff:"},
     {"role": "user", "content": $commit_diff_json}
   ]
 }
@@ -49,10 +52,7 @@ if [ -z "$ai_commit_message" ] || [ "$ai_commit_message" = "null" ]; then
   exit 0
 fi
 
-# Append a marker so we do not re-run this hook on the same commit.
-new_commit_message="${ai_commit_message}"
-echo $new_commit_message
 # Amend the commit with the new message (using --no-verify to avoid re-triggering hooks)
-git commit --amend -m "$new_commit_message" --no-verify
+git commit --amend -m "$ai_commit_message" --no-verify
 
-echo "Commit message updated with AI-generated suggestion."
+echo "Commit message updated with AI-generated suggestion: $ai_commit_message"
