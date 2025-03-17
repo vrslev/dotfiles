@@ -1,2 +1,2 @@
 #!/usr/bin/env fish
-list-repos $argv | parallel 'echo \033\[93m{}\033\[0m && git -C {} sync'
+list-repos $argv | run-in-dirs - -- git sync
