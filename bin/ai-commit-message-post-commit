@@ -55,4 +55,4 @@ fi
 # Amend the commit with the new message (using --no-verify to avoid re-triggering hooks)
 git commit --amend -m "$ai_commit_message" --no-verify
 
-echo "Commit message updated with AI-generated suggestion: $ai_commit_message"
+echo "Updated commit message: $ai_commit_message"
