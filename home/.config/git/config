@@ -49,6 +49,7 @@
   editor = code --wait
   pager = delta
 	attributesfile = ~/.config/git/gitattributes
+  hooksPath = ~/.config/git/hooks
 
 [diff]
   tool = vscode
