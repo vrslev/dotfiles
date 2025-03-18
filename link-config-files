@@ -7,7 +7,12 @@ from pathlib import Path
 REPO_PATH = Path(__file__).parent
 with open(REPO_PATH / "symlinks.json") as f:
     config: list[str] = json.load(f)
-repo_config_paths = set((REPO_PATH / "home").rglob("*"))
+IGNORED_PATHS = {".DS_Store"}
+repo_config_paths = {
+    one_path
+    for one_path in (REPO_PATH / "home").rglob("*")
+    if one_path.parts[-1] not in IGNORED_PATHS
+}
 found_repo_config_paths: set[Path] = set()
 
 for destination in config:
