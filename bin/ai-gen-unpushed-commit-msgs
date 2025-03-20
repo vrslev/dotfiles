@@ -1,0 +1,10 @@
+#!/bin/bash
+# Generate AI commit messages for all unpushed commits in parallel
+
+unpushed_commits=$(git log @{u}.. --pretty=format:"%H")
+if [ -z "$unpushed_commits" ]; then
+  echo "No unpushed commits found. Exiting."
+  exit 0
+fi
+echo "$unpushed_commits" | parallel 'ai-gen-commit-msg {}'
+echo "AI commit message generation complete for all unpushed commits."

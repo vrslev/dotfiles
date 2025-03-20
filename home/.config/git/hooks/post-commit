@@ -1,2 +1,2 @@
 #!/bin/bash
-ai-commit-message-post-commit
+ai-gen-unpushed-commit-msgs
