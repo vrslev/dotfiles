@@ -15,6 +15,7 @@ brew "jfrog-cli"
 brew "mas"
 brew "mise"
 brew "ollama", restart_service: :changed
+brew "openjdk"
 brew "parallel"
 brew "postgresql@14"
 brew "telnet"
