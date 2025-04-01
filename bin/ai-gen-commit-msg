@@ -25,6 +25,13 @@ fi
 # Get the diff of the given commit
 commit_diff=$(git diff-tree --no-commit-id -p -r "$commit_id")
 
+# Limit the commit diff to 32k chars
+max_diff_size=$((32 * 1024))
+if [ ${#commit_diff} -gt $max_diff_size ]; then
+  commit_diff="${commit_diff:0:$max_diff_size}"
+  echo "$commit_id: Commit diff exceeds 32k tokens. Truncating diff for AI generation."
+fi
+
 # Use jq to properly escape the diff for JSON
 commit_diff_json=$(jq -Rs . <<< "$commit_diff")
 
@@ -54,11 +61,12 @@ ai_commit_message=$(echo "$response" | jq -r '.choices[0].message.content')
 
 # If no valid commit message was returned, exit.
 if [ -z "$ai_commit_message" ] || [ "$ai_commit_message" = "null" ]; then
-  echo "$commit_id: AI did not return a valid commit message. Skipping update."
-  exit 0
+  echo "$commit_id: Skipping update, AI did not return a valid commit message:"
+  echo "$response"
+  ai_commit_message="Update"
+else
+  echo "$commit_id: Updated commit message: $ai_commit_message"
 fi
 
 # Amend the commit with the new message (using --no-verify to avoid re-triggering hooks)
 git commit --amend -m "$ai_commit_message" --no-verify >/dev/null 2>&1
-
-echo "$commit_id: Updated commit message: $ai_commit_message"
