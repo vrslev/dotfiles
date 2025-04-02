@@ -5,7 +5,13 @@ mise upgrade --yes
 mise prune --yes &
 mise reshim --yes &
 
-/opt/homebrew/bin/brew update --auto-update
-/opt/homebrew/bin/brew bundle --file Brewfile --cleanup --no-upgrade &
-/opt/homebrew/bin/brew upgrade --greedy &
+/opt/homebrew/bin/brew update
+/opt/homebrew/bin/brew bundle --file Brewfile --cleanup --no-upgrade
+
+updates=$(/opt/homebrew/bin/brew outdated --json --greedy | grep '^[{} ]' | jq -r ".formulae + .casks | .[] | .name")
+if test -n "$updates"; then
+    /opt/homebrew/bin/brew fetch --concurrency 8 $updates
+    /opt/homebrew/bin/brew upgrade --greedy
+    exit
+fi
 brew cleanup  # trigger _brew-dump
