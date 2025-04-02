@@ -30,43 +30,40 @@ run = '''
 '''
 
 [tools]
-bat = "latest"
+bat = { version = "latest", postinstall = "mise run install-local-completions bat --completion fish" }
 cargo-binstall = "latest"
 cargo-insta = "latest"
 delta = "latest"
-fd = "latest"
+fd = { version = "latest", postinstall = "mise run install-local-completions fd --gen-completions fish" }
 fzf = "latest"
 gh = { version = "latest", exe = "gh" }
 go = "latest"
-helmfile = "latest"
+helmfile = { version = "latest", postinstall = "mise run install-local-completions helmfile completion fish" }
 hyperfine = "latest"
 hugo = "latest"
 just = "latest"
 killport = "latest"
-mprocs = "latest"
 node = "latest"
 python = ["3.13", "3.12", "3.11", "3.10"]
-ripgrep = "latest"
+ripgrep = { version = "latest", postinstall = "mise run install-local-completions rg --generate complete-fish" }
 shellcheck = "latest"
 starship = "latest"
 tokei = "latest"
 usage = "latest"
-xh = "latest"
-yq = "latest"
+xh = { version = "latest", postinstall = "mise run install-local-completions xh --generate complete-fish && ln (which xh) ~/.local/bin/xhs" }
+yq = { version = "latest", postinstall = "mise run install-local-completions yq completion fish" }
 zoxide = "latest"
 "pipx:cookiecutter" = "latest"
 "pipx:glances" = "latest"
 "pipx:maturin" = "latest"
-"pipx:poetry" = "latest"
+"pipx:poetry" = { version = "latest", postinstall = "mise run install-local-completions poetry completions fish" }
 "pipx:pre-commit" = "latest"
 "pipx:python-lsp-server[all]" = { version = "latest", uvx_args = "--with pylsp-mypy" }
 "pipx:sqlfluff" = "latest"
 "spm:sindresorhus/macos-trash" = "latest"
-bun = "latest"
 "cargo:mergiraf" = "latest"
 rust = "latest"
 "pipx:pypyp" = "latest"
-hadolint = "latest"
 helm = "latest"
 uv = { version = "latest", postinstall = "mise run install-local-completions uv generate-shell-completion fish" }
 
