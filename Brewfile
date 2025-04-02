@@ -36,7 +36,6 @@ cask "visual-studio-code"
 cask "zed"
 mas "Focusito", id: 1473808464
 mas "GarageBand", id: 682658836
-mas "HiSuite", id: 1232508288
 mas "Keynote", id: 409183694
 mas "Numbers", id: 409203825
 mas "Outline", id: 1356178125

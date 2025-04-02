@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 set -xeuo pipefail
 
-brew update
-brew bundle --file Brewfile
-brew upgrade --greedy
-brew bundle cleanup --file Brewfile --zap --force
-brew cleanup
 mise upgrade --yes
-mise prune --yes
-mise reshim --yes
+mise prune --yes &
+mise reshim --yes &
+
+/opt/homebrew/bin/brew update --auto-update
+/opt/homebrew/bin/brew bundle --file Brewfile --cleanup --no-upgrade &
+/opt/homebrew/bin/brew upgrade --greedy &
+brew cleanup  # trigger _brew-dump
