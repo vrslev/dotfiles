@@ -54,6 +54,8 @@ bun = "latest"
 "cargo:mergiraf" = "latest"
 rust = "latest"
 "pipx:pypyp" = "latest"
+hadolint = "latest"
+helm = "latest"
 
 [settings]
 jobs = 8
