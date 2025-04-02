@@ -22,7 +22,6 @@ LOCAL_FISH_COMPLETION_DIR = "{{config_root}}/.config/fish/completions"
 postinstall = 'mkdir -p "$LOCAL_FISH_COMPLETION_DIR"'
 
 [tasks._install-fish-completions]
-description = 'Install shell completions into project directory'
 hide = true
 run = '''
     {{arg(name="command")}} {{arg(name="completion_command", var=true)}} \
