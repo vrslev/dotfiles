@@ -16,6 +16,18 @@ LDFLAGS = "-L{{env.HOMEBREW_PREFIX}}/lib"
 UV_NATIVE_TLS = "true"
 DOTFILES_ROOT = "{{env.HOME}}/code/dotfiles"
 STARSHIP_LOG = "error"
+LOCAL_FISH_COMPLETION_DIR = "{{config_root}}/.config/fish/completions"
+
+[hooks]
+postinstall = 'mkdir -p "$LOCAL_FISH_COMPLETION_DIR"'
+
+[tasks.install-local-completions]
+description = 'Install shell completions into project directory'
+hide = true
+run = '''
+    {{arg(name="command")}} {{arg(name="completion_command", var=true)}} \
+    > "$LOCAL_FISH_COMPLETION_DIR/{{arg(name="command")}}.fish"
+'''
 
 [tools]
 bat = "latest"
@@ -56,7 +68,7 @@ rust = "latest"
 "pipx:pypyp" = "latest"
 hadolint = "latest"
 helm = "latest"
-uv = "latest"
+uv = { version = "latest", postinstall = "mise run install-local-completions uv generate-shell-completion fish" }
 
 [settings]
 jobs = 8
