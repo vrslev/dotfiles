@@ -30,10 +30,13 @@
     "editor.defaultFormatter": "vscode.typescript-language-features"
   },
   "$schema": "vscode://schemas/settings/user",
+  "biome.requireConfigFile": true,
   "chat.commandCenter.enabled": false,
   "commitollama.custom.model": "qwen2.5-coder:1.5b-instruct",
   "commitollama.model": "Custom",
   "continue.disableQuickFix": true,
+  "continue.pauseCodebaseIndexOnStart": true,
+  "continue.pauseTabAutocompleteOnBattery": true,
   "continue.showInlineTip": false,
   "continue.telemetryEnabled": false,
   "diffEditor.ignoreTrimWhitespace": false,
@@ -174,6 +177,5 @@
   "workbench.startupEditor": "none",
   "workbench.tips.enabled": false,
   "zenMode.centerLayout": false,
-  "zenMode.fullScreen": false,
-  "biome.requireConfigFile": true
+  "zenMode.fullScreen": false
 }

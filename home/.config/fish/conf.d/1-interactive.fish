@@ -17,17 +17,6 @@ if type -q fzf
   fzf --fish | source
 end
 
-function __last_history_item
-  echo $history[1]
-end
-abbr --add !! --position anywhere --function __last_history_item
-
-function __last_history_arg
-  commandline -f backward-delete-char
-  commandline -f history-token-search-backward
-end
-abbr --add !\$ --position anywhere --function __last_history_arg
-
 abbr --add b brew
 abbr --add m mise
 abbr --add dco "docker compose"
