@@ -59,41 +59,11 @@ response=$(curl -sS -X POST "$api_url" \
 # Extract the generated commit message from the response using jq.
 ai_commit_message=$(echo "$response" | jq -r '.choices[0].message.content')
 
-# If no valid commit message was returned, fall back to Ollama model
+# If no valid commit message was returned, exit.
 if [ -z "$ai_commit_message" ] || [ "$ai_commit_message" = "null" ]; then
-  echo "$commit_id: AI did not return a valid commit message. Falling back to Ollama model."
-  if [ -z "$AICOMMIT_OLLAMA_FALLBACK_MODEL" ]; then
-    echo "$commit_id: AICOMMIT_OLLAMA_FALLBACK_MODEL environment variable not set. Skipping AI commit message generation."
-    exit 0
-  fi
-
-  payload=$(cat <<EOF
-  {
-    "model": "$AICOMMIT_OLLAMA_FALLBACK_MODEL",
-    "messages": [
-      {"role": "system", "content": "Generate a concise and descriptive commit message for the git diff. Make sure first character of your answer is a letter."},
-      {"role": "user", "content": $commit_diff_json}
-    ]
-  }
-EOF
-  )
-  # Send the request to the Ollama API using curl
-  response=$(curl -sS -X POST http://127.0.0.1:11434/v1/chat/completions \
-    -H "Content-Type: application/json" \
-    -H "${AICOMMIT_OPENAI_AUTH_HEADER}" \
-    -d "$payload")
-echo $response
-  # Extract the generated commit message from the response using jq.
-  ai_commit_message=$(echo "$response" | jq -r '.choices[0].message.content')
-
-  # If no valid commit message was returned, exit.
-  if [ -z "$ai_commit_message" ] || [ "$ai_commit_message" = "null" ]; then
-    echo "$commit_id: Skipping update, Ollama model did not return a valid commit message:"
-    echo "$response"
-    ai_commit_message="Update"
-  else
-    echo "$commit_id: Updated commit message using Ollama model: $ai_commit_message"
-  fi
+  echo "$commit_id: Skipping update, AI did not return a valid commit message:"
+  echo "$response"
+  ai_commit_message="Update"
 else
   echo "$commit_id: Updated commit message: $ai_commit_message"
 fi
