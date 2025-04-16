@@ -16,12 +16,6 @@ Open terminal and install [Homebrew](https://brew.sh):
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-Install [mise](https://mise.jdx.dev):
-
-```sh
-brew install mise
-```
-
 Set up Fish:
 
 ```sh
@@ -38,12 +32,19 @@ git clone https://github.com/vrslev/dotfiles code/dotfiles
 cd code/dotfiles
 ```
 
+Install [mise](https://mise.jdx.dev):
+
+```sh
+eval (/opt/homebrew/bin/brew shellenv)
+brew install mise
+```
+
 Install dependencies for the first time:
 
 ```sh
 eval (/opt/homebrew/bin/brew shellenv)
-/opt/homebrew/bin/brew bundle --file config/Brewfile --no-restart --no-lock
-mise up --yes --jobs=16
+/opt/homebrew/bin/brew bundle --file Brewfile --no-restart
+MISE_GLOBAL_CONFIG_FILE=home/.config/mise/config.toml mise up --yes --jobs 16
 ```
 
 Install dotfiles:
