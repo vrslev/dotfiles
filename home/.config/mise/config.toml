@@ -49,7 +49,7 @@ shellcheck = "latest"
 starship = "latest"
 tokei = "latest"
 usage = "latest"
-xh = { version = "latest", postinstall = "mise run _install-fish-completions xh --generate complete-fish && ln (which xh) ~/.local/bin/xhs" }
+xh = { version = "latest", postinstall = "mise run _install-fish-completions xh --generate complete-fish && mkdir -p ~/.local/bin && ln (which xh) ~/.local/bin/xhs" }
 yq = { version = "latest", postinstall = "mise run _install-fish-completions yq completion fish" }
 zoxide = "latest"
 "pipx:cookiecutter" = "latest"
