@@ -1,5 +1,3 @@
-tap "homebrew/bundle"
-tap "homebrew/services"
 brew "ca-certificates"
 brew "eza"
 brew "snappy"
