@@ -62,3 +62,5 @@ defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
 defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
 
 defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
+
+defaults write com.apple.HIToolbox AppleFnUsageType -int "2" # Show Emoji & Symbols on 🌐︎ key
