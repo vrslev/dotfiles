@@ -1,0 +1,42 @@
+#!/bin/bash
+
+if [ $# -eq 0 ]; then
+  echo "Usage: $0 <command_to_watch>"
+  echo "Example: $0 bash -c \"ps aux | grep node\""
+  exit 1
+fi
+
+COMMAND="$@"
+
+PREV=$(mktemp)
+CURR=$(mktemp)
+
+SOUND_PATH="/System/Library/Sounds/Glass.aiff"
+
+# Initial output
+eval "$COMMAND" > "$PREV" 2>&1
+
+while true; do
+  sleep 2
+  eval "$COMMAND" > "$CURR" 2>&1
+
+  if ! diff "$PREV" "$CURR" > /dev/null; then
+    echo -e "\n\033[1;33m=== Output changed at $(date) ===\033[0m"
+
+    diff -u "$PREV" "$CURR" | while IFS= read -r line; do
+      case "$line" in
+        ---*) echo -e "\033[1;34m$line\033[0m" ;; # Blue old file
+        +++*) echo -e "\033[1;34m$line\033[0m" ;; # Blue new file
+        @@*)  echo -e "\033[1;36m$line\033[0m" ;; # Cyan hunk header
+        +*)   echo -e "\033[0;32m$line\033[0m" ;; # Green additions
+        -*)   echo -e "\033[0;31m$line\033[0m" ;; # Red deletions
+        *)    echo "$line" ;;
+      esac
+    done
+
+    echo -e "\033[1;33m=================================\033[0m"
+    afplay "$SOUND_PATH"
+  fi
+
+  mv "$CURR" "$PREV"
+done

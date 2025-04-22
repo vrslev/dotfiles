@@ -42,8 +42,6 @@
   "commitollama.custom.model": "qwen2.5-coder:1.5b-instruct",
   "commitollama.model": "Custom",
   "continue.disableQuickFix": true,
-  "continue.pauseCodebaseIndexOnStart": true,
-  "continue.pauseTabAutocompleteOnBattery": true,
   "continue.showInlineTip": false,
   "continue.telemetryEnabled": false,
   "diffEditor.ignoreTrimWhitespace": false,
