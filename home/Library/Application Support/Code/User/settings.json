@@ -7,11 +7,11 @@
   },
   "[javascript]": {
     "editor.defaultFormatter": "vscode.typescript-language-features",
-    "editor.tabSize": 2,
+    "editor.tabSize": 2
   },
   "[javascriptreact]": {
     "editor.defaultFormatter": "vscode.typescript-language-features",
-    "editor.tabSize": 2,
+    "editor.tabSize": 2
   },
   "[json]": {
     "editor.defaultFormatter": "vscode.json-language-features"
@@ -30,11 +30,11 @@
   },
   "[typescript]": {
     "editor.defaultFormatter": "vscode.typescript-language-features",
-    "editor.tabSize": 2,
+    "editor.tabSize": 2
   },
   "[typescriptreact]": {
     "editor.defaultFormatter": "vscode.typescript-language-features",
-    "editor.tabSize": 2,
+    "editor.tabSize": 2
   },
   "$schema": "vscode://schemas/settings/user",
   "biome.requireConfigFile": true,
@@ -42,6 +42,7 @@
   "commitollama.custom.model": "qwen2.5-coder:1.5b-instruct",
   "commitollama.model": "Custom",
   "continue.disableQuickFix": true,
+  "continue.enableTabAutocomplete": true,
   "continue.showInlineTip": false,
   "continue.telemetryEnabled": false,
   "diffEditor.ignoreTrimWhitespace": false,
@@ -101,6 +102,8 @@
   "gitlens.plusFeatures.enabled": false,
   "gitlens.statusBar.enabled": false,
   "gitlens.views.commits.avatars": false,
+  "javascript.inlayHints.functionLikeReturnTypes.enabled": true,
+  "javascript.inlayHints.parameterNames.enabled": "all",
   "javascript.updateImportsOnFileMove.enabled": "always",
   "markdown.preview.typographer": true,
   "mypy-type-checker.ignorePatterns": [
@@ -120,6 +123,7 @@
   "python.analysis.gotoDefinitionInStringLiteral": true,
   "python.analysis.inlayHints.functionReturnTypes": true,
   "python.analysis.inlayHints.pytestParameters": true,
+  "python.analysis.inlayHints.variableTypes": true,
   "python.analysis.packageIndexDepths": [
     {
       "depth": 2,
@@ -164,6 +168,8 @@
   "terminal.integrated.showExitAlert": false,
   "terminal.integrated.stickyScroll.enabled": true,
   "terminal.integrated.tabs.hideCondition": "never",
+  "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
+  "typescript.inlayHints.parameterNames.enabled": "all",
   "typescript.updateImportsOnFileMove.enabled": "always",
   "typos.config": "~/.config/typos.toml",
   "vs-kubernetes": {
@@ -182,6 +188,5 @@
   "workbench.startupEditor": "none",
   "workbench.tips.enabled": false,
   "zenMode.centerLayout": false,
-  "zenMode.fullScreen": false,
-  "continue.enableTabAutocomplete": true
+  "zenMode.fullScreen": false
 }
