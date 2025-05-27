@@ -78,3 +78,4 @@ trusted_config_paths = [
     "~/code/dotfiles/home/.config/mise/config.local.toml",
 ]
 pipx = { uvx = true }
+fetch_remote_versions_cache = "2d"
