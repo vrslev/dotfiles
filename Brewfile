@@ -20,6 +20,7 @@ brew "telnet"
 brew "tree"
 brew "watch"
 cask "daisydisk"
+cask "eqmac"
 cask "flux"
 cask "font-fira-code-nerd-font"
 cask "freelens"
@@ -40,6 +41,7 @@ mas "Numbers", id: 409203825
 mas "Outline", id: 1356178125
 mas "Pages", id: 409201541
 mas "Pixelmator Pro", id: 1289583905
+mas "Reeder", id: 1529448980
 mas "Reeder", id: 6475002485
 mas "Strongbox", id: 897283731
 mas "Telegram", id: 747648890
