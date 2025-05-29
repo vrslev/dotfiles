@@ -37,10 +37,7 @@
     "editor.tabSize": 2
   },
   "$schema": "vscode://schemas/settings/user",
-  "biome.requireConfigFile": true,
   "chat.commandCenter.enabled": false,
-  "commitollama.custom.model": "qwen2.5-coder:1.5b-instruct",
-  "commitollama.model": "Custom",
   "continue.disableQuickFix": true,
   "continue.enableTabAutocomplete": true,
   "continue.showInlineTip": false,
@@ -106,13 +103,6 @@
   "javascript.inlayHints.parameterNames.enabled": "all",
   "javascript.updateImportsOnFileMove.enabled": "always",
   "markdown.preview.typographer": true,
-  "mypy-type-checker.ignorePatterns": [
-    "**/.mypy_cache",
-    "**/.venv"
-  ],
-  "mypy-type-checker.importStrategy": "fromEnvironment",
-  "mypy-type-checker.preferDaemon": true,
-  "mypy-type-checker.reportingScope": "workspace",
   "mypy.runUsingActiveInterpreter": true,
   "prettier.requireConfig": true,
   "python.analysis.autoFormatStrings": true,
@@ -188,5 +178,6 @@
   "workbench.startupEditor": "none",
   "workbench.tips.enabled": false,
   "zenMode.centerLayout": false,
-  "zenMode.fullScreen": false
+  "zenMode.fullScreen": false,
+  "biome.requireConfiguration": true
 }
