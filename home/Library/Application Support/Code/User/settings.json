@@ -48,6 +48,8 @@
     "source.fixAll": "explicit",
     "source.organizeImports": "explicit"
   },
+  "editor.experimental.preferTreeSitter.css": true,
+  "editor.experimental.preferTreeSitter.typescript": true,
   "editor.fontFamily": "FiraCode Nerd Font",
   "editor.fontLigatures": true,
   "editor.fontSize": 14,
@@ -94,9 +96,11 @@
   "git.mergeEditor": true,
   "git.openRepositoryInParentFolders": "always",
   "git.replaceTagsWhenPull": true,
+  "gitlens.ai.enabled": false,
   "gitlens.cloudPatches.enabled": false,
   "gitlens.codeLens.enabled": false,
   "gitlens.currentLine.enabled": false,
+  "gitlens.integrations.enabled": false,
   "gitlens.launchpad.indicator.polling.enabled": false,
   "gitlens.plusFeatures.enabled": false,
   "gitlens.statusBar.enabled": false,
@@ -135,6 +139,7 @@
       "name": "polyfactory"
     }
   ],
+  "python.analysis.supportAllPythonDocuments": true,
   "python.analysis.supportRestructuredText": true,
   "python.createEnvironment.trigger": "off",
   "python.terminal.activateEnvironment": false,
@@ -163,6 +168,7 @@
   "terminal.integrated.tabs.hideCondition": "never",
   "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
   "typescript.inlayHints.parameterNames.enabled": "all",
+  "typescript.tsserver.experimental.enableProjectDiagnostics": true,
   "typescript.updateImportsOnFileMove.enabled": "always",
   "typos.config": "~/.config/typos.toml",
   "vs-kubernetes": {
