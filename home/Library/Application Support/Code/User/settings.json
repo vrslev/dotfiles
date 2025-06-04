@@ -37,6 +37,7 @@
     "editor.tabSize": 2
   },
   "$schema": "vscode://schemas/settings/user",
+  "biome.requireConfiguration": true,
   "chat.commandCenter.enabled": false,
   "continue.disableQuickFix": true,
   "continue.enableTabAutocomplete": true,
@@ -54,6 +55,7 @@
   "editor.formatOnSave": true,
   "editor.formatOnSaveMode": "file",
   "editor.formatOnType": true,
+  "editor.guides.bracketPairs": true,
   "editor.inlayHints.maximumLength": 0,
   "editor.linkedEditing": true,
   "editor.minimap.enabled": false,
@@ -104,6 +106,7 @@
   "javascript.updateImportsOnFileMove.enabled": "always",
   "markdown.preview.typographer": true,
   "mypy.runUsingActiveInterpreter": true,
+  "outline.showVariables": false,
   "prettier.requireConfig": true,
   "python.analysis.autoFormatStrings": true,
   "python.analysis.autoImportCompletions": true,
@@ -171,13 +174,12 @@
   "vscode-kubernetes.kubectl-path": "/usr/local/bin/vscode-kubectl-stub",
   "window.autoDetectColorScheme": true,
   "window.newWindowDimensions": "maximized",
-  "workbench.activityBar.location": "bottom",
+  "workbench.activityBar.location": "top",
   "workbench.colorTheme": "Default Light Modern",
   "workbench.layoutControl.enabled": false,
   "workbench.list.smoothScrolling": true,
   "workbench.startupEditor": "none",
   "workbench.tips.enabled": false,
   "zenMode.centerLayout": false,
-  "zenMode.fullScreen": false,
-  "biome.requireConfiguration": true
+  "zenMode.fullScreen": false
 }
