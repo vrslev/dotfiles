@@ -15,5 +15,6 @@
     "~/Library/Application Support/Code/User/snippets",
     "~/Library/Application Support/Zed/extensions/index.json",
     "~/Library/Application Support/com.mitchellh.ghostty/config",
+    "~/Library/Application Support/io.datasette.llm/default_model.txt",
     "~/Library/Application Support/pypoetry/config.toml"
 ]
