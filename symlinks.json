@@ -1,9 +1,7 @@
 [
     "~/.bashrc",
-    "~/.config/fish-ai.ini",
     "~/.config/fish/conf.d/0-login.fish",
     "~/.config/fish/conf.d/1-interactive.fish",
-    "~/.config/fish/fish_plugins",
     "~/.config/git",
     "~/.config/mise",
     "~/.config/starship.toml",
