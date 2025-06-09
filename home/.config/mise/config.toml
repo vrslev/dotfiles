@@ -67,6 +67,7 @@ rust = "latest"
 helm = "latest"
 uv = { version = "latest", postinstall = "mise run _install-fish-completions uv generate-shell-completion fish" }
 java = "latest"
+"npm:open-codex" = "latest"
 
 [settings]
 jobs = 8
