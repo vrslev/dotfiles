@@ -13,6 +13,9 @@ if type -q /opt/homebrew/bin/brew
   fish_add_path --global --move --path "/opt/homebrew/bin" "/opt/homebrew/sbin";
   if test -n "$MANPATH[1]"; set --global --export MANPATH '' $MANPATH; end;
   if not contains "/opt/homebrew/share/info" $INFOPATH; set --global --export INFOPATH "/opt/homebrew/share/info" $INFOPATH; end;
+  # ---
+  set --global --export CPPFLAGS "-I{{env.HOMEBREW_PREFIX}}/include";
+  set --global --export LDFLAGS "-L{{env.HOMEBREW_PREFIX}}/lib";
 else
   echo "brew not found"
 end
