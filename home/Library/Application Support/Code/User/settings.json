@@ -59,7 +59,7 @@
   "editor.formatOnSaveMode": "file",
   "editor.formatOnType": true,
   "editor.guides.bracketPairs": true,
-  "editor.inlayHints.maximumLength": 0,
+  "editor.inlayHints.maximumLength": 50,
   "editor.linkedEditing": true,
   "editor.minimap.enabled": false,
   "editor.scrollbar.horizontalScrollbarSize": 7,
@@ -164,6 +164,35 @@
   "terminal.integrated.hideOnStartup": "whenEmpty",
   "terminal.integrated.inheritEnv": false,
   "terminal.integrated.minimumContrastRatio": 1,
+  "terminal.integrated.profiles.osx": {
+    "bash": {
+      "args": [
+        "-l"
+      ],
+      "icon": "terminal-bash",
+      "path": "bash"
+    },
+    "fish": {
+      "args": [
+        "-l"
+      ],
+      "path": "/opt/homebrew/bin/fish"
+    },
+    "pwsh": {
+      "icon": "terminal-powershell",
+      "path": "pwsh"
+    },
+    "tmux": {
+      "icon": "terminal-tmux",
+      "path": "tmux"
+    },
+    "zsh": {
+      "args": [
+        "-l"
+      ],
+      "path": "zsh"
+    }
+  },
   "terminal.integrated.showExitAlert": false,
   "terminal.integrated.stickyScroll.enabled": true,
   "terminal.integrated.tabs.hideCondition": "never",
