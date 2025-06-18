@@ -1,6 +1,9 @@
 if not status is-interactive
   exit
 end
+if test -n "$VSCODE_RESOLVING_ENVIRONMENT"
+  exit
+end
 
 set fish_greeting  # Disable greeting on startup
 

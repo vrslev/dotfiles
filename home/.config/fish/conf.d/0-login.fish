@@ -21,10 +21,10 @@ else
 end
 
 # make sure VS Code can detect tools
-if not status is-interactive
+if test -n "$VSCODE_RESOLVING_ENVIRONMENT"
   if type -q mise
     if not set --query DIRENV_INITIALIZED
-      mise hook-env --shell fish | source
+      mise env --shell fish | source
     end
   else
     echo "mise not found"
