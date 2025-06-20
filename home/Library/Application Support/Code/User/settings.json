@@ -111,6 +111,7 @@
   "javascript.updateImportsOnFileMove.enabled": "always",
   "markdown.preview.typographer": true,
   "mypy.runUsingActiveInterpreter": true,
+  "outline.showConstants": false,
   "outline.showVariables": false,
   "prettier.requireConfig": true,
   "python.analysis.autoFormatStrings": true,
@@ -143,7 +144,9 @@
   "python.analysis.supportAllPythonDocuments": true,
   "python.analysis.supportRestructuredText": true,
   "python.createEnvironment.trigger": "off",
+  "python.defaultInterpreterPath": ".venv/bin/python",
   "python.terminal.activateEnvironment": false,
+  "python.terminal.shellIntegration.enabled": true,
   "redhat.telemetry.enabled": false,
   "ruff.lint.ignore": [
     "F841",
@@ -155,6 +158,9 @@
   "scm.diffDecorations": "gutter",
   "scm.repositories.sortOrder": "name",
   "security.workspace.trust.enabled": false,
+  "settingsSync.ignoredSettings": [
+    "-python.defaultInterpreterPath"
+  ],
   "terminal.external.osxExec": "Ghostty.app",
   "terminal.integrated.copyOnSelection": true,
   "terminal.integrated.defaultProfile.osx": "fish",
@@ -195,6 +201,7 @@
   },
   "terminal.integrated.showExitAlert": false,
   "terminal.integrated.stickyScroll.enabled": true,
+  "terminal.integrated.suggest.enabled": true,
   "terminal.integrated.tabs.hideCondition": "never",
   "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
   "typescript.inlayHints.parameterNames.enabled": "all",
@@ -217,5 +224,5 @@
   "workbench.startupEditor": "none",
   "workbench.tips.enabled": false,
   "zenMode.centerLayout": false,
-  "zenMode.fullScreen": false,
+  "zenMode.fullScreen": false
 }
