@@ -1,0 +1,4 @@
+#!/usr/bin/env fish
+
+git push 2>&1 | open-url-from-output
+
