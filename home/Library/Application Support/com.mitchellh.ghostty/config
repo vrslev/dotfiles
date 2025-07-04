@@ -3,3 +3,4 @@ font-size = 15
 window-height = 36
 window-width = 130
 keybind = shift+enter=text:\n
+quit-after-last-window-closed = false
