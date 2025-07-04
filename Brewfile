@@ -48,6 +48,7 @@ mas "Telegram", id: 747648890
 mas "Things", id: 904280696
 mas "Wipr", id: 1662217862
 vscode "amodio.tsl-problem-matcher"
+vscode "bierner.markdown-mermaid"
 vscode "biomejs.biome"
 vscode "charliermarsh.ruff"
 vscode "continue.continue"
@@ -65,6 +66,7 @@ vscode "ms-kubernetes-tools.vscode-kubernetes-tools"
 vscode "ms-python.debugpy"
 vscode "ms-python.python"
 vscode "ms-python.vscode-pylance"
+vscode "ms-python.vscode-python-envs"
 vscode "ms-vscode.cpptools"
 vscode "ms-vsliveshare.vsliveshare"
 vscode "pflannery.vscode-versionlens"
