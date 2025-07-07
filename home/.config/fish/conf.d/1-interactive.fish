@@ -13,8 +13,7 @@ end
 if type -q zoxide
   zoxide init fish | source
 end
-set -x _STARSHIP_INIT 1
-if test -n _STARSHIP_INIT && type -q starship
+if type -q starship
   starship init fish --print-full-init | source
 end
 if type -q fzf
