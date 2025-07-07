@@ -1,3 +1,5 @@
 .DS_Store
 .mise.local.toml
 lllocal*
+
+**/.claude/settings.local.json
