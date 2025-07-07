@@ -7,4 +7,4 @@ disabled = true
 disabled = true
 
 [python]
-disabled = true
+command_timeout = 10
