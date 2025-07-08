@@ -158,10 +158,6 @@
   "scm.diffDecorations": "gutter",
   "scm.repositories.sortOrder": "name",
   "security.workspace.trust.enabled": false,
-  "settingsSync.ignoredSettings": [
-    "-python.defaultInterpreterPath",
-    "yaml.schemas"
-  ],
   "terminal.external.osxExec": "Ghostty.app",
   "terminal.integrated.copyOnSelection": true,
   "terminal.integrated.defaultProfile.osx": "fish",
