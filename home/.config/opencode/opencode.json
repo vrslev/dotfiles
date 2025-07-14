@@ -1,0 +1,16 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "main": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Main",
+      "options": {
+        "baseURL": "{env:MAIN_OPENAI_BASE_URL}",
+        "apiKey": "{env:MAIN_OPENAI_AUTH_TOKEN}"
+      },
+      "models": {
+        "{env:MAIN_OPENAI_MODEL}": {}
+      }
+    }
+  }
+}

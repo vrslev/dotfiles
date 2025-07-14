@@ -4,6 +4,7 @@
     "~/.config/fish/conf.d/1-interactive.fish",
     "~/.config/git",
     "~/.config/mise",
+    "~/.config/opencode/opencode.json",
     "~/.config/starship.toml",
     "~/.config/zed/keymap.json",
     "~/.config/zed/settings.json",

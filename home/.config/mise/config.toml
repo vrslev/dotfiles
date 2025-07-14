@@ -68,6 +68,7 @@ uv = { version = "latest", postinstall = "mise run _install-fish-completions uv 
 java = "latest"
 "npm:@openai/codex" = "latest"
 bun = "latest"
+"npm:opencode-ai" = "latest"
 
 [settings]
 jobs = 8
