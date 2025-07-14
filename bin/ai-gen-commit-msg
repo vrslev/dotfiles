@@ -2,8 +2,8 @@
 # post-commit hook for AI-generated commit message
 
 # Check that required environment variables are set
-if [ -z "$AICOMMIT_OPENAI_BASE_URL" ] || [ -z "$AICOMMIT_OPENAI_AUTH_TOKEN" ] || [ -z "$AICOMMIT_OPENAI_MODEL" ]; then
-  echo "AICOMMIT environment variables not set. Skipping AI commit message generation."
+if [ -z "$MAIN_OPENAI_BASE_URL" ] || [ -z "$MAIN_OPENAI_AUTH_TOKEN" ] || [ -z "$MAIN_OPENAI_MODEL" ]; then
+  echo "Environment variables not set. Skipping AI commit message generation."
   exit 0
 fi
 # Check that the commit ID is provided as the first argument
@@ -38,7 +38,7 @@ commit_diff_json=$(jq -Rs . <<< "$commit_diff")
 # Build the JSON payload for the API request.
 payload=$(cat <<EOF
 {
-  "model": "$AICOMMIT_OPENAI_MODEL",
+  "model": "$MAIN_OPENAI_MODEL",
   "messages": [
     {"role": "system", "content": "Generate a concise and descriptive commit message for the git diff. Make sure first character of your answer is a letter. Do not use template words such as 'adjust'"},
     {"role": "user", "content": $commit_diff_json}
@@ -48,12 +48,12 @@ EOF
 )
 
 # Construct the API endpoint URL (assuming the endpoint is under /chat/completions)
-api_url="${AICOMMIT_OPENAI_BASE_URL}/chat/completions"
+api_url="${MAIN_OPENAI_BASE_URL}/chat/completions"
 
 # Send the request to the AI API using curl
 response=$(curl -sS -X POST "$api_url" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer ${AICOMMIT_OPENAI_AUTH_TOKEN}" \
+  -H "Authorization: Bearer ${MAIN_OPENAI_AUTH_TOKEN}" \
   -d "$payload")
 
 # Extract the generated commit message from the response using jq.
