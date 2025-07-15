@@ -57,7 +57,7 @@ zoxide = "latest"
 "pipx:pre-commit" = "latest"
 "pipx:python-lsp-server[all]" = { version = "latest", uvx_args = "--with pylsp-mypy" }
 "pipx:sqlfluff" = "latest"
-"pipx:llm" = { version = "latest", uvx_args = "--with llm-ollama --with llm-fragments-youtube" }
+"pipx:llm" = { version = "latest", uvx_args = "--with llm-ollama --with llm-fragments-youtube --with llm-mlx" }
 "pipx:yt-dlp" = "latest"
 "spm:sindresorhus/macos-trash" = "latest"
 "cargo:mergiraf" = "latest"
