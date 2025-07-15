@@ -20,7 +20,7 @@
         "baseURL": "http://localhost:11434/v1"
       },
       "models": {
-        "hf.co/unsloth/Devstral-Small-2507-GGUF:Q4_K_M": {}
+        "devstral": {}
       }
     }
   }
