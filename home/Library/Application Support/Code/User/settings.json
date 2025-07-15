@@ -219,11 +219,6 @@
   "workbench.list.smoothScrolling": true,
   "workbench.startupEditor": "none",
   "workbench.tips.enabled": false,
-  "yaml.schemas": {
-    "/Users/ruavel3/.vscode/extensions/continue.continue-1.1.62-darwin-arm64/config-yaml-schema.json": [
-      ".continue/**/*.yaml"
-    ]
-  },
   "zenMode.centerLayout": false,
   "zenMode.fullScreen": false
 }
