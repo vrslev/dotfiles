@@ -1,15 +1,25 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "provider": {
-    "main": {
+    "work": {
       "npm": "@ai-sdk/openai-compatible",
-      "name": "Main",
+      "name": "Work LLM",
       "options": {
         "baseURL": "{env:MAIN_OPENAI_BASE_URL}",
         "apiKey": "{env:MAIN_OPENAI_AUTH_TOKEN}"
       },
       "models": {
         "{env:MAIN_OPENAI_MODEL}": {}
+      }
+    },
+    "ollama": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Ollama",
+      "options": {
+        "baseURL": "http://localhost:11434/v1"
+      },
+      "models": {
+        "hf.co/unsloth/Devstral-Small-2507-GGUF:Q4_K_M": {}
       }
     }
   }
