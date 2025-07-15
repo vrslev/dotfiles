@@ -69,6 +69,7 @@ java = "latest"
 "npm:@openai/codex" = "latest"
 bun = "latest"
 "npm:opencode-ai" = "latest"
+"cargo:somo" = "latest"
 
 [settings]
 jobs = 8
