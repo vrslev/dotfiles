@@ -6,10 +6,18 @@
     "editor.defaultFormatter": "vscode.html-language-features"
   },
   "[javascript]": {
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "never",
+      "source.removeUnusedImports": "always"
+    },
     "editor.defaultFormatter": "vscode.typescript-language-features",
     "editor.tabSize": 2
   },
   "[javascriptreact]": {
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "never",
+      "source.removeUnusedImports": "always"
+    },
     "editor.defaultFormatter": "vscode.typescript-language-features",
     "editor.tabSize": 2
   },
@@ -29,10 +37,18 @@
     "editor.defaultFormatter": "vscode.css-language-features"
   },
   "[typescript]": {
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "never",
+      "source.removeUnusedImports": "always"
+    },
     "editor.defaultFormatter": "vscode.typescript-language-features",
     "editor.tabSize": 2
   },
   "[typescriptreact]": {
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "never",
+      "source.removeUnusedImports": "always"
+    },
     "editor.defaultFormatter": "vscode.typescript-language-features",
     "editor.tabSize": 2
   },
