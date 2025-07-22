@@ -1,0 +1,84 @@
+%YAML 1.1
+---
+name: Local Assistant
+version: 1.0.0
+schema: v1
+
+model_defaults: &model_defaults
+  provider: openai
+  apiKey: ${{ secrets.api_key }}
+  requestOptions:
+    verifySsl: false
+
+models:
+  - name: Chat
+    <<: *model_defaults
+    model: Qwen3-32B
+    apiBase: ${{ secrets.chat_url }}
+    defaultCompletionOptions:
+      contextLength: 131000
+      maxTokens: 32000
+      temperature: 0.7
+      topP: 0.8
+      topK: 20
+    roles: [chat, edit, apply]
+    capabilities:
+      - tool_use
+
+  - name: Completion
+    <<: *model_defaults
+    model: Qwen2.5-Coder-7B
+    apiBase: ${{ secrets.completion_url }}
+    roles: [autocomplete]
+    defaultCompletionOptions:
+      contextLength: 8128
+      maxTokens: 64
+
+  - name: Embedding
+    <<: *model_defaults
+    model: Qwen3-Embedding-4B
+    apiBase: ${{ secrets.embedding_url }}
+    roles: [embed, rerank]
+    defaultCompletionOptions:
+      contextLength: 32000
+    embedOptions:
+      maxChunkSize: 256
+
+context:
+  - provider: file
+  - provider: code
+  - provider: diff
+  - provider: currentFile
+  - provider: terminal
+  - provider: docs
+  - provider: open
+  - provider: web
+  - provider: codebase
+  - provider: folder
+  - provider: search
+  - provider: url
+  - provider: clipboard
+  - provider: tree
+  - provider: problems
+  - provider: repo-map
+  - provider: os
+
+mcpServers:
+  - name: Playwright
+    command: npx
+    args: [-y, "@playwright/mcp@latest"]
+  - name: Memory
+    command: npx
+    args: [-y, "@modelcontextprotocol/server-memory"]
+  - name: Sequential Thinking
+    command: npx
+    args: [-y, "@modelcontextprotocol/server-sequential-thinking"]
+  - name: Time
+    command: uvx
+    args: ["--native-tls", "mcp-server-time", "--local-timezone=Europe/Moscow"]
+
+docs: []
+
+rules:
+  - name: Project rules (AGENTS.md file)
+    rule: Always attempt to read AGENTS.md before generating code
