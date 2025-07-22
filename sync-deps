@@ -13,7 +13,7 @@ echo -e "\033[1;32mbrew update && brew bundle --file ~/code/dotfiles/Brewfile --
 
 updates=$(/opt/homebrew/bin/brew outdated --json --greedy | grep '^[{} ]' | jq -r ".formulae + .casks | .[] | .name")
 if test -n "$updates"; then
-    /opt/homebrew/bin/brew fetch --concurrency 8 $updates
+    /opt/homebrew/bin/brew fetch $updates
     /opt/homebrew/bin/brew upgrade --greedy
     exit
 fi
