@@ -71,6 +71,7 @@ java = "latest"
 bun = "latest"
 "npm:opencode-ai" = "latest"
 "cargo:somo" = "latest"
+"npm:@qwen-code/qwen-code" = "latest"
 
 [settings]
 jobs = 8
