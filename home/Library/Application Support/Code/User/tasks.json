@@ -4,7 +4,7 @@
         {
             "label": "Python — auto-type-annotate",
             "type": "shell",
-            "command": "auto-type-annotate ${file}",
+            "command": "cd ${workspaceFolder} && auto-type-annotate ${file}",
             "presentation": {
                 "reveal": "never",
                 "close": true
