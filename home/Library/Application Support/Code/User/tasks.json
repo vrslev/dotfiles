@@ -1,0 +1,14 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Python — auto-type-annotate",
+            "type": "shell",
+            "command": "auto-type-annotate ${file}",
+            "presentation": {
+                "reveal": "never",
+                "close": true
+            }
+        }
+    ],
+}

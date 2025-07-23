@@ -126,10 +126,15 @@
   "javascript.inlayHints.parameterNames.enabled": "all",
   "javascript.updateImportsOnFileMove.enabled": "always",
   "markdown.preview.typographer": true,
+  "mypy.extraArguments": [
+    "--local-partial-types"
+  ],
   "mypy.runUsingActiveInterpreter": true,
+  "mypy.statusFile": ".dmypy.json",
   "outline.showConstants": false,
   "outline.showVariables": false,
   "prettier.requireConfig": true,
+  "python-envs.terminal.autoActivationType": "off",
   "python.analysis.autoFormatStrings": true,
   "python.analysis.autoImportCompletions": true,
   "python.analysis.diagnosticMode": "workspace",

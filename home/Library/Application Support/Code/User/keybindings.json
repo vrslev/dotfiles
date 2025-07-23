@@ -109,4 +109,10 @@
     "key": "cmd+shift+i",
     "command": "continue.focusEdit"
   },
+  {
+    "key": "cmd+k cmd+p",
+    "command": "workbench.action.tasks.runTask",
+    "args": "Python — auto-type-annotate",
+    "when": "editorTextFocus && editorLangId == python"
+  }
 ]
