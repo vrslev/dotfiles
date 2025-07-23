@@ -72,6 +72,7 @@ bun = "latest"
 "npm:opencode-ai" = "latest"
 "cargo:somo" = "latest"
 "npm:@qwen-code/qwen-code" = "latest"
+"pipx:auto-type-annotate" = "latest"
 
 [settings]
 jobs = 8
