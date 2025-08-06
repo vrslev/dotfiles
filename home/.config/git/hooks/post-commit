@@ -1,2 +1,2 @@
 #!/bin/bash
-ai-gen-unpushed-commit-msgs
+ai-gen-last-commit-msg

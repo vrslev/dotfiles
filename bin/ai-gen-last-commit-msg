@@ -1,0 +1,4 @@
+#!/bin/bash
+
+commit_id=$(git rev-parse HEAD)
+ai-gen-commit-msg "$commit_id"
