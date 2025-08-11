@@ -13,7 +13,7 @@ model_defaults: &model_defaults
 models:
   - name: Chat
     <<: *model_defaults
-    model: Qwen3-32B
+    model: Qwen3-Coder-30b-a3b
     apiBase: ${{ secrets.chat_url }}
     defaultCompletionOptions:
       contextLength: 131000
