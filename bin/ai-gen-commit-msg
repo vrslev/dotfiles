@@ -16,9 +16,9 @@ fi
 commit_id="$1"
 previous_commit_message=$(git log -1 --pretty=%B "$commit_id")
 
-# Skip if the commit message length is greater than 5 characters
-if [ ${#previous_commit_message} -gt 5 ]; then
-  echo "$commit_id $previous_commit_message. Commit message is more than 5 characters. Skipping AI generation."
+# Skip if the commit message length is greater than 6 characters
+if [ ${#previous_commit_message} -gt 6 ]; then
+  echo "$commit_id $previous_commit_message. Commit message is more than 6 characters. Skipping AI generation."
   exit 0
 fi
 
