@@ -40,7 +40,7 @@ payload=$(cat <<EOF
 {
   "model": "$MAIN_OPENAI_MODEL",
   "messages": [
-    {"role": "system", "content": "Generate a concise and descriptive commit message for the git diff. Make sure first character of your answer is a letter. Do not use template words such as 'adjust'"},
+    {"role": "system", "content": "Generate a concise and descriptive commit message for the git diff. Make sure first character of your answer is a letter. Do not use template words such as 'adjust'. Keep it really short!"},
     {"role": "user", "content": $commit_diff_json}
   ]
 }
