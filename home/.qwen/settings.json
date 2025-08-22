@@ -1,11 +1,5 @@
 {
   "theme": "Qwen Dark",
   "selectedAuthType": "openai",
-  "contextFileName": "AGENTS.md",
-  "mcpServers": {
-    "playwright": {
-      "command": "npx",
-      "args": ["-y", "@playwright/mcp@latest"]
-    }
-  }
+  "contextFileName": "AGENTS.md"
 }
