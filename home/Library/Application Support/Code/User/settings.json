@@ -65,6 +65,7 @@
     "source.fixAll": "explicit",
     "source.organizeImports": "explicit"
   },
+  "editor.cursorBlinking": "solid",
   "editor.experimental.preferTreeSitter.css": true,
   "editor.experimental.preferTreeSitter.typescript": true,
   "editor.fontFamily": "FiraCode Nerd Font",
@@ -184,7 +185,8 @@
   "redhat.telemetry.enabled": false,
   "ruff.lint.ignore": [
     "F841",
-    "T201"
+    "T201",
+    "RUF100"
   ],
   "ruff.showSyntaxErrors": false,
   "rust-analyzer.check.command": "clippy",
