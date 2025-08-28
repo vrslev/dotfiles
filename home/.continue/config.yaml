@@ -7,7 +7,7 @@ model_defaults:
   requestOptions:
     verifySsl: false
 models:
-  - name: Chat
+  - name: ${{ secrets.chat_model_name }}
     provider: openai
     apiKey: ${{ secrets.api_key }}
     requestOptions:
