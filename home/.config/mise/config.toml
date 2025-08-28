@@ -1,6 +1,6 @@
 [env]
 _.path = ["~/code/dotfiles/bin", "~/.local/bin", "~/.cargo/bin"]
-_.file = { path = "{{config_root}}/.config/mise/.env", redact = true }
+_.file = { path = "{{config_root}}/.config/mise/.env" }
 DIRENV_INITIALIZED = 1
 LANG = "en_US.UTF-8"
 LANGUAGE = "{{env.LANG}}"
@@ -72,9 +72,9 @@ java = "latest"
 bun = "latest"
 "npm:opencode-ai" = "latest"
 "cargo:somo" = "latest"
-"npm:@qwen-code/qwen-code" = "latest"
 "pipx:auto-type-annotate" = "latest"
 zig = "latest"
+"npm:@qwen-code/qwen-code" = "0.0.8"
 
 [settings]
 jobs = 8
