@@ -74,7 +74,6 @@ bun = "latest"
 "cargo:somo" = "latest"
 "pipx:auto-type-annotate" = "latest"
 zig = "latest"
-"npm:@qwen-code/qwen-code" = "0.0.8"
 
 [settings]
 jobs = 8
