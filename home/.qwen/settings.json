@@ -6,9 +6,5 @@
   "ideMode": true,
   "disableAutoUpdate": true,
   "disableUpdateNag": true,
-  "excludeTools": [
-    "ShellTool(git commit)",
-    "ShellTool(git add)"
-  ],
   "sessionTokenLimit": 128000
 }
