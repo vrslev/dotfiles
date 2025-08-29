@@ -1,0 +1,6 @@
+#!/usr/bin/env fish
+if contains $argv[1] add commit
+  echo "Agents are disallowed to use git add or git commit." >&2
+  exit 1
+end
+/opt/homebrew/bin/git $argv
