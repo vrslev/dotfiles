@@ -2,11 +2,15 @@
 
 I use macOS, [Visual Studio Code](https://code.visualstudio.com), [Ghostty](https://ghostty.org/), [Fish](https://fishshell.com).
 
-Here are:
+## Notable places
 
-- Scripts at [`bin`](bin).
-- Always-fresh-and-tidy configuration for development tools at [`home`](home). All the files are [linked](link-config-files) to user home directory. Dev tools and environment are defined in [`Brewfile`](Brewfile) and [mise config](home/.config/mise/config.toml)
-- macOS defaults at [`set-macos-defaults`](set-macos-defaults) that make using it snappier and less annoying.
+- [`bin`](bin)
+- [`Brewfile`](Brewfile)
+- [`home/.config/fish`](home/.config/fish)
+- [`home/.config/git`](home/.config/git)
+- [`home/.config/mise`](home/.config/mise)
+- [`home/Library/Application Support/Code (VS Code)`](home/Library/Application Support/Code)
+- [`home/Library/Application Support/com.mitchellh.ghostty`](home/Library/Application Support/com.mitchellh.ghostty)
 
 ## Getting started
 
