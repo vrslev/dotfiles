@@ -12,7 +12,7 @@
     "command": "workbench.action.focusActiveEditorGroup"
   },
   {
-    "key": "ctrl+shift+m",
+    "key": "ctrl+shift+n",
     "command": "workbench.action.toggleMaximizedPanel"
   },
   {
