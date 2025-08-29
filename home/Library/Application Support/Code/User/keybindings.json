@@ -107,12 +107,32 @@
   },
   {
     "key": "cmd+shift+i",
-    "command": "continue.focusEdit"
+    "command": "continue.continueGUIView.open"
   },
   {
     "key": "cmd+k cmd+p",
     "command": "workbench.action.tasks.runTask",
     "args": "Python — auto-type-annotate",
     "when": "editorTextFocus && editorLangId == python"
+  },
+  {
+    "key": "shift+cmd+g",
+    "command": "workbench.view.scm",
+    "when": "workbench.scm.active"
+  },
+  {
+    "key": "ctrl+shift+g",
+    "command": "-workbench.view.scm",
+    "when": "workbench.scm.active"
+  },
+  {
+    "key": "alt+cmd+g",
+    "command": "editor.action.previousMatchFindAction",
+    "when": "editorFocus"
+  },
+  {
+    "key": "shift+cmd+g",
+    "command": "-editor.action.previousMatchFindAction",
+    "when": "editorFocus"
   }
 ]
