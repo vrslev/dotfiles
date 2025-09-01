@@ -1,0 +1,11 @@
+#!/usr/bin/env fish
+# Run qwen CLI with credentials from environment variables with given prefix.
+# Example: qqwen main --yolo
+set -l env_prefix (string upper $argv[1])
+set -l command "\
+OPENAI_API_KEY=\$$(string join _ $env_prefix OPENAI_AUTH_TOKEN) \
+OPENAI_BASE_URL=\$$(string join _ $env_prefix OPENAI_BASE_URL) \
+OPENAI_MODEL=\$$(string join _ $env_prefix OPENAI_MODEL) \
+qwen $argv[2..-1] \
+"
+eval $command
