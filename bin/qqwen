@@ -3,6 +3,7 @@
 # Example: qqwen main --yolo
 set -l env_prefix (string upper $argv[1])
 set -l command "\
+PATH=~/code/dotfiles/ai-agent-shims:$PATH \
 OPENAI_API_KEY=\$$(string join _ $env_prefix OPENAI_AUTH_TOKEN) \
 OPENAI_BASE_URL=\$$(string join _ $env_prefix OPENAI_BASE_URL) \
 OPENAI_MODEL=\$$(string join _ $env_prefix OPENAI_MODEL) \
