@@ -153,5 +153,9 @@
     "key": "shift+cmd+d",
     "command": "git.viewChanges",
     "when": "!operationInProgress"
+  },
+  {
+    "key": "alt+space",
+    "command": "editor.action.inlineSuggest.trigger"
   }
 ]

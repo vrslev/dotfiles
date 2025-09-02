@@ -234,7 +234,6 @@
     }
   },
   "terminal.integrated.showExitAlert": false,
-  "terminal.integrated.stickyScroll.enabled": true,
   "terminal.integrated.tabs.hideCondition": "never",
   "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
   "typescript.inlayHints.parameterNames.enabled": "all",
