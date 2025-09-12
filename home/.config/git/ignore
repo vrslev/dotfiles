@@ -1,6 +1,6 @@
 .DS_Store
 .mise.local.toml
 lllocal*
-
+.venv
 **/.claude/settings.local.json
 **/.dmypy.json
