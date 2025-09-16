@@ -180,7 +180,6 @@
   "python.analysis.supportAllPythonDocuments": true,
   "python.analysis.supportRestructuredText": true,
   "python.createEnvironment.trigger": "off",
-  "python.defaultInterpreterPath": "python",
   "python.terminal.activateEnvironment": false,
   "python.terminal.shellIntegration.enabled": true,
   "redhat.telemetry.enabled": false,
