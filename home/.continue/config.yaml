@@ -1,11 +1,6 @@
 name: Local Assistant
 version: 1.0.0
 schema: v1
-model_defaults:
-  provider: openai
-  apiKey: ${{ secrets.api_key }}
-  requestOptions:
-    verifySsl: false
 models:
   - name: ${{ secrets.chat_model_name }}
     provider: openai
