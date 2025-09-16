@@ -1,0 +1,5 @@
+#!/usr/bin/env fish
+glab mr create --web --draft --squash-before-merge --remove-source-branch --push \
+    --description "" \
+    --assignee (whoami) \
+    --title "$(get-work-issue-no-from-branch): "
