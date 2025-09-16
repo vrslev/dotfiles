@@ -28,10 +28,10 @@ models:
       - tool_use
   - name: Completion
     provider: openai
-    apiKey: ${{ secrets.api_key }}
+    apiKey: ${{ secrets.completion_api_key }}
     requestOptions:
       verifySsl: false
-    model: Qwen2.5-Coder-7B
+    model: ${{ secrets.completion_model_name }}
     apiBase: ${{ secrets.completion_url }}
     roles:
       - autocomplete
@@ -43,7 +43,7 @@ models:
     apiKey: ${{ secrets.api_key }}
     requestOptions:
       verifySsl: false
-    model: Qwen3-Embedding-4B
+    model: ${{ secrets.embedding_model_name }}
     apiBase: ${{ secrets.embedding_url }}
     roles:
       - embed
