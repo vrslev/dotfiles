@@ -1,0 +1,22 @@
+#!/usr/bin/env uv run --script
+# /// script
+# requires-python = ">=3.13"
+# dependencies = [
+#     "json4humans",
+# ]
+# ///
+import pathlib
+
+from json4humans import json
+
+vscode_settings_path = pathlib.Path(
+    "~/code/dotfiles/home/Library/Application Support/Code/User/settings.json"
+).expanduser()
+
+loaded_settings = json.loads(vscode_settings_path.read_text())
+for one_prop in {"python.defaultInterpreterPath", "yaml.schemas"}:
+    loaded_settings.pop(one_prop, None)
+
+vscode_settings_path.write_text(
+    json.dumps(loaded_settings).strip().removesuffix("\n}").removesuffix("}") + "\n}\n"
+)
