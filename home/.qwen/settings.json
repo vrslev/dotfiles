@@ -6,7 +6,7 @@
   "ideMode": true,
   "disableAutoUpdate": true,
   "disableUpdateNag": true,
-  "sessionTokenLimit": 128000,
+  "sessionTokenLimit": 262000,
   "mcpServers": {
     "notifications": {
       "command": "npx",
