@@ -1,0 +1,8 @@
+#!/bin/bash
+# Extract issue no from branch name: ABC-123 from feature/ABC-123-branch-name
+branch="$(git rev-parse --abbrev-ref HEAD)"
+if [[ $branch =~ ^(feature|bugfix|hotfix)/([A-Z]+-[0-9]+)- ]]; then
+    echo -n "${BASH_REMATCH[2]}"
+else
+    echo -n ""
+fi
