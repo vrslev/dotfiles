@@ -4,7 +4,7 @@
       "manifest": {
         "id": "biome",
         "name": "Biome",
-        "version": "0.1.3",
+        "version": "0.2.0",
         "schema_version": 1,
         "description": "Biome support for Zed",
         "repository": "https://github.com/biomejs/biome-zed",
@@ -13,9 +13,10 @@
         ],
         "lib": {
           "kind": "Rust",
-          "version": "0.0.6"
+          "version": "0.5.0"
         },
         "themes": [],
+        "icon_themes": [],
         "languages": [],
         "grammars": {},
         "language_servers": {
@@ -32,28 +33,32 @@
               "JSON",
               "JSONC",
               "CSS",
-              "GraphQL"
+              "GraphQL",
+              "HTML"
             ],
             "language_ids": {
               "CSS": "css",
-              "Astro": "astro",
+              "JSONC": "jsonc",
+              "Vue.js": "vuejs",
+              "GraphQL": "graphql",
               "TSX": "typescriptreact",
               "JSX": "javascriptreact",
+              "Astro": "astro",
               "TypeScript": "typescript",
-              "Vue.js": "vuejs",
-              "JSONC": "jsonc",
+              "JavaScript": "javascript",
               "Svelte": "svelte",
-              "JSON": "json",
-              "GraphQL": "graphql",
-              "JavaScript": "javascript"
+              "HTML": "html",
+              "JSON": "json"
             },
-            "code_action_kinds": null
+            "code_action_kinds": [
+              "quickfix"
+            ]
           }
         },
         "context_servers": {},
         "slash_commands": {},
-        "indexed_docs_providers": {},
-        "snippets": null
+        "snippets": null,
+        "capabilities": []
       },
       "dev": false
     },
@@ -73,6 +78,7 @@
           "version": "0.0.6"
         },
         "themes": [],
+        "icon_themes": [],
         "languages": [],
         "grammars": {},
         "language_servers": {
@@ -85,8 +91,8 @@
         },
         "context_servers": {},
         "slash_commands": {},
-        "indexed_docs_providers": {},
-        "snippets": null
+        "snippets": null,
+        "capabilities": []
       },
       "dev": false
     },
@@ -106,6 +112,7 @@
           "version": null
         },
         "themes": [],
+        "icon_themes": [],
         "languages": [
           "languages/env"
         ],
@@ -119,8 +126,8 @@
         "language_servers": {},
         "context_servers": {},
         "slash_commands": {},
-        "indexed_docs_providers": {},
-        "snippets": null
+        "snippets": null,
+        "capabilities": []
       },
       "dev": false
     },
@@ -143,13 +150,14 @@
         "themes": [
           "themes/github_theme.json"
         ],
+        "icon_themes": [],
         "languages": [],
         "grammars": {},
         "language_servers": {},
         "context_servers": {},
         "slash_commands": {},
-        "indexed_docs_providers": {},
-        "snippets": null
+        "snippets": null,
+        "capabilities": []
       },
       "dev": false
     },
@@ -157,7 +165,7 @@
       "manifest": {
         "id": "html",
         "name": "HTML",
-        "version": "0.1.4",
+        "version": "0.2.2",
         "schema_version": 1,
         "description": "HTML support.",
         "repository": "https://github.com/zed-industries/zed",
@@ -169,6 +177,7 @@
           "version": "0.1.0"
         },
         "themes": [],
+        "icon_themes": [],
         "languages": [
           "languages/html"
         ],
@@ -184,16 +193,16 @@
             "language": "HTML",
             "languages": [],
             "language_ids": {
-              "CSS": "css",
-              "HTML": "html"
+              "HTML": "html",
+              "CSS": "css"
             },
             "code_action_kinds": null
           }
         },
         "context_servers": {},
         "slash_commands": {},
-        "indexed_docs_providers": {},
-        "snippets": null
+        "snippets": null,
+        "capabilities": []
       },
       "dev": false
     },
@@ -201,7 +210,7 @@
       "manifest": {
         "id": "just",
         "name": "Justfile",
-        "version": "0.1.3",
+        "version": "0.1.4",
         "schema_version": 1,
         "description": "Justfile syntax highlighting",
         "repository": "https://github.com/jackTabsCode/zed-just",
@@ -213,21 +222,22 @@
           "version": null
         },
         "themes": [],
+        "icon_themes": [],
         "languages": [
           "languages/just"
         ],
         "grammars": {
           "just": {
             "repository": "https://github.com/IndianBoy42/tree-sitter-just",
-            "rev": "792717c262df6d6fa285c1136a11c23cedadcb0c",
+            "rev": "3f90d24eb8c8d9e8c74fee7120d79c3ec7229f26",
             "path": null
           }
         },
         "language_servers": {},
         "context_servers": {},
         "slash_commands": {},
-        "indexed_docs_providers": {},
-        "snippets": null
+        "snippets": null,
+        "capabilities": []
       },
       "dev": false
     },
@@ -249,6 +259,7 @@
           "version": null
         },
         "themes": [],
+        "icon_themes": [],
         "languages": [
           "languages/log"
         ],
@@ -262,8 +273,8 @@
         "language_servers": {},
         "context_servers": {},
         "slash_commands": {},
-        "indexed_docs_providers": {},
-        "snippets": null
+        "snippets": null,
+        "capabilities": []
       },
       "dev": false
     },
@@ -283,6 +294,7 @@
           "version": "0.0.6"
         },
         "themes": [],
+        "icon_themes": [],
         "languages": [],
         "grammars": {},
         "language_servers": {
@@ -297,8 +309,8 @@
         },
         "context_servers": {},
         "slash_commands": {},
-        "indexed_docs_providers": {},
-        "snippets": null
+        "snippets": null,
+        "capabilities": []
       },
       "dev": false
     },
@@ -306,7 +318,7 @@
       "manifest": {
         "id": "ruff",
         "name": "Ruff",
-        "version": "0.1.0",
+        "version": "0.1.1",
         "schema_version": 1,
         "description": "Support for Ruff, the Python linter and formatter",
         "repository": "https://github.com/zed-industries/zed",
@@ -316,6 +328,7 @@
           "version": "0.1.0"
         },
         "themes": [],
+        "icon_themes": [],
         "languages": [],
         "grammars": {},
         "language_servers": {
@@ -330,8 +343,8 @@
         },
         "context_servers": {},
         "slash_commands": {},
-        "indexed_docs_providers": {},
-        "snippets": null
+        "snippets": null,
+        "capabilities": []
       },
       "dev": false
     },
@@ -339,19 +352,20 @@
       "manifest": {
         "id": "toml",
         "name": "TOML",
-        "version": "0.1.2",
+        "version": "1.0.0",
         "schema_version": 1,
         "description": "TOML support.",
-        "repository": "https://github.com/zed-industries/zed",
+        "repository": "https://github.com/zed-extensions/toml",
         "authors": [
           "Max Brunsfeld <max@zed.dev>",
           "Ammar Arif <evergreenkary@gmail.com>"
         ],
         "lib": {
-          "kind": "Rust",
-          "version": "0.1.0"
+          "kind": null,
+          "version": null
         },
         "themes": [],
+        "icon_themes": [],
         "languages": [
           "languages/toml"
         ],
@@ -362,18 +376,47 @@
             "path": null
           }
         },
+        "language_servers": {},
+        "context_servers": {},
+        "slash_commands": {},
+        "snippets": null,
+        "capabilities": []
+      },
+      "dev": false
+    },
+    "zuban": {
+      "manifest": {
+        "id": "zuban",
+        "name": "Zuban",
+        "version": "0.0.1",
+        "schema_version": 1,
+        "description": "Language Server for ZubanLS",
+        "repository": "https://github.com/CMLL/zed_zuban",
+        "authors": [
+          "Carlos Llamacho <llamacholancho@gmail.com>"
+        ],
+        "lib": {
+          "kind": "Rust",
+          "version": "0.6.0"
+        },
+        "themes": [],
+        "icon_themes": [],
+        "languages": [],
+        "grammars": {},
         "language_servers": {
-          "taplo": {
-            "language": "TOML",
-            "languages": [],
+          "zuban": {
+            "language": null,
+            "languages": [
+              "Python"
+            ],
             "language_ids": {},
             "code_action_kinds": null
           }
         },
         "context_servers": {},
         "slash_commands": {},
-        "indexed_docs_providers": {},
-        "snippets": null
+        "snippets": null,
+        "capabilities": []
       },
       "dev": false
     }
@@ -416,6 +459,7 @@
       "path": "themes/github_theme.json"
     }
   },
+  "icon_themes": {},
   "languages": {
     "HTML": {
       "extension": "html",
@@ -439,10 +483,7 @@
           "justfile",
           "Justfile",
           "JUSTFILE",
-          ".justfile",
-          ".Justfile",
-          ".JUSTFILE",
-          ".just"
+          "just"
         ],
         "first_line_pattern": null
       },

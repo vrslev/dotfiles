@@ -7,13 +7,13 @@
 // custom settings, run `zed: open default settings` from the
 // command palette
 {
-	"assistant": {
-		"default_model": {
-			"provider": "ollama",
-			"model": "llama3.1:latest"
-		},
-		"version": "2"
-	},
+	// "assistant": {
+	// 	"default_model": {
+	// 		"provider": "ollama",
+	// 		"model": "llama3.1:latest"
+	// 	},
+	// 	"version": "2"
+	// },
 	"base_keymap": "VSCode",
 	"features": {
 		"inline_completion_provider": "none"
@@ -43,7 +43,7 @@
 	"format_on_save": "on",
 	"languages": {
 		"Python": {
-			"language_servers": ["pyright", "ruff", "pylsp"],
+			"language_servers": ["zuban", "ruff"],
 			"code_actions_on_format": {
 				"source.organizeImports.ruff": true,
 				"source.fixAll.ruff": true
@@ -101,72 +101,11 @@
 		}
 	},
 	"lsp": {
-		"pyright": {
-			"python": {
-				"pythonPath": ".venv/bin/python"
-			},
-			"settings": {
-				"python.analysis": {
-					"diagnosticMode": "workspace",
-					"typeCheckingMode": "off"
-				}
-			}
-		},
 		"ruff": {
 			"initialization_options": {
 				"settings": {
 					"lint": {
 						"ignore": ["F841"]
-					}
-				}
-			}
-		},
-		"pylsp": {
-			"initialization_options": {
-				"settings": {
-					"python": {
-						"pythonPath": ".venv/bin/python"
-					}
-				}
-			},
-			"settings": {
-				"plugins": {
-					"rope": {
-						"enabled": true
-					},
-					"pylint": {
-						"enabled": false
-					},
-					"pycodestyle": {
-						"enabled": false
-					},
-					"jedi_symbols": {
-						"enabled": true
-					},
-					"jedi_definition": {
-						"enabled": true
-					},
-					"jedi_references": {
-						"enabled": true
-					},
-					"jedi_hover": {
-						"enabled": true
-					},
-					"jedi_completion": {
-						"enabled": true
-					},
-					"jedi_signature_help": {
-						"enablded": true
-					},
-					"jedi": {
-						"environment": {
-							"PYTHONPATH": ".venv"
-						}
-					},
-					"pylsp_mypy": {
-						"enabled": true,
-						"dmypy": true,
-						"overrides": ["--python-executable", ".venv/bin/python", true]
 					}
 				}
 			}

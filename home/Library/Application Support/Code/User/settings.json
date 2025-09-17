@@ -56,7 +56,7 @@
   "biome.requireConfiguration": true,
   "chat.commandCenter.enabled": false,
   "continue.disableQuickFix": true,
-  "continue.enableTabAutocomplete": true,
+  "continue.enableTabAutocomplete": false,
   "continue.showInlineTip": false,
   "continue.telemetryEnabled": false,
   "diffEditor.ignoreTrimWhitespace": false,
