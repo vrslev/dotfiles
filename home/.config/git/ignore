@@ -4,3 +4,5 @@ lllocal*
 .venv
 **/.claude/settings.local.json
 **/.dmypy.json
+.specify
+.qwen

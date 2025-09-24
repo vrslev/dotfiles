@@ -15,5 +15,6 @@
         "@pinkpixel/notification-mcp"
       ]
     }
-  }
+  },
+  "hideBanner": true
 }

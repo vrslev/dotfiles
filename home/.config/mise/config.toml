@@ -74,6 +74,7 @@ bun = "latest"
 "cargo:somo" = "latest"
 "pipx:auto-type-annotate" = "latest"
 zig = "latest"
+"npm:@qwen-code/qwen-code" = "latest"
 
 [settings]
 jobs = 8
@@ -87,3 +88,4 @@ trusted_config_paths = [
 pipx = { uvx = true }
 fetch_remote_versions_cache = "2d"
 npm.bun = true
+idiomatic_version_file_enable_tools = ["python"]
