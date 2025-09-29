@@ -37,7 +37,6 @@ cask "spotify"
 cask "the-unarchiver"
 cask "transmission"
 cask "visual-studio-code"
-cask "voiceink"
 mas "Focusito", id: 1473808464
 mas "GarageBand", id: 682658836
 mas "Keynote", id: 409183694
