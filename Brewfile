@@ -25,6 +25,7 @@ cask "flux-app"
 cask "font-fira-code-nerd-font"
 cask "freelens"
 cask "ghostty"
+cask "handy"
 cask "iina"
 cask "jordanbaird-ice"
 cask "localsend"
@@ -36,6 +37,7 @@ cask "spotify"
 cask "the-unarchiver"
 cask "transmission"
 cask "visual-studio-code"
+cask "voiceink"
 mas "Focusito", id: 1473808464
 mas "GarageBand", id: 682658836
 mas "Keynote", id: 409183694
@@ -44,6 +46,7 @@ mas "Outline", id: 1356178125
 mas "Pages", id: 409201541
 mas "Pixelmator Pro", id: 1289583905
 mas "Reeder", id: 1529448980
+mas "Shadowrocket", id: 932747118
 mas "Strongbox", id: 897283731
 mas "Telegram", id: 747648890
 mas "Things", id: 904280696
