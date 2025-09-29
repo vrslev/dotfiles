@@ -1,6 +1,6 @@
 [env]
 _.path = ["~/code/dotfiles/bin", "~/.local/bin", "~/.cargo/bin"]
-_.file = ["{{config_root}}/.env"]
+_.file = { path = "{{config_root}}/.config/mise/.env" }
 DIRENV_INITIALIZED = 1
 LANG = "en_US.UTF-8"
 LANGUAGE = "{{env.LANG}}"
@@ -75,6 +75,8 @@ bun = "latest"
 "pipx:auto-type-annotate" = "latest"
 zig = "latest"
 "npm:@qwen-code/qwen-code" = "latest"
+"npm:@anthropic-ai/claude-code" = "latest"
+"npm:@musistudio/claude-code-router" = "latest"
 
 [settings]
 jobs = 8
