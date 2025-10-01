@@ -1,20 +1,22 @@
 {
-  "theme": "GitHub Light",
-  "selectedAuthType": "openai",
+  "autoAccept": true,
   "contextFileName": "AGENTS.md",
-  "hasSeenIdeIntegrationNudge": true,
-  "ideMode": true,
   "disableAutoUpdate": true,
   "disableUpdateNag": true,
-  "sessionTokenLimit": 262000,
+  "hasSeenIdeIntegrationNudge": true,
+  "hideBanner": true,
+  "ideMode": false,
   "mcpServers": {
     "notifications": {
-      "command": "npx",
       "args": [
         "-y",
         "@pinkpixel/notification-mcp"
-      ]
+      ],
+      "command": "npx"
     }
   },
-  "hideBanner": true
+  "selectedAuthType": "openai",
+  "sessionTokenLimit": 262000,
+  "theme": "GitHub Light",
+  "usageStatisticsEnabled": false
 }
