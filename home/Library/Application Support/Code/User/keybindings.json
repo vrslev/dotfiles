@@ -155,7 +155,7 @@
     "when": "!operationInProgress"
   },
   {
-    "key": "alt+space",
+    "key": "shift+space",
     "command": "editor.action.inlineSuggest.trigger"
   }
 ]
