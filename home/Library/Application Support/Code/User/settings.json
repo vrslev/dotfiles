@@ -2,6 +2,20 @@
   "[css]": {
     "editor.defaultFormatter": "vscode.css-language-features"
   },
+  "[dockercompose]": {
+    "editor.autoIndent": "advanced",
+    "editor.defaultFormatter": "redhat.vscode-yaml",
+    "editor.insertSpaces": true,
+    "editor.quickSuggestions": {
+      "comments": false,
+      "other": true,
+      "strings": true
+    },
+    "editor.tabSize": 2
+  },
+  "[github-actions-workflow]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
   "[html]": {
     "editor.defaultFormatter": "vscode.html-language-features"
   },
@@ -54,6 +68,7 @@
   },
   "$schema": "vscode://schemas/settings/user",
   "biome.requireConfiguration": true,
+  "breadcrumbs.enabled": false,
   "chat.commandCenter.enabled": false,
   "continue.disableQuickFix": true,
   "continue.enableTabAutocomplete": true,
@@ -250,15 +265,14 @@
   "window.newWindowDimensions": "maximized",
   "workbench.activityBar.location": "top",
   "workbench.colorTheme": "Default Light Modern",
+  "workbench.editor.labelFormat": "medium",
+  "workbench.editor.showIcons": false,
+  "workbench.editor.showTabs": "single",
   "workbench.layoutControl.enabled": false,
   "workbench.list.smoothScrolling": true,
+  "workbench.secondarySideBar.defaultVisibility": "hidden",
   "workbench.sideBar.location": "right",
   "workbench.startupEditor": "none",
   "workbench.tips.enabled": false,
   "zenMode.centerLayout": false,
-  "zenMode.fullScreen": false,
-  "workbench.editor.showTabs": "single",
-  "workbench.editor.showIcons": false,
-  "workbench.editor.labelFormat": "medium",
-  "breadcrumbs.enabled": false
-}
+  "zenMode.fullScreen": false}
