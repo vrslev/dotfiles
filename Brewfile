@@ -19,6 +19,7 @@ brew "postgresql@14"
 brew "telnet"
 brew "tree"
 brew "watch"
+brew "wget"
 cask "daisydisk"
 cask "eqmac"
 cask "flux-app"
@@ -37,6 +38,7 @@ cask "spotify"
 cask "the-unarchiver"
 cask "transmission"
 cask "visual-studio-code"
+cask "zed"
 mas "Focusito", id: 1473808464
 mas "GarageBand", id: 682658836
 mas "Keynote", id: 409183694
