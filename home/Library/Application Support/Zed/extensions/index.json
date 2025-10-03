@@ -37,18 +37,18 @@
               "HTML"
             ],
             "language_ids": {
-              "CSS": "css",
-              "JSONC": "jsonc",
-              "Vue.js": "vuejs",
-              "GraphQL": "graphql",
-              "TSX": "typescriptreact",
-              "JSX": "javascriptreact",
-              "Astro": "astro",
-              "TypeScript": "typescript",
               "JavaScript": "javascript",
-              "Svelte": "svelte",
+              "JSON": "json",
+              "JSX": "javascriptreact",
+              "GraphQL": "graphql",
               "HTML": "html",
-              "JSON": "json"
+              "Svelte": "svelte",
+              "Vue.js": "vuejs",
+              "Astro": "astro",
+              "TSX": "typescriptreact",
+              "CSS": "css",
+              "TypeScript": "typescript",
+              "JSONC": "jsonc"
             },
             "code_action_kinds": [
               "quickfix"
@@ -165,7 +165,7 @@
       "manifest": {
         "id": "html",
         "name": "HTML",
-        "version": "0.2.2",
+        "version": "0.2.3",
         "schema_version": 1,
         "description": "HTML support.",
         "repository": "https://github.com/zed-industries/zed",
@@ -174,7 +174,7 @@
         ],
         "lib": {
           "kind": "Rust",
-          "version": "0.1.0"
+          "version": "0.7.0"
         },
         "themes": [],
         "icon_themes": [],

@@ -16,7 +16,7 @@
 	// },
 	"base_keymap": "VSCode",
 	"features": {
-		"inline_completion_provider": "none"
+		"edit_prediction_provider": "none"
 	},
 	"telemetry": {
 		"diagnostics": false,
@@ -43,7 +43,7 @@
 	"format_on_save": "on",
 	"languages": {
 		"Python": {
-			"language_servers": ["zuban", "ruff"],
+			"language_servers": ["basedpyright", "ruff"],
 			"code_actions_on_format": {
 				"source.organizeImports.ruff": true,
 				"source.fixAll.ruff": true
