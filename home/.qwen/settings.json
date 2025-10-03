@@ -10,7 +10,7 @@
     "notifications": {
       "args": [
         "-y",
-        "@pinkpixel/notification-mcp"
+        "macos-notify-mcp"
       ],
       "command": "npx"
     }
