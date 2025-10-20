@@ -10,11 +10,5 @@ mise reshim --yes &
 echo -e "\033[1;32mbrew update && brew bundle --file ~/code/dotfiles/Brewfile --cleanup --no-upgrade && brew upgrade --greedy\033[0m"
 /opt/homebrew/bin/brew update
 /opt/homebrew/bin/brew bundle --file Brewfile --cleanup --no-upgrade
-
-updates=$(/opt/homebrew/bin/brew outdated --json --greedy | grep '^[{} ]' | jq -r ".formulae + .casks | .[] | .name")
-if test -n "$updates"; then
-    /opt/homebrew/bin/brew fetch $updates
-    /opt/homebrew/bin/brew upgrade --greedy
-    exit
-fi
-brew cleanup  # trigger _brew-dump
+/opt/homebrew/bin/brew upgrade --greedy
+/opt/homebrew/bin/brew cleanup  # trigger _brew-dump
