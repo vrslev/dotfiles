@@ -43,7 +43,7 @@ hugo = "latest"
 just = "latest"
 killport = "latest"
 node = "20"
-python = ["3.13", "3.12", "3.11", "3.10"]
+python = ["3.14", "3.13", "3.12", "3.11", "3.10"]
 ripgrep = { version = "latest", postinstall = "mise run _install-fish-completions rg --generate complete-fish" }
 shellcheck = "latest"
 starship = "latest"
