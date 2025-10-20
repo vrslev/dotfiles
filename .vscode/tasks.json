@@ -8,7 +8,8 @@
             "runOptions": {
                 "runOn": "folderOpen"
             },
-            "hide": true
+            "hide": true,
+            "isBackground": true
         }
     ]
 }
