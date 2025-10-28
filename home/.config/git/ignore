@@ -6,3 +6,4 @@ lllocal*
 **/.dmypy.json
 .specify
 .qwen
+!home/.qwen/settings.json
