@@ -6,15 +6,6 @@
   "hasSeenIdeIntegrationNudge": true,
   "hideBanner": true,
   "ideMode": false,
-  "mcpServers": {
-    "notifications": {
-      "args": [
-        "-y",
-        "macos-notify-mcp"
-      ],
-      "command": "npx"
-    }
-  },
   "selectedAuthType": "openai",
   "sessionTokenLimit": 262000,
   "theme": "GitHub Light",
