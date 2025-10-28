@@ -77,6 +77,9 @@ zig = "latest"
 "npm:@qwen-code/qwen-code" = "latest"
 "npm:@anthropic-ai/claude-code" = "latest"
 "npm:@musistudio/claude-code-router" = "latest"
+"ubi:ksdme/ut" = "latest"
+kube-linter = "latest"
+kube-score = "latest"
 
 [settings]
 jobs = 8
