@@ -1,13 +1,31 @@
 {
-  "autoAccept": true,
-  "contextFileName": "AGENTS.md",
-  "disableAutoUpdate": true,
-  "disableUpdateNag": true,
-  "hasSeenIdeIntegrationNudge": true,
-  "hideBanner": true,
-  "ideMode": false,
-  "selectedAuthType": "openai",
-  "sessionTokenLimit": 262000,
-  "theme": "GitHub Light",
-  "usageStatisticsEnabled": false
+  "tools": {
+    "autoAccept": true
+  },
+  "context": {
+    "fileName": "AGENTS.md"
+  },
+  "general": {
+    "disableAutoUpdate": true,
+    "disableUpdateNag": true
+  },
+  "ide": {
+    "hasSeenNudge": true,
+    "enabled": false
+  },
+  "ui": {
+    "hideBanner": true,
+    "theme": "GitHub Light"
+  },
+  "security": {
+    "auth": {
+      "selectedType": "openai"
+    }
+  },
+  "privacy": {
+    "usageStatisticsEnabled": false
+  },
+  "model": {
+    "sessionTokenLimit": 262000
+  }
 }
