@@ -1,0 +1,3 @@
+#!/usr/bin/env fish
+# Usage: `notify "<title>" "<message>"`
+terminal-notifier -title "$argv[1]" -message "$argv[2]" -sound Morse -activate com.microsoft.VSCode -group 1234 -remove 1234 >/dev/null
