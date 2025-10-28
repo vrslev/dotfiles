@@ -55,6 +55,7 @@ mas "Telegram", id: 747648890
 mas "Things", id: 904280696
 mas "Wipr", id: 1662217862
 vscode "amodio.tsl-problem-matcher"
+vscode "anthropic.claude-code"
 vscode "bierner.markdown-mermaid"
 vscode "biomejs.biome"
 vscode "charliermarsh.ruff"
