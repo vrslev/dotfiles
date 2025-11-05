@@ -27,5 +27,6 @@
   },
   "model": {
     "sessionTokenLimit": 262000
-  }
+  },
+  "$version": 2
 }
