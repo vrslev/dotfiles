@@ -37,3 +37,11 @@ alias git-root 'cd $(git rev-parse --show-toplevel)'
 alias ls "eza --icons --all"
 alias ll "ls --long"
 alias posix 'exec bash -c "$argv; exec fish"'
+
+function beep
+  if test "$status" = "0"
+    afplay "/System/Library/Sounds/Glass.aiff"
+  else
+    afplay "/System/Library/Sounds/Basso.aiff"
+  end
+end
