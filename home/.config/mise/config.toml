@@ -56,7 +56,6 @@ zoxide = "latest"
 "pipx:glances" = "latest"
 "pipx:maturin" = "latest"
 "pipx:poetry" = { version = "latest", postinstall = "mise run _install-fish-completions poetry completions fish" }
-"pipx:pre-commit" = "latest"
 "pipx:python-lsp-server[all]" = { version = "latest", uvx_args = "--with pylsp-mypy" }
 "pipx:sqlfluff" = "latest"
 "pipx:llm" = { version = "latest", uvx_args = "--with llm-ollama --with llm-fragments-youtube --with llm-mlx" }
@@ -80,6 +79,7 @@ zig = "latest"
 "ubi:ksdme/ut" = "latest"
 kube-linter = "latest"
 kube-score = "latest"
+biome = "latest"
 
 [settings]
 jobs = 8

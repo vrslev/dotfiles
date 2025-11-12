@@ -7,3 +7,4 @@ lllocal*
 .specify
 .qwen
 !home/.qwen/settings.json
+.playwright-session
