@@ -22,6 +22,24 @@
   st = status
   rm-merged-branches = !git branch --format '%(refname:short) %(upstream:track)' | awk '$2 == \"[gone]\" { print $1 }' | xargs -r git branch -D
   sync = !git main && git pull --prune && git rm-merged-branches
+	# reword = "!f() { tmpfile=$(mktemp) && echo \"sed -i 1s/^pick/reword/\" > \"$tmpfile\" && GIT_SEQUENCE_EDITOR=\"sh -c \\\"'\\\"'\\\"\\\"$tmpfile\\\"'\\\"'\\\"\\\"\" git rebase -i \"$1^\" && rm -f \"$tmpfile\"; }; f"
+	reword = "!f() {\n  GIT_SEQUENCE_EDITOR=\"perl -i -pe 's/^pick/reword/ if $. == 1'\" GIT_EDITOR=\"printf \\\"%s\\n\\\" \\\"$2\\\" >\" git rebase -i \"$1^\";\n}; f"
+	# reword = "!f() {\n  GIT_SEQUENCE_EDITOR=\"sed 1s/^pick/reword/ 2>&1 \" GIT_EDITOR=\"printf \\\"%s\\n\\\" \\\"$2\\\" >\" git rebase -i \"$1^\";\n}; f"
+	autoreword = !git commit --fixup reword:$1 && GIT_EDITOR=true && git rebase --autosquash --interactive --rebase-merges $1~1 && echo \"autoreword finished\"
+	# reword = "!f() { \
+  #       if [ $# -lt 2 ]; then \
+  #           echo \"Usage: git reword <commit> <message>\"; \
+  #           return 1; \
+  #       fi; \
+  #       commit=\"$1\"; \
+  #       shift; \
+  #       msg=\"$*\"; \
+  #       if [ \"$(git rev-parse HEAD)\" = \"$(git rev-parse \"$commit\")\" ]; then \
+  #           git commit --amend -m \"$msg\"; \
+  #       else \
+  #           git rebase -i --exec \"git commit --amend -m '$msg'\" \"$commit^^\"; \
+  #       fi; \
+  #   }; f"
 
 [rerere]
   enabled = true
