@@ -17,16 +17,23 @@
     "hideBanner": true,
     "theme": "GitHub Light"
   },
-  "security": {
-    "auth": {
-      "selectedType": "openai"
-    }
-  },
   "privacy": {
     "usageStatisticsEnabled": false
   },
   "model": {
     "sessionTokenLimit": 262000
+  },
+  "mcpServers": {
+    // "grafana": {
+    //   "command": "mcp-grafana",
+    //   "args": ["-disable-proxied"]
+    // },
+    // "playwright": {
+    //   "command": "npx",
+    //   "args": [
+    //     "@playwright/mcp@latest"
+    //   ]
+    // }
   },
   "$version": 2
 }
