@@ -17,7 +17,6 @@ brew "ollama", restart_service: :changed
 brew "parallel"
 brew "postgresql@14"
 brew "telnet"
-brew "terminal-notifier"
 brew "tree"
 brew "watch"
 brew "wget"
