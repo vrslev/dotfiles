@@ -8,7 +8,6 @@ if [ -z "$unpushed_commits" ]; then
 fi
 
 for commit in $unpushed_commits; do
-# echo $commit
   ai-gen-commit-msg "$commit"
 done
 
