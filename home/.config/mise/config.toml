@@ -47,7 +47,6 @@ python = ["3.14", "3.13", "3.12", "3.11", "3.10"]
 ripgrep = { version = "latest", postinstall = "mise run _install-fish-completions rg --generate complete-fish" }
 shellcheck = "latest"
 starship = "latest"
-"ubi:XAMPPRocky/tokei" = "latest"
 usage = "latest"
 xh = { version = "latest", postinstall = "mise run _install-fish-completions xh --generate complete-fish && mkdir -p ~/.local/bin && ln (which xh) ~/.local/bin/xhs" }
 yq = { version = "latest", postinstall = "mise run _install-fish-completions yq completion fish" }
@@ -80,6 +79,7 @@ zig = "latest"
 kube-linter = "latest"
 kube-score = "latest"
 biome = "latest"
+"cargo:tokei" = "latest"
 
 [settings]
 jobs = 8
