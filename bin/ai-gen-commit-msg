@@ -67,6 +67,22 @@ if [ -z "$ai_commit_message" ] || [ "$ai_commit_message" = "null" ]; then
 else
   echo "$commit_id: Updated commit message: $ai_commit_message"
 fi
-
 # Amend the commit with the new message (using --no-verify to avoid re-triggering hooks)
-git commit --amend -m "$ai_commit_message" --no-verify >/dev/null 2>&1
+# git replace "$commit_id" $(git commit-tree $commit_id~^{tree} -m "$ai_commit_message" -p $(git rev-parse $commit_id~^))
+# echo "
+# git filter-branch --env-filter "
+#     if test \"\$GIT_COMMIT\" = \"$commit_id\"
+#     then
+#         export GIT_COMMIT_SUBJECT=\"$ai_commit_message\"
+#     fi
+# " HEAD
+# GIT_SEQUENCE_EDITOR="sed -i 1s/^pick/reword/" GIT_EDITOR="printf \"%s\n\" \"$2\" >" git rebase -i "$1^";
+# git reword "$commit_id" "$ai_commit_message"
+
+
+echo 'here'
+# Use GIT_SEQUENCE_EDITOR to execute a script that modifies the rebase instructions
+GIT_SEQUENCE_EDITOR="sed 's/^pick \\($commit_id\\)/reword \\1/'" git rebase -i "$commit_id^"
+
+# Then, use GIT_EDITOR to provide the new commit message non-interactively
+GIT_EDITOR="echo \"$ai_commit_message\" >" git rebase --continue
