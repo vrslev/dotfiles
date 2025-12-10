@@ -1,0 +1,62 @@
+#!/opt/homebrew/bin/mise x uv -- uv run --script
+# /// script
+# requires-python = ">=3.14"
+# dependencies = [
+#     "openai",
+# ]
+# ///
+import os
+import subprocess
+import sys
+
+from openai import OpenAI
+
+commit_id = sys.argv[1]
+
+previous_commit_message = subprocess.run(
+    ["git", "log", "-1", "--pretty=%B", commit_id],
+    capture_output=True,
+    text=True,
+    check=True,
+).stdout.strip()
+if len(previous_commit_message) > 6:
+    sys.stderr.write(
+        f"{commit_id} {previous_commit_message}. Commit message is more than 6 characters. Skipping AI generation."
+    )
+    sys.exit(0)
+
+commit_diff = subprocess.run(
+    ["git", "diff-tree", "--no-commit-id", "-p", "-r", commit_id],
+    capture_output=True,
+    text=True,
+    check=True,
+).stdout
+max_diff_size = 32 * 1024
+if len(commit_diff) > max_diff_size:
+    commit_diff = commit_diff[:max_diff_size]
+    sys.stderr.write(
+        f"{commit_id}: Commit diff exceeds 32k characters. Truncating diff for AI generation."
+    )
+
+client = OpenAI(
+    api_key=os.environ["OPENAI_API_KEY"],
+    base_url=os.environ["OPENAI_BASE_URL"],
+    timeout=5,
+    max_retries=1,
+)
+response = client.chat.completions.create(
+    model=os.environ["OPENAI_MODEL"],
+    messages=[
+        {
+            "role": "system",
+            "content": "Generate a concise and descriptive commit message for the git diff. Make sure first character of your answer is a letter. Do not use template words such as 'adjust'. Keep it really short, no more than 50 characters!",
+        },
+        {
+            "role": "user",
+            "content": commit_diff,
+        },
+    ],
+    max_tokens=100,
+    temperature=0.5,
+)
+sys.stdout.write(response.choices[0].message.content.strip())
