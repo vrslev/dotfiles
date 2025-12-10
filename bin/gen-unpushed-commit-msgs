@@ -1,0 +1,19 @@
+#!/bin/bash
+set -euo pipefail
+
+unpushed_commits=$(git log @{u}.. --pretty=format:"%H" || git log $(git main-branch).. --pretty=format:"%H")
+if [ -z "$unpushed_commits" ]; then
+  echo "No unpushed commits found."
+  exit 0
+fi
+
+for commit_id in $unpushed_commits; do
+  new_commit_message=$(gen-commit-msg "$commit_id")
+  echo $new_commit_message
+  if ! test -z $new_commit_message; then
+      echo "$commit_id: Updated commit message: $new_commit_message"
+      git reword "$commit_id" "$new_commit_message"
+  fi
+done
+
+echo "AI commit message generation complete for all unpushed commits."

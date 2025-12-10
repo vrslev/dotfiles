@@ -1,5 +1,5 @@
 #!/bin/bash
-set -xeuo pipefail
+set -euo pipefail
 
 last_commit_id=$(git rev-parse HEAD)
 new_commit_message=$(gen-commit-msg "$last_commit_id")

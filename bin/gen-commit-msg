@@ -19,7 +19,7 @@ previous_commit_message = subprocess.run(
     text=True,
     check=True,
 ).stdout.strip()
-if len(previous_commit_message) > 6:
+if len(previous_commit_message) > 7:
     sys.stderr.write(
         f"{commit_id} {previous_commit_message}. Commit message is more than 6 characters. Skipping AI generation."
     )
@@ -41,25 +41,31 @@ if len(commit_diff) > max_diff_size:
         f"{commit_id}: Commit diff exceeds 32k characters. Truncating diff for AI generation."
     )
 
-client = OpenAI(
-    api_key=os.environ["OPENAI_API_KEY"],
-    base_url=os.environ["OPENAI_BASE_URL"],
-    timeout=5,
-    max_retries=1,
-)
-response = client.chat.completions.create(
-    model=os.environ["OPENAI_MODEL"],
-    messages=[
-        {
-            "role": "system",
-            "content": "Generate a concise and descriptive commit message for the git diff. Make sure first character of your answer is a letter. Do not use template words such as 'adjust'. Keep it really short, no more than 50 characters!",
-        },
-        {
-            "role": "user",
-            "content": commit_diff,
-        },
-    ],
-    max_tokens=100,
-    temperature=0.5,
-)
-sys.stdout.write(response.choices[0].message.content.strip())
+try:
+    client = OpenAI(
+        api_key=os.environ["OPENAI_API_KEY"],
+        base_url=os.environ["OPENAI_BASE_URL"],
+        timeout=5,
+        max_retries=1,
+    )
+    response = client.chat.completions.create(
+        model=os.environ["OPENAI_MODEL"],
+        messages=[
+            {
+                "role": "system",
+                "content": "Generate a concise and descriptive commit message for the git diff. Make sure first character of your answer is a letter. Do not use template words such as 'adjust'. Keep it really short, no more than 50 characters!",
+            },
+            {
+                "role": "user",
+                "content": commit_diff,
+            },
+        ],
+        max_tokens=100,
+        temperature=0.5,
+    )
+    new_commit_message = response.choices[0].message.content.strip()
+except Exception:
+    sys.stderr.write(f"{commit_id}: Failed to generate commit message\n")
+    sys.stdout.write("Update")
+else:
+    sys.stdout.write(new_commit_message)
