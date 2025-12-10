@@ -21,7 +21,8 @@
     "usageStatisticsEnabled": false
   },
   "model": {
-    "sessionTokenLimit": 262000
+    "sessionTokenLimit": 262000,
+    "name": "coder-large"
   },
   "mcpServers": {
     // "grafana": {
@@ -35,5 +36,10 @@
     //   ]
     // }
   },
-  "$version": 2
+  "$version": 2,
+  "security": {
+    "auth": {
+      "selectedType": "openai"
+    }
+  }
 }
