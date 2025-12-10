@@ -3,6 +3,6 @@ set -euo pipefail
 
 last_commit_id=$(git rev-parse HEAD)
 new_commit_message=$(gen-commit-msg "$last_commit_id")
-if ! test -n $new_commit_message; then
+if ! test -n "$new_commit_message"; then
     git commit --amend -m "$new_commit_message" --no-verify
 fi

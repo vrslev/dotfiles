@@ -11,8 +11,12 @@ import sys
 
 from openai import OpenAI
 
-commit_id = sys.argv[1]
 
+def log(content: str) -> None:
+    print(f"{commit_id}: {content}", file=sys.stderr)
+
+
+commit_id = sys.argv[1]
 previous_commit_message = subprocess.run(
     ["git", "log", "-1", "--pretty=%B", commit_id],
     capture_output=True,
@@ -20,9 +24,7 @@ previous_commit_message = subprocess.run(
     check=True,
 ).stdout.strip()
 if len(previous_commit_message) > 7:
-    sys.stderr.write(
-        f"{commit_id} {previous_commit_message}. Commit message is more than 6 characters. Skipping AI generation."
-    )
+    log(f"skip, len({previous_commit_message=}) > 7")
     sys.exit(0)
 
 commit_diff = subprocess.run(
@@ -32,14 +34,12 @@ commit_diff = subprocess.run(
     check=True,
 ).stdout
 if not commit_diff.strip():
-    sys.stderr.write(f"{commit_id}: Empty commit, skipping generation")
+    log("skip, empty commit")
     sys.exit(0)
-max_diff_size = 32 * 1024
-if len(commit_diff) > max_diff_size:
-    commit_diff = commit_diff[:max_diff_size]
-    sys.stderr.write(
-        f"{commit_id}: Commit diff exceeds 32k characters. Truncating diff for AI generation."
-    )
+max_diff_chars = 32 * 1024
+if len(commit_diff) > max_diff_chars:
+    commit_diff = commit_diff[:max_diff_chars]
+    log(f"truncating commit diff — it exceeds {max_diff_chars=}")
 
 try:
     client = OpenAI(
@@ -64,8 +64,8 @@ try:
         temperature=0.5,
     )
     new_commit_message = response.choices[0].message.content.strip()
-except Exception:
-    sys.stderr.write(f"{commit_id}: Failed to generate commit message\n")
+except Exception as exception:
+    log(f"failed to generate commit message: {exception}")
     sys.stdout.write("Update")
 else:
     sys.stdout.write(new_commit_message)
