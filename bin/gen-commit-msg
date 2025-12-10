@@ -31,6 +31,9 @@ commit_diff = subprocess.run(
     text=True,
     check=True,
 ).stdout
+if not commit_diff.strip():
+    sys.stderr.write(f"{commit_id}: Empty commit, skipping generation")
+    sys.exit(0)
 max_diff_size = 32 * 1024
 if len(commit_diff) > max_diff_size:
     commit_diff = commit_diff[:max_diff_size]
