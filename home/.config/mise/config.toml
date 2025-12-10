@@ -80,6 +80,7 @@ kube-linter = "latest"
 kube-score = "latest"
 biome = "latest"
 "cargo:tokei" = "latest"
+"pipx:end-of-file-fixer" = "latest"
 
 [settings]
 jobs = 8
