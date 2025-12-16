@@ -71,7 +71,7 @@
   "breadcrumbs.enabled": false,
   "chat.commandCenter.enabled": false,
   "continue.disableQuickFix": true,
-  "continue.enableTabAutocomplete": true,
+  "continue.enableTabAutocomplete": false,
   "continue.showInlineTip": false,
   "continue.telemetryEnabled": false,
   "diffEditor.ignoreTrimWhitespace": false,
@@ -276,4 +276,6 @@
   "workbench.startupEditor": "none",
   "workbench.tips.enabled": false,
   "zenMode.centerLayout": false,
-  "zenMode.fullScreen": false}
+  "zenMode.fullScreen": false,
+  "terminal.integrated.suggest.enabled": false
+}
