@@ -23,6 +23,9 @@ previous_commit_message = subprocess.run(
     text=True,
     check=True,
 ).stdout.strip()
+if previous_commit_message == "Update":
+    log(f"skip, {previous_commit_message=}")
+    sys.exit(0)
 if len(previous_commit_message) > 7:
     log(f"skip, len({previous_commit_message=}) > 7")
     sys.exit(0)
