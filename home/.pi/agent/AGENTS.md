@@ -1,5 +1,5 @@
 # General Principles
-- Do not perform any destructive actions: no commits, clones, checkouts, Jira updates, or comments. All such actions must be performed by the user. Always prioritize user autonomy: your role is to assist, not to act on behalf of the user.
+- Reading content (remote or local) is perfectly fine. But do not perform any destructive actions: like commit, clones, checkouts, status updates, or comments. All *destructive* side effects must be performed by the user.
 - When in doubt, ask for clarification before proceeding.
 
 # Code Quality & Development Practices

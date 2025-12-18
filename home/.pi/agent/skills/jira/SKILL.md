@@ -1,6 +1,6 @@
 ---
 name: jira
-description: Operate Atlassian Jira through the official jira CLI; trigger this skill to list, inspect, create, update, triage, or report on Jira work using deterministic shell commands.
+description: Operate Atlassian Jira through the official jira CLI.
 version: 0.1.0
 ---
 
