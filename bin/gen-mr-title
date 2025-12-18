@@ -104,10 +104,45 @@ def main():
         # No need to split or count commits — we're using the full diff
         log(f"found {len(diff_text.splitlines())} lines of changes in this branch")
 
+        # Extract issue number from branch name
+        issue_result = subprocess.run(
+            ["get-work-issue-no", branch_name],
+            capture_output=True,
+            text=True,
+        )
+        issue_number = issue_result.stdout.strip()
+
+        jira_context = ""
+        if issue_number:
+            log(f"found issue number: {issue_number}")
+            # Get Jira issue details
+            jira_result = subprocess.run(
+                [
+                    "jira",
+                    "issue",
+                    "view",
+                    issue_number,
+                    "--plain",
+                    "--comments",
+                    "1000",
+                ],
+                capture_output=True,
+                text=True,
+            )
+            if jira_result.returncode == 0:
+                jira_context = (
+                    f"\n\n# Jira Issue: {issue_number}\n{jira_result.stdout.strip()}"
+                )
+                log(f"added Jira issue context for {issue_number}")
+            else:
+                log(
+                    f"failed to get Jira issue details for {issue_number}: {jira_result.stderr}"
+                )
+
         client = OpenAI(
             api_key=os.environ["SCRIPTS_OPENAI_API_KEY"],
             base_url=os.environ["SCRIPTS_OPENAI_BASE_URL"],
-            timeout=10,
+            timeout=5,
             max_retries=1,
         )
 
@@ -116,11 +151,11 @@ def main():
             messages=[
                 {
                     "role": "system",
-                    "content": "Generate a concise and descriptive merge request title based on the git commits. Make sure first character of your answer is a letter. Do not use template words such as 'adjust'. Keep it really short, no more than 70 characters! Focus on the overall theme of the changes rather than individual commits.",
+                    "content": "Generate a concise and descriptive merge request title based on the git commits. Make sure first character of your answer is a letter. Do not use template words such as 'adjust'. Keep it really short, no more than 50 characters! Focus on the overall theme of the changes rather than individual commits. If a Jira issue is provided, consider the issue description and comments when generating the title.",
                 },
                 {
                     "role": "user",
-                    "content": f"Branch name: {branch_name}\nChanges in this branch:\n{diff_text}",
+                    "content": f"# Branch name: {branch_name}{jira_context}\n\n# Changes in this branch:\n{diff_text}",
                 },
             ],
             max_tokens=100,
