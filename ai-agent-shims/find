@@ -1,3 +1,0 @@
-#!/bin/bash
-echo Use fd!
-exit 1
