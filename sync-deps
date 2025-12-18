@@ -11,4 +11,4 @@ echo -e "\033[1;32mbrew update && brew bundle --file ~/code/dotfiles/Brewfile --
 /opt/homebrew/bin/brew update
 /opt/homebrew/bin/brew bundle --file Brewfile --cleanup --no-upgrade
 /opt/homebrew/bin/brew upgrade --greedy
-/opt/homebrew/bin/brew cleanup  # trigger _brew-dump
+/opt/homebrew/bin/brew cleanup  # trigger brew-dump
