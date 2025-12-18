@@ -1,18 +1,18 @@
 ---
 name: confluence
-description: Read Atlassian Confluence content.
+description: Read and search Atlassian Confluence content.
 version: 0.1.0
 ---
 
 # Confluence CLI Skill
 
-This skill provides integration with the Confluence CLI tool for reading Atlassian Confluence content. Note: Only the 'read' command is available due to system restrictions.
+This skill provides integration with the Confluence CLI tool for reading Atlassian Confluence content.
 
 ## Usage
 
 Use this skill to interact with Atlassian Confluence via the official confluence CLI. The following commands are available:
 
-- Reading page content by ID or URL (read)
+- Reading page content by ID (read)
 - Searching for pages (search)
 - Getting page information (info)
 - Finding pages by title (find)
@@ -23,9 +23,6 @@ Use this skill to interact with Atlassian Confluence via the official confluence
 ```bash
 # Read a Confluence page in text format (default)
 confluence read 12345
-
-# Read a Confluence page by URL
-confluence read https://your-domain.atlassian.net/wiki/spaces/KEY/pages/12345
 
 # Search for pages containing a query
 confluence search "project documentation"
@@ -47,7 +44,6 @@ The skill expects the `confluence` CLI to be available in PATH and properly auth
 ## Notes
 
 - This skill is designed to work with the official Atlassian Confluence CLI
-- Only the 'read' command is available due to system restrictions
 - All operations are performed via the CLI tool, so ensure it's installed and configured before use
 - This skill is read-only - no create, update, or delete operations are permitted
 
