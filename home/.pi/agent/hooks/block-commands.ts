@@ -13,6 +13,7 @@ export default function (pi: HookAPI) {
     { pattern: /\bgit switch/i, reason: undefined },
     { pattern: /\bfind/i, reason: "Use fd" },
     { pattern: /\bgrep/i, reason: "Use rg" },
+    { pattern: /\bjira issue\s+(?!view\b)/i, reason: "Only 'jira issue view' is allowed" },
   ];
 
   pi.on("tool_call", async (event, ctx) => {

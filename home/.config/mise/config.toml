@@ -83,6 +83,7 @@ biome = "latest"
 "pipx:end-of-file-fixer" = "latest"
 "npm:@mariozechner/pi-coding-agent" = "latest"
 "ubi:ankitpokhrel/jira-cli" = { version = "latest", exe = "jira" }
+"npm:confluence-cli" = "latest"
 
 [settings]
 jobs = 8
