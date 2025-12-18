@@ -1,2 +1,0 @@
-#!/bin/bash
-ai-gen-unpushed-commit-msgs && git push $@
