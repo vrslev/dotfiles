@@ -10,14 +10,13 @@ This skill provides integration with the Confluence CLI tool for reading Atlassi
 
 ## Usage
 
-Use this skill to read Confluence page content via the official confluence CLI. The only available command is:
+Use this skill to interact with Atlassian Confluence via the official confluence CLI. The following commands are available:
 
-- Reading page content by ID or URL
-
-## Prerequisites
-
-- Confluence CLI installed and configured
-- Proper authentication credentials set up
+- Reading page content by ID or URL (read)
+- Searching for pages (search)
+- Getting page information (info)
+- Finding pages by title (find)
+- Displaying help (--help)
 
 ## Examples
 
@@ -25,11 +24,20 @@ Use this skill to read Confluence page content via the official confluence CLI. 
 # Read a Confluence page in text format (default)
 confluence read 12345
 
-# Read a Confluence page in Markdown format
-confluence read --format markdown 12345
-
 # Read a Confluence page by URL
 confluence read https://your-domain.atlassian.net/wiki/spaces/KEY/pages/12345
+
+# Search for pages containing a query
+confluence search "project documentation"
+
+# Get information about a specific page
+confluence info 12345
+
+# Find a page by title
+confluence find "Project Plan"
+
+# Display help information
+confluence --help
 ```
 
 ## Configuration
