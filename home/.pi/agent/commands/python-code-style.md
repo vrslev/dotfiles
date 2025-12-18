@@ -14,3 +14,8 @@ description: Comply with Python code style
 - Do not update code that is not in work tree or you already changed after feature request! You'll be stopped if you do. For example, if settings.py is in git status, but you change ioc.py, you're stopped. Only update what you really changed, I mean lines, not files.
 - Be sensible, but don't hesitate to making not commonly accepted suggestions. Though, if project generally does things the way that doesn't comply with code style, it probably is ok. Consistency is the best.
 - Be specific.
+
+## Additional code style
+
+- Remove comments and docstrings almost always.
+- Keep typing.Final for scalars
