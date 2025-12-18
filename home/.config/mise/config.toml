@@ -81,6 +81,8 @@ kube-score = "latest"
 biome = "latest"
 "cargo:tokei" = "latest"
 "pipx:end-of-file-fixer" = "latest"
+"npm:@mariozechner/pi-coding-agent" = "latest"
+"ubi:ankitpokhrel/jira-cli" = { version = "latest", exe = "jira" }
 
 [settings]
 jobs = 8
