@@ -1,4 +1,4 @@
-#!/opt/homebrew/bin/mise x uv -- uv run --script
+#!/usr/bin/env uv run --script
 # /// script
 # requires-python = ">=3.14"
 # dependencies = [
@@ -46,13 +46,14 @@ if len(commit_diff) > max_diff_chars:
 
 try:
     client = OpenAI(
-        api_key=os.environ["OPENAI_API_KEY"],
-        base_url=os.environ["OPENAI_BASE_URL"],
+        api_key=os.environ["SCRIPTS_OPENAI_API_KEY"],
+        base_url=os.environ["SCRIPTS_OPENAI_BASE_URL"],
         timeout=5,
         max_retries=1,
+
     )
     response = client.chat.completions.create(
-        model=os.environ["OPENAI_MODEL"],
+        model=os.environ["SCRIPTS_OPENAI_MODEL"],
         messages=[
             {
                 "role": "system",
