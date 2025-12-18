@@ -14,7 +14,7 @@ export default function (pi: HookAPI) {
     { pattern: /\bfind/i, reason: "Use fd" },
     { pattern: /\bgrep/i, reason: "Use rg" },
     { pattern: /\bjira issue\s+(?!view\b)/i, reason: "Only 'jira issue view' is allowed" },
-    { pattern: /\bconfluence\s+(?!read\b)/i, reason: "Only 'confluence read' is allowed" },
+    { pattern: /\bconfluence\s+(?!read\b|search\b|info\b|find\b)/i, reason: "Destructive actions are prohibited" },
   ];
 
   pi.on("tool_call", async (event, ctx) => {
