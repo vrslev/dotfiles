@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
+branch_name="$(git rev-parse --abbrev-ref HEAD)"
+work_issue_no="$(get-work-issue-no $branch_name)"
 glab mr create --web --squash-before-merge --remove-source-branch --push \
     --description "" \
     --assignee "$(whoami)" \
-    --title "$(get-work-issue-no-from-branch): $1"
+    --title "$work_issue_no: $1"
