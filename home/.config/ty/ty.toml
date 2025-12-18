@@ -1,0 +1,6 @@
+[rules]
+invalid-argument-type = "ignore"
+unknown-argument = "ignore"
+unresolved-attribute = "ignore"
+missing-argument = "ignore"
+possibly-missing-attribute = "ignore"

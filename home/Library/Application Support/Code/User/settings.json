@@ -195,6 +195,7 @@
   "python.analysis.supportAllPythonDocuments": true,
   "python.analysis.supportRestructuredText": true,
   "python.createEnvironment.trigger": "off",
+  "python.languageServer": "None",
   "python.terminal.activateEnvironment": false,
   "python.terminal.shellIntegration.enabled": true,
   "redhat.telemetry.enabled": false,
@@ -249,7 +250,9 @@
   },
   "terminal.integrated.showExitAlert": false,
   "terminal.integrated.stickyScroll.enabled": false,
+  "terminal.integrated.suggest.enabled": false,
   "terminal.integrated.tabs.hideCondition": "never",
+  "ty.diagnosticMode": "workspace",
   "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
   "typescript.inlayHints.parameterNames.enabled": "all",
   "typescript.tsserver.experimental.enableProjectDiagnostics": true,
@@ -276,6 +279,5 @@
   "workbench.startupEditor": "none",
   "workbench.tips.enabled": false,
   "zenMode.centerLayout": false,
-  "zenMode.fullScreen": false,
-  "terminal.integrated.suggest.enabled": false
+  "zenMode.fullScreen": false
 }
