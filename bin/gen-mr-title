@@ -1,0 +1,139 @@
+#!/usr/bin/env uv run --script
+# /// script
+# requires-python = ">=3.14"
+# dependencies = [
+#     "openai",
+# ]
+# ///
+import os
+import subprocess
+import sys
+
+from openai import OpenAI
+
+
+def log(content: str) -> None:
+    print(f"gen-mr-title: {content}", file=sys.stderr)
+
+
+def get_default_branch() -> str:
+    """Get the default branch name, trying different common names"""
+    # Try to get the default branch from remote
+    result = subprocess.run(
+        ["git", "symbolic-ref", "refs/remotes/origin/HEAD"],
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode == 0:
+        return result.stdout.strip().split("/")[-1]
+
+    # Fallback to common names
+    for branch in ["main", "master"]:
+        result = subprocess.run(
+            ["git", "rev-parse", "--verify", branch],
+            capture_output=True,
+            text=True,
+        )
+        if result.returncode == 0:
+            return branch
+
+    # If we can't determine, default to 'main'
+    return "main"
+
+
+def main():
+    try:
+        # Get branch name for context
+        branch_name = subprocess.run(
+            ["git", "rev-parse", "--abbrev-ref", "HEAD"],
+            capture_output=True,
+            text=True,
+            check=True,
+        ).stdout.strip()
+
+        # Get the configured merge target branch for this branch (base branch for MR)
+        result = subprocess.run(
+            ["git", "config", f"branch.{branch_name}.merge"],
+            capture_output=True,
+            text=True,
+        )
+        if result.returncode == 0 and result.stdout.strip():
+            # Format is 'refs/heads/main' → extract 'main'
+            target_branch = result.stdout.strip().split("/")[-1]
+        else:
+            # Fallback: use upstream branch if set
+            result = subprocess.run(
+                ["git", "rev-parse", "--abbrev-ref", "--symbolic-full-name", "@{u}"],
+                capture_output=True,
+                text=True,
+            )
+            if result.returncode == 0:
+                target_branch = result.stdout.strip().split("/")[-1]
+            else:
+                # Final fallback: default branch
+                target_branch = get_default_branch()
+
+        # Find the common ancestor (merge base) between current branch and target branch
+        merge_base = subprocess.run(
+            ["git", "merge-base", branch_name, target_branch],
+            capture_output=True,
+            text=True,
+        )
+        if merge_base.returncode != 0:
+            log(f"failed to find merge base between {branch_name} and {target_branch}")
+            sys.exit(1)
+
+        merge_base_hash = merge_base.stdout.strip()
+
+        # Get full diff of changes in current branch relative to base
+        diff = subprocess.run(
+            ["git", "diff", f"{merge_base_hash}..HEAD"],
+            capture_output=True,
+            text=True,
+            check=True,
+        ).stdout.strip()
+
+        # If no diff, exit early
+        if not diff:
+            log("no changes detected between base and current branch")
+            sys.exit(1)
+
+        # Use the full diff as context instead of commit messages
+        diff_text = diff
+
+        # No need to split or count commits — we're using the full diff
+        log(f"found {len(diff_text.splitlines())} lines of changes in this branch")
+
+        client = OpenAI(
+            api_key=os.environ["SCRIPTS_OPENAI_API_KEY"],
+            base_url=os.environ["SCRIPTS_OPENAI_BASE_URL"],
+            timeout=10,
+            max_retries=1,
+        )
+
+        response = client.chat.completions.create(
+            model=os.environ["SCRIPTS_OPENAI_MODEL"],
+            messages=[
+                {
+                    "role": "system",
+                    "content": "Generate a concise and descriptive merge request title based on the git commits. Make sure first character of your answer is a letter. Do not use template words such as 'adjust'. Keep it really short, no more than 70 characters! Focus on the overall theme of the changes rather than individual commits.",
+                },
+                {
+                    "role": "user",
+                    "content": f"Branch name: {branch_name}\nChanges in this branch:\n{diff_text}",
+                },
+            ],
+            max_tokens=100,
+            temperature=0.5,
+        )
+
+        title = response.choices[0].message.content.strip()
+        sys.stdout.write(title)
+
+    except Exception as exception:
+        log(f"failed to generate MR title: {exception}")
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()
