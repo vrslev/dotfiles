@@ -1,6 +1,6 @@
 ---
 name: jira
-description: Operate Atlassian Jira through the official jira CLI.
+description: Access Atlassian Jira.
 version: 0.1.0
 ---
 

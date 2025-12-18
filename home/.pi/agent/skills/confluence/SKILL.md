@@ -1,6 +1,6 @@
 ---
 name: confluence
-description: Read Atlassian Confluence content via the official confluence CLI; trigger this skill to retrieve page content using deterministic shell commands.
+description: Read Atlassian Confluence content.
 version: 0.1.0
 ---
 
