@@ -1,7 +1,15 @@
 #!/usr/bin/env bash
 branch_name="$(git rev-parse --abbrev-ref HEAD)"
 work_issue_no="$(get-work-issue-no $branch_name)"
+
+title=""
+if [ -n "$1" ]; then
+    title="$1"
+else
+    title="$(gen-mr-title 2>/dev/null)"
+fi
+
 glab mr create --web --squash-before-merge --remove-source-branch --push \
     --description "" \
     --assignee "$(whoami)" \
-    --title "$work_issue_no: $1"
+    --title "$work_issue_no: $title"
