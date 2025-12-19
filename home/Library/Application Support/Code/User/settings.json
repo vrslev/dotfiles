@@ -71,7 +71,7 @@
   "breadcrumbs.enabled": false,
   "chat.commandCenter.enabled": false,
   "continue.disableQuickFix": true,
-  "continue.enableTabAutocomplete": false,
+  "continue.enableTabAutocomplete": true,
   "continue.showInlineTip": false,
   "continue.telemetryEnabled": false,
   "diffEditor.ignoreTrimWhitespace": false,
