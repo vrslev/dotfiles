@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+set -euo pipefail
+git switch -c "$(gen-work-branch-name "$1")"
