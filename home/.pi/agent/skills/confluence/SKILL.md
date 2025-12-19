@@ -1,7 +1,6 @@
 ---
 name: confluence
 description: Search and read Atlassian Confluence content.
-version: 0.1.0
 ---
 
 # Confluence

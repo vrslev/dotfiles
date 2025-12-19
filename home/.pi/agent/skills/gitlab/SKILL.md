@@ -1,7 +1,6 @@
 ---
-name: glab
-description: GitLab CLI tool for managing GitLab resources from the command line
-version: 0.1.0
+name: gitlab
+description: Manage and view GitLab resources
 ---
 
 # GitLab CLI (glab) Skill

@@ -1,12 +1,11 @@
 ---
 name: jira
 description: Access Atlassian Jira.
-version: 0.1.0
 ---
 
 # Jira
 
-Interact with Jira issues, projects, sprints, and boards.
+Interact with Jira issues, projects, sprints, and boards using `jira` CLI.
 
 ## Search & View
 
