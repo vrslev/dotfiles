@@ -15,8 +15,10 @@
   main-branch = !git rev-parse --verify --quiet --abbrev-ref origin/HEAD -- | yq 'sub(\"origin/\", \"\")'
   main = !git sw "$(git main-branch)"
   cm = commit -m
+  cm1 = commit -m 1
   ca = !git add . && git commit -m
   cai = !git add . && git commit -m 1  # when commit message is too short, it will be generated with LLM
+  caip = !git cai && git push
   l = log --oneline --decorate --color --graph
   d = diff
   ds = diff --staged
