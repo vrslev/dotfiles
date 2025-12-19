@@ -1,6 +1,6 @@
 ---
 name: jira
-description: Access Atlassian Jira.
+description: Access to Atlassian Jira with `jira` CLI.
 ---
 
 # Jira

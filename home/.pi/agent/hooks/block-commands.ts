@@ -15,7 +15,6 @@ export default function (pi: HookAPI) {
     { pattern: /\bconfluence\s+(?!read\b|search\b|info\b|find\b|--help\b)/, reason: "Destructive actions are prohibited" },
     { pattern: /\bmv\b.*-f/i, reason: undefined },
     { pattern: /\bkubectl\s+(apply|delete|create|replace)\b/i, reason: undefined },
-    { pattern: /\bpip\b/i, reason: "Use uv" },
   ];
 
   pi.on("tool_call", async (event, ctx) => {
