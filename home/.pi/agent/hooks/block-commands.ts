@@ -10,10 +10,12 @@ export default function (pi: HookAPI) {
     { pattern: /\bgh repo clone/i, reason: undefined },
     { pattern: /\bgit checkout/i, reason: undefined },
     { pattern: /\bgit switch/i, reason: undefined },
-    // { pattern: /\bfind/i, reason: "Use fd" },
-    // { pattern: /\bgrep/i, reason: "Use rg" },
+    { pattern: /\bgit reset/i, reason: undefined },
     { pattern: /\bjira issue\s+(?!view\b)/i, reason: "Only 'jira issue view' is allowed" },
     { pattern: /\bconfluence\s+(?!read\b|search\b|info\b|find\b|--help\b)/, reason: "Destructive actions are prohibited" },
+    { pattern: /\bmv\b.*-f/i, reason: undefined },
+    { pattern: /\bkubectl\s+(apply|delete|create|replace)\b/i, reason: undefined },
+    { pattern: /\bpip\b/i, reason: "Use uv" },
   ];
 
   pi.on("tool_call", async (event, ctx) => {
