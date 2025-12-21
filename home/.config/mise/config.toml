@@ -1,5 +1,5 @@
 [env]
-_.path = ["~/code/dotfiles/bin", "~/.local/bin", "~/.cargo/bin"]
+_.path = ["~/code/dotfiles/bin", "~/code/dotfiles/bin/source-control", "~/.local/bin", "~/.cargo/bin"]
 _.file = { path = "{{config_root}}/.config/mise/.env" }
 DIRENV_INITIALIZED = 1
 LANG = "en_US.UTF-8"
