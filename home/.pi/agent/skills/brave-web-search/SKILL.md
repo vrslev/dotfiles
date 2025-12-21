@@ -1,5 +1,5 @@
 ---
-name: brave-search
+name: brave-web-search
 description: Web search and content extraction via Brave Search API. Use for searching documentation, facts, or any web content. Lightweight, no browser required.
 ---
 
@@ -12,7 +12,7 @@ Headless web search and content extraction using Brave Search. No browser requir
 Run once before first use:
 
 ```bash
-cd {baseDir}/brave-search
+cd {baseDir}/brave-web-search
 npm install
 ```
 

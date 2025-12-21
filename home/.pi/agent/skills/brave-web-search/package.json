@@ -1,5 +1,5 @@
 {
-	"name": "brave-search",
+	"name": "brave-web-search",
 	"version": "1.0.0",
 	"type": "module",
 	"description": "Headless web search via Brave Search - no browser required",
