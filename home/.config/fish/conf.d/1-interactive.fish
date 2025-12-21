@@ -1,3 +1,4 @@
+echo -n "start interactive "
 if not status is-interactive
   exit
 end
@@ -8,7 +9,9 @@ end
 set fish_greeting  # Disable greeting on startup
 
 if type -q mise
+  echo -n "start mise "
   mise activate fish | source
+  echo -n "done "
 end
 if type -q zoxide
   zoxide init fish | source
@@ -45,3 +48,4 @@ function beep
     afplay "/System/Library/Sounds/Basso.aiff"
   end
 end
+echo done
