@@ -39,51 +39,40 @@ gh = { version = "latest", exe = "gh" }
 go = "latest"
 helmfile = { version = "latest", postinstall = "mise run _install-fish-completions helmfile completion fish" }
 hyperfine = "latest"
-hugo = "latest"
 just = "latest"
 killport = "latest"
 node = "20"
 python = ["3.14", "3.13", "3.12", "3.11", "3.10"]
 ripgrep = { version = "latest", postinstall = "mise run _install-fish-completions rg --generate complete-fish" }
-shellcheck = "latest"
 starship = "latest"
 usage = "latest"
 xh = { version = "latest", postinstall = "mise run _install-fish-completions xh --generate complete-fish && mkdir -p ~/.local/bin && ln (which xh) ~/.local/bin/xhs" }
 yq = { version = "latest", postinstall = "mise run _install-fish-completions yq completion fish" }
 zoxide = "latest"
 "pipx:cookiecutter" = "latest"
-"pipx:glances" = "latest"
 "pipx:maturin" = "latest"
 "pipx:poetry" = { version = "latest", postinstall = "mise run _install-fish-completions poetry completions fish" }
-"pipx:python-lsp-server[all]" = { version = "latest", uvx_args = "--with pylsp-mypy" }
-"pipx:sqlfluff" = "latest"
-"pipx:llm" = { version = "latest", uvx_args = "--with llm-ollama --with llm-fragments-youtube --with llm-mlx" }
 "pipx:yt-dlp" = "latest"
 "spm:sindresorhus/macos-trash" = "latest"
 "cargo:mergiraf" = "latest"
 rust = "latest"
-"pipx:pypyp" = "latest"
 helm = "latest"
 uv = { version = "latest", postinstall = "mise run _install-fish-completions uv generate-shell-completion fish" }
-java = "latest"
-"npm:@openai/codex" = "latest"
 bun = "latest"
-"npm:opencode-ai" = "latest"
-"cargo:somo" = "latest"
 "pipx:auto-type-annotate" = "latest"
-zig = "latest"
 "npm:@qwen-code/qwen-code" = "latest"
 "npm:@anthropic-ai/claude-code" = "latest"
 "npm:@musistudio/claude-code-router" = "latest"
-"ubi:ksdme/ut" = "latest"
-kube-linter = "latest"
+"ubi:ksdme/ut" = { version = "latest", postinstall = "mise run _install-fish-completions ut completions fish" }
+kube-linter = { version = "latest", postinstall = "mise run _install-fish-completions kube-linter completion fish" }
 kube-score = "latest"
 biome = "latest"
 "cargo:tokei" = "latest"
-"pipx:end-of-file-fixer" = "latest"
+"pipx:eof-fixer" = "latest"
 "npm:@mariozechner/pi-coding-agent" = "latest"
-"ubi:ankitpokhrel/jira-cli" = { version = "latest", exe = "jira" }
+"ubi:ankitpokhrel/jira-cli" = { version = "latest", exe = "jira", postinstall = "mise run _install-fish-completions jira completion fish"}
 "npm:confluence-cli" = "latest"
+zola = { version= "latest", postinstall = "mise run _install-fish-completions zola completion fish" }
 
 [settings]
 jobs = 8
@@ -94,7 +83,8 @@ trusted_config_paths = [
     "~/code/dotfiles/home/.config/mise/config.toml",
     "~/code/dotfiles/home/.config/mise/config.local.toml",
 ]
-pipx = { uvx = true }
 fetch_remote_versions_cache = "2d"
+fetch_remote_versions_timeout = "500ms"
+pipx.uvx = true
 npm.bun = true
-idiomatic_version_file_enable_tools = ["python"]
+cargo.binstall = true
