@@ -1,5 +1,11 @@
 [env]
-_.path = ["~/code/dotfiles/bin", "~/code/dotfiles/bin/source-control", "~/.local/bin", "~/.cargo/bin"]
+_.path = [
+    "~/code/dotfiles/bin/dotfiles",
+    "~/code/dotfiles/bin/source-control",
+    "~/code/dotfiles/bin/utils",
+    "~/.local/bin",
+    "~/.cargo/bin",
+]
 _.file = { path = "{{config_root}}/.config/mise/.env" }
 DIRENV_INITIALIZED = 1
 LANG = "en_US.UTF-8"
@@ -55,7 +61,7 @@ usage = "latest"
 uv = { version = "latest", postinstall = "mise run _install-fish-completions uv generate-shell-completion fish" }
 xh = { version = "latest", postinstall = "mise run _install-fish-completions xh --generate complete-fish && mkdir -p ~/.local/bin && ln (which xh) ~/.local/bin/xhs" }
 yq = { version = "latest", postinstall = "mise run _install-fish-completions yq completion fish" }
-zola = { version= "latest", postinstall = "mise run _install-fish-completions zola completion fish" }
+zola = { version = "latest", postinstall = "mise run _install-fish-completions zola completion fish" }
 zoxide = "latest"
 "cargo:mergiraf" = "latest"
 "cargo:tokei" = "latest"
@@ -71,7 +77,7 @@ zoxide = "latest"
 "pipx:poetry" = { version = "latest", postinstall = "mise run _install-fish-completions poetry completions fish" }
 "pipx:yt-dlp" = "latest"
 "spm:sindresorhus/macos-trash" = "latest"
-"ubi:ankitpokhrel/jira-cli" = { version = "latest", exe = "jira", postinstall = "mise run _install-fish-completions jira completion fish"}
+"ubi:ankitpokhrel/jira-cli" = { version = "latest", exe = "jira", postinstall = "mise run _install-fish-completions jira completion fish" }
 "ubi:ksdme/ut" = { version = "latest", postinstall = "mise run _install-fish-completions ut completions fish" }
 
 [settings]
