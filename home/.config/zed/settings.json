@@ -14,6 +14,10 @@
 	// 	},
 	// 	"version": "2"
 	// },
+	"ui_font_weight": 400.0,
+	"ui_font_family": ".SystemUIFont",
+	"buffer_font_weight": 400.0,
+	"buffer_font_family": "FiraCode Nerd Font",
 	"base_keymap": "VSCode",
 	"features": {
 		"edit_prediction_provider": "none"
@@ -22,8 +26,8 @@
 		"diagnostics": false,
 		"metrics": false
 	},
-	"ui_font_size": 15,
-	"buffer_font_size": 15,
+	"ui_font_size": 14.0,
+	"buffer_font_size": 14.0,
 	"theme": {
 		"mode": "system",
 		"light": "Github Light",
@@ -85,7 +89,12 @@
 	},
 	"languages": {
 		"Python": {
-			"language_servers": ["ty", "!basedpyright", "ruff", "pylsp"],
+			"language_servers": [
+				"ty",
+				"!basedpyright",
+				"ruff",
+				"pylsp"
+			],
 			"code_actions_on_format": {
 				"source.organizeImports.ruff": true,
 				"source.fixAll.ruff": true
@@ -99,7 +108,10 @@
 			]
 		},
 		"JavaScript": {
-			"language_servers": ["biome", "typescript-language-server"],
+			"language_servers": [
+				"biome",
+				"typescript-language-server"
+			],
 			"code_actions_on_format": {
 				"source.fixAll.biome": true,
 				"source.organizeImports.biome": true
@@ -113,7 +125,10 @@
 			]
 		},
 		"TypeScript": {
-			"language_servers": ["biome", "typescript-language-server"],
+			"language_servers": [
+				"biome",
+				"typescript-language-server"
+			],
 			"code_actions_on_format": {
 				"source.fixAll.biome": true,
 				"source.organizeImports.biome": true
@@ -127,7 +142,10 @@
 			]
 		},
 		"JSX": {
-			"language_servers": ["biome", "typescript-language-server"],
+			"language_servers": [
+				"biome",
+				"typescript-language-server"
+			],
 			"code_actions_on_format": {
 				"source.fixAll.biome": true,
 				"source.organizeImports.biome": true
@@ -141,7 +159,10 @@
 			]
 		},
 		"TSX": {
-			"language_servers": ["biome", "typescript-language-server"],
+			"language_servers": [
+				"biome",
+				"typescript-language-server"
+			],
 			"code_actions_on_format": {
 				"source.fixAll.biome": true,
 				"source.organizeImports.biome": true
@@ -155,7 +176,9 @@
 			]
 		},
 		"JSON": {
-			"language_servers": ["biome"],
+			"language_servers": [
+				"biome"
+			],
 			"code_actions_on_format": {
 				"source.fixAll.biome": true,
 				"source.organizeImports.biome": true
@@ -169,7 +192,9 @@
 			]
 		},
 		"JSONC": {
-			"language_servers": ["biome"],
+			"language_servers": [
+				"biome"
+			],
 			"code_actions_on_format": {
 				"source.fixAll.biome": true,
 				"source.organizeImports.biome": true
@@ -183,7 +208,9 @@
 			]
 		},
 		"CSS": {
-			"language_servers": ["biome"],
+			"language_servers": [
+				"biome"
+			],
 			"code_actions_on_format": {
 				"source.fixAll.biome": true,
 				"source.organizeImports.biome": true
@@ -197,10 +224,14 @@
 			]
 		},
 		"YAML": {
-			"language_servers": ["yaml-language-server"]
+			"language_servers": [
+				"yaml-language-server"
+			]
 		},
 		"Dockerfile": {
-			"language_servers": ["dockerfile-language-server"]
+			"language_servers": [
+				"dockerfile-language-server"
+			]
 		}
 	},
 	"lsp": {
@@ -208,7 +239,11 @@
 			"initialization_options": {
 				"settings": {
 					"lint": {
-						"ignore": ["F841", "T201", "RUF100"]
+						"ignore": [
+							"F841",
+							"T201",
+							"RUF100"
+						]
 					}
 				}
 			}
@@ -253,7 +288,11 @@
 					"pylsp_mypy": {
 						"enabled": true,
 						"dmypy": true,
-						"overrides": ["--python-executable", ".venv/bin/python", true]
+						"overrides": [
+							"--python-executable",
+							".venv/bin/python",
+							true
+						]
 					}
 				}
 			}
