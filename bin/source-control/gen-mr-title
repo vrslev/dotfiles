@@ -41,6 +41,24 @@ def get_default_branch() -> str:
     return "main"
 
 
+def parse_branch_name(ref: str) -> str:
+    """Extract branch name from Git ref (e.g., refs/heads/main -> main, origin/main -> main)"""
+    # Handle refs/heads/branch_name
+    if ref.startswith("refs/heads/"):
+        return ref[len("refs/heads/"):]
+    
+    # Handle origin/branch_name or other remote/branch_name formats
+    if "/" in ref and not ref.startswith("refs/"):
+        parts = ref.split("/")
+        # If it looks like remote/branch, return branch part
+        # But be careful not to cut off legitimate branch names with slashes
+        if len(parts) >= 2 and parts[0] in ("origin", "upstream"):
+            return "/".join(parts[1:])
+        
+    # For all other cases, return as is
+    return ref
+
+
 def main():
     try:
         # Get branch name for context
@@ -58,8 +76,8 @@ def main():
             text=True,
         )
         if result.returncode == 0 and result.stdout.strip():
-            # Format is 'refs/heads/main' → extract 'main'
-            target_branch = result.stdout.strip().split("/")[-1]
+            # Format is 'refs/heads/main' → extract branch name properly
+            target_branch = parse_branch_name(result.stdout.strip())
         else:
             # Fallback: use upstream branch if set
             result = subprocess.run(
@@ -68,7 +86,7 @@ def main():
                 text=True,
             )
             if result.returncode == 0:
-                target_branch = result.stdout.strip().split("/")[-1]
+                target_branch = parse_branch_name(result.stdout.strip())
             else:
                 # Final fallback: default branch
                 target_branch = get_default_branch()
@@ -80,7 +98,7 @@ def main():
             text=True,
         )
         if merge_base.returncode != 0:
-            log(f"failed to find merge base between {branch_name} and {target_branch}")
+            log(f"failed to find merge base between '{branch_name}' and '{target_branch}'")
             sys.exit(1)
 
         merge_base_hash = merge_base.stdout.strip()
