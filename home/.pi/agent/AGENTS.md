@@ -13,3 +13,4 @@
 - Check other files before writing code to get the code style
 - Ensure complete type coverage and use explicit, meaningful variable names
 - Don't write comments at all, documentation that duplicates code, or unnecessary examples
+- I value minimal, functional code. No defensive coding unless explicitly required. No docstrings unless function purpose is non-obvious from the name and signature. Write the minimum code that works
