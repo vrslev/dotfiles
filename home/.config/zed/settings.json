@@ -31,7 +31,7 @@
 	},
 	"autosave": {
 		"after_delay": {
-			"milliseconds": 100
+			"milliseconds": 300
 		}
 	},
 	"show_call_status_icon": false,
@@ -41,6 +41,48 @@
 		"font_size": 14
 	},
 	"format_on_save": "on",
+	"diagnostics": {
+		"inline": {
+			"enabled": true,
+			"max_severity": "hint"
+		}
+	},
+	"scrollbar": {
+		"diagnostics": "all"
+	},
+	"project_panel": {
+		"file_icons": true,
+		"folder_icons": true,
+		"git_status": true,
+		"indent_guides": true
+	},
+	"outline_panel": {
+		"buttons": true,
+		"dock": "right"
+	},
+	"toolbar": {
+		"breadcrumbs": true,
+		"quick_actions": true
+	},
+	"relative_line_numbers": false,
+	"soft_wrap": "none",
+	"confirm_quit": false,
+	"show_whitespaces": "none",
+	"files": {
+		"exclude": {
+			"**/__pycache__": true,
+			"**/.coverage*": true,
+			"**/.mypy_cache": true,
+			"**/.pytest_cache": true,
+			"**/.ruff_cache": true,
+			"**/coverage.xml": true,
+			"**/.git": true,
+			"**/.DS_Store": true,
+			"**/node_modules": true,
+			"**/target/debug": true,
+			"**/target/release": true
+		}
+	},
 	"languages": {
 		"Python": {
 			"language_servers": ["basedpyright", "ruff"],
@@ -51,6 +93,7 @@
 			"formatter": [{ "language_server": { "name": "ruff" } }]
 		},
 		"JavaScript": {
+			"language_servers": ["biome", "typescript-language-server"],
 			"code_actions_on_format": {
 				"source.fixAll.biome": true,
 				"source.organizeImports.biome": true
@@ -58,6 +101,7 @@
 			"formatter": [{ "language_server": { "name": "biome" } }]
 		},
 		"TypeScript": {
+			"language_servers": ["biome", "typescript-language-server"],
 			"code_actions_on_format": {
 				"source.fixAll.biome": true,
 				"source.organizeImports.biome": true
@@ -65,6 +109,7 @@
 			"formatter": [{ "language_server": { "name": "biome" } }]
 		},
 		"JSX": {
+			"language_servers": ["biome", "typescript-language-server"],
 			"code_actions_on_format": {
 				"source.fixAll.biome": true,
 				"source.organizeImports.biome": true
@@ -72,6 +117,7 @@
 			"formatter": [{ "language_server": { "name": "biome" } }]
 		},
 		"TSX": {
+			"language_servers": ["biome", "typescript-language-server"],
 			"code_actions_on_format": {
 				"source.fixAll.biome": true,
 				"source.organizeImports.biome": true
@@ -79,6 +125,7 @@
 			"formatter": [{ "language_server": { "name": "biome" } }]
 		},
 		"JSON": {
+			"language_servers": ["biome"],
 			"code_actions_on_format": {
 				"source.fixAll.biome": true,
 				"source.organizeImports.biome": true
@@ -86,6 +133,7 @@
 			"formatter": [{ "language_server": { "name": "biome" } }]
 		},
 		"JSONC": {
+			"language_servers": ["biome"],
 			"code_actions_on_format": {
 				"source.fixAll.biome": true,
 				"source.organizeImports.biome": true
@@ -93,11 +141,18 @@
 			"formatter": [{ "language_server": { "name": "biome" } }]
 		},
 		"CSS": {
+			"language_servers": ["biome"],
 			"code_actions_on_format": {
 				"source.fixAll.biome": true,
 				"source.organizeImports.biome": true
 			},
 			"formatter": [{ "language_server": { "name": "biome" } }]
+		},
+		"YAML": {
+			"language_servers": ["yaml-language-server"]
+		},
+		"Dockerfile": {
+			"language_servers": ["dockerfile-language-server"]
 		}
 	},
 	"lsp": {
@@ -105,7 +160,7 @@
 			"initialization_options": {
 				"settings": {
 					"lint": {
-						"ignore": ["F841"]
+						"ignore": ["F841", "T201", "RUF100"]
 					}
 				}
 			}
