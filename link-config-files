@@ -19,7 +19,7 @@ for destination in config:
     assert destination.startswith("~/")
     source = "home/" + destination.removeprefix("~/")
     full_source = REPO_PATH / source
-    assert full_source.exists()
+    assert full_source.exists(), full_source
     full_destination = Path(destination).expanduser()
 
     if full_destination.is_symlink():

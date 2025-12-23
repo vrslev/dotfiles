@@ -1,5 +1,5 @@
 /**
- * Think Tool - A simple tool that accepts a thought and outputs nothing
+ * Simple Think Tool - A tool that accepts a thought and outputs nothing
  */
 
 import { Type } from "@sinclair/typebox";
