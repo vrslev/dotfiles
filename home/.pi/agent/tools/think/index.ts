@@ -25,16 +25,8 @@ const factory: CustomToolFactory = (pi) => ({
     };
   },
 
-  renderCall(args, theme) {
-    let text = theme.fg("toolTitle", theme.bold("think "));
-    if (args.thought) {
-      text += theme.fg("dim", `${args.thought}`);
-    }
-    return new Text(text, 0, 0);
-  },
-
-  renderResult() {
-    return new Text(undefined, 0, 0);
+  renderResult(result) {
+    return new Text(result.details.thought, 0, 0);
   },
 });
 
