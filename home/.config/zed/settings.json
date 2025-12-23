@@ -51,10 +51,10 @@
 		"diagnostics": "all"
 	},
 	"project_panel": {
+		"dock": "right",
 		"file_icons": true,
 		"folder_icons": true,
-		"git_status": true,
-		"indent_guides": true
+		"git_status": true
 	},
 	"outline_panel": {
 		"buttons": true,
@@ -64,7 +64,7 @@
 		"breadcrumbs": true,
 		"quick_actions": true
 	},
-	"relative_line_numbers": false,
+	"relative_line_numbers": "disabled",
 	"soft_wrap": "none",
 	"confirm_quit": false,
 	"show_whitespaces": "none",
@@ -85,74 +85,148 @@
 	},
 	"languages": {
 		"Python": {
-			"language_servers": ["basedpyright", "ruff"],
+			"language_servers": [
+				"ty",
+				"!basedpyright",
+				"ruff"
+			],
 			"code_actions_on_format": {
 				"source.organizeImports.ruff": true,
 				"source.fixAll.ruff": true
 			},
-			"formatter": [{ "language_server": { "name": "ruff" } }]
+			"formatter": [
+				{
+					"language_server": {
+						"name": "ruff"
+					}
+				}
+			]
 		},
 		"JavaScript": {
-			"language_servers": ["biome", "typescript-language-server"],
+			"language_servers": [
+				"biome",
+				"typescript-language-server"
+			],
 			"code_actions_on_format": {
 				"source.fixAll.biome": true,
 				"source.organizeImports.biome": true
 			},
-			"formatter": [{ "language_server": { "name": "biome" } }]
+			"formatter": [
+				{
+					"language_server": {
+						"name": "biome"
+					}
+				}
+			]
 		},
 		"TypeScript": {
-			"language_servers": ["biome", "typescript-language-server"],
+			"language_servers": [
+				"biome",
+				"typescript-language-server"
+			],
 			"code_actions_on_format": {
 				"source.fixAll.biome": true,
 				"source.organizeImports.biome": true
 			},
-			"formatter": [{ "language_server": { "name": "biome" } }]
+			"formatter": [
+				{
+					"language_server": {
+						"name": "biome"
+					}
+				}
+			]
 		},
 		"JSX": {
-			"language_servers": ["biome", "typescript-language-server"],
+			"language_servers": [
+				"biome",
+				"typescript-language-server"
+			],
 			"code_actions_on_format": {
 				"source.fixAll.biome": true,
 				"source.organizeImports.biome": true
 			},
-			"formatter": [{ "language_server": { "name": "biome" } }]
+			"formatter": [
+				{
+					"language_server": {
+						"name": "biome"
+					}
+				}
+			]
 		},
 		"TSX": {
-			"language_servers": ["biome", "typescript-language-server"],
+			"language_servers": [
+				"biome",
+				"typescript-language-server"
+			],
 			"code_actions_on_format": {
 				"source.fixAll.biome": true,
 				"source.organizeImports.biome": true
 			},
-			"formatter": [{ "language_server": { "name": "biome" } }]
+			"formatter": [
+				{
+					"language_server": {
+						"name": "biome"
+					}
+				}
+			]
 		},
 		"JSON": {
-			"language_servers": ["biome"],
+			"language_servers": [
+				"biome"
+			],
 			"code_actions_on_format": {
 				"source.fixAll.biome": true,
 				"source.organizeImports.biome": true
 			},
-			"formatter": [{ "language_server": { "name": "biome" } }]
+			"formatter": [
+				{
+					"language_server": {
+						"name": "biome"
+					}
+				}
+			]
 		},
 		"JSONC": {
-			"language_servers": ["biome"],
+			"language_servers": [
+				"biome"
+			],
 			"code_actions_on_format": {
 				"source.fixAll.biome": true,
 				"source.organizeImports.biome": true
 			},
-			"formatter": [{ "language_server": { "name": "biome" } }]
+			"formatter": [
+				{
+					"language_server": {
+						"name": "biome"
+					}
+				}
+			]
 		},
 		"CSS": {
-			"language_servers": ["biome"],
+			"language_servers": [
+				"biome"
+			],
 			"code_actions_on_format": {
 				"source.fixAll.biome": true,
 				"source.organizeImports.biome": true
 			},
-			"formatter": [{ "language_server": { "name": "biome" } }]
+			"formatter": [
+				{
+					"language_server": {
+						"name": "biome"
+					}
+				}
+			]
 		},
 		"YAML": {
-			"language_servers": ["yaml-language-server"]
+			"language_servers": [
+				"yaml-language-server"
+			]
 		},
 		"Dockerfile": {
-			"language_servers": ["dockerfile-language-server"]
+			"language_servers": [
+				"dockerfile-language-server"
+			]
 		}
 	},
 	"lsp": {
@@ -160,7 +234,60 @@
 			"initialization_options": {
 				"settings": {
 					"lint": {
-						"ignore": ["F841", "T201", "RUF100"]
+						"ignore": [
+							"F841",
+							"T201",
+							"RUF100"
+						]
+					}
+				}
+			}
+		},
+		"pylsp": {
+			"initialization_options": {
+				"settings": {
+					"python": {
+						"pythonPath": ".venv/bin/python"
+					}
+				}
+			},
+			"settings": {
+				"plugins": {
+					"rope": {
+						"enabled": false
+					},
+					"pylint": {
+						"enabled": false
+					},
+					"pycodestyle": {
+						"enabled": false
+					},
+					"jedi_symbols": {
+						"enabled": false
+					},
+					"jedi_definition": {
+						"enabled": false
+					},
+					"jedi_references": {
+						"enabled": false
+					},
+					"jedi_hover": {
+						"enabled": false
+					},
+					"jedi_completion": {
+						"enabled": false
+					},
+					"jedi_signature_help": {
+						"enablded": false
+					},
+					"pylsp_mypy": {
+						"enabled": true,
+						"dmypy": true,
+						"overrides": [
+							"--python-executable",
+							".venv/bin/python",
+							true
+						]
 					}
 				}
 			}
