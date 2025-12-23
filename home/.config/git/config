@@ -19,6 +19,7 @@
   ca = !git add . && git commit -m
   cai = !git add . && git commit -m 1  # when commit message is too short, it will be generated with LLM
   caip = !git cai && git push
+  empty = !git commit -m 'empty' --allow-empty && git push
   l = log --oneline --decorate --color --graph
   d = diff
   ds = diff --staged
