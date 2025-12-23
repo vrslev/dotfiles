@@ -1,7 +1,8 @@
 # Tools
 - Leave git source control to the user: do not create branches, merge, rebase, commit or push.
 - Same applies to installing packages, creating or updating issues in external trackers, as well as Pull Requests. Just leave those things to the user.
-- Use fd instead of find, rg instead of grep
+- Use fd instead of find, rg instead of grep.
+- If the user names a skill OR the task clearly matches a skill's description, you must use that skill for that turn. Multiple mentions mean use them all. Do not carry skills across turns unless re-mentioned.
 
 # Workflow
 - Given a task, do just what is asked, not more.
