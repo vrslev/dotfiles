@@ -52,7 +52,6 @@ mas "Shadowrocket", id: 932747118
 mas "Strongbox", id: 897283731
 mas "Telegram", id: 747648890
 mas "Things", id: 904280696
-mas "Wipr", id: 1662217862
 vscode "astral-sh.ty"
 vscode "biomejs.biome"
 vscode "charliermarsh.ruff"
