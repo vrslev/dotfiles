@@ -3,7 +3,7 @@ description: Comply with Python code style
 ---
 
 1. Read code style `curl -s https://raw.githubusercontent.com/community-of-python/pylines/refs/heads/main/code-style.md`, look for rules that are not automated.
-2. Check changes that you've made or those that were there in git work tree.
+2. Check changes that you've made or those that were there in git work tree. $@
 3. Generate suggestions for changes according to code style. Before modifying code, ask me if your plan is ok.
 4. Modify the code.
 
