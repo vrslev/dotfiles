@@ -17,7 +17,7 @@
     "editor.defaultFormatter": "redhat.vscode-yaml"
   },
   "[html]": {
-    "editor.defaultFormatter": "vscode.html-language-features"
+    "editor.defaultFormatter": null
   },
   "[javascript]": {
     "editor.codeActionsOnSave": {
