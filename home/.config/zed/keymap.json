@@ -1,4 +1,15 @@
-// Zed keymap
+// Zed keymap - Ported from VSCode keybindings
+//
+// This keymap attempts to replicate common VSCode keybindings in Zed.
+// Not all VSCode functionality can be directly mapped due to differences
+// in architecture and available actions.
+//
+// Major mappings:
+// - ctrl+,/.: Navigation history (back/forward)
+// - f3: Rename symbol (moved from F2)
+// - alt+cmd+g: Find previous match
+// - cmd+k a/shift+a: New file/folder
+// - Various Git, terminal, and utility shortcuts
 //
 // For information on binding keys, see the Zed
 // documentation: https://zed.dev/docs/key-bindings
@@ -9,13 +20,58 @@
   {
     "context": "Workspace",
     "bindings": {
-      // "shift shift": "file_finder::Toggle"
+      // Panel management
+      "ctrl-`": "terminal_panel::Toggle",
+      "ctrl-shift-n": "workspace::ToggleZoom", // Maximize/minimize active pane (like VSCode)
+      // Navigation history (ported from VSCode ctrl+, and ctrl+.)
+      "ctrl-,": "pane::GoBack",
+      "ctrl-.": "pane::GoForward",
+      // Terminal operations
+      "ctrl-alt-`": "workspace::NewTerminal",
+      "ctrl-alt-z": "workspace::NewTerminal",
+      // Git operations
+      "cmd-shift-g": "git_panel::ToggleFocus", // Git/SCM panel in Zed (exact command)
+      "cmd-shift-d": "git::Diff", // Git diff
+      "cmd-ctrl-enter": "git::Commit", // Approximation of git.commit + git.push
+      // File operations
+      "cmd-k a": "project_panel::NewFile",
+      "cmd-k shift-a": "project_panel::NewDirectory",
+      "cmd-k cmd-w": "workspace::CloseAllItemsAndPanes", // Close all editors (approximation)
+      // Task operations
+      "cmd-k cmd-p": "task::Spawn", // Run task
+      // Custom commands
+      "cmd-shift-i": "assistant::ToggleFocus", // Continue/Assistant panel
+      "shift-space": "editor::ShowCompletions" // Inline suggest trigger
     }
   },
   {
     "context": "Editor",
     "bindings": {
-      "cmd-i": "editor::ShowCompletions"
+      "cmd-i": "editor::ShowCompletions",
+      "shift-enter": "editor::OpenUrl", // Open link under cursor
+      "f3": "editor::Rename" // Rename symbol (moved from F2 to F3)
+    }
+  },
+  {
+    "context": "Editor && mode == full",
+    "bindings": {
+      // Find operations (ported from VSCode alt+cmd+g)
+      "alt-cmd-g": "search::SelectPreviousMatch",
+      "cmd-shift-h": "buffer_search::DeployReplace" // Find and replace
+    }
+  },
+  {
+    "context": "ProjectPanel && not_editing",
+    "bindings": {
+      // Override F2 rename in project panel to match VSCode behavior
+      "f2": "project_panel::Rename"
+    }
+  },
+  {
+    "context": "Terminal",
+    "bindings": {
+      // Terminal-specific bindings
+      "ctrl-alt-`": "workspace::NewTerminal"
     }
   }
 ]
