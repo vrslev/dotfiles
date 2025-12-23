@@ -15,10 +15,6 @@ const factory: CustomToolFactory = (pi) => ({
   }),
 
   async execute(toolCallId, params, signal, onUpdate) {
-    onUpdate?.({
-      content: [{ type: "text", text: params.thought }],
-      details: { thought: params.thought },
-    });
     return {
       content: [{ type: "text", text: "OK" }], // Minimal feedback for LLM
       details: { thought: params.thought },
