@@ -6,7 +6,7 @@
 # Workflow
 - Given a task, do just what is asked, not more.
 - Use `Justfile` in any project and use its defined tasks (e.g., `just install`, `just lint`, `just test test_file.py`) instead of raw commands like `pytest test_file.py`, `ruff .`, `npm i` or `npm run lint`. List available commands with `just --list`.
-- Always use `run-silent <cmd>` for running tests and lints, so it doesn't output irrelevant stuff: `run-silent just test`.
+- Use `run-silent <cmd>` for running tests and lints, when output is irrelevant stuff to avoid polluting context: `run-silent just test`.
 - Run tests and linters after making noticeable increments, and iterate on any errors before proceeding.
 - Prefer running single tests, and not the whole test suite, for performance
 
