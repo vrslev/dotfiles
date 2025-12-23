@@ -1,10 +1,15 @@
-# General Principles
-- Reading content (remote or local) is perfectly fine. But do not perform any **destructive** side effects: like commit, clones, checkouts, status updates, or comments. They must be performed by the user.
-- Given a task, do just that, not more.
+# Tools
+- Leave git source control to the user: do not create branches, merge, rebase, commit or push.
+- Same applies to installing packages, creating or updating issues in external trackers, as well as Pull Requests. Just leave those things to the user.
+- Use fd instead of find, rg instead of grep
 
-# Code Quality & Development Practices
-- Always use `Justfile` in any project and use its defined tasks (e.g., `just install`, `just lint`, `just test test_file.py`) instead of raw commands like `pytest test_file.py`, `ruff .`, `npm i` or `npm run lint`. List available commands with `just --list`.
-- Check other files before writing code to get the code style.
-- Ensure complete type coverage and use explicit, meaningful variable names. Apply immutability principles where possible.
-- Always run tests and linters after making noticeable increments, and iterate on any errors before proceeding.
-- Do not write documentation that duplicates code. Do not write comments at all. Do not write unnecessary examples
+# Workflow
+- Given a task, do just what is asked, not more.
+- Use `Justfile` in any project and use its defined tasks (e.g., `just install`, `just lint`, `just test test_file.py`) instead of raw commands like `pytest test_file.py`, `ruff .`, `npm i` or `npm run lint`. List available commands with `just --list`.
+- Run tests and linters after making noticeable increments, and iterate on any errors before proceeding.
+- Prefer running single tests, and not the whole test suite, for performance
+
+# Code Quality
+- Check other files before writing code to get the code style
+- Ensure complete type coverage and use explicit, meaningful variable names
+- Don't write comments at all, documentation that duplicates code, or unnecessary examples
