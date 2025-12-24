@@ -1,4 +1,3 @@
-echo -n "start login "
 if not status is-login
   exit
 end
@@ -25,12 +24,9 @@ end
 if test -n "$VSCODE_RESOLVING_ENVIRONMENT"
   if type -q mise
     if not set --query DIRENV_INITIALIZED
-      echo "before env mise "
       mise env --shell fish | source
-      echo done
     end
   else
     echo "mise not found"
   end
 end
-echo done
