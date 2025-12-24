@@ -1,0 +1,6 @@
+#!/opt/homebrew/bin/fish
+if test "$argv[1]" = "down"
+    exit 0
+end
+set JUST_CMD (mise x just --command "which just" | head -n 1)
+$JUST_CMD $argv

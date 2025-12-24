@@ -23,6 +23,7 @@ UV_NATIVE_TLS = "true"
 DOTFILES_ROOT = "{{env.HOME}}/code/dotfiles"
 STARSHIP_LOG = "error"
 LOCAL_FISH_COMPLETION_DIR = "{{config_root}}/.config/fish/completions"
+COMPOSE_PROGRESS = "quiet"
 
 [hooks]
 postinstall = 'mkdir -p "$LOCAL_FISH_COMPLETION_DIR"'
