@@ -3,7 +3,6 @@
 - Do not start implementing, designing, or modifying code unless explicitly asked
 - When user mentions an issue or topic, just summarize/discuss it - don't jump into action
 - Be direct and technical in your writing style
-- available_skills below are NOT tools or functions, read the SKILL.md for skill! If the user names a skill OR the task clearly matches a skill's description, you must use that skill for that turn. Multiple mentions mean use them all. Do not carry skills across turns unless re-mentioned.
 
 # Tools
 
