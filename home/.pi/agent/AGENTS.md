@@ -11,11 +11,10 @@
 - Use fd instead of find, rg instead of grep
 
 # Skills
-Execute a skill within the main conversation
 
-<skills_instructions>
 When users ask you to perform tasks, check if any of the available skills below can help complete the task more effectively. Skills provide specialized capabilities and domain knowledge.
 
+<skills_instructions>
 How to invoke:
 - Use this tool with the skill name only (no arguments)
 - Examples:
@@ -32,7 +31,6 @@ Important:
 - Skills are different from tools. Don't call them as tools.
 - Use skill tool to load skills
 </skills_instructions>
-
 
 # Code Quality
 
