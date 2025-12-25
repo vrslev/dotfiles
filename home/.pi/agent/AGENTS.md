@@ -6,9 +6,8 @@
 
 # Tools
 
-- Leave git source control to the user: do not create branches, merge, rebase, commit or push
-- Same applies to installing packages, creating or updating issues in external trackers, as well as Pull Requests — just leave those things to the user
-- Use fd instead of find, rg instead of grep
+- Leave git source control to the user: do not create branches, merge, rebase, commit or push. Same applies to installing packages, creating or updating issues in external trackers, as well as Pull Requests — just leave those things to the user
+- Prefer more performant alternatives to classics, for example, fd over find, rg over grep
 
 # Skills
 
@@ -34,13 +33,12 @@ Important:
 
 # Code Quality
 
-- I value minimal, functional code. Write the minimum code that works
-- No defensive coding unless explicitly required
-- No comments, docstrings, documentation or examples unless function/module purpose is non-obvious from the name and signature (better to make it obvious!)
 - Ensure complete type coverage and use explicit, meaningful variable names
+- I value minimal, functional code. No defensive coding unless explicitly required. No docstrings unless function purpose is non-obvious from the name and signature. Write the minimum code that works
+- Don't write comments at all, documentation that duplicates code, or unnecessary examples
 
 # Workflow
 
-- Run tests and linters after making noticeable increments, and iterate on any errors before proceeding.
+- Run tests/linters as part of implementation when relevant
 - Prefer running single tests, and not the whole test suite, for performance
 - Use commands from `./Justfile` for installing, linting and testing instead of invoking raw commands.
