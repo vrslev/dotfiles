@@ -1,6 +1,6 @@
 ---
 name: brave-web-search
-description: Web search and fetch content as markdown via Brave Search API. You're encouraged to use it for searching documentation, facts, or any web content. Lightweight, no browser required.
+description: Fetch content and search web. You're encouraged to use it instead of curl for fetching and searching any content, not only articles, documentation, facts, or any web content. Lightweight, no browser required.
 ---
 
 # Brave Search
