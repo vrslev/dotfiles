@@ -16,17 +16,13 @@ export default function (pi: HookAPI) {
     if (event.toolName !== "bash") return;
 
     const command = event.input.command as string;
-    const additions: string[] = [];
-
-    for (const { suggestion: tip, pattern } of toolSuggestions) {
-      if (pattern.test(command)) {
-        additions.push(tip);
-      }
-    }
+    const additions = toolSuggestions
+      .filter(({ pattern }) => pattern.test(command))
+      .map(({ suggestion }) => suggestion);
 
     if (additions.length === 0) return;
 
-    const suggestionText = additions.join("\n") + "\n\n";
+    const suggestionText = additions.join("\n") + "\n";
     const modifiedContent = [...event.content];
 
     if (modifiedContent.length > 0 && modifiedContent[0].type === "text") {
