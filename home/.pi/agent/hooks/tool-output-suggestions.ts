@@ -4,11 +4,11 @@ export default function (pi: HookAPI) {
   const toolSuggestions: { suggestion: string; pattern: RegExp }[] = [
     {
       pattern: /\bfind\b/,
-      suggestion: "Tip: use fd",
+      suggestion: "Warn: use fd",
     },
     {
       pattern: /\bgrep\b/,
-      suggestion: "Tip: use rg",
+      suggestion: "Warn: use rg",
     },
   ];
 
