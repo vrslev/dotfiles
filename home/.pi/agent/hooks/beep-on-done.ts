@@ -1,7 +1,5 @@
-import type { HookAPI } from "@mariozechner/pi-coding-agent/hooks";
-
-export default function (pi: HookAPI) {
-  pi.on("agent_end", async (event, ctx) => {
+export default function (pi) {
+  pi.on("agent_end", async (_event, ctx) => {
     await ctx.exec("afplay", ["/System/Library/Sounds/Glass.aiff"]);
   });
 }

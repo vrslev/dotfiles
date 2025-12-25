@@ -1,6 +1,4 @@
-import type { HookAPI } from "@mariozechner/pi-coding-agent/hooks";
-
-export default function (pi: HookAPI) {
+export default function (pi) {
   const dangerousPatterns = [
     { pattern: /\brm\s+(-rf?|--recursive)/i, reason: undefined },
     { pattern: /\bsudo\b/i, reason: undefined },
@@ -17,10 +15,10 @@ export default function (pi: HookAPI) {
     { pattern: /\bkubectl\s+(apply|delete|create|replace)\b/i, reason: undefined },
   ];
 
-  pi.on("tool_call", async (event, ctx) => {
+  pi.on("tool_call", async (event: { toolName: string; input: { command: string } }, ctx) => {
     if (event.toolName !== "bash") return undefined;
 
-    const command = event.input.command as string;
+    const command = event.input.command;
     for (const { pattern, reason } of dangerousPatterns) {
       if (pattern.test(command)) {
         return { block: true, reason: reason || "Blocked by system" };
