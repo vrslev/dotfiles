@@ -1,0 +1,67 @@
+#!/bin/bash
+# Retry a command on failure
+# Usage: 
+#   retry command...
+#   retry --attempts 7 --delay 1 command...
+# Examples: 
+#   retry curl https://example.com
+#   retry --attempts 7 --delay 1 curl https://example.com
+
+max_attempts=7
+delay_seconds=1
+
+# Parse command line arguments
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --attempts)
+            max_attempts="$2"
+            shift 2
+            ;;
+        --delay)
+            delay_seconds="$2"
+            shift 2
+            ;;
+        --)
+            shift
+            break
+            ;;
+        -*)
+            echo "Unknown option: $1" >&2
+            echo "Usage: retry [--attempts NUM] [--delay SECONDS] command..." >&2
+            exit 1
+            ;;
+        *)
+            break
+            ;;
+    esac
+done
+
+if [ $# -lt 1 ]; then
+    echo "Usage: retry [--attempts NUM] [--delay SECONDS] command..." >&2
+    echo "Examples:" >&2
+    echo "  retry curl https://example.com" >&2
+    echo "  retry --attempts 3 --delay 3 curl https://example.com" >&2
+    exit 1
+fi
+
+attempt=1
+while [ $attempt -le $max_attempts ]; do
+    echo "Attempt $attempt/$max_attempts: $*" >&2
+    "$@"
+    exit_code=$?
+    
+    if [ $exit_code -eq 0 ]; then
+        exit 0
+    fi
+    
+    if [ $attempt -lt $max_attempts ]; then
+        echo "Command failed with exit code $exit_code. Retrying in $delay_seconds seconds..." >&2
+        sleep $delay_seconds
+    else
+        echo "Command failed after $max_attempts attempts." >&2
+    fi
+    
+    attempt=$((attempt + 1))
+done
+
+exit $exit_code
