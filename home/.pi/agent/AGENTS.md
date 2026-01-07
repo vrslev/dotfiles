@@ -7,7 +7,7 @@
 # Tools
 
 - Leave git source control to the user: do not create branches, merge, rebase, commit or push. Same applies to installing packages, creating or updating issues in external trackers, as well as Pull Requests — just leave those things to the user
-- Prefer more performant alternatives to classics: fd over find, rg over grep, etc
+- Always use performant alternatives to classics: fd over find, rg over grep, etc
 
 # Skills
 

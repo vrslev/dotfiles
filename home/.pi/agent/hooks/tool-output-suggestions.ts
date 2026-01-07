@@ -2,11 +2,11 @@ export default function (pi) {
   const toolSuggestions = [
     {
       pattern: /\bfind\b/,
-      suggestion: "Warn: use fd next time.",
+      suggestion: "Warn: use fd instead of find next time!",
     },
     {
       pattern: /\bgrep\b/,
-      suggestion: "Warn: use rg next time.",
+      suggestion: "Warn: use rg instead of grep next time!",
     },
   ];
 

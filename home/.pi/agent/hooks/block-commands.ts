@@ -9,6 +9,7 @@ export default function (pi) {
     { pattern: /\bgit checkout/i, reason: undefined },
     { pattern: /\bgit switch/i, reason: undefined },
     { pattern: /\bgit reset/i, reason: undefined },
+    { pattern: /\bgit restore/i, reason: undefined },
     { pattern: /\bjira issue\s+(?!view\b)/i, reason: "Only 'jira issue view' is allowed" },
     { pattern: /\bconfluence\s+(?!read\b|search\b|info\b|find\b|--help\b)/, reason: "Destructive actions are prohibited" },
     { pattern: /\bmv\b.*-f/i, reason: undefined },
