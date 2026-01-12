@@ -24,6 +24,7 @@ DOTFILES_ROOT = "{{env.HOME}}/code/dotfiles"
 STARSHIP_LOG = "error"
 LOCAL_FISH_COMPLETION_DIR = "{{config_root}}/.config/fish/completions"
 COMPOSE_PROGRESS = "quiet"
+PI_SKIP_VERSION_CHECK = 1
 
 [hooks]
 postinstall = 'mkdir -p "$LOCAL_FISH_COMPLETION_DIR"'
