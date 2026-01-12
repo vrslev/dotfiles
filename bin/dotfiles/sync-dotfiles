@@ -5,4 +5,4 @@ cd $DOTFILES_ROOT
 git pull
 
 ./link-config-files
-./sync-deps
+sync-deps
