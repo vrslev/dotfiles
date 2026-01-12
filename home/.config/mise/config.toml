@@ -62,7 +62,6 @@ usage = "latest"
 uv = { version = "latest", postinstall = "mise run _install-fish-completions uv generate-shell-completion fish" }
 xh = { version = "latest", postinstall = "mise run _install-fish-completions xh --generate complete-fish && mkdir -p ~/.local/bin && ln (which xh) ~/.local/bin/xhs" }
 yq = { version = "latest", postinstall = "mise run _install-fish-completions yq completion fish" }
-zola = { version = "latest", postinstall = "mise run _install-fish-completions zola completion fish" }
 zoxide = "latest"
 "cargo:mergiraf" = "latest"
 "cargo:tokei" = "latest"
@@ -92,7 +91,7 @@ trusted_config_paths = [
     "~/code/dotfiles/home/.config/mise/config.local.toml",
 ]
 fetch_remote_versions_cache = "2d"
-fetch_remote_versions_timeout = "500ms"
+fetch_remote_versions_timeout = "1s"
 pipx.uvx = true
 npm.bun = true
 cargo.binstall = true
