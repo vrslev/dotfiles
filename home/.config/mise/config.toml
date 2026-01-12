@@ -81,6 +81,7 @@ zoxide = "latest"
 "spm:sindresorhus/macos-trash" = "latest"
 "ubi:ankitpokhrel/jira-cli" = { version = "latest", exe = "jira", postinstall = "mise run _install-fish-completions jira completion fish" }
 "ubi:ksdme/ut" = { version = "latest", postinstall = "mise run _install-fish-completions ut completions fish" }
+"ubi:pranshuparmar/witr" = "latest"
 
 [settings]
 jobs = 8
