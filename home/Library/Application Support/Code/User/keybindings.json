@@ -189,5 +189,15 @@
   {
     "key": "shift+cmd+f",
     "command": "-workbench.action.findInFiles"
+  },
+  {
+    "key": "alt+[",
+    "command": "workbench.action.decreaseViewWidth",
+    "when": "!isAuxiliaryWindowFocusedContext"
+  },
+  {
+    "key": "alt+]",
+    "command": "workbench.action.increaseViewWidth",
+    "when": "!isAuxiliaryWindowFocusedContext"
   }
 ]
