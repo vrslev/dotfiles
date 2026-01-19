@@ -11,12 +11,12 @@ export default function (pi) {
       skill: Type.String({ description: 'The skill name (no arguments). E.g., "pdf" or "xlsx"' }),
     }),
 
-    async execute(_toolCallId, params) {
+    async execute(_toolCallId, params, _onUpdate, ctx, _signal) {
       const skillName = (params as { skill: string }).skill;
 
       // Check common skill locations
       const skillPaths = [
-        join(pi.cwd, ".pi", "skills", skillName, "SKILL.md"),
+        join(ctx.cwd, ".pi", "skills", skillName, "SKILL.md"),
         join(process.env.HOME || "", ".pi", "agent", "skills", skillName, "SKILL.md"),
       ];
 
@@ -52,5 +52,5 @@ export default function (pi) {
         details: { skill: skillName, path: skillPath },
       };
     }
-  })
-};
+  });
+}
