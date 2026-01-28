@@ -92,6 +92,8 @@ const SAFE_PATTERNS = [
 	/^\s*fd\b/,
 	/^\s*bat\b/,
 	/^\s*exa\b/,
+	/^\s*jira\b/,
+	/^\s*confluence\b/,
 ];
 
 export function isSafeCommand(command: string): boolean {
