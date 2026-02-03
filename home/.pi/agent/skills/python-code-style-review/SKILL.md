@@ -1,5 +1,7 @@
 ---
+name: python-code-style-review
 description: Comply with Python code style
+disable-model-invocation: true
 ---
 
 1. Read code style `curl -s https://raw.githubusercontent.com/community-of-python/pylines/refs/heads/main/code-style.md`, look for rules that are not automated.

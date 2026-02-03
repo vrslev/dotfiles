@@ -205,9 +205,16 @@
     "command": "errorLens.toggle"
   },
   {
-  "key": "shift+enter",
-  "command": "workbench.action.terminal.sendSequence",
-  "args": { "text": "\u001b[13;2u" },
-  "when": "terminalFocus"
-}
+    "key": "shift+enter",
+    "command": "workbench.action.terminal.sendSequence",
+    "args": {
+      "text": "\u001b[13;2u"
+    },
+    "when": "terminalFocus"
+  },
+  {
+    "key": "cmd+i",
+    "command": "-inlineChat.start",
+    "when": "editorFocus && inlineChatHasEditsAgent && inlineChatPossible && !editorReadonly && !editorSimpleInput || editorFocus && inlineChatHasNotebookAgent && inlineChatPossible && !editorReadonly && !editorSimpleInput && activeEditor == 'workbench.editor.notebook' || editorFocus && inlineChatHasNotebookInline && inlineChatPossible && !editorReadonly && !editorSimpleInput && activeEditor == 'workbench.editor.notebook'"
+  }
 ]

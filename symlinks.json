@@ -15,8 +15,6 @@
     "~/.pi/agent/AGENTS.md",
     "~/.pi/agent/extensions",
     "~/.pi/agent/keybindings.json",
-    "~/.pi/agent/prompts",
-    "~/.pi/agent/reference-pi-system-prompt.md",
     "~/.pi/agent/skills",
     "~/.qwen/settings.json",
     "~/Library/Application Support/Code/User/keybindings.json",
