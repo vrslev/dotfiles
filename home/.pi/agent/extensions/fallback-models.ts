@@ -1,7 +1,7 @@
 /**
  * Fallback Models Extension
  *
- * Automatically switches to a fallback model when responses take too long.
+ * Automatically cancels slow requests and retries with a faster model.
  *
  * Configuration in ~/.pi/agent/settings.json or .pi/settings.json:
  *
@@ -25,6 +25,7 @@ export default function fallbackModelsExtension(pi: ExtensionAPI) {
 
 	// State
 	let timerId: NodeJS.Timeout | null = null;
+	let hasSwitched = false;
 
 	// Load configuration from settings
 	function loadConfig(ctx: ExtensionContext) {
@@ -86,13 +87,16 @@ export default function fallbackModelsExtension(pi: ExtensionAPI) {
 			clearTimeout(timerId);
 		}
 
+		// Reset switch state for new requests
+		hasSwitched = false;
+
 		// Load configuration
 		const config = loadConfig(ctx);
 
 		// Start timeout timer
 		timerId = setTimeout(async () => {
-			// Check if still processing
-			if (!ctx.isIdle()) {
+			// Check if still processing and hasn't already switched
+			if (!ctx.isIdle() && !hasSwitched) {
 				const currentModel = ctx.model;
 
 				if (currentModel) {
@@ -101,11 +105,16 @@ export default function fallbackModelsExtension(pi: ExtensionAPI) {
 
 					if (fallbackModel) {
 						try {
+							// Cancel the current request
+							ctx.abort();
+							
+							// Switch to fallback model
 							const success = await pi.setModel(fallbackModel);
 							if (success) {
+								hasSwitched = true;
 								if (ctx.hasUI) {
 									ctx.ui.notify(
-										`Switched to fallback model: ${fallbackModel.provider}:${fallbackModel.id}`,
+										`Cancelled slow request, retrying with: ${fallbackModel.provider}:${fallbackModel.id}`,
 										"warning"
 									);
 								}
