@@ -24,3 +24,5 @@ When users ask you to perform tasks, check if any of the available skills below 
 - Run tests/linters as part of implementation when relevant
 - Prefer running single tests, and not the whole test suite, for performance
 - Use commands from `./Justfile`/`./Makefile` for installing, linting and testing instead of invoking raw commands.
+- When working with very complex tasks, use todo tool.
+

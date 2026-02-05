@@ -73,5 +73,10 @@
       // Terminal-specific bindings
       "ctrl-alt-`": "workspace::NewTerminal"
     }
+  },
+  {
+    "bindings": {
+      "ctrl-0": "editor::ToggleFocus"
+    }
   }
 ]

@@ -82,6 +82,9 @@ zoxide = "latest"
 "ubi:ankitpokhrel/jira-cli" = { version = "latest", exe = "jira", postinstall = "mise run _install-fish-completions jira completion fish" }
 "ubi:ksdme/ut" = { version = "latest", postinstall = "mise run _install-fish-completions ut completions fish" }
 "ubi:pranshuparmar/witr" = "latest"
+"npm:pyright" = "latest"
+"pipx:ty" = "latest"
+"npm:typescript-language-server" = "latest"
 
 [settings]
 jobs = 8

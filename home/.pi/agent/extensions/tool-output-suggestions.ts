@@ -1,13 +1,13 @@
 export default function (pi) {
   const toolSuggestions = [
-    {
-      pattern: /\bfind\b/,
-      suggestion: "Warn: you have to always use fd instead of find!",
-    },
-    {
-      pattern: /\bgrep\b/,
-      suggestion: "Warn: you have to always use rg instead of grep!",
-    },
+    // {
+    //   pattern: /\bfind\b/,
+    //   suggestion: "Warn: you have to always use fd instead of find!",
+    // },
+    // {
+    //   pattern: /\bgrep\b/,
+    //   suggestion: "Warn: you have to always use rg instead of grep!",
+    // },
   ];
 
   pi.on("tool_result", async (event: { toolName: string; input: { command: string }; content: { type: string; text?: string }[] }) => {

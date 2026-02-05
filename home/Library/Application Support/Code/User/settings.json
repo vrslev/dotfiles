@@ -284,5 +284,12 @@
     "file:///Users/ruavel3/.vscode/extensions/continue.continue-1.2.11-darwin-arm64/config-yaml-schema.json": [
       ".continue/**/*.yaml"
     ]
-  }
+  },
+  "flake8.importStrategy": "fromEnvironment",
+  "flake8.interpreter": [
+    ".venv/bin/python"
+  ],
+  "flake8.args": [
+    "--select=COP"
+  ]
 }
