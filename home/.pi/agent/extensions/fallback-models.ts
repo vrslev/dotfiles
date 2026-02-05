@@ -157,7 +157,7 @@ export default function fallbackModelsExtension(pi: ExtensionAPI) {
 								}
 
 								// Send "continue" message to restart processing with new model
-								await pi.sendUserMessage("continue", { deliverAs: "steer" });
+								await pi.sendUserMessage("continue", { deliverAs: "followUp" });
 							}
 						} catch (error) {
 							console.error("Fallback Models error:", error);
