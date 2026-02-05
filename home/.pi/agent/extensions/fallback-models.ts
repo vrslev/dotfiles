@@ -17,6 +17,9 @@
  * }
  */
 
+import * as fs from "node:fs";
+import * as path from "node:path";
+import { homedir } from "node:os";
 import type { ExtensionAPI, ExtensionContext } from "@mariozechner/pi-coding-agent";
 
 export default function fallbackModelsExtension(pi: ExtensionAPI) {
@@ -27,17 +30,51 @@ export default function fallbackModelsExtension(pi: ExtensionAPI) {
 	let timerId: NodeJS.Timeout | null = null;
 	let hasSwitched = false;
 
-	// Load configuration from settings
-	function loadConfig(ctx: ExtensionContext) {
+	// Load configuration from settings files
+	function loadConfig(cwd: string) {
 		try {
-			// Try to get settings from context
-			const settings = (ctx as any).settings || {};
-			const fallbackModelsConfig = settings.fallbackModels || {};
+			let globalSettings = {};
+			let projectSettings = {};
 
-			return {
-				timeoutMs: fallbackModelsConfig.timeoutMs || DEFAULT_TIMEOUT_MS,
-				fallbackModels: fallbackModelsConfig["fallback-models"] || {}
+			// Load global settings
+			const globalPath = path.join(homedir(), ".pi", "agent", "settings.json");
+			if (fs.existsSync(globalPath)) {
+				const content = fs.readFileSync(globalPath, "utf-8");
+				globalSettings = JSON.parse(content);
+			}
+
+			// Load project settings
+			const projectPath = path.join(cwd, ".pi", "settings.json");
+			if (fs.existsSync(projectPath)) {
+				const content = fs.readFileSync(projectPath, "utf-8");
+				projectSettings = JSON.parse(content);
+			}
+
+			// Merge settings (project overrides global)
+			const settings = { ...globalSettings, ...projectSettings };
+
+			// Extract fallbackModels configuration
+			const fallbackModelsConfig = (settings as any).fallbackModels || {};
+
+			// Extract timeoutMs and fallback-models
+			let timeoutMs = DEFAULT_TIMEOUT_MS;
+			let fallbackModels = {};
+
+			if (fallbackModelsConfig && typeof fallbackModelsConfig === 'object') {
+				if (fallbackModelsConfig.timeoutMs !== undefined) {
+					timeoutMs = fallbackModelsConfig.timeoutMs;
+				}
+				if (fallbackModelsConfig["fallback-models"]) {
+					fallbackModels = fallbackModelsConfig["fallback-models"];
+				}
+			}
+
+			const config = {
+				timeoutMs: timeoutMs,
+				fallbackModels: fallbackModels
 			};
+
+			return config;
 		} catch (error) {
 			console.error("Fallback Models: Error loading config, using defaults", error);
 			return {
@@ -90,8 +127,8 @@ export default function fallbackModelsExtension(pi: ExtensionAPI) {
 		// Reset switch state for new requests
 		hasSwitched = false;
 
-		// Load configuration
-		const config = loadConfig(ctx);
+		// Load configuration from settings files
+		const config = loadConfig(ctx.cwd);
 
 		// Start timeout timer
 		timerId = setTimeout(async () => {
@@ -106,18 +143,21 @@ export default function fallbackModelsExtension(pi: ExtensionAPI) {
 					if (fallbackModel) {
 						try {
 							// Cancel the current request
-							ctx.abort();
-							
+							await ctx.abort();
+
 							// Switch to fallback model
 							const success = await pi.setModel(fallbackModel);
 							if (success) {
 								hasSwitched = true;
 								if (ctx.hasUI) {
 									ctx.ui.notify(
-										`Cancelled slow request, retrying with: ${fallbackModel.provider}:${fallbackModel.id}`,
+										`Cancelled slow request, continuing with: ${fallbackModel.provider}:${fallbackModel.id}`,
 										"warning"
 									);
 								}
+
+								// Send "continue" message to restart processing with new model
+								await pi.sendUserMessage("continue", { deliverAs: "steer" });
 							}
 						} catch (error) {
 							console.error("Fallback Models error:", error);
