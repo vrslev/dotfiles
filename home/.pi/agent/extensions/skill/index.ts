@@ -11,7 +11,7 @@ export default function (pi) {
       skill: Type.String({ description: 'The skill name (no arguments). E.g., "pdf" or "xlsx"' }),
     }),
 
-    async execute(_toolCallId, params, _onUpdate, ctx, _signal) {
+    async execute(_toolCallId, params, _signal, _onUpdate, ctx) {
       const skillName = (params as { skill: string }).skill;
 
       // Check common skill locations

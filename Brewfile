@@ -1,6 +1,5 @@
 brew "ca-certificates"
 brew "eza"
-brew "snappy"
 brew "ffmpeg"
 brew "fish"
 brew "git"
@@ -16,6 +15,7 @@ brew "mmctl"
 brew "ollama", restart_service: :changed
 brew "parallel"
 brew "postgresql@14"
+brew "snappy"
 brew "telnet"
 brew "tmux"
 brew "tree"
@@ -52,7 +52,6 @@ mas "Strongbox", id: 897283731
 mas "Telegram", id: 747648890
 mas "Things", id: 904280696
 mas "Wipr", id: 1662217862
-vscode "anthropic.claude-code"
 vscode "astral-sh.ty"
 vscode "biomejs.biome"
 vscode "charliermarsh.ruff"
@@ -60,8 +59,10 @@ vscode "eamodio.gitlens"
 vscode "ecmel.vscode-html-css"
 vscode "github.vscode-github-actions"
 vscode "jasonlhy.hungry-delete"
+vscode "lencerf.beancount"
 vscode "matangover.mypy"
 vscode "ms-kubernetes-tools.vscode-kubernetes-tools"
+vscode "ms-python.flake8"
 vscode "ms-python.python"
 vscode "ms-python.vscode-pylance"
 vscode "ms-python.vscode-python-envs"
