@@ -98,6 +98,7 @@
   "editor.scrollbar.verticalScrollbarSize": 7,
   "editor.stickyScroll.enabled": true,
   "emmet.triggerExpansionOnTab": true,
+  "errorLens.enabled": false,
   "errorLens.enabledDiagnosticLevels": [
     "error",
     "warning"
@@ -120,6 +121,13 @@
   "files.insertFinalNewline": true,
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
+  "flake8.args": [
+    "--select=COP"
+  ],
+  "flake8.importStrategy": "fromEnvironment",
+  "flake8.interpreter": [
+    ".venv/bin/python"
+  ],
   "git.autofetch": true,
   "git.blame.editorDecoration.enabled": false,
   "git.confirmSync": false,
@@ -195,9 +203,10 @@
   "python.analysis.supportAllPythonDocuments": true,
   "python.analysis.supportRestructuredText": true,
   "python.createEnvironment.trigger": "off",
-  "python.languageServer": "None",
+  "python.defaultInterpreterPath": ".venv/bin/python",
   "python.terminal.activateEnvironment": false,
   "python.terminal.shellIntegration.enabled": true,
+  "python.useEnvironmentsExtension": false,
   "redhat.telemetry.enabled": false,
   "ruff.lint.ignore": [
     "F841",
@@ -278,18 +287,11 @@
   "workbench.sideBar.location": "right",
   "workbench.startupEditor": "none",
   "workbench.tips.enabled": false,
-  "zenMode.centerLayout": false,
-  "zenMode.fullScreen": false,
   "yaml.schemas": {
     "file:///Users/ruavel3/.vscode/extensions/continue.continue-1.2.11-darwin-arm64/config-yaml-schema.json": [
       ".continue/**/*.yaml"
     ]
   },
-  "flake8.importStrategy": "fromEnvironment",
-  "flake8.interpreter": [
-    ".venv/bin/python"
-  ],
-  "flake8.args": [
-    "--select=COP"
-  ]
+  "zenMode.centerLayout": false,
+  "zenMode.fullScreen": false
 }
