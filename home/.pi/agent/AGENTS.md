@@ -7,7 +7,7 @@
 # Tools
 
 - Leave git source control to the user: do not create branches, merge, rebase, commit or push. Same applies to installing packages, creating or updating issues in external trackers, as well as Pull Requests — just leave those things to the user
-- Prefer performant alternatives to classics: fd over find, rg over grep, etc
+- Use performant alternatives to classics: fd instead of find, rg instead of grep, etc
 
 # Skills
 
@@ -25,4 +25,3 @@ When users ask you to perform tasks, check if any of the available skills below 
 - Prefer running single tests, and not the whole test suite, for performance
 - Use commands from `./Justfile`/`./Makefile` for installing, linting and testing instead of invoking raw commands.
 - When working with very complex tasks, use todo tool.
-
