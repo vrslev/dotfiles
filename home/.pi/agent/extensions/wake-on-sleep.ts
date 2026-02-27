@@ -2,6 +2,7 @@
  * Continues processing after laptop wake from sleep.
  *
  * Detects wake by checking if kern.waketime is within the last 60 seconds.
+ * Only resumes if the last message was an error.
  *
  * Usage:
  *   pi -e examples/extensions/wake-on-sleep.ts
@@ -18,13 +19,17 @@ function wasRecentlyWoken(): boolean {
     if (match) {
       const wakeTime = parseInt(match[1]);
       const now = Math.floor(Date.now() / 1000);
-      console.log(now - wakeTime)
       return (now - wakeTime) < 60;
     }
   } catch {
     return false;
   }
   return false;
+}
+
+function getLastErrorMessage(event: any): string | null {
+  const lastMsg = event.messages[event.messages.length - 1];
+  return lastMsg?.role === "assistant" ? lastMsg.errorMessage : null;
 }
 
 export default function (pi: ExtensionAPI) {
@@ -34,10 +39,12 @@ export default function (pi: ExtensionAPI) {
   pi.on("session_start", (_, ctx) => {
     timer = setInterval(() => {
       const woke = wasRecentlyWoken();
-      ctx.ui.notify(woke, "info");
       if (woke && !notified) {
-        notified = true;
-        pi.sendUserMessage("Continue from where we left off", { deliverAs: "steer" });
+        const lastError = getLastErrorMessage(ctx);
+        if (lastError) {
+          notified = true;
+          pi.sendUserMessage("Continue from where we left off", { deliverAs: "steer" });
+        }
       } else if (!woke) {
         notified = false;
       }
