@@ -18,7 +18,7 @@ export default function (pi) {
       IGNORED_ERROR_MESSAGES.includes(msg.errorMessage)
     );
 
-    if (allHaveErrorMessage && hasIgnoredError) return;
+    if (allHaveErrorMessage || hasIgnoredError) return;
     await pi.exec("afplay", ["/System/Library/Sounds/Morse.aiff"]);
   });
 }
