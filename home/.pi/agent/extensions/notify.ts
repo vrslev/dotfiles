@@ -5,11 +5,18 @@ export default function (pi) {
 
   // @ts-ignore
   pi.on("agent_end", async (event) => {
-    const lastMsg = event.messages[event.messages.length - 1];
-    if (lastMsg?.role !== "assistant") return;
+    const assistantMessages = event.messages.filter(m => m.role === "assistant");
+    if (assistantMessages.length === 0) return;
+
+    const lastMsg = assistantMessages[assistantMessages.length - 1];
     if (lastMsg.stopReason === "aborted") return;
-    // @ts-ignore
-    if (IGNORED_ERROR_MESSAGES.includes(lastMsg.errorMessage)) return;
+
+    const recentAssistantMessages = assistantMessages.slice(-4);
+    const hasIgnoredError = recentAssistantMessages.some(msg =>
+      // @ts-ignore
+      IGNORED_ERROR_MESSAGES.includes(msg.errorMessage)
+    );
+    if (hasIgnoredError) return;
     await pi.exec("afplay", ["/System/Library/Sounds/Morse.aiff"]);
   });
 }
