@@ -12,11 +12,13 @@ export default function (pi) {
     if (lastMsg.stopReason === "aborted") return;
 
     const recentAssistantMessages = assistantMessages.slice(-4);
+    const allHaveErrorMessage = recentAssistantMessages.every(msg => msg.errorMessage);
     const hasIgnoredError = recentAssistantMessages.some(msg =>
       // @ts-ignore
       IGNORED_ERROR_MESSAGES.includes(msg.errorMessage)
     );
-    if (hasIgnoredError) return;
+
+    if (allHaveErrorMessage && hasIgnoredError) return;
     await pi.exec("afplay", ["/System/Library/Sounds/Morse.aiff"]);
   });
 }
