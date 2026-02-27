@@ -6,10 +6,10 @@ export default function (pi) {
   // @ts-ignore
   pi.on("agent_end", async (event) => {
     const lastMsg = event.messages[event.messages.length - 1];
-    const errorMsg = lastMsg?.role === "assistant" ? lastMsg.errorMessage : null;
+    if (lastMsg?.role !== "assistant") return;
+    if (lastMsg.stopReason === "aborted") return;
     // @ts-ignore
-    if (!IGNORED_ERROR_MESSAGES.includes(errorMsg)) {
-      await pi.exec("afplay", ["/System/Library/Sounds/Morse.aiff"]);
-    }
+    if (IGNORED_ERROR_MESSAGES.includes(lastMsg.errorMessage)) return;
+    await pi.exec("afplay", ["/System/Library/Sounds/Morse.aiff"]);
   });
 }
