@@ -1,7 +1,6 @@
 ---
 name: python-code-style-review
 description: Comply with Python code style
-disable-model-invocation: true
 ---
 
 1. Read code style `curl -s https://raw.githubusercontent.com/community-of-python/pylines/refs/heads/main/code-style.md`, look for rules that are not automated.
@@ -20,4 +19,4 @@ disable-model-invocation: true
 ## Additional code style
 
 - Remove comments and docstrings almost always.
-- Keep typing.Final for scalars
+- Keep typing.Final for scalars. Rely on auto-typing-final linter to set typing.Final.

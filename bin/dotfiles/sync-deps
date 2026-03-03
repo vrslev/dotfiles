@@ -3,6 +3,7 @@ set -euo pipefail
 
 echo -e "\033[1;32mmise upgrade\033[0m"
 
+export MISE_FETCH_REMOTE_VERSIONS_TIMEOUT=100
 mise upgrade --yes
 mise prune --yes &
 mise reshim --yes &

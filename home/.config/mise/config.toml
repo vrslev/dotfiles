@@ -99,5 +99,7 @@ trusted_config_paths = [
 fetch_remote_versions_cache = "2d"
 fetch_remote_versions_timeout = "1s"
 pipx.uvx = true
+python.compile = false
 npm.bun = true
 cargo.binstall = true
+github_attestations = false
