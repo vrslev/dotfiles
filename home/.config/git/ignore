@@ -9,3 +9,4 @@ lllocal*
 !home/.qwen/settings.json
 .playwright-session
 .playwright-mcp
+.ralph

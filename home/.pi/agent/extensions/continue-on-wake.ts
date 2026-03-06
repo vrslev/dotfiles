@@ -13,7 +13,7 @@
  */
 
 import { execSync } from "node:child_process";
-import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
+import type { ExtensionAPI, ExtensionContext } from "@mariozechner/pi-coding-agent";
 
 /**
  * Check if the system woke from sleep within the last 60 seconds.
@@ -35,11 +35,17 @@ function wasRecentlyWoken(): boolean {
 }
 
 /**
- * Get the error message from the last assistant message, if any.
+ * Get the error message from the last assistant message in the current session branch, if any.
  */
-function getLastErrorMessage(event: any): string | null {
-  const lastMsg = event.messages[event.messages.length - 1];
-  return lastMsg?.role === "assistant" ? lastMsg.errorMessage : null;
+function getLastErrorMessage(ctx: ExtensionContext): string | null {
+  const branch = ctx.sessionManager.getBranch();
+  for (let i = branch.length - 1; i >= 0; i--) {
+    const entry = branch[i];
+    if (entry.type === "message" && entry.message.role === "assistant") {
+      return entry.message.errorMessage ?? null;
+    }
+  }
+  return null;
 }
 
 export default function (pi: ExtensionAPI) {

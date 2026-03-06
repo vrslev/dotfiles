@@ -6,7 +6,7 @@
 
 # Tools
 
-- Leave git source control to the user: do not create branches, merge, rebase, commit or push. Same applies to installing packages, creating or updating issues in external trackers, as well as Pull Requests — just leave those things to the user
+- Leave git source control to the user: do not create branches, merge, rebase, or push. Same applies to installing packages, creating or updating issues in external trackers, as well as Pull Requests — just leave those things to the user
 - Use performant alternatives to classics: fd instead of find, rg instead of grep, etc
 
 # Skills
