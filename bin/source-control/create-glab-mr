@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+git cai || true
+
 branch_name="$(git rev-parse --abbrev-ref HEAD)"
 work_issue_no="$(get-work-issue-no $branch_name)"
 

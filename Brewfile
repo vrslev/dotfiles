@@ -1,5 +1,6 @@
 brew "bison"
 brew "ca-certificates"
+brew "cmake"
 brew "eza"
 brew "ffmpeg"
 brew "fish"

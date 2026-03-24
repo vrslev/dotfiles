@@ -226,7 +226,6 @@
   "terminal.integrated.fontSize": 14,
   "terminal.integrated.hideOnStartup": "whenEmpty",
   "terminal.integrated.inheritEnv": false,
-  "terminal.integrated.minimumContrastRatio": 1,
   "terminal.integrated.profiles.osx": {
     "bash": {
       "args": [
@@ -292,5 +291,16 @@
     ]
   },
   "zenMode.centerLayout": false,
-  "zenMode.fullScreen": false
+  "zenMode.fullScreen": false,
+  "json.schemaDownload.trustedDomains": {
+    "https://schemastore.azurewebsites.net/": true,
+    "https://raw.githubusercontent.com/microsoft/vscode/": true,
+    "https://raw.githubusercontent.com/devcontainers/spec/": true,
+    "https://www.schemastore.org/": true,
+    "https://json.schemastore.org/": true,
+    "https://json-schema.org/": true,
+    "https://developer.microsoft.com/json-schemas/": true,
+    "https://biomejs.dev": true
+  },
+  "claudeCode.claudeProcessWrapper": "claude-wrapped"
 }
