@@ -1,5 +1,6 @@
 [
     "~/.bashrc",
+    "~/.claude/CLAUDE.md",
     "~/.config/fish/conf.d/0-login.fish",
     "~/.config/fish/conf.d/1-interactive.fish",
     "~/.config/git",
