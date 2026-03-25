@@ -15,7 +15,12 @@ else
     title="$(gen-mr-title)"
 fi
 
+mr_title="$title"
+if [ -n "$work_issue_no" ]; then
+    mr_title="$work_issue_no: $title"
+fi
+
 glab mr create --web --squash-before-merge --remove-source-branch --push \
     --description "" \
     --assignee "$(whoami)" \
-    --title "$work_issue_no: $title"
+    --title "$mr_title"
