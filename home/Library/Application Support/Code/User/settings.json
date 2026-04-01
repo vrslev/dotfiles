@@ -70,6 +70,8 @@
   "biome.requireConfiguration": true,
   "breadcrumbs.enabled": false,
   "chat.commandCenter.enabled": false,
+  "claudeCode.allowDangerouslySkipPermissions": true,
+  "claudeCode.claudeProcessWrapper": "claude-wrapped",
   "continue.disableQuickFix": true,
   "continue.enableTabAutocomplete": true,
   "continue.showInlineTip": false,
@@ -138,6 +140,7 @@
   "git.mergeEditor": true,
   "git.openRepositoryInParentFolders": "always",
   "git.replaceTagsWhenPull": true,
+  "github.copilot.chat.agentDebugLog.enabled": true,
   "gitlens.ai.enabled": false,
   "gitlens.cloudPatches.enabled": false,
   "gitlens.codeLens.enabled": false,
@@ -163,6 +166,16 @@
   "javascript.inlayHints.functionLikeReturnTypes.enabled": true,
   "javascript.inlayHints.parameterNames.enabled": "all",
   "javascript.updateImportsOnFileMove.enabled": "always",
+  "json.schemaDownload.trustedDomains": {
+    "https://biomejs.dev": true,
+    "https://developer.microsoft.com/json-schemas/": true,
+    "https://json-schema.org/": true,
+    "https://json.schemastore.org/": true,
+    "https://raw.githubusercontent.com/devcontainers/spec/": true,
+    "https://raw.githubusercontent.com/microsoft/vscode/": true,
+    "https://schemastore.azurewebsites.net/": true,
+    "https://www.schemastore.org/": true
+  },
   "markdown.preview.typographer": true,
   "mypy.extraArguments": [
     "--local-partial-types"
@@ -171,6 +184,7 @@
   "mypy.statusFile": ".dmypy.json",
   "outline.showConstants": false,
   "outline.showVariables": false,
+  "pi.debug": true,
   "prettier.requireConfig": true,
   "python-envs.terminal.autoActivationType": "off",
   "python.analysis.autoFormatStrings": true,
@@ -224,6 +238,7 @@
   "terminal.integrated.detectLocale": "off",
   "terminal.integrated.enableImages": true,
   "terminal.integrated.fontSize": 14,
+  "terminal.integrated.gpuAcceleration": "off",
   "terminal.integrated.hideOnStartup": "whenEmpty",
   "terminal.integrated.inheritEnv": false,
   "terminal.integrated.profiles.osx": {
@@ -275,7 +290,7 @@
   "window.autoDetectColorScheme": true,
   "window.newWindowDimensions": "maximized",
   "workbench.activityBar.location": "top",
-  "workbench.colorTheme": "Default Light Modern",
+  "workbench.colorTheme": "Light Modern",
   "workbench.editor.labelFormat": "medium",
   "workbench.editor.showIcons": false,
   "workbench.editor.showTabs": "single",
@@ -291,17 +306,5 @@
     ]
   },
   "zenMode.centerLayout": false,
-  "zenMode.fullScreen": false,
-  "json.schemaDownload.trustedDomains": {
-    "https://schemastore.azurewebsites.net/": true,
-    "https://raw.githubusercontent.com/microsoft/vscode/": true,
-    "https://raw.githubusercontent.com/devcontainers/spec/": true,
-    "https://www.schemastore.org/": true,
-    "https://json.schemastore.org/": true,
-    "https://json-schema.org/": true,
-    "https://developer.microsoft.com/json-schemas/": true,
-    "https://biomejs.dev": true
-  },
-  "claudeCode.claudeProcessWrapper": "claude-wrapped",
-  "claudeCode.allowDangerouslySkipPermissions": true
+  "zenMode.fullScreen": false
 }
