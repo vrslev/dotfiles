@@ -16,6 +16,7 @@
     "~/.pi/agent/AGENTS.md",
     "~/.pi/agent/extensions",
     "~/.pi/agent/keybindings.json",
+    "~/.pi/agent/settings.json",
     "~/.pi/agent/skills",
     "~/.qwen/settings.json",
     "~/Library/Application Support/Code/User/keybindings.json",

@@ -84,6 +84,7 @@ zoxide = "latest"
 "npm:pyright" = "latest"
 "pipx:ty" = "latest"
 "npm:typescript-language-server" = "latest"
+"npm:lean-ctx-bin" = "latest"
 
 [settings]
 jobs = 8

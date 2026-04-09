@@ -1,0 +1,21 @@
+{
+  "lastChangelogVersion": "0.64.0",
+  "defaultProvider": "anthropic",
+  "defaultModel": "claude-opus-4-6",
+  "hideThinkingBlock": false,
+  "theme": "light",
+  "defaultThinkingLevel": "low",
+  "compaction": {
+    "enabled": true
+  },
+  "steeringMode": "all",
+  "packages": [
+    "npm:@tmustier/pi-tab-status",
+    "npm:@tmustier/pi-usage-extension",
+    "npm:@tmustier/pi-ralph-wiggum",
+    "git:github.com/davebcn87/pi-autoresearch",
+    "npm:pi-rewind",
+    "npm:pi-timer",
+    "npm:pi-lean-ctx"
+  ]
+}
