@@ -1,9 +1,9 @@
 {
-  "lastChangelogVersion": "0.64.0",
+  "lastChangelogVersion": "0.67.6",
   "defaultProvider": "anthropic",
-  "defaultModel": "claude-opus-4-6",
+  "defaultModel": "claude-opus-4-7",
   "hideThinkingBlock": false,
-  "theme": "light",
+  "theme": "dark",
   "defaultThinkingLevel": "low",
   "compaction": {
     "enabled": true
@@ -16,6 +16,9 @@
     "git:github.com/davebcn87/pi-autoresearch",
     "npm:pi-rewind",
     "npm:pi-timer",
-    "npm:pi-lean-ctx"
+    {
+      "source": "git:github.com/v2nic/pi-caveman",
+      "extensions": []
+    }
   ]
 }
