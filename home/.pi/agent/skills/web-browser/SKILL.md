@@ -21,6 +21,8 @@ agent-browser close
 
 Refs `@eN` come from the latest `snapshot`. Traditional CSS selectors also work (`agent-browser click "#submit"`).
 
+Headless by default. Add `--headed` to show the window.
+
 ## Reading the page
 
 - `agent-browser snapshot -i` — compact accessibility tree, best for agent reasoning
