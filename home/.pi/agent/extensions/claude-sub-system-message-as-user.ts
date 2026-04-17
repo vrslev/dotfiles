@@ -6,7 +6,8 @@ type SystemEntry = { type?: string; text?: string; [key: string]: unknown };
 type Message = { role?: string; content?: unknown; [key: string]: unknown };
 
 export default function (pi: ExtensionAPI) {
-	pi.on("before_provider_request", (event) => {
+	pi.on("before_provider_request", (event, ctx) => {
+		if (ctx.model?.provider !== "anthropic") return;
 		const payload = event.payload as {
 			system?: SystemEntry[];
 			messages?: Message[];
