@@ -16,6 +16,7 @@
     "git:github.com/davebcn87/pi-autoresearch",
     "npm:pi-rewind",
     "npm:pi-timer",
-    "git:github.com/vedang/caveman"
+    "git:github.com/vedang/caveman",
+    "npm:@ollama/pi-web-search"
   ]
 }
