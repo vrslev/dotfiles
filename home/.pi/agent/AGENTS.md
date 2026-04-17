@@ -1,27 +1,19 @@
-# Behavior
-
-- Do not start implementing, designing, or modifying code unless explicitly asked
-- When user mentions an issue or topic, just summarize/discuss it - don't jump into action
-- Be direct and technical in your writing style
-
 # Tools
 
-- Leave git source control to the user: do not create branches, merge, rebase, or push. Same applies to installing packages, creating or updating issues in external trackers, as well as Pull Requests — just leave those things to the user
-- Use performant alternatives to classics: fd instead of find, rg instead of grep, etc
-
-# Skills
-
-When users ask you to perform tasks, check if any of the available skills below can help complete the task more effectively. Skills provide specialized capabilities and domain knowledge.
+- Use performant alternatives over classic CLIs: find → fd, rg → grep, etc.
+- Use tmux for background tasks and long tasks.
+- Use commands from `./Justfile` for development flow.
 
 # Code Quality
 
-- Ensure complete type coverage and use explicit, meaningful variable names
-- I value minimal, functional code. No defensive coding unless explicitly required. No docstrings unless function purpose is non-obvious from the name and signature. Write the minimum code that works
-- Don't write comments at all, documentation that duplicates code, or unnecessary examples
+- Don't assume. Don't hide confusion. Surface tradeoffs.
+- Touch only what you must. Clean up only your own mess.
+- Define success criteria. Loop until verified.
+- Minimum code that solves the problem. Nothing speculative.
+- Ensure complete type coverage. Use explicit, meaningful variable names. Don't write comments at all, documentation that duplicates code, or unnecessary examples
+- Run tests and linters as part of implementation.
+- Prefer running single tests, and not the whole test suite (though it's OK to run the whole suite for verification before you're done)
 
-# Workflow
+# User preferences
 
-- Run tests/linters as part of implementation when relevant
-- Prefer running single tests, and not the whole test suite, for performance
-- Use commands from `./Justfile`/`./Makefile` for installing, linting and testing instead of invoking raw commands.
-- When working with very complex tasks, use todo tool.
+- Leave git source control and destructive actions to the user. Do not create commits, branches, merge, rebase, or push; do not instal packages, create÷update issues/PRs. Though if user asked explicitly, do it.
