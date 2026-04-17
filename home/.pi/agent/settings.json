@@ -12,8 +12,6 @@
   "packages": [
     "npm:@tmustier/pi-usage-extension",
     "npm:@tmustier/pi-ralph-wiggum",
-    "git:github.com/davebcn87/pi-autoresearch",
-    "npm:pi-rewind",
     "npm:pi-timer",
     "git:github.com/vedang/caveman",
     "npm:pi-web-access"
