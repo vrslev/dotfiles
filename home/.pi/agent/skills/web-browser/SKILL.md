@@ -5,34 +5,46 @@ description: Drive Chrome from the shell to browse, click, fill forms, run JS, a
 
 # Web Browser Skill
 
-Uses [rodney](https://github.com/simonw/rodney) — a small Chrome CLI. One command per action, Chrome persists between calls.
+Uses [agent-browser](https://github.com/vercel-labs/agent-browser) — Rust CLI over CDP. Daemon persists Chrome between calls.
 
 ## Typical flow
 
 ```bash
-rodney start
-rodney open https://example.com
-rodney waitload
-rodney text "h1"
-rodney click "a.more"
-rodney input "#q" "query"
-rodney submit "form"
-rodney screenshot out.png
-rodney stop
+agent-browser open https://example.com
+agent-browser snapshot -i             # compact a11y tree with @eN refs
+agent-browser click @e5
+agent-browser fill @e7 "query"
+agent-browser press Enter
+agent-browser screenshot out.png
+agent-browser close
 ```
 
-Selectors are CSS. Use `rodney js '<expr>'` (single-quoted) for anything CSS cannot express.
+Refs `@eN` come from the latest `snapshot`. Traditional CSS selectors also work (`agent-browser click "#submit"`).
 
 ## Reading the page
 
-- `rodney ax-tree --json` — accessibility tree, best for reasoning about layout
-- `rodney html [sel]`, `rodney text <sel>`, `rodney attr <sel> <name>`
-- `rodney js '...'` for structured extraction
+- `agent-browser snapshot -i` — compact accessibility tree, best for agent reasoning
+- `agent-browser get text @e1` / `get html @e1` / `get value @e1` / `get title` / `get url`
+- `agent-browser eval '<js>'` (`--stdin` for piped JS)
 
-## Checks (exit codes)
+## Finding elements semantically
 
-`rodney exists <sel>`, `rodney visible <sel>`, `rodney assert <expr> [expected]` — exit `1` on failed check, `2` on error. Chain with `&&` / `||`.
+```bash
+agent-browser find role button click --name "Submit"
+agent-browser find text "Sign In" click
+agent-browser find label "Email" fill "me@example.com"
+```
+
+## Checks
+
+`agent-browser is visible|enabled|checked <sel>` — exit code reflects state.
+
+## Batch (avoid per-command startup)
+
+```bash
+agent-browser batch "open https://example.com" "snapshot -i" "click @e1"
+```
 
 ## Everything else
 
-Run `rodney --help` for the full command list (waits, tabs, files, downloads, pdf, accessibility queries). Prefer one-shot commands composed with shell over large JS blobs.
+`agent-browser --help` and `agent-browser <cmd> --help` for the full list (waits, tabs, uploads, pdf, recording, sessions). Prefer one-shot commands composed with shell over large eval blobs.
