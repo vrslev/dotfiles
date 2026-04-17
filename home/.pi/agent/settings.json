@@ -10,13 +10,12 @@
   },
   "steeringMode": "all",
   "packages": [
-    "npm:@tmustier/pi-tab-status",
     "npm:@tmustier/pi-usage-extension",
     "npm:@tmustier/pi-ralph-wiggum",
     "git:github.com/davebcn87/pi-autoresearch",
     "npm:pi-rewind",
     "npm:pi-timer",
     "git:github.com/vedang/caveman",
-    "npm:@ollama/pi-web-search"
+    "npm:pi-web-access"
   ]
 }
