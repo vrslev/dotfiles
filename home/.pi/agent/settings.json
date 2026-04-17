@@ -16,9 +16,6 @@
     "git:github.com/davebcn87/pi-autoresearch",
     "npm:pi-rewind",
     "npm:pi-timer",
-    {
-      "source": "git:github.com/v2nic/pi-caveman",
-      "extensions": []
-    }
+    "git:github.com/vedang/caveman"
   ]
 }
