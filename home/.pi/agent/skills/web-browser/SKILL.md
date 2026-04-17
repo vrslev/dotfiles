@@ -10,7 +10,7 @@ Uses [rodney](https://github.com/simonw/rodney) — a small Chrome CLI. One comm
 ## Typical flow
 
 ```bash
-rodney start                   # --show to see the window
+rodney start
 rodney open https://example.com
 rodney waitload
 rodney text "h1"
