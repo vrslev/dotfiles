@@ -85,6 +85,7 @@ zoxide = "latest"
 "pipx:ty" = "latest"
 "npm:typescript-language-server" = "latest"
 "npm:lean-ctx-bin" = "latest"
+"ubi:simonw/rodney" = "latest"
 
 [settings]
 jobs = 8
