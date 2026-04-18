@@ -10,7 +10,15 @@
   },
   "steeringMode": "all",
   "packages": [
-    "npm:@tmustier/pi-ralph-wiggum",
+    {
+      "source": "git:github.com/tmustier/pi-extensions",
+      "extensions": [
+        "ralph-wiggum/index.ts"
+      ],
+      "skills": [
+        "ralph-wiggum/SKILL.md"
+      ]
+    },
     "npm:pi-timer",
     "npm:pi-web-access"
   ]
