@@ -1,8 +1,9 @@
 # Tools
 
 - Use performant alternatives over classic CLIs: find → fd, rg → grep, etc.
-- Use tmux for background tasks and long tasks.
+- Use quiet mode when tool has it.
 - Use commands from `./Justfile` for development flow.
+- Use tmux for background tasks and long tasks.
 
 # Code Quality
 
