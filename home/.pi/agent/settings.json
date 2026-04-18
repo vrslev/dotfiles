@@ -20,6 +20,11 @@
       ]
     },
     "npm:pi-timer",
-    "npm:pi-web-access"
+    {
+      "source": "npm:pi-web-access",
+      "skills": [
+        "-skills/librarian/SKILL.md"
+      ]
+    }
   ]
 }
