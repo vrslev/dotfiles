@@ -86,6 +86,7 @@ zoxide = "latest"
 "npm:typescript-language-server" = "latest"
 "npm:lean-ctx-bin" = "latest"
 "npm:agent-browser" = "latest"
+"ubi:rtk-ai/rtk" = "latest"
 
 [settings]
 jobs = 8

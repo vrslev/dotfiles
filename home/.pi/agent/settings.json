@@ -3,7 +3,7 @@
   "defaultProvider": "anthropic",
   "defaultModel": "claude-opus-4-7",
   "hideThinkingBlock": false,
-  "theme": "dark",
+  "theme": "light",
   "defaultThinkingLevel": "low",
   "compaction": {
     "enabled": true
