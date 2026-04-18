@@ -10,7 +10,6 @@
   },
   "steeringMode": "all",
   "packages": [
-    "npm:@tmustier/pi-usage-extension",
     "npm:@tmustier/pi-ralph-wiggum",
     "npm:pi-timer",
     "npm:pi-web-access"
