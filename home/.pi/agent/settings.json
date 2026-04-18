@@ -13,7 +13,6 @@
     "npm:@tmustier/pi-usage-extension",
     "npm:@tmustier/pi-ralph-wiggum",
     "npm:pi-timer",
-    "git:github.com/vedang/caveman",
     "npm:pi-web-access"
   ]
 }
