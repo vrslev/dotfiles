@@ -1,10 +1,10 @@
 {
   "lastChangelogVersion": "0.67.6",
   "defaultProvider": "anthropic",
-  "defaultModel": "claude-opus-4-7",
+  "defaultModel": "claude-sonnet-4-6",
   "hideThinkingBlock": false,
   "theme": "light",
-  "defaultThinkingLevel": "low",
+  "defaultThinkingLevel": "minimal",
   "compaction": {
     "enabled": true
   },
@@ -25,6 +25,8 @@
       "skills": [
         "-skills/librarian/SKILL.md"
       ]
-    }
+    },
+    "npm:pi-caffeinate",
+    "npm:@victor-software-house/pi-openai-proxy"
   ]
 }

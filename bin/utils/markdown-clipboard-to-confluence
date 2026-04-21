@@ -1,0 +1,2 @@
+#!/bin/bash
+pbpaste | pandoc -f markdown -t jira - | pbcopy

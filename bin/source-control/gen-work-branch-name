@@ -9,6 +9,7 @@ import os
 import re
 import subprocess
 import sys
+import traceback
 from typing import Final, Optional
 
 from openai import OpenAI
@@ -163,6 +164,7 @@ def main():
 
     except Exception as exception:
         log(f"failed to generate branch name: {exception}")
+        traceback.print_exception(exception)
         sys.exit(1)
 
 

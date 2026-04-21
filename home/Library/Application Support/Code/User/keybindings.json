@@ -226,5 +226,10 @@
     "key": "alt+cmd+t",
     "command": "workbench.action.createTerminalEditorSide",
     "when": "terminalProcessSupported"
+  },
+  {
+    "key": "cmd+k cmd+w",
+    "command": "git.closeAllUnmodifiedEditors",
+    "when": "!operationInProgress"
   }
 ]

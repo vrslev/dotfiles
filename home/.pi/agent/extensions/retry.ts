@@ -14,11 +14,21 @@ export default function piRetry(pi: ExtensionAPI) {
       }
       const branch = ctx.sessionManager.getBranch();
       let lastMsg: any = null;
+      let skipPrecedingAssistant = false;
       for (let i = branch.length - 1; i >= 0; i--) {
         const e = branch[i] as any;
         if (e.type !== "message") continue;
         const m = e.message;
-        if (m.role === "assistant" && (m.stopReason === "error" || m.stopReason === "aborted")) continue;
+        if (m.role === "toolResult" && m.isError) {
+          skipPrecedingAssistant = true;
+          continue;
+        }
+        if (m.role === "assistant") {
+          if (m.stopReason === "error" || m.stopReason === "aborted" || skipPrecedingAssistant) {
+            skipPrecedingAssistant = false;
+            continue;
+          }
+        }
         lastMsg = m;
         break;
       }
