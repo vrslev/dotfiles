@@ -1,6 +1,6 @@
 /**
  * Single bash tool_call mutator:
- *   1. rtk rewrite (token savings via rtk registry)
+ *   1. rtk rewrite (token savings via rtk registry) — opt-in via BASH_REWRITE_RTK=1
  *   2. quiet-env prefix (strip noise/telemetry/progress)
  *
  * Order matters: rewrite first so rtk sees the raw user command,
@@ -84,8 +84,9 @@ function tryRewrite(command: string): string | null {
 
 export default function (pi: ExtensionAPI) {
 	const debug = process.env.BASH_REWRITE_DEBUG === "1";
-	const rtkOn = checkRtk();
-	if (!rtkOn && debug) {
+	const rtkEnabled = process.env.BASH_REWRITE_RTK === "1";
+	const rtkOn = rtkEnabled && checkRtk();
+	if (rtkEnabled && !rtkOn && debug) {
 		console.warn("[bash-rewrite] rtk not in PATH — skipping rewrite, env prefix still active");
 	}
 
