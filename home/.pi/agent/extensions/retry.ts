@@ -32,10 +32,6 @@ export default function piRetry(pi: ExtensionAPI) {
         lastMsg = m;
         break;
       }
-      if (lastMsg?.role !== "user") {
-        ctx.ui.notify("Nothing to retry — last message is not a user message.", "warning");
-        return;
-      }
       pendingRetryCleanup = true;
       pi.sendMessage(
         { customType: RETRY_CUSTOM_TYPE, content: "Retrying.", display: false },
@@ -48,7 +44,7 @@ export default function piRetry(pi: ExtensionAPI) {
     if (!pendingRetryCleanup) return;
     pendingRetryCleanup = false;
     const cleaned = event.messages.filter(
-      (msg: any) => !(msg.role === "custom" && msg.customType === RETRY_CUSTOM_TYPE),
+      (msg: any) => !(msg.customType === RETRY_CUSTOM_TYPE),
     );
     return { messages: cleaned };
   });
