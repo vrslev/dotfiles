@@ -1,3 +1,4 @@
 {
-  "app.message.dequeue": "shift+up"
+  "app.message.dequeue": "shift+up",
+  "dequeue": "shift+up"
 }

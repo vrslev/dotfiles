@@ -312,5 +312,6 @@
     "plaintext": false,
     "markdown": false,
     "scminput": false
-  }
+  },
+  "extensions.ignoreRecommendations": true
 }
