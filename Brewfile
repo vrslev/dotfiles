@@ -50,7 +50,6 @@ mas "Pixelmator Pro", id: 1289583905
 mas "Reeder", id: 1529448980
 mas "Shadowrocket", id: 932747118
 mas "Strongbox", id: 897283731
-mas "Telegram", id: 747648890
 mas "Things", id: 904280696
 mas "Wipr", id: 1662217862
 vscode "biomejs.biome"
@@ -74,7 +73,6 @@ vscode "redhat.vscode-yaml"
 vscode "skellock.just"
 vscode "skyapps.fish-vscode"
 vscode "styled-components.vscode-styled-components"
-vscode "t-nano.markdown-to-confluence-vscode"
 vscode "tamasfe.even-better-toml"
 vscode "tekumara.typos-vscode"
 vscode "tomoki1207.pdf"

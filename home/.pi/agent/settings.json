@@ -1,10 +1,10 @@
 {
-  "lastChangelogVersion": "0.70.2",
+  "lastChangelogVersion": "0.72.1",
   "defaultProvider": "anthropic",
   "defaultModel": "claude-opus-4-7",
   "hideThinkingBlock": false,
   "theme": "light",
-  "defaultThinkingLevel": "high",
+  "defaultThinkingLevel": "xhigh",
   "compaction": {
     "enabled": true
   },
@@ -26,6 +26,7 @@
         "-skills/librarian/SKILL.md"
       ]
     },
-    "npm:pi-caffeinate"
+    "npm:pi-caffeinate",
+    "npm:pi-subdir-context"
   ]
 }
