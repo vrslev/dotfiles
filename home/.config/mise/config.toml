@@ -80,15 +80,15 @@ zoxide = "latest"
 "pipx:python-lsp-server[all]" = { version = "latest", uvx_args = "--with pylsp-mypy" }
 "pipx:yt-dlp" = "latest"
 "spm:sindresorhus/macos-trash" = "latest"
-"ubi:ankitpokhrel/jira-cli" = { version = "latest", exe = "jira", postinstall = "mise run _install-fish-completions jira completion fish" }
-"ubi:ksdme/ut" = { version = "latest", postinstall = "mise run _install-fish-completions ut completions fish" }
-"ubi:pranshuparmar/witr" = "latest"
+"github:ankitpokhrel/jira-cli" = { version = "latest", postinstall = "mise run _install-fish-completions jira completion fish" }
+"github:ksdme/ut" = { version = "latest", postinstall = "mise run _install-fish-completions ut completions fish" }
+"github:pranshuparmar/witr" = "latest"
 "npm:pyright" = "latest"
 "pipx:ty" = "latest"
 "npm:typescript-language-server" = "latest"
 "npm:lean-ctx-bin" = "latest"
 "npm:agent-browser" = "latest"
-"ubi:rtk-ai/rtk" = "latest"
+"github:rtk-ai/rtk" = "latest"
 
 [settings]
 jobs = 8
