@@ -33,9 +33,13 @@ postinstall = 'mkdir -p "$LOCAL_FISH_COMPLETION_DIR"'
 
 [tasks._install-fish-completions]
 hide = true
+usage = '''
+arg "<command>"
+arg "<completion_command>" var=#true
+'''
 run = '''
-    {{arg(name="command")}} {{arg(name="completion_command", var=true)}} \
-    > "$LOCAL_FISH_COMPLETION_DIR/{{arg(name="command")}}.fish"
+    ${usage_command?} ${usage_completion_command?} \
+    > "$LOCAL_FISH_COMPLETION_DIR/${usage_command?}.fish"
 '''
 
 [tools]
