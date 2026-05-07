@@ -8,7 +8,7 @@
 - Use quiet mode when tool has it.
 - Use commands from `./Justfile` for development flow.
 - Use tmux for background tasks and long tasks.
-- When tasks take more than 1 minute (for example, e2e tests), redirect its output to the file and read it—instead of running the same command multiple time and grepping output directly.
+- When tasks take more than 3 minutes, redirect its output to the file and read it—instead of running the same command multiple time and grepping output directly.
 
 # Code Quality
 

@@ -19,6 +19,7 @@ export default function (pi) {
     );
 
     if (allHaveErrorMessage || hasIgnoredError) return;
+    process.stdout.write("\u0007");
     await pi.exec("afplay", ["/System/Library/Sounds/Morse.aiff"]);
   });
 }

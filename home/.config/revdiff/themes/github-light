@@ -1,0 +1,27 @@
+# name: github-light
+# description: light theme matching Ghostty's GitHub Light Default palette
+# author: ruavel3
+# bundled: false
+
+chroma-style = github
+color-accent = #0969da
+color-border = #d0d7de
+color-normal = #1f2328
+color-muted = #6e7781
+color-selected-fg = #ffffff
+color-selected-bg = #0969da
+color-annotation = #9a6700
+color-cursor-fg = #0969da
+color-cursor-bg = #ddf4ff
+color-add-fg = #1a7f37
+color-add-bg = #dafbe1
+color-remove-fg = #cf222e
+color-remove-bg = #ffebe9
+color-modify-fg = #9a6700
+color-modify-bg = #fff8c5
+color-tree-bg = #f6f8fa
+color-diff-bg = #ffffff
+color-status-fg = #1f2328
+color-status-bg = #f6f8fa
+color-search-fg = #1f2328
+color-search-bg = #fff8c5

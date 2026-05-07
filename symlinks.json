@@ -6,6 +6,8 @@
     "~/.config/git",
     "~/.config/mise",
     "~/.config/opencode/opencode.json",
+    "~/.config/revdiff/config",
+    "~/.config/revdiff/themes/github-light",
     "~/.config/starship.toml",
     "~/.config/ty/ty.toml",
     "~/.config/zed/keymap.json",

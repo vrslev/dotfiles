@@ -4,7 +4,7 @@
   "defaultModel": "claude-opus-4-7",
   "hideThinkingBlock": false,
   "theme": "light",
-  "defaultThinkingLevel": "xhigh",
+  "defaultThinkingLevel": "high",
   "compaction": {
     "enabled": true
   },
@@ -28,6 +28,7 @@
     },
     "npm:pi-caffeinate",
     "npm:pi-subdir-context",
-    "https://github.com/umputun/revdiff"
+    "https://github.com/umputun/revdiff",
+    "npm:pi-code-rollback"
   ]
 }
