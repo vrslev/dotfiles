@@ -27,6 +27,7 @@
       ]
     },
     "npm:pi-caffeinate",
-    "npm:pi-subdir-context"
+    "npm:pi-subdir-context",
+    "https://github.com/umputun/revdiff"
   ]
 }

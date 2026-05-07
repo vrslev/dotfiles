@@ -93,7 +93,7 @@ zoxide = "latest"
 "npm:lean-ctx-bin" = "latest"
 "npm:agent-browser" = "latest"
 "github:rtk-ai/rtk" = "latest"
-"npm:hunkdiff" = "latest"
+"github:umputun/revdiff" = "latest"
 
 [settings]
 jobs = 8
