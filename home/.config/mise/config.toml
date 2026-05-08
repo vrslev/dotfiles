@@ -72,7 +72,6 @@ zoxide = "latest"
 "cargo:mergiraf" = "latest"
 "cargo:tokei" = "latest"
 "npm:@anthropic-ai/claude-code" = "latest"
-"npm:@mariozechner/pi-coding-agent" = "latest"
 "npm:@musistudio/claude-code-router" = "latest"
 "npm:@qwen-code/qwen-code" = "latest"
 "npm:confluence-cli" = "latest"
@@ -94,6 +93,7 @@ zoxide = "latest"
 "npm:agent-browser" = "latest"
 "github:rtk-ai/rtk" = "latest"
 "github:umputun/revdiff" = "latest"
+"npm:@earendil-works/pi-coding-agent" = "latest"
 
 [settings]
 jobs = 8

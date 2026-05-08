@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.72.1",
+  "lastChangelogVersion": "0.74.0",
   "defaultProvider": "anthropic",
   "defaultModel": "claude-opus-4-7",
   "hideThinkingBlock": false,
@@ -7,6 +7,9 @@
   "defaultThinkingLevel": "high",
   "compaction": {
     "enabled": true
+  },
+  "retry": {
+    "maxRetries": 10
   },
   "steeringMode": "all",
   "packages": [
@@ -28,7 +31,12 @@
     },
     "npm:pi-caffeinate",
     "npm:pi-subdir-context",
-    "https://github.com/umputun/revdiff",
+    {
+      "source": "https://github.com/umputun/revdiff",
+      "extensions": [
+        "-plugins/pi/extensions/revdiff-post-edit.ts"
+      ]
+    },
     "npm:pi-code-rollback"
   ]
 }
