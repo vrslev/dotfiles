@@ -4,7 +4,7 @@
   "defaultModel": "claude-opus-4-7",
   "hideThinkingBlock": false,
   "theme": "light",
-  "defaultThinkingLevel": "high",
+  "defaultThinkingLevel": "xhigh",
   "compaction": {
     "enabled": true
   },
@@ -35,8 +35,18 @@
       "source": "https://github.com/umputun/revdiff",
       "extensions": [
         "-plugins/pi/extensions/revdiff-post-edit.ts"
-      ]
+      ],
+      "skills": []
     },
-    "npm:pi-code-rollback"
+    "npm:pi-code-rollback",
+    {
+      "source": "npm:mitsupi",
+      "extensions": [
+        "extensions/split-fork.ts",
+        "extensions/notify.ts"
+      ],
+      "skills": ["skills/uv/SKILL.md"],
+      "themes": []
+    }
   ]
 }
