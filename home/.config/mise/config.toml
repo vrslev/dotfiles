@@ -60,7 +60,7 @@ just = "latest"
 killport = "latest"
 kube-linter = { version = "latest", postinstall = "mise run _install-fish-completions kube-linter completion fish" }
 kube-score = "latest"
-node = "20"
+node = "24"
 python = ["3.14", "3.13", "3.12", "3.11", "3.10"]
 ripgrep = { version = "latest", postinstall = "mise run _install-fish-completions rg --generate complete-fish" }
 starship = "latest"

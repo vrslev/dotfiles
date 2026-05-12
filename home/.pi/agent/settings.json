@@ -42,7 +42,6 @@
     {
       "source": "npm:mitsupi",
       "extensions": [
-        "extensions/split-fork.ts",
         "extensions/notify.ts"
       ],
       "skills": ["skills/uv/SKILL.md"],
