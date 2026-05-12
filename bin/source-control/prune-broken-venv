@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# Per-repo: if cwd has a broken `.venv`, remove it and reinstall via `just`.
+#
+# A `.venv` is "broken" when `.venv/bin/python` fails to run — typically
+# because mise/pyenv updated the underlying interpreter and the symlink now
+# points at a path that no longer exists.
+#
+# `just install || true` so repos without that target don't fail the run.
+
+set -euo pipefail
+
+venv=".venv"
+[[ -d $venv ]] || exit 0
+
+py="$venv/bin/python"
+
+if [[ -L $py && ! -e $py ]]; then
+    reason="dangling symlink → $(readlink "$py")"
+elif [[ ! -x $py ]]; then
+    reason="missing or not executable"
+elif ! "$py" --version >/dev/null 2>&1; then
+    reason="$("$py" --version 2>&1)"
+else
+    exit 0
+fi
+
+echo "  broken: $reason"
+echo "  removing: $PWD/$venv"
+rm -rf "$venv"
+justfile="$PWD/Justfile"
+if [[ -f $justfile ]]; then
+    just --justfile "$justfile" install || true
+fi
