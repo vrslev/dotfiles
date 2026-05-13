@@ -1,6 +1,9 @@
 [
     "~/.bashrc",
-    "~/.claude/CLAUDE.md",
+    {
+        "target": "~/.claude/CLAUDE.md",
+        "source": "~/.pi/agent/AGENTS.md"
+    },
     "~/.config/fish/config.fish",
     "~/.config/ghostty/config",
     "~/.config/git",

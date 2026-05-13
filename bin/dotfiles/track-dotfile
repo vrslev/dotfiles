@@ -14,8 +14,12 @@ def pretty_path(path: Path) -> Path:
 requested_paths_to_track = [Path(one_path).absolute() for one_path in sys.argv[1:]]
 REPO_PATH = Path(os.environ["DOTFILES_ROOT"]).expanduser()
 with open(REPO_PATH / "symlinks.json") as f:
-    current_config: list[str] = json.load(f)
-current_config_paths = [Path(one_path).expanduser() for one_path in current_config]
+    current_config: list[str | dict[str, str]] = json.load(f)
+current_config_str_entries = [e for e in current_config if isinstance(e, str)]
+current_config_dict_entries = [e for e in current_config if not isinstance(e, str)]
+current_config_paths = [
+    Path(one_path).expanduser() for one_path in current_config_str_entries
+]
 paths_to_track: list[Path] = []
 
 for one_req_path in requested_paths_to_track:
@@ -50,8 +54,13 @@ for one_req_path in requested_paths_to_track:
         print(f"tracking {pretty_path(one_req_path)}")
         paths_to_track.append(one_req_path)
 
+new_entries: list[str | dict[str, str]] = [
+    *current_config_str_entries,
+    *(str(pretty_path(one_path)) for one_path in paths_to_track),
+    *current_config_dict_entries,
+]
 new_config = sorted(
-    [*current_config, *(str(pretty_path(one_path)) for one_path in paths_to_track)]
+    new_entries, key=lambda e: e if isinstance(e, str) else e["target"]
 )
 with open(REPO_PATH / "symlinks.json", "r+") as f:
     f.seek(0)

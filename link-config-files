@@ -6,7 +6,7 @@ from pathlib import Path
 
 REPO_PATH = Path(__file__).parent
 with open(REPO_PATH / "symlinks.json") as f:
-    config: list[str] = json.load(f)
+    config: list[str | dict[str, str]] = json.load(f)
 IGNORED_PATHS = {".DS_Store"}
 repo_config_paths = {
     one_path
@@ -15,12 +15,22 @@ repo_config_paths = {
 }
 found_repo_config_paths: set[Path] = set()
 
-for destination in config:
-    assert destination.startswith("~/")
-    source = "home/" + destination.removeprefix("~/")
-    full_source = REPO_PATH / source
-    assert full_source.exists(), full_source
-    full_destination = Path(destination).expanduser()
+for entry in config:
+    if isinstance(entry, str):
+        destination = entry
+        assert destination.startswith("~/")
+        source = "home/" + destination.removeprefix("~/")
+        full_source = REPO_PATH / source
+        assert full_source.exists(), full_source
+        full_destination = Path(destination).expanduser()
+    else:
+        destination = entry["target"]
+        source = entry["source"]
+        assert destination.startswith("~/"), destination
+        assert source.startswith("~/"), source
+        full_source = Path(source).expanduser()
+        assert full_source.exists(), full_source
+        full_destination = Path(destination).expanduser()
 
     if full_destination.is_symlink():
         if full_source != (linked_to := Path(os.readlink(full_destination))):
@@ -31,6 +41,9 @@ for destination in config:
         full_destination.parent.mkdir(parents=True, exist_ok=True)
         full_destination.symlink_to(full_source)
         print(f"created link: {destination} -> {source}")
+
+    if not isinstance(entry, str):
+        continue
 
     for one_repo_path in repo_config_paths:
         if one_repo_path.is_relative_to(full_source) or full_source.is_relative_to(
