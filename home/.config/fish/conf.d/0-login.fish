@@ -19,14 +19,3 @@ if type -q /opt/homebrew/bin/brew
 else
   echo "brew not found"
 end
-
-# make sure VS Code can detect tools
-if test -n "$VSCODE_RESOLVING_ENVIRONMENT"
-  if type -q mise
-    if not set --query DIRENV_INITIALIZED
-      mise env --shell fish | source
-    end
-  else
-    echo "mise not found"
-  end
-end
