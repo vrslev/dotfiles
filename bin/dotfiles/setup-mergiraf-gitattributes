@@ -1,2 +1,0 @@
-#!/usr/bin/env fish
-mergiraf languages --gitattributes > $DOTFILES_ROOT/home/.config/git/gitattributes

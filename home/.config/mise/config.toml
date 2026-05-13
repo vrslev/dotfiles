@@ -45,21 +45,17 @@ run = '''
 [tools]
 bat = { version = "latest", postinstall = "mise run _install-fish-completions bat --completion fish" }
 biome = "latest"
-bun = "latest"
 cargo-binstall = "latest"
-cargo-insta = "latest"
 delta = "latest"
 fd = { version = "latest", postinstall = "mise run _install-fish-completions fd --gen-completions fish" }
 fzf = "latest"
-gh = { version = "latest", exe = "gh" }
+gh = { version = "latest" }
 go = "latest"
 helm = "latest"
 helmfile = { version = "latest", postinstall = "mise run _install-fish-completions helmfile completion fish" }
 hyperfine = "latest"
 just = "latest"
 killport = "latest"
-kube-linter = { version = "latest", postinstall = "mise run _install-fish-completions kube-linter completion fish" }
-kube-score = "latest"
 node = "24"
 python = ["3.14", "3.13", "3.12", "3.11", "3.10"]
 ripgrep = { version = "latest", postinstall = "mise run _install-fish-completions rg --generate complete-fish" }
@@ -69,7 +65,7 @@ uv = { version = "latest", postinstall = "mise run _install-fish-completions uv 
 xh = { version = "latest", postinstall = "mise run _install-fish-completions xh --generate complete-fish && mkdir -p ~/.local/bin && ln (which xh) ~/.local/bin/xhs" }
 yq = { version = "latest", postinstall = "mise run _install-fish-completions yq completion fish" }
 zoxide = "latest"
-"cargo:mergiraf" = "latest"
+"cargo:mergiraf" = { version = "latest", postinstall = "mergiraf languages --gitattributes > $DOTFILES_ROOT/home/.config/git/gitattributes" }
 "cargo:tokei" = "latest"
 "npm:@anthropic-ai/claude-code" = "latest"
 "npm:@musistudio/claude-code-router" = "latest"
@@ -108,6 +104,5 @@ fetch_remote_versions_cache = "2d"
 fetch_remote_versions_timeout = "1s"
 pipx.uvx = true
 python.compile = false
-npm.bun = true
 cargo.binstall = true
 github_attestations = false
