@@ -50,7 +50,8 @@
       "themes": []
     },
     "npm:pi-continuous-learning",
-    "npm:pi-session-search"
+    "npm:pi-session-search",
+    "npm:pi-code-previews"
   ],
   "warnings": {
     "anthropicExtraUsage": false
