@@ -4,7 +4,7 @@ import json
 import os
 from pathlib import Path
 
-REPO_PATH = Path(__file__).parent
+REPO_PATH = Path(os.environ["DOTFILES_ROOT"]).expanduser()
 with open(REPO_PATH / "symlinks.json") as f:
     config: list[str | dict[str, str]] = json.load(f)
 IGNORED_PATHS = {".DS_Store"}

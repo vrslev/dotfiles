@@ -4,5 +4,5 @@ set -xeuo pipefail
 cd $DOTFILES_ROOT
 git pull
 
-./link-config-files
+link-config-files
 sync-deps
