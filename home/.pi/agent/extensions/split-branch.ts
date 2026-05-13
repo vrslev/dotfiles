@@ -47,11 +47,11 @@ function buildPiStartupInput(sessionFile, prompt) {
 }
 
 export default function (pi) {
-  pi.registerCommand("split-fork", {
-    description: "Open this session in a Ghostty right-split. Branches diverge in the same JSONL. Usage: /split-fork [optional prompt]",
+  pi.registerCommand("split-branch", {
+    description: "Open this session in a Ghostty right-split. Branches diverge in the same JSONL. Usage: /split-branch [optional prompt]",
     handler: async (args, ctx) => {
       if (process.platform !== "darwin") {
-        ctx.ui.notify("/split-fork requires macOS (Ghostty AppleScript).", "warning");
+        ctx.ui.notify("/split-branch requires macOS (Ghostty AppleScript).", "warning");
         return;
       }
 
