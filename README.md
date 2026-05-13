@@ -5,12 +5,11 @@ I use macOS, [Visual Studio Code](https://code.visualstudio.com), [Ghostty](http
 ## Notable places
 
 - [`bin`](bin)
+- [`home/.pi/agent`](home/.pi/agent)
+- [`home/Library/Application Support/Code (VS Code)`](home/Library/Application%20Support/Code)
+- [`home/.config/mise/config.toml`](home/.config/mise/config.toml)
 - [`Brewfile`](Brewfile)
-- [`home/.config/fish`](home/.config/fish)
 - [`home/.config/git`](home/.config/git)
-- [`home/.config/mise`](home/.config/mise)
-- [`home/Library/Application Support/Code (VS Code)`](home/Library/Application Support/Code)
-- [`home/.config/ghostty`](home/.config/ghostty)
 
 ## Getting started
 

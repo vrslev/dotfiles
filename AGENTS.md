@@ -1,47 +1,32 @@
-# AGENTS.md
+# dotfiles
 
-## Project Overview
-- Dotfiles repository for macOS development environment
-- Managed with Fish shell, mise, Git, VS Code, Ghostty, Zed
-- Includes AI agent configurations in `home/.pi/agent/`
-- Repository structure designed for easy symlink management
+macOS dotfiles for Fish, Ghostty, VS Code, Git, mise, etc. Installed via symlinks from `home/` into `$HOME`.
 
-## Notable Directories
-- [`bin/`](bin/): Custom utility scripts and tools
-- [`home/.config/fish/`](home/.config/fish/): Fish shell configuration and aliases
-- [`home/.config/git/`](home/.config/git/): Git configuration, aliases, and settings
-- [`home/.config/mise/`](home/.config/mise/): Language version management configuration
-- [`home/Library/Application Support/Code/`](home/Library/Application Support/Code/): VS Code settings and extensions
-- [`home/.config/ghostty/`](home/.config/ghostty/): Ghostty terminal configuration
-- [`home/.pi/agent/`](home/.pi/agent/): AI agent configuration and behavior rules
+## Layout
 
-## Key Configuration Areas
-- **Shell**: Fish with custom configurations, functions, and utilities in `home/.config/fish/`
-- **Languages**: Managed with mise (Python, Node.js, Go, Rust, etc.) via `home/.config/mise/config.toml`
-- **Version Control**: Git with extensive aliases and configurations in `home/.config/git/`
-- **Editors**: 
-  - VS Code settings, keybindings, and extensions in `home/Library/Application Support/Code/User/`
-  - Zed editor configuration in `home/Library/Application Support/Zed/`
-- **Terminal**: Ghostty with custom configuration in `home/.config/ghostty/config`
-- **Custom Tools**: All scripts in `bin/` directory are available in PATH for easy execution
+- `home/` — mirrors `$HOME`. Files/dirs here are symlink sources.
+- `symlinks.json` — flat list of `~/...` paths to symlink. Each must exist under `home/<same relative path>`.
+- `link-config-files` — Python script. Creates symlinks per `symlinks.json`; warns on mismatches; reports untracked files in `home/`.
+- `Brewfile` — Homebrew deps. Updated by `bin/dotfiles/brew-dump` (runs on `brew cleanup` via a hook).
+- `bin/` — scripts on `$PATH`:
+  - `bin/dotfiles/` — repo maintenance (`sync-deps`, `sync-dotfiles`, `track-dotfile`, `untrack-dotfile`, `set-macos-defaults`, `brew-dump`, ...).
+  - `bin/source-control/` — Git/GitLab helpers (`g`, `gen-commit-msg`, `create-glab-mr`, ...).
+  - `bin/utils/` — misc utilities.
+- `README.md` — first-time setup steps.
 
-## Development Environment
-- **Operating System**: macOS with custom defaults applied
-- **Shell**: Fish with starship prompt and custom utilities
-- **Language Management**: mise for Python, Node.js, Go, Rust version management
-- **Tools**: eza (modern ls), tmux, starship, ty, opencode, and others
-- **Code Quality**: Biome, Ruff, MyPy, Hadolint integrations
-- **Task Runner**: Go Task (taskfile) for automation
+## Conventions
 
-## Installed Tools (Brewfile)
-- **CLI Tools**: fish, git, mise, eza, tmux, tree, wget, parallel, etc.
-- **Development**: go-task, kubernetes-cli, postgresql@14, glab, etc.
-- **Applications**: Visual Studio Code, Zed, Ghostty, Rectangle, Orbstack, etc.
-- **VS Code Extensions**: Python, Biome, GitLens, Ruff, and others
+- Add a dotfile: place under `home/<path>`, then either edit `symlinks.json` or run `track-dotfile ~/<path>`. Then run `./link-config-files`.
+- Remove a dotfile: `untrack-dotfile ~/<path>`.
+- Python scripts: `#!/usr/bin/env -S uv run --python 3.13 --script` or `#!/usr/bin/env python3`, `# pyright: strict`, no comments unless they add info beyond the code.
+- Shell scripts: `#!/usr/bin/env bash`, `set -euo pipefail`.
+- `$DOTFILES_ROOT` env var points at this repo (set by Fish config).
 
-## Agent Integration Points
-- Behavior configuration: `home/.pi/agent/AGENTS.md`
-- Custom commands: `home/.pi/agent/commands/`
-- Skills integrations: `home/.pi/agent/skills/`
-- Custom tools: `home/.pi/agent/tools/`
-- System prompt reference: `home/.pi/agent/reference-pi-system-prompt.md`
+## Common tasks
+
+- Sync everything (pull, relink, update brew/mise): `bin/dotfiles/sync-dotfiles`
+- Update deps only: `bin/dotfiles/sync-deps`
+- Apply macOS defaults: `sudo bin/dotfiles/set-macos-defaults` (then reboot)
+- Re-link after changing `symlinks.json` or adding files: `./link-config-files`
+
+No tests, no Justfile.
