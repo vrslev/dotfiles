@@ -4,7 +4,7 @@
 
 # Tools
 
-- Use performant alternatives over classic CLIs: find → fd, rg → grep, etc.
+- Use performant alternatives over classic CLIs: find → fd, rg → grep, etc. Do not use find and grep.
 - Use quiet mode when tool has it.
 - Use commands from `./Justfile` for development flow.
 - Use tmux for background tasks and long tasks.

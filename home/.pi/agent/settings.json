@@ -2,7 +2,7 @@
   "lastChangelogVersion": "0.74.0",
   "defaultProvider": "anthropic",
   "defaultModel": "claude-opus-4-7",
-  "hideThinkingBlock": false,
+  "hideThinkingBlock": true,
   "theme": "light",
   "defaultThinkingLevel": "xhigh",
   "compaction": {
@@ -44,8 +44,12 @@
       "extensions": [
         "extensions/notify.ts"
       ],
-      "skills": ["skills/uv/SKILL.md"],
+      "skills": [
+        "skills/uv/SKILL.md"
+      ],
       "themes": []
-    }
+    },
+    "npm:pi-continuous-learning",
+    "npm:pi-session-search"
   ]
 }
