@@ -7,13 +7,11 @@ _.path = [
     "~/.cargo/bin",
 ]
 _.file = { path = "{{config_root}}/.config/mise/.env" }
-DIRENV_INITIALIZED = 1
 LANG = "en_US.UTF-8"
 LANGUAGE = "{{env.LANG}}"
 LC_ALL = "{{env.LANG}}"
 EDITOR = "code --wait"
 PYTHONDONTWRITEBYTECODE = 1
-HOMEBREW_BUNDLE_NO_LOCK = 1
 HOMEBREW_NO_ANALYTICS = 1
 HOMEBREW_NO_AUTO_UPDATE = 1
 HOMEBREW_NO_ENV_HINTS = 1
@@ -27,6 +25,22 @@ COMPOSE_PROGRESS = "quiet"
 PI_SKIP_VERSION_CHECK = 1
 PI_TELEMETRY = 0
 PI_CACHE_RETENTION = "long"
+
+[shell_alias]
+b = "brew"
+m = "mise"
+dco = "docker compose"
+g = "git"
+j = "just"
+l = "ls"
+po = "poetry"
+py = "python3"
+rmt = "trash"
+c = "z"
+ls = "eza --icons --all"
+ll = "eza --icons --all --long"
+dir-size = "du -sh"
+git-root = "cd $(git rev-parse --show-toplevel)"
 
 [hooks]
 postinstall = 'mkdir -p "$LOCAL_FISH_COMPLETION_DIR"'
@@ -84,7 +98,6 @@ zoxide = "latest"
 
 [settings]
 jobs = 8
-experimental = true
 trusted_config_paths = [
     "~/.config/mise/config.toml",
     "~/.config/mise/config.local.toml",
@@ -97,3 +110,4 @@ pipx.uvx = true
 python.compile = false
 cargo.binstall = true
 github_attestations = false
+minimum_release_age = "7d"
