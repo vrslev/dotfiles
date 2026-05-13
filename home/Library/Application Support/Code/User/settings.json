@@ -69,15 +69,7 @@
   "$schema": "vscode://schemas/settings/user",
   "biome.requireConfiguration": true,
   "breadcrumbs.enabled": false,
-  "chat.commandCenter.enabled": false,
-  "claudeCode.allowDangerouslySkipPermissions": true,
-  "claudeCode.claudeProcessWrapper": "claude-wrapped",
-  "continue.disableQuickFix": true,
-  "continue.enableTabAutocomplete": true,
-  "continue.showInlineTip": false,
-  "continue.telemetryEnabled": false,
   "diffEditor.ignoreTrimWhitespace": false,
-  "docker.extension.enableComposeLanguageServer": false,
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit",
     "source.organizeImports": "explicit"
@@ -184,8 +176,6 @@
   "mypy.statusFile": ".dmypy.json",
   "outline.showConstants": false,
   "outline.showVariables": false,
-  "pi.debug": true,
-  "prettier.requireConfig": true,
   "python-envs.terminal.autoActivationType": "off",
   "python.analysis.autoFormatStrings": true,
   "python.analysis.autoImportCompletions": true,
@@ -227,8 +217,6 @@
     "T201"
   ],
   "ruff.showSyntaxErrors": false,
-  "rust-analyzer.check.command": "clippy",
-  "rust-analyzer.inlayHints.typeHints.enable": false,
   "scm.diffDecorations": "gutter",
   "scm.repositories.sortOrder": "name",
   "security.workspace.trust.enabled": false,
@@ -300,11 +288,6 @@
   "workbench.sideBar.location": "right",
   "workbench.startupEditor": "none",
   "workbench.tips.enabled": false,
-  "yaml.schemas": {
-    "file:///Users/ruavel3/.vscode/extensions/continue.continue-1.2.11-darwin-arm64/config-yaml-schema.json": [
-      ".continue/**/*.yaml"
-    ]
-  },
   "zenMode.centerLayout": false,
   "zenMode.fullScreen": false,
   "github.copilot.enable": {
