@@ -71,12 +71,10 @@ zoxide = "latest"
 "npm:@musistudio/claude-code-router" = "latest"
 "npm:@qwen-code/qwen-code" = "latest"
 "npm:confluence-cli" = "latest"
-"pipx:auto-type-annotate" = "latest"
 "pipx:cookiecutter" = "latest"
 "pipx:eof-fixer" = "latest"
 "pipx:maturin" = "latest"
 "pipx:poetry" = { version = "latest", postinstall = "mise run _install-fish-completions poetry completions fish" }
-"pipx:python-lsp-server[all]" = { version = "latest", uvx_args = "--with pylsp-mypy" }
 "pipx:yt-dlp" = "latest"
 "spm:sindresorhus/macos-trash" = "latest"
 "github:ankitpokhrel/jira-cli" = { version = "latest", postinstall = "mise run _install-fish-completions jira completion fish" }

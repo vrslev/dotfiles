@@ -110,12 +110,6 @@
     "command": "continue.continueGUIView.open"
   },
   {
-    "key": "cmd+k cmd+p",
-    "command": "workbench.action.tasks.runTask",
-    "args": "Python — auto-type-annotate",
-    "when": "editorTextFocus && editorLangId == python"
-  },
-  {
     "key": "ctrl+shift+g",
     "command": "-workbench.view.scm",
     "when": "workbench.scm.active"
