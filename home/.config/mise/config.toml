@@ -73,7 +73,13 @@ killport = "latest"
 kubectl = "latest"
 glab = "latest"
 node = "24"
-python = ["3.14", "3.13", "3.12", "3.11", "3.10"]
+python = [
+    { version = "3.14", postinstall = "pip install mypy" },
+    { version = "3.13", postinstall = "pip install mypy" },
+    { version = "3.12", postinstall = "pip install mypy" },
+    { version = "3.11", postinstall = "pip install mypy" },
+    { version = "3.10", postinstall = "pip install mypy" },
+]
 ripgrep = { version = "latest", postinstall = "mise run _install-fish-completions rg --generate complete-fish" }
 starship = "latest"
 usage = "latest"
