@@ -68,24 +68,17 @@ zoxide = "latest"
 "cargo:mergiraf" = { version = "latest", postinstall = "mergiraf languages --gitattributes > $DOTFILES_ROOT/home/.config/git/gitattributes" }
 "cargo:tokei" = "latest"
 "npm:@anthropic-ai/claude-code" = "latest"
-"npm:@musistudio/claude-code-router" = "latest"
-"npm:@qwen-code/qwen-code" = "latest"
 "npm:confluence-cli" = "latest"
-"pipx:cookiecutter" = "latest"
 "pipx:eof-fixer" = "latest"
 "pipx:maturin" = "latest"
 "pipx:poetry" = { version = "latest", postinstall = "mise run _install-fish-completions poetry completions fish" }
 "pipx:yt-dlp" = "latest"
 "spm:sindresorhus/macos-trash" = "latest"
 "github:ankitpokhrel/jira-cli" = { version = "latest", postinstall = "mise run _install-fish-completions jira completion fish" }
-"github:ksdme/ut" = { version = "latest", postinstall = "mise run _install-fish-completions ut completions fish" }
-"github:pranshuparmar/witr" = "latest"
-"npm:pyright" = "latest"
 "pipx:ty" = "latest"
 "npm:typescript-language-server" = "latest"
 "npm:lean-ctx-bin" = "latest"
 "npm:agent-browser" = "latest"
-"github:rtk-ai/rtk" = "latest"
 "github:umputun/revdiff" = "latest"
 "npm:@earendil-works/pi-coding-agent" = "latest"
 
