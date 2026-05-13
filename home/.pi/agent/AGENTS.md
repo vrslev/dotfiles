@@ -9,6 +9,7 @@
 - Use commands from `./Justfile` for development flow.
 - Use tmux for background tasks and long tasks.
 - When tasks take more than 3 minutes, redirect its output to the file and read it—instead of running the same command multiple time and grepping output directly.
+- Don't `cd` into the current working directory. Run commands directly; only `cd` when targeting a different dir.
 
 # Code Quality
 
