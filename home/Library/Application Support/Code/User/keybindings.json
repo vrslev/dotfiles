@@ -29,18 +29,6 @@
     "command": "explorer.newFolder"
   },
   {
-    "key": "cmd+m",
-    "command": "-continue.focusContinueInput"
-  },
-  {
-    "key": "shift+cmd+m",
-    "command": "-continue.focusContinueInputWithoutClear"
-  },
-  {
-    "key": "cmd+i",
-    "command": "-continue.focusEdit"
-  },
-  {
     "key": "f3",
     "command": "editor.action.rename",
     "when": "editorHasRenameProvider && editorTextFocus && !editorReadonly"
@@ -55,44 +43,8 @@
     "command": "workbench.action.addRootFolder"
   },
   {
-    "key": "cmd+k cmd+w",
-    "command": "runCommands",
-    "args": {
-      "commands": [
-        "workbench.files.action.collapseExplorerFolders",
-        "workbench.action.closeAllEditors"
-      ]
-    }
-  },
-  {
-    "key": "ctrl+alt+`",
-    "command": "workbench.action.terminal.newInActiveWorkspace",
-    "when": "terminalProcessSupported"
-  },
-  {
-    "key": "cmd+ctrl+enter",
-    "command": "runCommands",
-    "args": {
-      "commands": [
-        "git.commit",
-        "git.push"
-      ]
-    },
-    "when": "workbench.scm.active"
-  },
-  {
-    "key": "cmd+i",
-    "command": "-inlineChat.start",
-    "when": "editorFocus && inlineChatHasEditsAgent && inlineChatPossible && !editorReadonly && !editorSimpleInput || editorFocus && inlineChatHasProvider && inlineChatPossible && !editorReadonly && !editorSimpleInput"
-  },
-  {
     "key": "ctrl+alt+z",
     "command": "workbench.action.terminal.new",
-    "when": "terminalProcessSupported || terminalWebExtensionContributedProfile"
-  },
-  {
-    "key": "ctrl+shift+`",
-    "command": "-workbench.action.terminal.new",
     "when": "terminalProcessSupported || terminalWebExtensionContributedProfile"
   },
   {
@@ -104,10 +56,6 @@
     "key": "ctrl+.",
     "command": "workbench.action.navigateForward",
     "when": "canNavigateForward"
-  },
-  {
-    "key": "cmd+shift+i",
-    "command": "continue.continueGUIView.open"
   },
   {
     "key": "ctrl+shift+g",
@@ -153,16 +101,6 @@
     "command": "editor.action.inlineSuggest.trigger"
   },
   {
-    "key": "cmd+i",
-    "command": "-workbench.action.terminal.chat.start",
-    "when": "chatIsEnabled && terminalChatAgentRegistered && terminalFocusInAny && terminalHasBeenCreated || chatIsEnabled && terminalChatAgentRegistered && terminalFocusInAny && terminalProcessSupported"
-  },
-  {
-    "key": "cmd+i",
-    "command": "-inlineChat.start",
-    "when": "editorFocus && inlineChatHasEditsAgent && inlineChatPossible && !editorReadonly && !editorSimpleInput && activeEditor != 'workbench.editor.notebook' || editorFocus && inlineChatHasNotebookAgent && inlineChatPossible && !editorReadonly && !editorSimpleInput && activeEditor == 'workbench.editor.notebook' || editorFocus && inlineChatHasNotebookInline && inlineChatPossible && !editorReadonly && !editorSimpleInput && activeEditor == 'workbench.editor.notebook' || editorFocus && inlineChatHasProvider && inlineChatPossible && !editorReadonly && !editorSimpleInput && activeEditor != 'workbench.editor.notebook'"
-  },
-  {
     "key": "shift+cmd+t",
     "command": "terminal.focus"
   },
@@ -205,11 +143,6 @@
       "text": "\u001b[13;2u"
     },
     "when": "terminalFocus"
-  },
-  {
-    "key": "cmd+i",
-    "command": "-inlineChat.start",
-    "when": "editorFocus && inlineChatHasEditsAgent && inlineChatPossible && !editorReadonly && !editorSimpleInput || editorFocus && inlineChatHasNotebookAgent && inlineChatPossible && !editorReadonly && !editorSimpleInput && activeEditor == 'workbench.editor.notebook' || editorFocus && inlineChatHasNotebookInline && inlineChatPossible && !editorReadonly && !editorSimpleInput && activeEditor == 'workbench.editor.notebook'"
   },
   {
     "key": "cmd+i",
