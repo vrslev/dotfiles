@@ -140,17 +140,34 @@ function buildExtractionPrompt(
 		...extractBulletLines(existingCandidates.project),
 	];
 	return [
-		"Extract durable facts/preferences worth remembering across future sessions.",
-		"Output ONE fact per line, in this exact format:",
-		"  [global] <fact>     — preferences/identity/tools that apply everywhere",
-		"  [project] <fact>    — facts specific to the current codebase",
+		"Extract repo conventions and durable user preferences suitable for AGENTS.md.",
+		"AGENTS.md is auto-loaded by every future agent session in this directory.",
+		"Imagine writing a CONTRIBUTING note for a teammate joining the project.",
+		"The bar is high: prefer emitting nothing over emitting noise.",
+		"",
+		"INCLUDE only:",
+		"  - Repo conventions: file layout, naming, where new code/data goes",
+		"  - Workflow patterns: build/test/lint/deploy commands, branch or PR norms",
+		"  - Tooling gotchas: non-obvious behaviour of project tools, APIs, or libraries",
+		"  - Durable user preferences expressed in the session (style, tool choices)",
+		"",
+		"EXCLUDE:",
+		"  - One-off analysis results, computed numbers, amounts, dates, names tied to one dataset",
+		"  - Personal, financial, or otherwise sensitive data",
+		"  - Narration of what just happened in this session ('we fixed X by doing Y')",
+		"  - Pi-internal trivia, generic LLM advice, or agent hygiene",
+		"  - Anything likely stale within a week, or only meaningful with this session's context",
+		"  - Restatements or paraphrases of ALREADY KNOWN lines below",
+		"",
+		"Output ONE fact per line, exact format:",
+		"  [global] <fact>     — cross-project user preference (rare; default to [project])",
+		"  [project] <fact>    — convention or gotcha specific to this codebase",
 		"",
 		"Rules:",
-		"  - Be terse. One line per fact, no explanation.",
-		"  - Skip generic agent hygiene (e.g. 'read files before editing').",
-		"  - Treat ALREADY KNOWN below as established — do not re-extract them or paraphrases of them.",
-		"  - If nothing genuinely new is worth remembering, output nothing.",
-		"  - No preamble, no closing remarks, no markdown — just lines.",
+		"  - Terse, imperative when possible. No explanation, no justification.",
+		"  - If unsure whether a line belongs in AGENTS.md, drop it.",
+		"  - If nothing meets the bar, output nothing at all.",
+		"  - No preamble, no closing remarks, no markdown headings — just bare lines.",
 		"",
 		"CONTEXT:",
 		projectLine,
@@ -306,6 +323,38 @@ function resolveExtractionModel(): string {
 	return process.env.PI_MEMORY_CANDIDATES_MODEL?.trim() || DEFAULT_MODEL;
 }
 
+type ExtractionOutcome =
+	| { kind: "added"; total: number; global: number; project: number }
+	| { kind: "none" }
+	| { kind: "skipped"; reason: string }
+	| { kind: "failed"; reason: string };
+
+function notifyOutcome(ctx: ExtensionContext | ExtensionCommandContext, outcome: ExtractionOutcome): void {
+	if (!ctx.hasUI) return;
+	try {
+		switch (outcome.kind) {
+			case "added":
+				ctx.ui.notify(
+					`📝 ${outcome.total} memory candidate${outcome.total === 1 ? "" : "s"}` +
+						` (${outcome.global}G/${outcome.project}P) — /promote to review`,
+					"info",
+				);
+				break;
+			case "none":
+				ctx.ui.notify("📝 No new memory candidates", "info");
+				break;
+			case "skipped":
+				ctx.ui.notify(`📝 Skipped: ${outcome.reason}`, "warning");
+				break;
+			case "failed":
+				ctx.ui.notify(`📝 Failed: ${outcome.reason}`, "warning");
+				break;
+		}
+	} catch {
+		/* ctx may be stale during shutdown */
+	}
+}
+
 export default function (pi: ExtensionAPI) {
 	let userTurns = 0;
 	let turnsSinceReview = 0;
@@ -315,19 +364,23 @@ export default function (pi: ExtensionAPI) {
 		if (event.message.role === "user") userTurns++;
 	});
 
-	async function runExtraction(ctx: ExtensionContext, timeoutMs: number): Promise<void> {
-		if (reviewInProgress) return;
-		if (userTurns < MIN_USER_TURNS) return;
+	async function runExtraction(ctx: ExtensionContext, timeoutMs: number): Promise<ExtractionOutcome> {
+		if (reviewInProgress) return { kind: "skipped", reason: "extraction already running" };
 		reviewInProgress = true;
 		try {
 			let entries: unknown[];
 			try {
 				entries = ctx.sessionManager.getBranch();
-			} catch {
-				return;
+			} catch (e) {
+				return { kind: "failed", reason: `session unavailable: ${(e as Error).message}` };
 			}
 			const transcriptParts = collectTranscript(entries);
-			if (transcriptParts.length < MIN_TRANSCRIPT_PARTS) return;
+			if (transcriptParts.length < MIN_TRANSCRIPT_PARTS) {
+				return {
+					kind: "skipped",
+					reason: `transcript has ${transcriptParts.length} message(s), need ≥${MIN_TRANSCRIPT_PARTS}`,
+				};
+			}
 			const transcript = transcriptParts.slice(-RECENT_MESSAGES).join("\n\n");
 
 			const paths = resolveProjectPaths(ctx.cwd);
@@ -341,19 +394,30 @@ export default function (pi: ExtensionAPI) {
 			};
 			const prompt = buildExtractionPrompt(transcript, paths, existingCandidates, existingAgentsMd);
 
-			const result = await pi.exec(
-				"pi",
-				[
-					"-p", prompt,
-					"--print",
-					"--no-session",
-					"--no-extensions",
-					"--no-context-files",
-					"--model", resolveExtractionModel(),
-				],
-				{ signal: undefined, timeout: timeoutMs },
-			);
-			if (result.code !== 0 || !result.stdout) return;
+			let result: Awaited<ReturnType<typeof pi.exec>>;
+			try {
+				result = await pi.exec(
+					"pi",
+					[
+						"-p", prompt,
+						"--print",
+						"--no-session",
+						"--no-extensions",
+						"--no-context-files",
+						"--model", resolveExtractionModel(),
+					],
+					{ signal: undefined, timeout: timeoutMs },
+				);
+			} catch (e) {
+				return { kind: "failed", reason: `pi exec threw: ${(e as Error).message}` };
+			}
+			if (result.code !== 0) {
+				const tail = (result.stderr || result.stdout || "").trim().split("\n").slice(-1)[0] || "";
+				return { kind: "failed", reason: `pi exit ${result.code}${tail ? `: ${tail.slice(0, 160)}` : ""}` };
+			}
+			if (!result.stdout || !result.stdout.trim()) {
+				return { kind: "none" };
+			}
 			const extracted = parseExtraction(result.stdout);
 			const seenGlobal = [
 				...collectExistingTokenSets(paths.globalCandidates),
@@ -369,13 +433,8 @@ export default function (pi: ExtensionAPI) {
 				addedProject = appendCandidates(paths.projectCandidates, extracted.project, ctx.cwd, seenProject);
 			}
 			const total = addedGlobal + addedProject;
-			if (total > 0 && ctx.hasUI) {
-				try {
-					ctx.ui.notify(`📝 ${total} memory candidate${total === 1 ? "" : "s"} (/promote to review)`, "info");
-				} catch {
-					/* ctx may be stale during shutdown */
-				}
-			}
+			if (total === 0) return { kind: "none" };
+			return { kind: "added", total, global: addedGlobal, project: addedProject };
 		} finally {
 			reviewInProgress = false;
 		}
@@ -385,12 +444,18 @@ export default function (pi: ExtensionAPI) {
 		turnsSinceReview++;
 		if (turnsSinceReview < TURN_INTERVAL) return;
 		turnsSinceReview = 0;
-		runExtraction(ctx, REVIEW_TIMEOUT_MS).catch(() => {
-			/* best-effort */
-		});
+		if (userTurns < MIN_USER_TURNS) return;
+		runExtraction(ctx, REVIEW_TIMEOUT_MS)
+			.then((outcome) => {
+				if (outcome.kind === "added") notifyOutcome(ctx, outcome);
+			})
+			.catch(() => {
+				/* best-effort */
+			});
 	});
 
 	pi.on("session_shutdown", async (_event, ctx) => {
+		if (userTurns < MIN_USER_TURNS) return;
 		runExtraction(ctx, SHUTDOWN_TIMEOUT_MS).catch(() => {
 			/* best-effort */
 		});
@@ -407,11 +472,15 @@ export default function (pi: ExtensionAPI) {
 		description: "Manually extract memory candidates from the current session",
 		handler: async (_args, ctx) => {
 			ctx.ui.setStatus("memory-candidates", "📝 Extracting...");
+			let outcome: ExtractionOutcome;
 			try {
-				await runExtraction(ctx, REVIEW_TIMEOUT_MS);
+				outcome = await runExtraction(ctx, REVIEW_TIMEOUT_MS);
+			} catch (e) {
+				outcome = { kind: "failed", reason: (e as Error).message };
 			} finally {
 				try { ctx.ui.setStatus("memory-candidates", ""); } catch { /* stale */ }
 			}
+			notifyOutcome(ctx, outcome);
 		},
 	});
 }

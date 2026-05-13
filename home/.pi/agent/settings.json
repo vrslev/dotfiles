@@ -44,9 +44,7 @@
       "extensions": [
         "extensions/notify.ts"
       ],
-      "skills": [
-        "skills/uv/SKILL.md"
-      ],
+      "skills": [],
       "themes": []
     },
     "npm:pi-session-search",
