@@ -50,7 +50,6 @@
       "themes": []
     },
     "npm:pi-session-search",
-    "npm:pi-lean-ctx",
     "npm:pi-code-previews"
   ],
   "warnings": {
