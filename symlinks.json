@@ -5,7 +5,6 @@
     "~/.config/fish/conf.d/1-interactive.fish",
     "~/.config/git",
     "~/.config/mise",
-    "~/.config/opencode/opencode.json",
     "~/.config/revdiff/config",
     "~/.config/revdiff/themes/github-light",
     "~/.config/starship.toml",
