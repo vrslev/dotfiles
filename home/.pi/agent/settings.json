@@ -51,5 +51,8 @@
     },
     "npm:pi-continuous-learning",
     "npm:pi-session-search"
-  ]
+  ],
+  "warnings": {
+    "anthropicExtraUsage": false
+  }
 }
