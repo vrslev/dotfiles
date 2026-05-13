@@ -100,7 +100,6 @@ zoxide = "latest"
 
 [settings]
 experimental = true
-jobs = 8
 trusted_config_paths = [
     "~/.config/mise/config.toml",
     "~/.config/mise/config.local.toml",
