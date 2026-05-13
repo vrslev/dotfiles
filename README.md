@@ -53,7 +53,7 @@ MISE_GLOBAL_CONFIG_FILE=home/.config/mise/config.toml mise up --yes --jobs 16
 Install dotfiles:
 
 ```sh
-./link-config-files
+./bin/dotfiles/link-config-files
 ./bin/dotfiles/sync-deps
 sudo ./bin/dotfiles/set-macos-defaults
 ```
