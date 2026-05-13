@@ -10,7 +10,7 @@ I use macOS, [Visual Studio Code](https://code.visualstudio.com), [Ghostty](http
 - [`home/.config/git`](home/.config/git)
 - [`home/.config/mise`](home/.config/mise)
 - [`home/Library/Application Support/Code (VS Code)`](home/Library/Application Support/Code)
-- [`home/Library/Application Support/com.mitchellh.ghostty`](home/Library/Application Support/com.mitchellh.ghostty)
+- [`home/.config/ghostty`](home/.config/ghostty)
 
 ## Getting started
 

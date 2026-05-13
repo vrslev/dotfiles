@@ -12,7 +12,7 @@
 - [`home/.config/git/`](home/.config/git/): Git configuration, aliases, and settings
 - [`home/.config/mise/`](home/.config/mise/): Language version management configuration
 - [`home/Library/Application Support/Code/`](home/Library/Application Support/Code/): VS Code settings and extensions
-- [`home/Library/Application Support/com.mitchellh.ghostty/`](home/Library/Application Support/com.mitchellh.ghostty/): Ghostty terminal configuration
+- [`home/.config/ghostty/`](home/.config/ghostty/): Ghostty terminal configuration
 - [`home/.pi/agent/`](home/.pi/agent/): AI agent configuration and behavior rules
 
 ## Key Configuration Areas
@@ -22,7 +22,7 @@
 - **Editors**: 
   - VS Code settings, keybindings, and extensions in `home/Library/Application Support/Code/User/`
   - Zed editor configuration in `home/Library/Application Support/Zed/`
-- **Terminal**: Ghostty with custom configuration in `home/Library/Application Support/com.mitchellh.ghostty/config`
+- **Terminal**: Ghostty with custom configuration in `home/.config/ghostty/config`
 - **Custom Tools**: All scripts in `bin/` directory are available in PATH for easy execution
 
 ## Development Environment

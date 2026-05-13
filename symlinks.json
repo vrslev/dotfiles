@@ -2,6 +2,7 @@
     "~/.bashrc",
     "~/.claude/CLAUDE.md",
     "~/.config/fish/config.fish",
+    "~/.config/ghostty/config",
     "~/.config/git",
     "~/.config/mise",
     "~/.config/revdiff/config",
@@ -18,6 +19,5 @@
     "~/Library/Application Support/Code/User/keybindings.json",
     "~/Library/Application Support/Code/User/settings.json",
     "~/Library/Application Support/Code/User/snippets",
-    "~/Library/Application Support/com.mitchellh.ghostty/config",
     "~/Library/Application Support/pypoetry/config.toml"
 ]
