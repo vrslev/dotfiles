@@ -4,9 +4,4 @@ lllocal*
 .venv
 **/.claude/settings.local.json
 **/.dmypy.json
-.specify
-.qwen
-!home/.qwen/settings.json
-.playwright-session
-.playwright-mcp
 .ralph
