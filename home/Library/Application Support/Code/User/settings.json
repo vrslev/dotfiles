@@ -102,6 +102,7 @@
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
   "explorer.confirmPasteNative": false,
+  "extensions.ignoreRecommendations": true,
   "files.autoSave": "afterDelay",
   "files.autoSaveDelay": 300,
   "files.exclude": {
@@ -133,6 +134,12 @@
   "git.openRepositoryInParentFolders": "always",
   "git.replaceTagsWhenPull": true,
   "github.copilot.chat.agentDebugLog.enabled": true,
+  "github.copilot.enable": {
+    "*": false,
+    "markdown": false,
+    "plaintext": false,
+    "scminput": false
+  },
   "gitlens.ai.enabled": false,
   "gitlens.cloudPatches.enabled": false,
   "gitlens.codeLens.enabled": false,
@@ -289,12 +296,5 @@
   "workbench.startupEditor": "none",
   "workbench.tips.enabled": false,
   "zenMode.centerLayout": false,
-  "zenMode.fullScreen": false,
-  "github.copilot.enable": {
-    "*": false,
-    "plaintext": false,
-    "markdown": false,
-    "scminput": false
-  },
-  "extensions.ignoreRecommendations": true
+  "zenMode.fullScreen": false
 }
