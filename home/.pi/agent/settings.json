@@ -2,7 +2,7 @@
   "lastChangelogVersion": "0.74.0",
   "defaultProvider": "anthropic",
   "defaultModel": "claude-opus-4-7",
-  "hideThinkingBlock": true,
+  "hideThinkingBlock": false,
   "theme": "dark",
   "defaultThinkingLevel": "xhigh",
   "compaction": {
@@ -49,8 +49,8 @@
       ],
       "themes": []
     },
-    "npm:pi-continuous-learning",
     "npm:pi-session-search",
+    "npm:pi-lean-ctx",
     "npm:pi-code-previews"
   ],
   "warnings": {
