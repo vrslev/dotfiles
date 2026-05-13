@@ -115,6 +115,7 @@ trusted_config_paths = [
 fetch_remote_versions_cache = "2d"
 fetch_remote_versions_timeout = "1s"
 pipx.uvx = true
+python.uv_venv_auto = "source"
 python.compile = false
 cargo.binstall = true
 github_attestations = false
