@@ -1,2 +1,0 @@
-#/usr/bin/env bash
-pi --tools read,grep,find,ls $@

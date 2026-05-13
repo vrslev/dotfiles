@@ -1,8 +1,0 @@
-#!/usr/bin/env fish
-
-set filename content/posts/$argv[1].md
-cd ~/code/vrslev/vrslev.com
-code .
-# TODO: remove
-hugo new content $filename
-code $filename
