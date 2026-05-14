@@ -2,8 +2,8 @@
   "lastChangelogVersion": "0.74.0",
   "defaultProvider": "anthropic",
   "defaultModel": "claude-opus-4-7",
-  "hideThinkingBlock": true,
-  "theme": "dark",
+  "hideThinkingBlock": false,
+  "theme": "light",
   "defaultThinkingLevel": "xhigh",
   "compaction": {
     "enabled": true
@@ -13,15 +13,10 @@
   },
   "steeringMode": "all",
   "packages": [
-    {
-      "source": "git:github.com/tmustier/pi-extensions",
-      "extensions": [
-        "ralph-wiggum/index.ts"
-      ],
-      "skills": [
-        "ralph-wiggum/SKILL.md"
-      ]
-    },
+    "npm:pi-caffeinate",
+    "npm:pi-code-rollback",
+    "npm:pi-session-search",
+    "npm:pi-subdir-context",
     "npm:pi-timer",
     {
       "source": "npm:pi-web-access",
@@ -29,16 +24,13 @@
         "-skills/librarian/SKILL.md"
       ]
     },
-    "npm:pi-caffeinate",
-    "npm:pi-subdir-context",
     {
-      "source": "https://github.com/umputun/revdiff",
+      "source": "git:github.com/umputun/revdiff",
       "extensions": [
         "-plugins/pi/extensions/revdiff-post-edit.ts"
       ],
       "skills": []
     },
-    "npm:pi-code-rollback",
     {
       "source": "npm:mitsupi",
       "extensions": [
@@ -46,9 +38,7 @@
       ],
       "skills": [],
       "themes": []
-    },
-    "npm:pi-session-search",
-    "npm:pi-code-previews"
+    }
   ],
   "warnings": {
     "anthropicExtraUsage": false

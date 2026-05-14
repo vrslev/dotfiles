@@ -34,13 +34,13 @@ import {
 	truncateToWidth,
 } from "@earendil-works/pi-tui";
 
-const TURN_INTERVAL = 10;
+const TURN_INTERVAL = 20;
 const MIN_USER_TURNS = 3;
 const MIN_TRANSCRIPT_PARTS = 4;
 const RECENT_MESSAGES = 40;
 const REVIEW_TIMEOUT_MS = 120_000;
 const SHUTDOWN_TIMEOUT_MS = 30_000;
-const DEFAULT_MODEL = "anthropic/claude-haiku-4-5-20251001";
+const DEFAULT_MODEL = "anthropic/claude-sonnet-4-6";
 const AGENTS_HEADING = "## Memory";
 
 const CANDIDATES_DIR = join(homedir(), ".pi", "agent", "memory-candidates");
@@ -158,6 +158,8 @@ function buildExtractionPrompt(
 		"  - Pi-internal trivia, generic LLM advice, or agent hygiene",
 		"  - Anything likely stale within a week, or only meaningful with this session's context",
 		"  - Restatements or paraphrases of ALREADY KNOWN lines below",
+		"  - Lines that name a specific file/path/value the user just edited — extract the pattern, not the change",
+		"  - Anything only true because of an edit made in THIS session — the line must generalize beyond the immediate change",
 		"",
 		"Output ONE fact per line, exact format:",
 		"  [global] <fact>     — cross-project user preference (rare; default to [project])",
@@ -168,6 +170,7 @@ function buildExtractionPrompt(
 		"  - If unsure whether a line belongs in AGENTS.md, drop it.",
 		"  - If nothing meets the bar, output nothing at all.",
 		"  - No preamble, no closing remarks, no markdown headings — just bare lines.",
+		"  - Generalization test: a line must still be accurate next month even if every edit from this session is reverted.",
 		"",
 		"CONTEXT:",
 		projectLine,
@@ -402,8 +405,8 @@ export default function (pi: ExtensionAPI) {
 						"-p", prompt,
 						"--print",
 						"--no-session",
-						"--no-extensions",
-						"--no-context-files",
+						// "--no-extensions",
+						// "--no-context-files",
 						"--model", resolveExtractionModel(),
 					],
 					{ signal: undefined, timeout: timeoutMs },
