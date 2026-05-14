@@ -40,6 +40,7 @@ ls = "eza --icons --all"
 ll = "eza --icons --all --long"
 dir-size = "du -sh"
 git-root = "cd $(git rev-parse --show-toplevel)"
+spi = "env TMUX_TMPDIR=$HOME/.pi/agent/tmux safehouse.sh --env --enable=clipboard --enable=agent-browser --enable=docker --enable=kubectl --enable=ssh --enable=shell-init --add-dirs-ro=$HOME/code/dotfiles --add-dirs-ro=$HOME/.config pi"
 
 [hooks]
 postinstall = 'mkdir -p "$LOCAL_FISH_COMPLETION_DIR"'
@@ -102,6 +103,7 @@ zoxide = "latest"
 "npm:agent-browser" = "latest"
 "github:umputun/revdiff" = "latest"
 "npm:@earendil-works/pi-coding-agent" = "latest"
+"github:eugene1g/agent-safehouse" = { version = "latest", asset_pattern = "safehouse.sh" }
 
 [settings]
 experimental = true
