@@ -1,0 +1,13 @@
+{
+    "name": "vrslev-pi",
+    "version": "1.0.0",
+    "license": "MIT",
+    "pi": {
+        "extensions": [
+            "home/.pi/agent/extensions"
+        ],
+        "skills": [
+            "home/.pi/agent/skills"
+        ]
+    }
+}
