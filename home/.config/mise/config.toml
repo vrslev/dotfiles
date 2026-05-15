@@ -92,6 +92,7 @@ zoxide = "latest"
 "npm:@anthropic-ai/claude-code" = "latest"
 "npm:confluence-cli" = "latest"
 "pipx:eof-fixer" = "latest"
+"pipx:mattermost-cli" = "latest"
 "pipx:maturin" = "latest"
 "pipx:poetry" = { version = "latest", postinstall = "mise run _install-fish-completions poetry completions fish" }
 "pipx:yt-dlp" = "latest"
