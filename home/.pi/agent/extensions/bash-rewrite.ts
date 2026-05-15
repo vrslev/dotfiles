@@ -1,15 +1,9 @@
 /**
- * Single bash tool_call mutator:
- *   1. rtk rewrite (token savings via rtk registry) — opt-in via BASH_REWRITE_RTK=1
- *   2. quiet-env prefix (strip noise/telemetry/progress)
- *
- * Order matters: rewrite first so rtk sees the raw user command,
- * then wrap the rewritten command with the env preamble.
+ * Single bash tool_call mutator: quiet-env prefix (strip noise/telemetry/progress).
  */
 
 import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
 import { isToolCallEventType } from "@mariozechner/pi-coding-agent";
-import { execSync, spawnSync } from "node:child_process";
 
 const QUIET_ENV: Record<string, string> = {
 	NO_COLOR: "1",
@@ -59,51 +53,10 @@ const EXPORT_PREFIX = `${MARKER}\n${Object.entries(QUIET_ENV)
 	.map(([k, v]) => `export ${k}=${JSON.stringify(v)}`)
 	.join("; ")}\n`;
 
-let rtkAvailable: boolean | null = null;
-
-function checkRtk(): boolean {
-	if (rtkAvailable !== null) return rtkAvailable;
-	try {
-		execSync("which rtk", { stdio: "ignore" });
-		rtkAvailable = true;
-	} catch {
-		rtkAvailable = false;
-	}
-	return rtkAvailable;
-}
-
-function tryRewrite(command: string): string | null {
-	const res = spawnSync("rtk", ["rewrite", command], {
-		encoding: "utf-8",
-		timeout: 2000,
-	});
-	if (res.error) return null;
-	const result = (res.stdout ?? "").trim();
-	return result && result !== command ? result : null;
-}
-
 export default function (pi: ExtensionAPI) {
-	const debug = process.env.BASH_REWRITE_DEBUG === "1";
-	const rtkEnabled = process.env.BASH_REWRITE_RTK === "1";
-	const rtkOn = rtkEnabled && checkRtk();
-	if (rtkEnabled && !rtkOn && debug) {
-		console.warn("[bash-rewrite] rtk not in PATH — skipping rewrite, env prefix still active");
-	}
-
 	pi.on("tool_call", (event) => {
 		if (!isToolCallEventType("bash", event)) return;
 		if (event.input.command.includes(MARKER)) return;
-
-		let cmd = event.input.command;
-
-		if (rtkOn) {
-			const rewritten = tryRewrite(cmd);
-			if (rewritten) {
-				if (debug) console.log(`[bash-rewrite] rtk: ${cmd} -> ${rewritten}`);
-				cmd = rewritten;
-			}
-		}
-
-		event.input.command = EXPORT_PREFIX + cmd;
+		event.input.command = EXPORT_PREFIX + event.input.command;
 	});
 }
