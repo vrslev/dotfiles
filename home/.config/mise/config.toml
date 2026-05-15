@@ -40,7 +40,7 @@ ls = "eza --icons --all"
 ll = "eza --icons --all --long"
 dir-size = "du -sh"
 git-root = "cd $(git rev-parse --show-toplevel)"
-spi = "env TMUX_TMPDIR=$HOME/.pi/agent/tmux safehouse.sh --env --enable=clipboard --enable=agent-browser --enable=docker --enable=kubectl --enable=ssh --enable=shell-init --add-dirs-ro=$HOME/code/dotfiles --add-dirs-ro=$HOME/.config pi"
+spi = "env TMUX_TMPDIR=$HOME/.pi/agent/tmux safehouse.sh --env --enable=clipboard --enable=agent-browser --enable=docker --enable=kubectl --enable=ssh --enable=shell-init --add-dirs=$HOME/code/dotfiles/home/.pi --add-dirs-ro=$HOME/code/dotfiles --add-dirs-ro=$HOME/.config --add-dirs-ro=$HOME/web/.gitconfig pi"
 
 [hooks]
 postinstall = 'mkdir -p "$LOCAL_FISH_COMPLETION_DIR"'
