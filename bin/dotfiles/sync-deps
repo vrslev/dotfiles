@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+echo -e "\033[1;32mpi update --extensions\033[0m"
+pi update --extensions &
+
 echo -e "\033[1;32mmise upgrade\033[0m"
 
 export MISE_FETCH_REMOTE_VERSIONS_TIMEOUT=100
