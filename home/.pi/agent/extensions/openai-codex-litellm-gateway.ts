@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { getAgentDir, type ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import {
@@ -13,8 +13,26 @@ const provider = "openai-codex";
 const modelsPath = join(getAgentDir(), "models.json");
 const cacheDebug = process.env.PI_CODEX_CACHE_DEBUG === "1";
 
-const config =
-	JSON.parse(readFileSync(modelsPath, "utf-8")).providers?.[provider] ?? {};
+type ProviderConfig = {
+	baseUrl: string;
+	headers?: Record<string, string>;
+};
+
+function getProviderConfig(): ProviderConfig | undefined {
+	if (!existsSync(modelsPath)) {
+		return undefined;
+	}
+
+	const parsed = JSON.parse(readFileSync(modelsPath, "utf-8")) as {
+		providers?: Record<string, Partial<ProviderConfig>>;
+	};
+	const config = parsed.providers?.[provider];
+	if (!config?.baseUrl) {
+		return undefined;
+	}
+
+	return { ...config, baseUrl: config.baseUrl };
+}
 
 const models = getModels(provider).map((model) => {
 	const {
@@ -87,6 +105,11 @@ function stream(
 }
 
 export default function (pi: ExtensionAPI) {
+	const config = getProviderConfig();
+	if (!config) {
+		return;
+	}
+
 	pi.registerProvider(provider, {
 		baseUrl: config.baseUrl,
 		api: "openai-responses",
