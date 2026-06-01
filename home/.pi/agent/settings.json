@@ -25,7 +25,7 @@
       ]
     },
     {
-      "source": "git:github.com/umputun/revdiff",
+      "source": "git:github.com/umputun/revdiff@a80e92d998448c50e18a67bebda05f41939fd561",
       "extensions": [
         "-plugins/pi/extensions/revdiff-post-edit.ts"
       ],
