@@ -7,6 +7,7 @@ import { openaiCodexOAuthProvider } from "/Users/ruavel3/.pi/agent/npm/node_modu
 
 const provider = "openai-codex";
 const modelsPath = join(getAgentDir(), "models.json");
+const cacheDebug = process.env.PI_CODEX_CACHE_DEBUG === "1";
 
 const config =
 	JSON.parse(readFileSync(modelsPath, "utf-8")).providers?.[provider] ?? {};
@@ -42,7 +43,7 @@ function isSystemMessage(item: unknown) {
 		return false;
 	}
 
-	return item.role === "developer" || item.role === "system";
+	return item.role === "system";
 }
 
 function cleanInput(input: unknown) {
@@ -61,6 +62,12 @@ function stream(
 	return streamSimpleOpenAIResponses(model as any, context as any, {
 		...(options as any),
 		onPayload: async (payload: Record<string, unknown>) => {
+			if (cacheDebug) {
+				process.stderr.write(
+					`openai-codex-cache: key=${String(payload.prompt_cache_key)} retention=${String(payload.prompt_cache_retention)}\n`,
+				);
+			}
+
 			const next = {
 				...payload,
 				input: cleanInput(payload.input),
@@ -68,7 +75,6 @@ function stream(
 			};
 
 			delete next.max_output_tokens;
-			delete next.prompt_cache_key;
 			delete next.prompt_cache_retention;
 
 			return next;
