@@ -1,9 +1,13 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { getAgentDir, type ExtensionAPI } from "@earendil-works/pi-coding-agent";
-import { getModels, type Model, type SimpleStreamOptions } from "@earendil-works/pi-ai";
-import { streamSimpleOpenAIResponses } from "/Users/ruavel3/.pi/agent/npm/node_modules/@earendil-works/pi-ai/dist/providers/openai-responses.js";
-import { openaiCodexOAuthProvider } from "/Users/ruavel3/.pi/agent/npm/node_modules/@earendil-works/pi-ai/dist/oauth.js";
+import {
+	getModels,
+	streamSimpleOpenAIResponses,
+	type Model,
+	type SimpleStreamOptions,
+} from "@earendil-works/pi-ai";
+import { openaiCodexOAuthProvider } from "@earendil-works/pi-ai/oauth";
 
 const provider = "openai-codex";
 const modelsPath = join(getAgentDir(), "models.json");

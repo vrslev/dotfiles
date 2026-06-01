@@ -40,7 +40,7 @@ const MIN_TRANSCRIPT_PARTS = 4;
 const RECENT_MESSAGES = 40;
 const REVIEW_TIMEOUT_MS = 120_000;
 const SHUTDOWN_TIMEOUT_MS = 30_000;
-const DEFAULT_MODEL = "anthropic/claude-sonnet-4-6";
+const DEFAULT_MODEL = "openai-codex/gpt-5.4-mini";
 const AGENTS_HEADING = "## Memory";
 
 const CANDIDATES_DIR = join(homedir(), ".pi", "agent", "memory-candidates");
