@@ -15,7 +15,6 @@
   "packages": [
     "npm:pi-caffeinate",
     "npm:pi-code-rollback",
-    "npm:pi-session-search",
     "npm:pi-subdir-context",
     "npm:pi-timer",
     {
