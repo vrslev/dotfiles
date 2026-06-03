@@ -3,7 +3,7 @@
   "defaultProvider": "internal-1",
   "defaultModel": "gpt-5.5",
   "hideThinkingBlock": true,
-  "theme": "light",
+  "theme": "dark",
   "defaultThinkingLevel": "high",
   "compaction": {
     "enabled": true
@@ -36,7 +36,8 @@
       ],
       "skills": [],
       "themes": []
-    }
+    },
+    "npm:@tifan/pi-recap"
   ],
   "warnings": {
     "anthropicExtraUsage": false
