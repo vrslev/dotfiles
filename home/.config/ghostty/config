@@ -3,4 +3,4 @@ keybind = shift+enter=text:\n
 theme = light:GitHub Light Default,dark:Ghostty Default Style Dark
 scroll-to-bottom = no-keystroke
 notify-on-command-finish = unfocused
-keybind = global:cmd+backquote=toggle_quick_terminal
+keybind = global:ctrl+backquote=toggle_quick_terminal
