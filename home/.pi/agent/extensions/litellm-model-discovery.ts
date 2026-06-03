@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { getModels, getProviders, type Api, type KnownProvider, type Model } from "@earendil-works/pi-ai";
 import {
@@ -86,6 +86,7 @@ function normalizeBaseUrl(baseUrl: string): string {
 }
 
 function readModelsConfig(): ModelsConfig {
+	if (!existsSync(modelsPath)) return {};
 	return JSON.parse(readFileSync(modelsPath, "utf-8")) as ModelsConfig;
 }
 
