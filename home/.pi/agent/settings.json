@@ -1,6 +1,6 @@
 {
   "lastChangelogVersion": "0.78.0",
-  "defaultProvider": "openai-codex",
+  "defaultProvider": "internal-1",
   "defaultModel": "gpt-5.5",
   "hideThinkingBlock": true,
   "theme": "light",
@@ -15,7 +15,6 @@
   "packages": [
     "npm:pi-caffeinate",
     "npm:pi-code-rollback",
-    "npm:pi-subdir-context",
     "npm:pi-timer",
     {
       "source": "npm:pi-web-access",
