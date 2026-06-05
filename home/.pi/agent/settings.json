@@ -29,14 +29,6 @@
       ],
       "skills": []
     },
-    {
-      "source": "npm:mitsupi",
-      "extensions": [
-        "extensions/notify.ts"
-      ],
-      "skills": [],
-      "themes": []
-    },
     "npm:@tifan/pi-recap"
   ],
   "warnings": {

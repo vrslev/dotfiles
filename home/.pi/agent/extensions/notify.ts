@@ -2,6 +2,7 @@
  * Desktop Notification Extension
  *
  * Sends a native desktop notification when the agent finishes and is waiting for input.
+ * Adapted from mitsupi: https://github.com/mitsuhiko/agent-stuff/blob/main/extensions/notify.ts
  * Uses OSC 777 escape sequence - no external dependencies.
  *
  * Supported terminals: Ghostty, iTerm2, WezTerm, rxvt-unicode
@@ -19,27 +20,53 @@ const notify = (title: string, body: string): void => {
 	process.stdout.write(`\x1b]777;notify;${title};${body}\x07`);
 };
 
-const isTextPart = (part: unknown): part is { type: "text"; text: string } =>
-	Boolean(part && typeof part === "object" && "type" in part && part.type === "text" && "text" in part);
+type AssistantMessage = {
+	role?: string;
+	content?: unknown;
+	stopReason?: unknown;
+	errorMessage?: unknown;
+};
 
-const extractLastAssistantText = (messages: Array<{ role?: string; content?: unknown }>): string | null => {
+type AssistantSummary = {
+	text: string | null;
+	modelError: boolean;
+};
+
+const modelErrorStopReasons = new Set(["error", "aborted"]);
+
+const isTextPart = (part: unknown): part is { type: "text"; text: string } =>
+	Boolean(
+		part &&
+			typeof part === "object" &&
+			"type" in part &&
+			part.type === "text" &&
+			"text" in part &&
+			typeof part.text === "string",
+	);
+
+const isModelError = (message: AssistantMessage): boolean =>
+	modelErrorStopReasons.has(String(message.stopReason)) ||
+	(typeof message.errorMessage === "string" && message.errorMessage.trim().length > 0);
+
+const extractLastAssistant = (messages: readonly AssistantMessage[]): AssistantSummary | null => {
 	for (let i = messages.length - 1; i >= 0; i--) {
 		const message = messages[i];
 		if (message?.role !== "assistant") {
 			continue;
 		}
 
+		const modelError = isModelError(message);
 		const content = message.content;
 		if (typeof content === "string") {
-			return content.trim() || null;
+			return { text: content.trim() || null, modelError };
 		}
 
 		if (Array.isArray(content)) {
 			const text = content.filter(isTextPart).map((part) => part.text).join("\n").trim();
-			return text || null;
+			return { text: text || null, modelError };
 		}
 
-		return null;
+		return { text: null, modelError };
 	}
 
 	return null;
@@ -81,8 +108,12 @@ const formatNotification = (text: string | null): { title: string; body: string 
 
 export default function (pi: ExtensionAPI) {
 	pi.on("agent_end", async (event) => {
-		const lastText = extractLastAssistantText(event.messages ?? []);
-		const { title, body } = formatNotification(lastText);
+		const lastAssistant = extractLastAssistant(event.messages ?? []);
+		if (!lastAssistant || lastAssistant.modelError) {
+			return;
+		}
+
+		const { title, body } = formatNotification(lastAssistant.text);
 		notify(title, body);
 	});
 }
