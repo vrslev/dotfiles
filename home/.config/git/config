@@ -24,7 +24,7 @@
   d = diff
   ds = diff --staged
   st = status
-  rm-merged-branches = !git branch --format '%(refname:short) %(upstream:track)' | awk '$2 == \"[gone]\" { print $1 }' | xargs -r git branch -D
+  rm-merged-branches = !git worktree prune --expire now && git branch --merged "$(git main-branch)" --format '%(refname:short) %(upstream:track)' | awk '$2 == \"[gone]\" { print $1 }' | xargs -r git branch -d
   sync = !git main && git pull --prune && git rm-merged-branches
 	reword = "!f() {\n  GIT_SEQUENCE_EDITOR=\"perl -i -pe 's/^pick/reword/ if $. == 1'\" GIT_EDITOR=\"printf \\\"%s\\n\\\" \\\"$2\\\" >\" git rebase -i \"$1^\";\n}; f"
   undo = reset HEAD^
