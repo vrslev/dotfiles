@@ -29,6 +29,7 @@ These guidelines bias toward caution over speed. For trivial tasks, use judgment
 - Validation change → test invalid inputs, then make them pass.
 - Refactor → ensure tests pass before and after.
 - Run tests and linters as part of implementation.
+- Open PR/MR: run/watch CI in parallel with local tests.
 - Prefer targeted tests; run full suite for final verification when useful.
 - Avoid real sleeps in tests unless waiting for real external deps.
 - Parametrize tests that differ only by input, expected output, or error.
