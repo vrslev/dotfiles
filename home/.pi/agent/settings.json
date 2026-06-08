@@ -29,7 +29,8 @@
       ],
       "skills": []
     },
-    "npm:@tifan/pi-recap"
+    "npm:@tifan/pi-recap",
+    "npm:@ff-labs/pi-fff"
   ],
   "warnings": {
     "anthropicExtraUsage": false

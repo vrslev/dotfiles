@@ -1,4 +1,26 @@
 #!/usr/bin/env bash
+
+usage() {
+    cat <<'EOF'
+Usage: create-glab-mr [--use-last-commit-msg | TITLE]
+
+Create a GitLab merge request in the browser.
+
+Arguments:
+  TITLE                  Use TITLE as the merge request title
+  --use-last-commit-msg  Use the last commit subject as the merge request title
+  -h, --help             Show this help
+
+Without TITLE, create-glab-mr uses gen-mr-title.
+Issue prefix is added from the current branch when present.
+EOF
+}
+
+if [ "${1:-}" = "--help" ] || [ "${1:-}" = "-h" ]; then
+    usage
+    exit 0
+fi
+
 cai || true
 
 branch_name="$(git rev-parse --abbrev-ref HEAD)"
