@@ -13,6 +13,7 @@
   },
   "steeringMode": "all",
   "packages": [
+    "npm:@tmustier/pi-tab-status",
     "npm:pi-caffeinate",
     "npm:pi-code-rollback",
     "npm:pi-timer",
