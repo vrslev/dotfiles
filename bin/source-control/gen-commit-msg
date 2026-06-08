@@ -1,75 +1,169 @@
-#!/usr/bin/env uv run --script
-# /// script
-# requires-python = ">=3.14"
-# dependencies = [
-#     "openai",
-# ]
-# ///
+#!/usr/bin/env python3
+# pyright: strict
+from __future__ import annotations
+
+import argparse
 import os
+import re
 import subprocess
 import sys
+import typing
 
-from openai import OpenAI
+DEFAULT_MAX_DIFF_CHARS: typing.Final = 32 * 1024
+SYSTEM_PROMPT: typing.Final = (
+    "You write git commit summaries. Output exactly one line, no quotes, no Markdown, no prefix, "
+    "no trailing period. Start with a letter. Keep it under 50 characters. Use imperative mood. "
+    "Do not use template words such as adjust."
+)
+USER_PROMPT: typing.Final = "Generate a concise and descriptive commit message for this git diff."
+THINKING_LEVELS: typing.Final = ("off", "minimal", "low", "medium", "high", "xhigh")
 
 
-def log(content: str) -> None:
-    print(f"{commit_id}: {content}", file=sys.stderr)
+@typing.final
+class ParsedArguments(typing.NamedTuple):
+    commit_identifier: str | None
+    staged: bool
+    provider: str | None
+    model: str | None
+    thinking: str
+    timeout_seconds: float
+    max_diff_chars: int
 
 
-commit_id = sys.argv[1]
-previous_commit_message = subprocess.run(
-    ["git", "log", "-1", "--pretty=%B", commit_id],
-    capture_output=True,
-    text=True,
-    check=True,
-).stdout.strip()
-if previous_commit_message == "Update":
-    log(f"skip, {previous_commit_message=}")
-    sys.exit(0)
-if len(previous_commit_message) > 7:
-    log(f"skip, len({previous_commit_message=}) > 7")
-    sys.exit(0)
-
-commit_diff = subprocess.run(
-    ["git", "diff-tree", "--no-commit-id", "-p", "-r", commit_id],
-    capture_output=True,
-    text=True,
-    check=True,
-).stdout
-if not commit_diff.strip():
-    log("skip, empty commit")
-    sys.exit(0)
-max_diff_chars = 32 * 1024
-if len(commit_diff) > max_diff_chars:
-    commit_diff = commit_diff[:max_diff_chars]
-    log(f"truncating commit diff — it exceeds {max_diff_chars=}")
-
-try:
-    client = OpenAI(
-        api_key=os.environ["SCRIPTS_OPENAI_API_KEY"],
-        base_url=os.environ["SCRIPTS_OPENAI_BASE_URL"],
-        timeout=5,
-        max_retries=1,
-
+def parse_arguments(raw_arguments: list[str]) -> ParsedArguments:
+    argument_parser = argparse.ArgumentParser(description="Generate a git commit message using pi.")
+    argument_parser.add_argument("commit_identifier", nargs="?")
+    argument_parser.add_argument("--staged", action="store_true", help="Generate from staged changes")
+    argument_parser.add_argument("--provider", default=os.environ.get("PI_COMMIT_PROVIDER"))
+    argument_parser.add_argument("--model", default=os.environ.get("PI_COMMIT_MODEL"))
+    argument_parser.add_argument(
+        "--thinking",
+        choices=THINKING_LEVELS,
+        default=os.environ.get("PI_COMMIT_THINKING", "off"),
     )
-    response = client.chat.completions.create(
-        model=os.environ["SCRIPTS_OPENAI_MODEL"],
-        messages=[
-            {
-                "role": "system",
-                "content": "Generate a concise and descriptive commit message for the git diff. Make sure first character of your answer is a letter. Do not use template words such as 'adjust'. Keep it really short, no more than 50 characters!",
-            },
-            {
-                "role": "user",
-                "content": commit_diff,
-            },
-        ],
-        max_tokens=100,
-        temperature=0.5,
+    argument_parser.add_argument("--timeout", type=float, default=float(os.environ.get("PI_COMMIT_TIMEOUT", "60")))
+    argument_parser.add_argument(
+        "--max-diff-chars",
+        type=int,
+        default=int(os.environ.get("PI_COMMIT_MAX_DIFF_CHARS", str(DEFAULT_MAX_DIFF_CHARS))),
     )
-    new_commit_message = response.choices[0].message.content.strip()
-except Exception as exception:
-    log(f"failed to generate commit message: {exception}")
-    sys.stdout.write("Update")
-else:
-    sys.stdout.write(new_commit_message)
+    namespace = argument_parser.parse_args(raw_arguments)
+    commit_identifier = typing.cast(str | None, namespace.commit_identifier)
+    staged = typing.cast(bool, namespace.staged)
+    if staged and commit_identifier is not None:
+        argument_parser.error("COMMIT_IDENTIFIER cannot be used with --staged")
+    if not staged and commit_identifier is None:
+        argument_parser.error("COMMIT_IDENTIFIER or --staged is required")
+
+    return ParsedArguments(
+        commit_identifier=commit_identifier,
+        staged=staged,
+        provider=typing.cast(str | None, namespace.provider),
+        model=typing.cast(str | None, namespace.model),
+        thinking=typing.cast(str, namespace.thinking),
+        timeout_seconds=typing.cast(float, namespace.timeout),
+        max_diff_chars=typing.cast(int, namespace.max_diff_chars),
+    )
+
+
+def write_log_message(label: str, content: str) -> None:
+    print(f"{label}: {content}", file=sys.stderr)
+
+
+def run_git_command(command_arguments: list[str]) -> str:
+    return subprocess.run(
+        ["git", *command_arguments],
+        capture_output=True,
+        text=True,
+        check=True,
+    ).stdout
+
+
+def clean_commit_message(raw_output: str) -> str:
+    message_lines = [
+        stripped_line
+        for line in raw_output.strip().splitlines()
+        if (stripped_line := line.strip()) and not stripped_line.startswith("```")
+    ]
+    first_line = next(iter(message_lines), "")
+    without_prefix = re.sub(r"(?i)^commit message\s*:\s*", "", first_line)
+    without_command = re.sub(r"(?i)^git commit -m\s+", "", without_prefix)
+    without_bullet = re.sub(r"^[-*•]\s+", "", without_command)
+    without_quotes = without_bullet.strip("`'\" ")
+    without_extra_spaces = re.sub(r"\s+", " ", without_quotes).strip()
+    return without_extra_spaces.rstrip(".")
+
+
+def generate_with_pi(arguments: ParsedArguments, diff_content: str) -> str:
+    pi_command = [
+        "pi",
+        "--no-session",
+        "--no-tools",
+        "--no-context-files",
+        "--no-skills",
+        "--no-prompt-templates",
+        "--thinking",
+        arguments.thinking,
+    ]
+    if arguments.provider is not None:
+        pi_command.extend(["--provider", arguments.provider])
+    if arguments.model is not None:
+        pi_command.extend(["--model", arguments.model])
+    pi_command.extend(["--system-prompt", SYSTEM_PROMPT, "-p", USER_PROMPT])
+
+    completed_process = subprocess.run(
+        pi_command,
+        input=f"# Git diff\n{diff_content}",
+        capture_output=True,
+        text=True,
+        timeout=arguments.timeout_seconds,
+        check=False,
+    )
+    if completed_process.returncode != 0:
+        error_output = completed_process.stderr.strip() or completed_process.stdout.strip()
+        raise RuntimeError(error_output or f"pi exited with {completed_process.returncode}")
+
+    commit_message = clean_commit_message(completed_process.stdout)
+    if not commit_message:
+        raise RuntimeError("empty model output")
+    if re.match(r"^[A-Za-z]", commit_message) is None:
+        raise RuntimeError(f"commit message must start with a letter: {commit_message!r}")
+    return commit_message
+
+
+def read_diff_content(arguments: ParsedArguments, label: str) -> str | None:
+    if arguments.commit_identifier is not None:
+        previous_message = run_git_command(["log", "-1", "--pretty=%B", arguments.commit_identifier]).strip()
+        if previous_message == "Update":
+            write_log_message(label, f"skip, previous_message={previous_message!r}")
+            return None
+        if len(previous_message) > 7:
+            write_log_message(label, f"skip, len(previous_message={previous_message!r}) > 7")
+            return None
+        return run_git_command(["diff-tree", "--no-commit-id", "-p", "-r", arguments.commit_identifier])
+
+    return run_git_command(["diff", "--cached", "--no-ext-diff"])
+
+
+def execute_main() -> int:
+    arguments = parse_arguments(sys.argv[1:])
+    label = arguments.commit_identifier or "staged"
+    try:
+        diff_content = read_diff_content(arguments, label)
+        if diff_content is None:
+            return 0
+        if not diff_content.strip():
+            write_log_message(label, "skip, empty commit")
+            return 0
+        if len(diff_content) > arguments.max_diff_chars:
+            write_log_message(label, f"truncating commit diff — it exceeds max_diff_chars={arguments.max_diff_chars}")
+            diff_content = diff_content[: arguments.max_diff_chars]
+        sys.stdout.write(generate_with_pi(arguments, diff_content))
+    except (OSError, RuntimeError, subprocess.SubprocessError) as error:
+        write_log_message(label, f"failed to generate commit message: {error}")
+        return 1
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(execute_main())

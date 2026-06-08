@@ -1,10 +1,10 @@
 {
   "lastChangelogVersion": "0.78.0",
-  "defaultProvider": "internal-1",
+  "defaultProvider": "openai-codex",
   "defaultModel": "gpt-5.5",
-  "hideThinkingBlock": true,
+  "hideThinkingBlock": false,
   "theme": "dark",
-  "defaultThinkingLevel": "high",
+  "defaultThinkingLevel": "xhigh",
   "compaction": {
     "enabled": true
   },
