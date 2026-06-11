@@ -15,6 +15,7 @@ Options:
   --thinking LEVEL            pi thinking level; defaults to PI_COMMIT_THINKING or off
   --timeout SECONDS           pi generation timeout; defaults to PI_COMMIT_TIMEOUT or 60
   --max-diff-chars CHARS      diff chars sent to pi; defaults to PI_COMMIT_MAX_DIFF_CHARS or 32768
+  --style STYLE               Commit style: mcga or concise; defaults to PI_COMMIT_STYLE or mcga
   --list-models [SEARCH]      List models from pi providers/models config
   -h, --help                  Show this help
 EOF
@@ -22,7 +23,7 @@ EOF
 
 stage_changes=1
 push_after_commit=0
-generator_arguments=()
+generator_arguments=(--style "${PI_COMMIT_STYLE:-mcga}")
 
 while (($#)); do
     case "$1" in
@@ -34,7 +35,7 @@ while (($#)); do
             push_after_commit=1
             shift
             ;;
-        --provider | --model | --thinking | --timeout | --max-diff-chars)
+        --provider | --model | --thinking | --timeout | --max-diff-chars | --style)
             if (($# < 2)); then
                 echo "cai: $1 requires a value" >&2
                 exit 2
@@ -42,7 +43,7 @@ while (($#)); do
             generator_arguments+=("$1" "$2")
             shift 2
             ;;
-        --provider=* | --model=* | --thinking=* | --timeout=* | --max-diff-chars=*)
+        --provider=* | --model=* | --thinking=* | --timeout=* | --max-diff-chars=* | --style=*)
             generator_arguments+=("${1%%=*}" "${1#*=}")
             shift
             ;;

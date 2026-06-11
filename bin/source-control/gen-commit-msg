@@ -10,13 +10,24 @@ import sys
 import typing
 
 DEFAULT_MAX_DIFF_CHARS: typing.Final = 32 * 1024
-SYSTEM_PROMPT: typing.Final = (
+CONCISE_SYSTEM_PROMPT: typing.Final = (
     "You write git commit summaries. Output exactly one line, no quotes, no Markdown, no prefix, "
     "no trailing period. Start with a letter. Keep it under 50 characters. Use imperative mood. "
     "Do not use template words such as adjust."
 )
-USER_PROMPT: typing.Final = "Generate a concise and descriptive commit message for this git diff."
+CONCISE_USER_PROMPT: typing.Final = "Generate a concise and descriptive commit message for this git diff."
+MCGA_SYSTEM_PROMPT: typing.Final = (
+    "You write MCGA (Make Commits Great Again) git commit messages in English, styled like "
+    "overconfident Donald Trump tweets. Output only the commit message, no quotes, no Markdown, "
+    "no code fences. First line must be a conventional commit subject like `fix: auth CATASTROPHE "
+    "— FIXED!`; choose feat, fix, docs, refactor, test, chore, build, ci, perf, or style. "
+    "Then add a blank line and 2-5 short punchy English sentences. Use selective uppercase "
+    "for emphasis. Be dramatic and funny, but base every claim on the diff. Do not mention "
+    "Trump by name."
+)
+MCGA_USER_PROMPT: typing.Final = "Generate an MCGA-style commit message for this git diff."
 THINKING_LEVELS: typing.Final = ("off", "minimal", "low", "medium", "high", "xhigh")
+COMMIT_STYLES: typing.Final = ("concise", "mcga")
 
 
 @typing.final
@@ -28,6 +39,7 @@ class ParsedArguments(typing.NamedTuple):
     thinking: str
     timeout_seconds: float
     max_diff_chars: int
+    style: str
 
 
 def parse_arguments(raw_arguments: list[str]) -> ParsedArguments:
@@ -47,6 +59,7 @@ def parse_arguments(raw_arguments: list[str]) -> ParsedArguments:
         type=int,
         default=int(os.environ.get("PI_COMMIT_MAX_DIFF_CHARS", str(DEFAULT_MAX_DIFF_CHARS))),
     )
+    argument_parser.add_argument("--style", choices=COMMIT_STYLES, default=os.environ.get("PI_COMMIT_STYLE", "mcga"))
     namespace = argument_parser.parse_args(raw_arguments)
     commit_identifier = typing.cast(str | None, namespace.commit_identifier)
     staged = typing.cast(bool, namespace.staged)
@@ -63,6 +76,7 @@ def parse_arguments(raw_arguments: list[str]) -> ParsedArguments:
         thinking=typing.cast(str, namespace.thinking),
         timeout_seconds=typing.cast(float, namespace.timeout),
         max_diff_chars=typing.cast(int, namespace.max_diff_chars),
+        style=typing.cast(str, namespace.style),
     )
 
 
@@ -79,22 +93,57 @@ def run_git_command(command_arguments: list[str]) -> str:
     ).stdout
 
 
-def clean_commit_message(raw_output: str) -> str:
-    message_lines = [
-        stripped_line
-        for line in raw_output.strip().splitlines()
-        if (stripped_line := line.strip()) and not stripped_line.startswith("```")
-    ]
-    first_line = next(iter(message_lines), "")
-    without_prefix = re.sub(r"(?i)^commit message\s*:\s*", "", first_line)
+def read_model_output_lines(raw_output: str) -> list[str]:
+    output_lines = [line.strip() for line in raw_output.strip().splitlines() if not line.strip().startswith("```")]
+    while output_lines and not output_lines[0]:
+        output_lines.pop(0)
+    while output_lines and not output_lines[-1]:
+        output_lines.pop()
+    if output_lines and re.fullmatch(r"(?i)commit message\s*: ?", output_lines[0]):
+        output_lines.pop(0)
+        while output_lines and not output_lines[0]:
+            output_lines.pop(0)
+    return output_lines
+
+
+def clean_subject_line(subject_line: str) -> str:
+    without_prefix = re.sub(r"(?i)^commit message\s*:\s*", "", subject_line)
     without_command = re.sub(r"(?i)^git commit -m\s+", "", without_prefix)
     without_bullet = re.sub(r"^[-*•]\s+", "", without_command)
     without_quotes = without_bullet.strip("`'\" ")
-    without_extra_spaces = re.sub(r"\s+", " ", without_quotes).strip()
-    return without_extra_spaces.rstrip(".")
+    return re.sub(r"\s+", " ", without_quotes).strip()
+
+
+def clean_commit_message(raw_output: str, style: str) -> str:
+    output_lines = read_model_output_lines(raw_output)
+    if not output_lines:
+        return ""
+    subject_line = clean_subject_line(output_lines[0])
+    if style == "concise":
+        return subject_line.rstrip(".")
+
+    cleaned_lines = [subject_line, *[re.sub(r"[ \t]+", " ", line).strip("`") for line in output_lines[1:]]]
+    normalized_lines: list[str] = []
+    previous_line_blank = False
+    for line in cleaned_lines:
+        if not line:
+            if not previous_line_blank:
+                normalized_lines.append("")
+            previous_line_blank = True
+            continue
+        normalized_lines.append(line)
+        previous_line_blank = False
+    return "\n".join(normalized_lines).strip()
+
+
+def get_prompts(style: str) -> tuple[str, str]:
+    if style == "mcga":
+        return MCGA_SYSTEM_PROMPT, MCGA_USER_PROMPT
+    return CONCISE_SYSTEM_PROMPT, CONCISE_USER_PROMPT
 
 
 def generate_with_pi(arguments: ParsedArguments, diff_content: str) -> str:
+    system_prompt, user_prompt = get_prompts(arguments.style)
     pi_command = [
         "pi",
         "--no-session",
@@ -109,7 +158,7 @@ def generate_with_pi(arguments: ParsedArguments, diff_content: str) -> str:
         pi_command.extend(["--provider", arguments.provider])
     if arguments.model is not None:
         pi_command.extend(["--model", arguments.model])
-    pi_command.extend(["--system-prompt", SYSTEM_PROMPT, "-p", USER_PROMPT])
+    pi_command.extend(["--system-prompt", system_prompt, "-p", user_prompt])
 
     completed_process = subprocess.run(
         pi_command,
@@ -123,11 +172,12 @@ def generate_with_pi(arguments: ParsedArguments, diff_content: str) -> str:
         error_output = completed_process.stderr.strip() or completed_process.stdout.strip()
         raise RuntimeError(error_output or f"pi exited with {completed_process.returncode}")
 
-    commit_message = clean_commit_message(completed_process.stdout)
+    commit_message = clean_commit_message(completed_process.stdout, arguments.style)
     if not commit_message:
         raise RuntimeError("empty model output")
-    if re.match(r"^[A-Za-z]", commit_message) is None:
-        raise RuntimeError(f"commit message must start with a letter: {commit_message!r}")
+    subject_line = commit_message.splitlines()[0]
+    if re.match(r"^[A-Za-z]", subject_line) is None:
+        raise RuntimeError(f"commit message subject must start with a letter: {subject_line!r}")
     return commit_message
 
 
