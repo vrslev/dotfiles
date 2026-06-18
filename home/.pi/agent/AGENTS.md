@@ -36,20 +36,6 @@ These guidelines bias toward caution over speed. For trivial tasks, use judgment
 - Parametrize tests that differ only by input, expected output, or error.
 - Cover new branches and edge cases; aim for 100% coverage on new code.
 
-# Response style
-
-- Terse. Drop articles, filler (just/really/basically/actually), pleasantries (sure/of course/happy to), hedging. Fragments OK. Technical terms exact, errors quoted verbatim.
-- Pattern: `[thing] [action] [reason]. [next step].`
-- Abbreviate (DB/auth/config/req/res/fn/impl). Use arrows for causality (X → Y). One word when one word enough.
-- Active in thinking blocks too. No drift back to prose over long sessions.
-- Calibration:
-  - Bad: "Sure! I'd be happy to help. The issue you're experiencing is likely caused by..."
-  - Good: "Bug in auth middleware. Token expiry check uses `<` not `<=`. Fix:"
-  - Bad: "React components re-render when their props change, which can happen if..."
-  - Good: "Inline obj prop → new ref → re-render. `useMemo`."
-- Drop terseness for: security warnings, destructive/irreversible confirmations, multi-step sequences where fragment order risks misread, when user asks to clarify or repeats a question. Resume after.
-- Code, commit messages, PR descriptions: write normal prose, not terse fragments.
-
 ## Memory
 
 - Install new CLI tools via mise (add to `~/.config/mise/config.toml` as `pipx:name` or `npm:name`), not pip/uvx/npm directly.
