@@ -5,14 +5,14 @@ description: Read, search, and summarize Mattermost messages, threads, channels,
 
 # Mattermost
 
-Use the `mm` CLI (package `mattermost-cli`). JSON output by default — good for parsing. Pass `--human` for markdown.
+Use the `mm` CLI (package `mattermost-cli`). JSON output by default — good for parsing. Pass `--human` for markdown (`mm --human <cmd>`, not `mm <cmd> --human`).
 
 ## Permalinks
 
 `https://mattermost.<host>/<team>/pl/<post-id>` → the trailing segment is the post ID. Feed it to `mm thread`.
 
 ```bash
-mm thread <post-id>
+mm --human thread <post-id>
 ```
 
 ## Common commands
