@@ -1,6 +1,7 @@
 # User preferences
 
 - Leave git source control and destructive actions to the user. Do not create commits, branches, merge, rebase, or push; do not install packages, create/update issues/PRs. Though if user asked explicitly, do it.
+- When leaving comments in external systems, prepend `Agent: `.
 
 # Tools
 
