@@ -6,6 +6,7 @@ import { openaiCodexOAuthProvider } from "@earendil-works/pi-ai/oauth";
 
 const provider = "openai-codex";
 const modelsPath = join(getAgentDir(), "models.json");
+const requiredInstructions = "You are a helpful assistant.";
 
 type ProviderConfig = {
 	baseUrl: string;
@@ -54,45 +55,14 @@ const models = getModels(provider).map((model) => {
 	};
 });
 
-function isInstructionMessage(item: unknown) {
-	if (!item || typeof item !== "object" || !("role" in item)) {
-		return false;
-	}
-
-	return item.role === "system" || item.role === "developer";
-}
-
-function cleanInput(input: unknown) {
-	if (!Array.isArray(input)) {
-		return input;
-	}
-
-	return input.filter((item) => !isInstructionMessage(item));
-}
-
-function getInstructions(input: unknown) {
-	if (!Array.isArray(input)) {
-		return undefined;
-	}
-
-	const message = input.find(isInstructionMessage);
-	if (!message || typeof message !== "object" || !("content" in message)) {
-		return undefined;
-	}
-
-	return typeof message.content === "string" ? message.content : undefined;
-}
-
 function cleanPayload(payload: unknown) {
 	if (!payload || typeof payload !== "object") {
 		return payload;
 	}
 
-	const input = (payload as Record<string, unknown>).input;
 	const next = {
 		...(payload as Record<string, unknown>),
-		input: cleanInput(input),
-		instructions: getInstructions(input),
+		instructions: requiredInstructions,
 	};
 
 	delete next.max_output_tokens;
