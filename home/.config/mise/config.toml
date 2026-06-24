@@ -7,11 +7,14 @@ _.path = [
     "~/.cargo/bin",
 ]
 _.file = { path = "{{config_root}}/.config/mise/.env" }
+XDG_CACHE_HOME = "{{env.HOME}}/.cache"
 LANG = "en_US.UTF-8"
 LANGUAGE = "{{env.LANG}}"
 LC_ALL = "{{env.LANG}}"
 EDITOR = "code --wait"
-PYTHONDONTWRITEBYTECODE = 1
+PYTHONPYCACHEPREFIX = "{{env.XDG_CACHE_HOME}}/python/pycache"
+MYPY_CACHE_DIR = "{{env.XDG_CACHE_HOME}}/mypy"
+RUFF_CACHE_DIR = "{{env.XDG_CACHE_HOME}}/ruff"
 HOMEBREW_NO_ANALYTICS = 1
 HOMEBREW_NO_AUTO_UPDATE = 1
 HOMEBREW_NO_ENV_HINTS = 1
