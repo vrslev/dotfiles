@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { getAgentDir, type ExtensionAPI } from "@earendil-works/pi-coding-agent";
-import { getModels } from "@earendil-works/pi-ai";
+import { getModels } from "@earendil-works/pi-ai/compat";
 import { openaiCodexOAuthProvider } from "@earendil-works/pi-ai/oauth";
 
 const provider = "openai-codex";
@@ -29,31 +29,10 @@ function getProviderConfig(): ProviderConfig | undefined {
 	return { ...config, baseUrl: config.baseUrl };
 }
 
-const models = getModels(provider).map((model) => {
-	const {
-		id,
-		name,
-		reasoning,
-		thinkingLevelMap,
-		input,
-		cost,
-		contextWindow,
-		maxTokens,
-		compat,
-	} = model;
-
-	return {
-		id,
-		name,
-		reasoning,
-		thinkingLevelMap,
-		input,
-		cost,
-		contextWindow,
-		maxTokens,
-		compat: { ...(compat ?? {}), supportsLongCacheRetention: false },
-	};
-});
+const models = getModels(provider).map(({ api: _api, baseUrl: _baseUrl, provider: _provider, compat, ...model }) => ({
+	...model,
+	compat: { ...(compat ?? {}), supportsLongCacheRetention: false },
+}));
 
 function cleanPayload(payload: unknown) {
 	if (!payload || typeof payload !== "object") {
