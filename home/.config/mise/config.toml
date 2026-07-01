@@ -92,7 +92,6 @@ yq = { version = "latest", postinstall = "mise run _install-fish-completions yq 
 zoxide = "latest"
 "cargo:mergiraf" = { version = "latest", postinstall = "mergiraf languages --gitattributes > $DOTFILES_ROOT/home/.config/git/gitattributes" }
 "cargo:tokei" = "latest"
-"npm:@anthropic-ai/claude-code" = "latest"
 "npm:confluence-cli" = "latest"
 "pipx:eof-fixer" = "latest"
 "pipx:mattermost-cli" = "latest"
@@ -103,7 +102,6 @@ zoxide = "latest"
 "github:ankitpokhrel/jira-cli" = { version = "latest", postinstall = "mise run _install-fish-completions jira completion fish" }
 "pipx:ty" = "latest"
 "npm:typescript-language-server" = "latest"
-"npm:lean-ctx-bin" = "latest"
 "npm:agent-browser" = "latest"
 "github:umputun/revdiff" = "latest"
 "npm:@earendil-works/pi-coding-agent" = "latest"
