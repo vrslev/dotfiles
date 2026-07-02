@@ -3,11 +3,13 @@
 - Reply in English unless asked otherwise.
 - Leave git history and destructive/external actions to the user unless explicitly asked: commits, branches, merges, rebases, pushes, package installs, issue/PR changes.
 - When writing comments in external systems, prepend `Agent: `.
-- Install CLI tools via mise (`~/.config/mise/config.toml`), not pip/uvx/npm directly.
+- If explicitly asked to install a CLI tool, use mise (`~/.config/mise/config.toml`), not pip/uvx/npm directly.
+- Do not read, print, or edit secrets unless explicitly required.
 
 # Workflow
 
-- Use `./Justfile` commands when present; otherwise use repo-documented commands. Prefer targeted checks and report any checks not run.
+- If a `Justfile` exists, inspect it and prefer `just <recipe>`; otherwise use repo-documented commands.
+- After code changes, run relevant targeted tests/lint when available and report checks not run.
 - Use `fd` and `rg` for shell discovery/search; do not scan `$HOME` broadly.
 - Ask only when ambiguity affects correctness, security, data loss, or broad scope.
 - For long-running tasks, use tmux or log output to a file.
@@ -17,7 +19,8 @@
 - Make the smallest correct root-cause change.
 - Reuse existing code, stdlib/platform features, and installed dependencies before adding code.
 - Match existing style; do not refactor unrelated code.
-- Do not add dependencies, migrations, generated files, or production/destructive changes without explicit approval.
+- Do not add dependencies, migrations, unrelated generated files, or production/destructive changes without explicit approval.
+- Update tracked generated outputs only when required by the requested change.
 - Add or update a small regression test for bug fixes or validation changes when practical.
 - Avoid comments unless the code would likely be misunderstood.
 
