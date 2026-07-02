@@ -7,26 +7,19 @@
 
 # Workflow
 
-- Touch only what the task requires; fix root causes.
-- Prefer existing code, stdlib/platform features, and installed dependencies before adding code or dependencies.
-- Ask only when ambiguity affects correctness, security, data loss, or broad scope.
 - Use `./Justfile` commands when present; otherwise use repo-documented commands. Prefer targeted checks and report any checks not run.
 - Use `fd` and `rg` for shell discovery/search; do not scan `$HOME` broadly.
+- Ask only when ambiguity affects correctness, security, data loss, or broad scope.
 - For long-running tasks, use tmux or log output to a file.
 
-# Code
+# Code changes
 
+- Make the smallest correct root-cause change.
+- Reuse existing code, stdlib/platform features, and installed dependencies before adding code.
 - Match existing style; do not refactor unrelated code.
 - Do not add dependencies, migrations, generated files, or production/destructive changes without explicit approval.
 - Add or update a small regression test for bug fixes or validation changes when practical.
 - Avoid comments unless the code would likely be misunderstood.
-
-# Ponytail
-
-- Prefer the smallest correct change.
-- Reuse existing code before writing new code.
-- Do not add abstractions or flexibility for hypothetical future needs.
-- Fix root causes, not symptoms.
 
 # Gotchas
 
