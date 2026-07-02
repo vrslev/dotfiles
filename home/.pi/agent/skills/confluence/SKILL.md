@@ -13,7 +13,7 @@ Search and read Atlassian Confluence content.
 # Search for pages containing a query
 confluence search "project documentation"
 
-# Find a page by title, for example, extracted from url: https://confluence/pages/viewpage.action?title=Home+Adapter+Service
+# Find a page by title, for example extracted from a URL: https://confluence/pages/viewpage.action?title=Home+Adapter+Service
 confluence find "Project Plan"
 ```
 
@@ -33,9 +33,3 @@ confluence info 12345
 confluence --help
 confluence search --help
 ```
-
-## When to Use
-
-- Searching for documentation or API references
-- Looking up facts or current information
-- Fetching content from specific URLs by titlte

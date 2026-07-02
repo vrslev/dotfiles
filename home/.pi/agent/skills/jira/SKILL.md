@@ -35,9 +35,3 @@ jira sprint list --plain --columns id,name,state,start,end
 jira --help
 jira issue --help
 ```
-
-## When to Use
-
-- Searching and viewing Jira issues
-- Creating or updating issues, comments, worklogs
-- Listing projects, boards, sprints

@@ -17,6 +17,10 @@ glab api <endpoint> | jq .
 
 # Common commands
 glab mr list
+glab mr view <id>
+glab mr diff <id>
 glab issue list
+glab issue view <id>
+glab ci list
 glab repo clone <repo>
 ```

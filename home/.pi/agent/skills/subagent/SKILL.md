@@ -1,9 +1,7 @@
 ---
 name: subagent
 description: |
-  Spawn a sub-agent using `pi -p` for parallel or delegated work. Use when:
-  - A task can be broken into independent subtasks run in parallel
-  - A focused, isolated context is needed for a subtask
+  Spawn sub-agents with `pi -p` for parallel or delegated work. Read before running `pi -p`. Use when a task can be split into independent subtasks, needs a fresh/isolated context, benefits from an independent second opinion, or asks for parallel review/search/audit across files, repos, logs, or alternatives.
 ---
 
 # Subagent
@@ -25,3 +23,14 @@ wait
 ```
 
 Use `--no-tools` for pure reasoning, `--tools read` for read-only analysis. Keep prompts focused on a single task.
+
+## Good delegation prompts
+
+Include scope, constraints, output format, and whether edits are allowed:
+
+```bash
+pi -p --tools read "Review src/auth.py for security issues. Do not edit. Return only findings with file/line references."
+pi -p "Find likely causes of the failing checkout test. Make no changes; summarize evidence and next checks."
+```
+
+For parallel runs, write each result to a temp file, `wait`, then read and synthesize. Do not spawn subagents for tiny tasks where direct inspection is faster.
