@@ -106,6 +106,7 @@ zoxide = "latest"
 "github:umputun/revdiff" = "latest"
 "npm:@earendil-works/pi-coding-agent" = "latest"
 "github:eugene1g/agent-safehouse" = { version = "latest", asset_pattern = "safehouse.sh" }
+"github:charmbracelet/glow" = "latest"
 
 [settings]
 experimental = true

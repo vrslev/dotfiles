@@ -18,7 +18,7 @@
     "npm:pi-code-rollback",
     "npm:pi-timer",
     {
-      "source": "npm:pi-web-access",
+      "source": "npm:pi-web-access@0.12.0",
       "skills": [
         "-skills/librarian/SKILL.md"
       ]
