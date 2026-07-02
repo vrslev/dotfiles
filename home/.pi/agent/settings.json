@@ -30,12 +30,7 @@
       ],
       "skills": []
     },
-    "npm:@tifan/pi-recap",
-    "npm:@ff-labs/pi-fff",
-    {
-      "source": "git:github.com/DietrichGebert/ponytail",
-      "skills": []
-    }
+    "npm:@tifan/pi-recap"
   ],
   "warnings": {
     "anthropicExtraUsage": false
