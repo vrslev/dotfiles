@@ -100,6 +100,20 @@ unverified flag (a warning raised because evidence wasn't found, rather than bec
 fault was found) is itself an error: it manufactures doubt where none is warranted and
 sends the user chasing ghosts. Absence of evidence is not the finding. Confirm, then flag.
 
+**Artifact consistency before handoff.** If the run produced multiple written artifacts
+(plans, reviews, synthesis notes, handoffs), do a final consistency sweep before delivery:
+- identify the current source-of-truth artifact and say which file it is
+- remove or update stale "open question", "fixed", or "decision" statements that were
+  superseded later in the run
+- check that review notes describe the final plan, not an earlier draft
+- if the main artifact is long or spread across several files, create or update a short
+  human-review handoff that lists final decisions, remaining open questions, failable
+  checks, and the next action
+- report remaining uncertainty separately from confirmed blockers
+
+A plan is not reviewable if a human has to reconcile contradictory artifacts to know what
+is still open.
+
 ---
 
 ## Domain-specific patterns
