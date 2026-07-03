@@ -1,0 +1,594 @@
+#!/usr/bin/env python3
+# pyright: strict
+from __future__ import annotations
+
+import dataclasses
+import os
+import re
+import subprocess
+import sys
+import tempfile
+from collections import OrderedDict
+from collections.abc import Sequence
+
+
+READ_SCRIPT = r'''
+on cleanText(valueText)
+    set valueText to valueText as text
+    set oldDelimiters to AppleScript's text item delimiters
+    set AppleScript's text item delimiters to tab
+    set textItems to text items of valueText
+    set AppleScript's text item delimiters to " "
+    set valueText to textItems as text
+    set AppleScript's text item delimiters to linefeed
+    set textItems to text items of valueText
+    set AppleScript's text item delimiters to " "
+    set valueText to textItems as text
+    set AppleScript's text item delimiters to return
+    set textItems to text items of valueText
+    set AppleScript's text item delimiters to " "
+    set valueText to textItems as text
+    set AppleScript's text item delimiters to oldDelimiters
+    return valueText
+end cleanText
+
+on safeHeader(mailMessage, headerName)
+    tell application "Mail"
+        try
+            return my cleanText(content of header headerName of mailMessage)
+        on error
+            return ""
+        end try
+    end tell
+end safeHeader
+
+on run argv
+    set outputPath to item 1 of argv
+    tell application "Mail"
+        if (count of message viewers) is 0 then error "No Mail message viewer is open"
+        if (count of selection) > 0 then
+            set messageList to selection
+        else
+            set selectedMailboxesList to selected mailboxes of message viewer 1
+            if (count of selectedMailboxesList) is 0 then error "No mailbox is selected"
+            set selectedMailbox to item 1 of selectedMailboxesList
+            set messageList to messages of selectedMailbox
+        end if
+
+        set outputHandle to open for access POSIX file outputPath with write permission
+        set eof outputHandle to 0
+        try
+            repeat with mailMessage in messageList
+                set projectPath to my safeHeader(mailMessage, "x-gitlab-project-path")
+                set mrIid to my safeHeader(mailMessage, "x-gitlab-mergerequest-iid")
+                if projectPath is not "" and mrIid is not "" then
+                    set accountName to ""
+                    set accountId to ""
+                    set subjectText to ""
+                    set senderText to ""
+                    set dateReceivedText to ""
+                    set readStatusText to ""
+                    set bodyText to ""
+                    try
+                        set accountName to name of account of mailbox of mailMessage
+                        set accountId to id of account of mailbox of mailMessage
+                    end try
+                    try
+                        set subjectText to subject of mailMessage
+                    end try
+                    try
+                        set senderText to sender of mailMessage
+                    end try
+                    try
+                        set dateReceivedText to (date received of mailMessage) as text
+                    end try
+                    try
+                        set readStatusText to (read status of mailMessage) as text
+                    end try
+                    try
+                        set bodyText to content of mailMessage
+                    end try
+                    set gitlabHost to my safeHeader(mailMessage, "x-gitlab-host")
+                    set listUnsubscribe to my safeHeader(mailMessage, "list-unsubscribe")
+                    set listId to my safeHeader(mailMessage, "list-id")
+                    write ((my cleanText(accountId)) & tab & (my cleanText(accountName)) & tab & projectPath & tab & mrIid & tab & gitlabHost & tab & listUnsubscribe & tab & listId & tab & (my cleanText(subjectText)) & tab & (my cleanText(senderText)) & tab & (my cleanText(dateReceivedText)) & tab & (my cleanText(readStatusText)) & tab & (my cleanText(bodyText)) & linefeed) to outputHandle as «class utf8»
+                end if
+            end repeat
+        on error errorMessage number errorNumber
+            close access outputHandle
+            error errorMessage number errorNumber
+        end try
+        close access outputHandle
+        return (count of messageList) as text
+    end tell
+end run
+'''
+
+MARK_READ_SCRIPT = r'''
+on safeHeader(mailMessage, headerName)
+    tell application "Mail"
+        try
+            return content of header headerName of mailMessage
+        on error
+            return ""
+        end try
+    end tell
+end safeHeader
+
+on run argv
+    set targetAccountId to item 1 of argv
+    set targetProjectPath to item 2 of argv
+    set targetMrIid to item 3 of argv
+
+    tell application "Mail"
+        if (count of message viewers) is 0 then error "No Mail message viewer is open"
+        if (count of selection) > 0 then
+            set messageList to selection
+        else
+            set selectedMailboxesList to selected mailboxes of message viewer 1
+            if (count of selectedMailboxesList) is 0 then error "No mailbox is selected"
+            set selectedMailbox to item 1 of selectedMailboxesList
+            set messageList to messages of selectedMailbox
+        end if
+
+        set markedCount to 0
+        repeat with mailMessage in messageList
+            try
+                set accountId to id of account of mailbox of mailMessage
+                set projectPath to my safeHeader(mailMessage, "x-gitlab-project-path")
+                set mrIid to my safeHeader(mailMessage, "x-gitlab-mergerequest-iid")
+                if accountId is targetAccountId and projectPath is targetProjectPath and mrIid is targetMrIid and read status of mailMessage is false then
+                    set read status of mailMessage to true
+                    set markedCount to markedCount + 1
+                end if
+            end try
+        end repeat
+        return markedCount as text
+    end tell
+end run
+'''
+
+
+@dataclasses.dataclass(frozen=True)
+class Notification:
+    account_id: str
+    account_name: str
+    project_path: str
+    mr_iid: str
+    host: str
+    subject: str
+    sender: str
+    date_received: str
+    read: bool
+    body: str
+
+    @property
+    def key(self) -> tuple[str, str, str, str]:
+        return (self.account_id, self.host, self.project_path, self.mr_iid)
+
+    @property
+    def url(self) -> str:
+        return f"https://{self.host}/{self.project_path}/-/merge_requests/{self.mr_iid}"
+
+    @property
+    def label(self) -> str:
+        project = self.project_path.rsplit("/", 1)[-1]
+        return f"{project} !{self.mr_iid}"
+
+
+def run_osascript(script: str, args: Sequence[str]) -> str:
+    with tempfile.NamedTemporaryFile("w", suffix=".applescript", delete=False) as file:
+        file.write(script)
+        script_path = file.name
+    try:
+        result = subprocess.run(["osascript", script_path, *args], capture_output=True, text=True, check=False)
+    finally:
+        os.unlink(script_path)
+    if result.returncode != 0:
+        raise RuntimeError(result.stderr.strip() or result.stdout.strip())
+    return result.stdout.strip()
+
+
+def strip_host(host: str) -> str:
+    host = host.strip().strip("<>")
+    host = re.sub(r"^https?://", "", host)
+    return host.split("/", 1)[0]
+
+
+def extract_host(gitlab_host: str, list_unsubscribe: str, list_id: str) -> str:
+    if gitlab_host:
+        return strip_host(gitlab_host)
+    match = re.search(r"https?://([^>/\s]+)", list_unsubscribe)
+    if match:
+        return strip_host(match.group(1))
+    match = re.search(r"<([^>]*gitlab[^>]*)>", list_id, re.IGNORECASE)
+    if match:
+        labels = match.group(1).split(".")
+        for index, label in enumerate(labels):
+            if "gitlab" in label.lower():
+                return strip_host(".".join(labels[index:]))
+    return ""
+
+
+def read_notifications() -> tuple[int, list[Notification]]:
+    with tempfile.NamedTemporaryFile("r", delete=False) as file:
+        output_path = file.name
+    try:
+        message_count = int(run_osascript(READ_SCRIPT, [output_path]))
+        notifications: list[Notification] = []
+        with open(output_path, encoding="utf-8", errors="replace") as file:
+            for line in file:
+                fields = line.rstrip("\n").split("\t")
+                if len(fields) != 12:
+                    continue
+                (
+                    account_id,
+                    account_name,
+                    project_path,
+                    mr_iid,
+                    gitlab_host,
+                    list_unsubscribe,
+                    list_id,
+                    subject,
+                    sender,
+                    date_received,
+                    read_status,
+                    body,
+                ) = fields
+                host = extract_host(gitlab_host, list_unsubscribe, list_id)
+                if not account_id or not host:
+                    continue
+                notifications.append(
+                    Notification(
+                        account_id=account_id,
+                        account_name=account_name,
+                        project_path=project_path,
+                        mr_iid=mr_iid,
+                        host=host,
+                        subject=subject,
+                        sender=sender,
+                        date_received=date_received,
+                        read=read_status.lower() == "true",
+                        body=body,
+                    )
+                )
+        return message_count, notifications
+    finally:
+        os.unlink(output_path)
+
+
+def group_notifications(notifications: Sequence[Notification]) -> OrderedDict[tuple[str, str, str, str], list[Notification]]:
+    groups: OrderedDict[tuple[str, str, str, str], list[Notification]] = OrderedDict()
+    for notification in notifications:
+        groups.setdefault(notification.key, []).append(notification)
+    return groups
+
+
+def mark_group_read(group: Sequence[Notification]) -> int:
+    notification = group[0]
+    output = run_osascript(MARK_READ_SCRIPT, [notification.account_id, notification.project_path, notification.mr_iid])
+    return int(output)
+
+
+def git_config_value(key: str) -> str:
+    result = subprocess.run(["git", "config", "--get", key], capture_output=True, text=True, check=False)
+    return result.stdout.strip() if result.returncode == 0 else ""
+
+
+def me_terms() -> list[str]:
+    git_name = git_config_value("user.name")
+    terms = [git_name, git_config_value("user.email"), os.environ.get("USER", "")]
+    parts = git_name.split()
+    if len(parts) >= 2:
+        first_name = parts[0]
+        last_name = parts[-1]
+        terms.extend([f"{last_name} {first_name}", f"{last_name.upper()} {first_name}"])
+        simplified_last_name = last_name.replace("shch", "sch").replace("Shch", "Sch")
+        if simplified_last_name != last_name:
+            terms.extend([f"{simplified_last_name} {first_name}", f"{simplified_last_name.upper()} {first_name}"])
+    unique_terms: list[str] = []
+    for term in terms:
+        term = term.strip()
+        if len(term) >= 2 and term.lower() not in [existing.lower() for existing in unique_terms]:
+            unique_terms.append(term)
+    return unique_terms
+
+
+def mentions_me(text: str, terms: Sequence[str]) -> bool:
+    normalized = text.lower()
+    return any(term.lower() in normalized for term in terms)
+
+
+def colors_enabled() -> bool:
+    return "NO_COLOR" not in os.environ and (sys.stdout.isatty() or "FORCE_COLOR" in os.environ)
+
+
+def style(text: str, *codes: str) -> str:
+    if not colors_enabled():
+        return text
+    return f"\033[{';'.join(codes)}m{text}\033[0m"
+
+
+def bold(text: str) -> str:
+    return style(text, "1")
+
+
+def dim(text: str) -> str:
+    return style(text, "2")
+
+
+def green(text: str) -> str:
+    return style(text, "32")
+
+
+def yellow(text: str) -> str:
+    return style(text, "33")
+
+
+def blue(text: str) -> str:
+    return style(text, "34")
+
+
+def magenta(text: str) -> str:
+    return style(text, "35")
+
+
+def cyan(text: str) -> str:
+    return style(text, "36")
+
+
+def gray(text: str) -> str:
+    return style(text, "90")
+
+
+def person_name(name: str) -> str:
+    name = name.replace("\ufffc", " ").replace("�", " ")
+    name = re.sub(r"\s*\(@[^)]+\)", "", name).strip().strip('"')
+    if name.lower().startswith("chat & bot token"):
+        return "Bot"
+    parts = name.split()
+    if len(parts) >= 2 and parts[0].isupper():
+        return f"{parts[1].title()} {parts[0].title()}"
+    return name
+
+
+def sender_display(sender: str) -> str:
+    match = re.match(r'"?([^"<]+?)"?\s*<', sender)
+    if match:
+        return person_name(match.group(1))
+    return person_name(sender) or "GitLab"
+
+
+def clean_body(body: str) -> str:
+    body = re.sub(r"You're receiving this email because.*", "", body, flags=re.IGNORECASE)
+    body = re.sub(r"View it on GitLab\.?", "", body, flags=re.IGNORECASE)
+    body = re.sub(r"https?://\S+", "", body)
+    body = body.replace("\ufffc", " ").replace("�", " ")
+    body = re.sub(r"\?{4,}", "…", body)
+    body = re.sub(r"\s+", " ", body)
+    body = re.sub(r"\s+([.,;:?])", r"\1", body)
+    return body.strip(" —")
+
+
+def short_text(text: str, limit: int = 110) -> str:
+    text = clean_body(text)
+    if len(text) <= limit:
+        return text
+    return f"{text[: limit - 1].rstrip()}…"
+
+
+def subject_title(subject: str) -> str:
+    subject = re.sub(r"^Re:\s*", "", subject).strip()
+    subject = re.sub(r"\s*\(!\d+\)\s*$", "", subject).strip()
+    if " | " in subject:
+        subject = subject.split(" | ", 1)[1].strip()
+    return short_text(subject, 92)
+
+
+def short_path(path: str) -> str:
+    path = path.strip()
+    return path.rsplit("/", 1)[-1] if "/" in path else path
+
+
+def describe(notification: Notification, terms: Sequence[str]) -> str:
+    body = clean_body(notification.body)
+    if not body:
+        return subject_title(notification.subject)
+
+    merge_match = re.search(r"Merge request !\d+ was merged\s+Branches:\s+(.+?)\s+Author:", body, re.IGNORECASE)
+    if merge_match:
+        branch_text = re.sub(r"\s+to\s+", " → ", merge_match.group(1).strip(), flags=re.IGNORECASE)
+        return f"merged {short_text(branch_text, 80)}"
+
+    approved_match = re.search(r"approved by\s+\??\s*([^?]+?)(?:\s+Project\b|$)", body, re.IGNORECASE)
+    if "approved" in body.lower():
+        approver = person_name(approved_match.group(1).strip(" .")) if approved_match else sender_display(notification.sender)
+        return f"approved by {approver}"
+
+    reviewers_match = re.search(r"(.+?)\s+were added as reviewers", body, re.IGNORECASE)
+    if reviewers_match:
+        reviewers = reviewers_match.group(1).strip(" .")
+        if mentions_me(reviewers, terms):
+            return "for me: added as reviewer"
+        return f"reviewers added: {short_text(reviewers)}"
+
+    if re.search(r"All discussions .* were resolved", body, re.IGNORECASE):
+        return "resolved all discussions"
+
+    push_match = re.search(r"pushed new commits? to merge request !\d+\s+([0-9a-f]{7,40})\s+-\s+(.+)$", body, re.IGNORECASE)
+    if push_match:
+        return f"pushed {push_match.group(1)[:8]}: {short_text(push_match.group(2))}"
+
+    discussion_match = re.search(r"(?:started a new discussion|commented on a discussion) on ([^:]+):\s*(.+)$", body, re.IGNORECASE)
+    if discussion_match:
+        return f"discussion on {short_path(discussion_match.group(1))}: {short_text(discussion_match.group(2))}"
+
+    discussion_match = re.search(r"started a new discussion:\s*(.+)$", body, re.IGNORECASE)
+    if discussion_match:
+        return f"new discussion: {short_text(discussion_match.group(1))}"
+
+    comment_match = re.search(r"commented:\s*(.+)$", body, re.IGNORECASE)
+    if comment_match:
+        return f"comment: {short_text(comment_match.group(1))}"
+
+    return short_text(body)
+
+
+MONTHS = {
+    "january": 1,
+    "february": 2,
+    "march": 3,
+    "april": 4,
+    "may": 5,
+    "june": 6,
+    "july": 7,
+    "august": 8,
+    "september": 9,
+    "october": 10,
+    "november": 11,
+    "december": 12,
+}
+MONTH_ABBR = {
+    1: "Jan",
+    2: "Feb",
+    3: "Mar",
+    4: "Apr",
+    5: "May",
+    6: "Jun",
+    7: "Jul",
+    8: "Aug",
+    9: "Sep",
+    10: "Oct",
+    11: "Nov",
+    12: "Dec",
+}
+
+
+def date_sort_key(notification: Notification) -> tuple[int, int, int, int, int, int]:
+    match = re.search(
+        r"(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})\s+at\s+(\d{1,2}):(\d{2}):(\d{2})",
+        notification.date_received,
+    )
+    if not match:
+        return (0, 0, 0, 0, 0, 0)
+    day, month_name, year, hour, minute, second = match.groups()
+    return (int(year), MONTHS.get(month_name.lower(), 0), int(day), int(hour), int(minute), int(second))
+
+
+def sorted_group_values(groups: OrderedDict[tuple[str, str, str, str], list[Notification]]) -> list[list[Notification]]:
+    return sorted(groups.values(), key=lambda group: max(date_sort_key(notification) for notification in group), reverse=True)
+
+
+def unique_notifications(group: Sequence[Notification], terms: Sequence[str]) -> list[Notification]:
+    unique: list[Notification] = []
+    seen: set[tuple[str, str, str]] = set()
+    for notification in sorted(group, key=date_sort_key):
+        key = (received_stamp(notification.date_received), sender_display(notification.sender), describe(notification, terms))
+        if key in seen:
+            continue
+        seen.add(key)
+        unique.append(notification)
+    return unique
+
+
+def received_stamp(date_received: str) -> str:
+    match = re.search(
+        r"(\d{1,2})\s+([A-Za-z]+)\s+\d{4}\s+at\s+(\d{1,2}:\d{2})",
+        date_received,
+    )
+    if not match:
+        return date_received
+    day, month_name, time = match.groups()
+    month = MONTH_ABBR.get(MONTHS.get(month_name.lower(), 0), month_name[:3])
+    return f"{month} {int(day):02d} {time}"
+
+
+def event_parts(notification: Notification, terms: Sequence[str]) -> tuple[str, str, str]:
+    description = describe(notification, terms)
+    if description.startswith("for me:"):
+        return (style("★", "1", "33"), style("FOR ME".ljust(8), "1", "33"), yellow(description.removeprefix("for me: ")))
+    if description.startswith("merged "):
+        return (green("✓"), green("MERGED".ljust(8)), green(description.removeprefix("merged ")))
+    if description.startswith("approved by "):
+        return (green("✓"), green("APPROVED".ljust(8)), description.removeprefix("approved by "))
+    if description.startswith("resolved "):
+        return (green("✓"), green("RESOLVED".ljust(8)), description.removeprefix("resolved "))
+    if description.startswith("pushed "):
+        return (blue("↑"), blue("PUSH".ljust(8)), description.removeprefix("pushed "))
+    if "discussion" in description:
+        return (magenta("●"), magenta("DISCUSS".ljust(8)), f"{cyan(sender_display(notification.sender))}: {description}")
+    if description.startswith("comment:"):
+        return (cyan("●"), cyan("COMMENT".ljust(8)), f"{cyan(sender_display(notification.sender))}: {description.removeprefix('comment:').strip()}")
+    return (gray("•"), gray("UPDATE".ljust(8)), f"{cyan(sender_display(notification.sender))}: {description}")
+
+
+def print_event(notification: Notification, terms: Sequence[str]) -> None:
+    icon, tag, text = event_parts(notification, terms)
+    time = gray(received_stamp(notification.date_received).rjust(12))
+    print(f"   {icon} {time} {tag} {text}")
+
+
+def print_summary(groups: Sequence[Sequence[Notification]], terms: Sequence[str]) -> None:
+    unread_total = sum(1 for group in groups for notification in group if not notification.read)
+    print(bold(cyan(f"{len(groups)} MR thread(s) · {unread_total} unread notification(s)")))
+    for index, group in enumerate(groups, start=1):
+        first = group[0]
+        events = unique_notifications(group, terms)
+        unread_count = sum(1 for notification in group if not notification.read)
+        unread = yellow(bold(f"{unread_count} unread")) if unread_count else gray("read")
+        count = gray(f"{len(group)} notification(s)")
+        label = bold(cyan(first.label))
+        title = bold(subject_title(first.subject))
+        path = gray(first.project_path)
+        print()
+        print(f"{gray(str(index).rjust(2) + '.')} {label} {gray('·')} {title}")
+        print(f"    {path} {gray('·')} {count} {gray('·')} {unread}")
+        for notification in events:
+            print_event(notification, terms)
+
+
+def dry_run_requested() -> bool:
+    if len(sys.argv) == 1:
+        return False
+    if len(sys.argv) == 2 and sys.argv[1] == "--dry-run":
+        return True
+    print("Usage: open-mail-mrs [--dry-run]", file=sys.stderr)
+    raise SystemExit(2)
+
+
+def main() -> int:
+    dry_run = dry_run_requested()
+    try:
+        message_count, notifications = read_notifications()
+        groups = group_notifications(notifications)
+        if not groups:
+            print(f"No GitLab merge request notifications found in {message_count} Mail message(s).", file=sys.stderr)
+            return 2
+        terms = me_terms()
+        ordered_groups = sorted_group_values(groups)
+        print_summary(ordered_groups, terms)
+
+        if dry_run:
+            print(f"\n{yellow(bold('DRY RUN'))} {gray('would open')} {bold(str(len(ordered_groups)))} {gray('MR(s) and mark unread notifications read')}")
+        else:
+            print(f"\n{bold(cyan(f'Opening {len(ordered_groups)} MR(s)'))}")
+            for group in ordered_groups:
+                first = group[0]
+                print(f"   {cyan('•')} {bold(first.label)}")
+                subprocess.run(["open", first.url], check=False)
+
+            unread_total = sum(1 for group in ordered_groups for notification in group if not notification.read)
+            marked_total = 0
+            if unread_total:
+                for group in ordered_groups:
+                    if any(not notification.read for notification in group):
+                        marked_total += mark_group_read(group)
+            print(green(f"Marked {marked_total} notification(s) read."))
+        return 0
+    except Exception as exception:
+        print(f"open-mail-mrs: {exception}", file=sys.stderr)
+        return 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
