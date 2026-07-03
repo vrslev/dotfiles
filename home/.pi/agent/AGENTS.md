@@ -10,7 +10,7 @@
 
 - If a `Justfile` exists, inspect it and prefer `just <recipe>`; otherwise use repo-documented commands.
 - After code changes, run relevant targeted tests/lint when available and report checks not run.
-- Use `fd` and `rg` for shell discovery/search; do not scan `$HOME` broadly.
+- Use `rg` for content search and `rg --files` for repo-scoped file discovery; use `find` for path/type/depth-specific discovery when needed; do not scan `$HOME` broadly.
 - Ask only when ambiguity affects correctness, security, data loss, or broad scope.
 - For long-running tasks, use tmux or log output to a file.
 
