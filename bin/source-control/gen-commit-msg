@@ -46,12 +46,12 @@ def parse_arguments(raw_arguments: list[str]) -> ParsedArguments:
     argument_parser = argparse.ArgumentParser(description="Generate a git commit message using pi.")
     argument_parser.add_argument("commit_identifier", nargs="?")
     argument_parser.add_argument("--staged", action="store_true", help="Generate from staged changes")
-    argument_parser.add_argument("--provider", default=os.environ.get("PI_COMMIT_PROVIDER"))
-    argument_parser.add_argument("--model", default=os.environ.get("PI_COMMIT_MODEL"))
+    argument_parser.add_argument("--provider", default=os.environ.get("PI_COMMIT_PROVIDER", "openai-codex"))
+    argument_parser.add_argument("--model", default=os.environ.get("PI_COMMIT_MODEL", "gpt-5.3-codex-spark"))
     argument_parser.add_argument(
         "--thinking",
         choices=THINKING_LEVELS,
-        default=os.environ.get("PI_COMMIT_THINKING", "off"),
+        default=os.environ.get("PI_COMMIT_THINKING", "low"),
     )
     argument_parser.add_argument("--timeout", type=float, default=float(os.environ.get("PI_COMMIT_TIMEOUT", "60")))
     argument_parser.add_argument(
@@ -59,7 +59,7 @@ def parse_arguments(raw_arguments: list[str]) -> ParsedArguments:
         type=int,
         default=int(os.environ.get("PI_COMMIT_MAX_DIFF_CHARS", str(DEFAULT_MAX_DIFF_CHARS))),
     )
-    argument_parser.add_argument("--style", choices=COMMIT_STYLES, default=os.environ.get("PI_COMMIT_STYLE", "mcga"))
+    argument_parser.add_argument("--style", choices=COMMIT_STYLES, default=os.environ.get("PI_COMMIT_STYLE", "concise"))
     namespace = argument_parser.parse_args(raw_arguments)
     commit_identifier = typing.cast(str | None, namespace.commit_identifier)
     staged = typing.cast(bool, namespace.staged)

@@ -10,12 +10,12 @@ Stage changes, generate a commit message with pi, and commit.
 Options:
   --staged                    Use current staged changes; do not run git add --all
   --push                      Run git push after committing
-  --provider NAME             pi provider; defaults to PI_COMMIT_PROVIDER or pi settings
-  --model PATTERN             pi model pattern/id; defaults to PI_COMMIT_MODEL or pi settings
-  --thinking LEVEL            pi thinking level; defaults to PI_COMMIT_THINKING or off
+  --provider NAME             pi provider; defaults to gen-commit-msg
+  --model PATTERN             pi model pattern/id; defaults to gen-commit-msg
+  --thinking LEVEL            pi thinking level; defaults to gen-commit-msg
   --timeout SECONDS           pi generation timeout; defaults to PI_COMMIT_TIMEOUT or 60
   --max-diff-chars CHARS      diff chars sent to pi; defaults to PI_COMMIT_MAX_DIFF_CHARS or 32768
-  --style STYLE               Commit style: mcga or concise; defaults to PI_COMMIT_STYLE or mcga
+  --style STYLE               Commit style: mcga or concise; defaults to gen-commit-msg
   --list-models [SEARCH]      List models from pi providers/models config
   -h, --help                  Show this help
 EOF
@@ -23,7 +23,7 @@ EOF
 
 stage_changes=1
 push_after_commit=0
-generator_arguments=(--style "${PI_COMMIT_STYLE:-mcga}")
+generator_arguments=()
 
 while (($#)); do
     case "$1" in

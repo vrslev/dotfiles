@@ -1,5 +1,6 @@
-import { existsSync, readFileSync } from "node:fs";
-import { join } from "node:path";
+import { createHash } from "node:crypto";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { dirname, join } from "node:path";
 import { getModels, getProviders, type Api, type KnownProvider, type Model } from "@earendil-works/pi-ai";
 import {
 	AuthStorage,
@@ -72,14 +73,33 @@ type ModelInfoMetadata = {
 	maxTokens?: number;
 };
 
-const modelsPath = join(getAgentDir(), "models.json");
+type ProviderEntry = [string, LiteLLMProviderConfig];
+
+type CachedProviderModels = {
+	baseUrl: string;
+	apiKeyFingerprint?: string;
+	fetchedAt: number;
+	models: ProviderModelConfig[];
+};
+
+type ModelsCache = {
+	version: 1;
+	providers: Record<string, CachedProviderModels>;
+};
+
+const agentDir = getAgentDir();
+const modelsPath = join(agentDir, "models.json");
+const cachePath = join(agentDir, "cache", "litellm-model-discovery.json");
 const modelRegistry = ModelRegistry.create(AuthStorage.create(), modelsPath);
 const knownProviderSet = new Set<string>(getProviders());
 const defaultCost = { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 };
 const defaultCompat: ProviderModelConfig["compat"] = { supportsStore: false };
 const defaultContextWindow = 128_000;
 const defaultMaxTokens = 16_384;
-const discoveryTimeoutMs = 10_000;
+const modelListTimeoutMs = 5_000;
+const modelInfoTimeoutMs = 2_000;
+
+let refreshInFlight: Promise<void> | undefined;
 
 function normalizeBaseUrl(baseUrl: string): string {
 	return baseUrl.replace(/\/+$/, "").replace(/\/v1\/?$/i, "");
@@ -88,6 +108,10 @@ function normalizeBaseUrl(baseUrl: string): string {
 function readModelsConfig(): ModelsConfig {
 	if (!existsSync(modelsPath)) return {};
 	return JSON.parse(readFileSync(modelsPath, "utf-8")) as ModelsConfig;
+}
+
+function getLiteLLMProviders(): ProviderEntry[] {
+	return Object.entries(readModelsConfig().providers ?? {}).filter((entry): entry is ProviderEntry => entry[1]["litellm-provider"] === true);
 }
 
 function stringValue(value: unknown): string | undefined {
@@ -218,11 +242,11 @@ function mergeMetadata(base: ModelInfoMetadata, next: ModelInfoMetadata): ModelI
 	};
 }
 
-async function fetchJson<T>(url: string, apiKey: string): Promise<T | undefined> {
+async function fetchJson<T>(url: string, apiKey: string, timeoutMs: number): Promise<T | undefined> {
 	try {
 		const response = await fetch(url, {
 			headers: { Authorization: `Bearer ${apiKey}`, Accept: "application/json" },
-			signal: AbortSignal.timeout(discoveryTimeoutMs),
+			signal: AbortSignal.timeout(timeoutMs),
 		});
 		return response.ok ? ((await response.json()) as T) : undefined;
 	} catch {
@@ -231,12 +255,12 @@ async function fetchJson<T>(url: string, apiKey: string): Promise<T | undefined>
 }
 
 async function fetchModels(baseUrl: string, apiKey: string): Promise<LiteLLMModel[]> {
-	const payload = await fetchJson<LiteLLMModelsResponse>(`${normalizeBaseUrl(baseUrl)}/v1/models`, apiKey);
+	const payload = await fetchJson<LiteLLMModelsResponse>(`${normalizeBaseUrl(baseUrl)}/v1/models`, apiKey, modelListTimeoutMs);
 	return payload?.data ?? [];
 }
 
 async function fetchModelInfo(baseUrl: string, apiKey: string): Promise<Map<string, ModelInfoMetadata>> {
-	const payload = await fetchJson<LiteLLMModelInfoResponse>(`${normalizeBaseUrl(baseUrl)}/model/info`, apiKey);
+	const payload = await fetchJson<LiteLLMModelInfoResponse>(`${normalizeBaseUrl(baseUrl)}/model/info`, apiKey, modelInfoTimeoutMs);
 	const metadata = new Map<string, ModelInfoMetadata>();
 
 	for (const entry of payload?.data ?? []) {
@@ -284,7 +308,128 @@ function dedupeModels(models: ProviderModelConfig[]): ProviderModelConfig[] {
 	});
 }
 
-async function registerProvider(
+function toProviderModels(
+	remoteModels: LiteLLMModel[],
+	providerConfig: LiteLLMProviderConfig,
+	modelInfo = new Map<string, ModelInfoMetadata>(),
+): ProviderModelConfig[] {
+	return dedupeModels(
+		remoteModels
+			.map((model) => toProviderModel(model, providerConfig, modelInfo))
+			.filter((model): model is ProviderModelConfig => !!model),
+	);
+}
+
+function isOfflineModeEnabled(): boolean {
+	const value = process.env.PI_OFFLINE;
+	return value === "1" || value?.toLowerCase() === "true" || value?.toLowerCase() === "yes";
+}
+
+function resolveEnvReference(value: string | undefined): string | undefined {
+	if (!value) return undefined;
+	const bare = value.match(/^\$([A-Za-z_][A-Za-z0-9_]*)$/);
+	if (bare) return process.env[bare[1]];
+	const braced = value.match(/^\$\{([A-Za-z_][A-Za-z0-9_]*)\}$/);
+	if (braced) return process.env[braced[1]];
+	return value;
+}
+
+function fingerprintApiKey(apiKey: string | undefined): string | undefined {
+	return apiKey ? createHash("sha256").update(apiKey).digest("hex") : undefined;
+}
+
+function currentApiKeyFingerprint(providerConfig: LiteLLMProviderConfig): string | undefined {
+	return fingerprintApiKey(resolveEnvReference(providerConfig.apiKey));
+}
+
+function readModelsCache(): ModelsCache {
+	try {
+		if (!existsSync(cachePath)) return { version: 1, providers: {} };
+		const cache = JSON.parse(readFileSync(cachePath, "utf-8")) as Partial<ModelsCache>;
+		return cache.version === 1 && cache.providers ? (cache as ModelsCache) : { version: 1, providers: {} };
+	} catch {
+		return { version: 1, providers: {} };
+	}
+}
+
+function isProviderModelConfig(value: unknown): value is ProviderModelConfig {
+	if (!value || typeof value !== "object") return false;
+	const model = value as Partial<ProviderModelConfig>;
+	return (
+		typeof model.id === "string" &&
+		typeof model.name === "string" &&
+		typeof model.reasoning === "boolean" &&
+		Array.isArray(model.input) &&
+		typeof model.contextWindow === "number" &&
+		typeof model.maxTokens === "number" &&
+		!!model.cost &&
+		typeof model.cost.input === "number" &&
+		typeof model.cost.output === "number" &&
+		typeof model.cost.cacheRead === "number" &&
+		typeof model.cost.cacheWrite === "number"
+	);
+}
+
+function getCachedModels(providerName: string, providerConfig: LiteLLMProviderConfig): ProviderModelConfig[] {
+	if (!providerConfig.baseUrl) return [];
+	const cached = readModelsCache().providers[providerName];
+	if (!cached) return [];
+	if (normalizeBaseUrl(cached.baseUrl) !== normalizeBaseUrl(providerConfig.baseUrl)) return [];
+	const currentFingerprint = currentApiKeyFingerprint(providerConfig);
+	if (currentFingerprint && cached.apiKeyFingerprint && currentFingerprint !== cached.apiKeyFingerprint) return [];
+	return cached.models.filter(isProviderModelConfig);
+}
+
+function writeCachedModels(
+	providerName: string,
+	providerConfig: LiteLLMProviderConfig,
+	models: ProviderModelConfig[],
+	apiKey: string | undefined,
+): void {
+	if (!providerConfig.baseUrl || models.length === 0) return;
+	try {
+		const cache = readModelsCache();
+		cache.providers[providerName] = {
+			baseUrl: providerConfig.baseUrl,
+			apiKeyFingerprint: fingerprintApiKey(apiKey) ?? currentApiKeyFingerprint(providerConfig),
+			fetchedAt: Date.now(),
+			models,
+		};
+		mkdirSync(dirname(cachePath), { recursive: true, mode: 0o700 });
+		writeFileSync(cachePath, JSON.stringify(cache, null, 2));
+	} catch {}
+}
+
+function registerProviderModels(
+	pi: ExtensionAPI,
+	providerName: string,
+	providerConfig: LiteLLMProviderConfig,
+	models: ProviderModelConfig[],
+	apiKey: string | undefined,
+): boolean {
+	if (!providerConfig.baseUrl || models.length === 0) return false;
+	const resolvedApiKey = providerConfig.apiKey ?? apiKey;
+	if (!resolvedApiKey) return false;
+
+	pi.registerProvider(providerName, {
+		name: providerConfig.name,
+		baseUrl: `${normalizeBaseUrl(providerConfig.baseUrl)}/v1`,
+		apiKey: resolvedApiKey,
+		api: providerConfig.api ?? "openai-completions",
+		headers: providerConfig.headers,
+		authHeader: providerConfig.authHeader,
+		models,
+	});
+	return true;
+}
+
+function registerCachedProvider(pi: ExtensionAPI, providerName: string, providerConfig: LiteLLMProviderConfig): void {
+	try {
+		registerProviderModels(pi, providerName, providerConfig, getCachedModels(providerName, providerConfig), undefined);
+	} catch {}
+}
+
+async function refreshProvider(
 	pi: ExtensionAPI,
 	providerName: string,
 	providerConfig: LiteLLMProviderConfig,
@@ -295,30 +440,37 @@ async function registerProvider(
 		const apiKey = await modelRegistry.getApiKeyForProvider(providerName);
 		if (!apiKey) return;
 
-		const [remoteModels, modelInfo] = await Promise.all([
-			fetchModels(providerConfig.baseUrl, apiKey),
-			fetchModelInfo(providerConfig.baseUrl, apiKey),
-		]);
-		const models = dedupeModels(
-			remoteModels
-				.map((model) => toProviderModel(model, providerConfig, modelInfo))
-				.filter((model): model is ProviderModelConfig => !!model),
-		);
-		if (models.length === 0) return;
+		const remoteModels = await fetchModels(providerConfig.baseUrl, apiKey);
+		const fastModels = toProviderModels(remoteModels, providerConfig);
+		if (!registerProviderModels(pi, providerName, providerConfig, fastModels, apiKey)) return;
+		writeCachedModels(providerName, providerConfig, fastModels, apiKey);
 
-		pi.registerProvider(providerName, {
-			name: providerConfig.name,
-			baseUrl: `${normalizeBaseUrl(providerConfig.baseUrl)}/v1`,
-			apiKey: providerConfig.apiKey ?? apiKey,
-			api: providerConfig.api ?? "openai-completions",
-			headers: providerConfig.headers,
-			authHeader: providerConfig.authHeader,
-			models,
-		});
+		const modelInfo = await fetchModelInfo(providerConfig.baseUrl, apiKey);
+		if (modelInfo.size === 0) return;
+
+		const enrichedModels = toProviderModels(remoteModels, providerConfig, modelInfo);
+		if (!registerProviderModels(pi, providerName, providerConfig, enrichedModels, apiKey)) return;
+		writeCachedModels(providerName, providerConfig, enrichedModels, apiKey);
 	} catch {}
 }
 
-export default async function litellmModelDiscovery(pi: ExtensionAPI): Promise<void> {
-	const providers = Object.entries(readModelsConfig().providers ?? {}).filter(([, config]) => config["litellm-provider"]);
-	await Promise.all(providers.map(([providerName, providerConfig]) => registerProvider(pi, providerName, providerConfig)));
+function refreshProvidersInBackground(pi: ExtensionAPI, providers: ProviderEntry[]): void {
+	if (isOfflineModeEnabled() || refreshInFlight || providers.length === 0) return;
+	refreshInFlight = Promise.all(providers.map(([providerName, providerConfig]) => refreshProvider(pi, providerName, providerConfig)))
+		.then(() => undefined)
+		.finally(() => {
+			refreshInFlight = undefined;
+		});
+}
+
+export default function litellmModelDiscovery(pi: ExtensionAPI): void {
+	const providers = getLiteLLMProviders();
+	for (const [providerName, providerConfig] of providers) {
+		registerCachedProvider(pi, providerName, providerConfig);
+	}
+
+	pi.on("session_start", (_event, ctx) => {
+		if (ctx.mode !== "tui") return;
+		refreshProvidersInBackground(pi, providers);
+	});
 }
