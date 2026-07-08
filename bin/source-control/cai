@@ -78,7 +78,13 @@ if git diff --cached --quiet --exit-code; then
 fi
 
 retry_with_post_commit_hook=0
-if ! commit_message="$(gen-commit-msg --staged "${generator_arguments[@]}")"; then
+if ((${#generator_arguments[@]})); then
+    generator_command=(gen-commit-msg --staged "${generator_arguments[@]}")
+else
+    generator_command=(gen-commit-msg --staged)
+fi
+
+if ! commit_message="$("${generator_command[@]}")"; then
     echo "cai: generation failed; committing with placeholder 1" >&2
     commit_message=1
     retry_with_post_commit_hook=1
@@ -88,7 +94,6 @@ elif [[ -z "$commit_message" ]]; then
     retry_with_post_commit_hook=1
 fi
 
-echo "cai: $commit_message" >&2
 if ((retry_with_post_commit_hook)); then
     git commit -m "$commit_message"
 else
