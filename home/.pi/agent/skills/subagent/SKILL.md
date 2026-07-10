@@ -24,6 +24,10 @@ wait
 
 Use `--no-tools` for pure reasoning, `--tools read` for read-only analysis. Keep prompts focused on a single task.
 
+## Timeouts
+
+Set the wrapper/tool timeout higher than you think the subagent needs, especially for parallel runs or repo-wide reviews. Subagents often spend extra time on tool calls and synthesis; timing them out wastes the work already done. Prefer 2-3x your estimate over the smallest plausible timeout.
+
 ## Good delegation prompts
 
 Include scope, constraints, output format, and whether edits are allowed:
