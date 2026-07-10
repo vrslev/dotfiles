@@ -1,12 +1,12 @@
 ---
-name: subagent
+name: pi-subagent
 description: |
-  Spawn sub-agents with `pi -p` for parallel or delegated work. Read before running `pi -p`. Use when a task can be split into independent subtasks, needs a fresh/isolated context, benefits from an independent second opinion, or asks for parallel review/search/audit across files, repos, logs, or alternatives.
+  Pi-only delegation skill. Use only when the current runtime is Pi / pi-coding-agent, or when the user explicitly asks to run `pi -p`. Spawn sub-agents with `pi -p` for parallel or delegated work. Do not use this skill in OpenAI Codex CLI or other runtimes; prefer that runtime's native agent/subagent mechanism if available.
 ---
 
-# Subagent
+# Pi Subagent
 
-Spawn focused pi sub-agents via `pi -p` (non-interactive mode). Each gets its own context and tools, runs to completion, returns output to stdout.
+Spawn focused Pi sub-agents via `pi -p` (non-interactive mode). This skill is only for Pi / pi-coding-agent sessions, not Codex CLI sessions. Each gets its own context and tools, runs to completion, returns output to stdout.
 
 ```bash
 pi -p "Summarize the README.md in this repo"

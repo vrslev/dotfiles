@@ -4,6 +4,14 @@
         "target": "~/.claude/CLAUDE.md",
         "source": "~/.pi/agent/AGENTS.md"
     },
+    {
+        "target": "~/.codex/AGENTS.md",
+        "source": "~/code/dotfiles/home/.pi/agent/AGENTS.md"
+    },
+    {
+        "target": "~/.codex/skills/pi",
+        "source": "~/code/dotfiles/home/.pi/agent/skills"
+    },
     "~/.config/fish/config.fish",
     "~/.config/ghostty/config",
     "~/.config/git",
