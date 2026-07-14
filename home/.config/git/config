@@ -44,9 +44,9 @@
 
 [delta]
   navigate = true
-  lineNumbers = true
+  line-numbers = true
   hyperlinks = true
-  hyperlinksFileLinkFormat = vscode://file/{path}:{line}
+  hyperlinks-file-link-format = vscode://file/{path}:{line}
 
 [diff]
   tool = vscode
