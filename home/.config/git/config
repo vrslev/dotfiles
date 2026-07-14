@@ -98,6 +98,5 @@
   enabled = true
   autoUpdate = true
 
-
 [safe]
   bareRepository = explicit
