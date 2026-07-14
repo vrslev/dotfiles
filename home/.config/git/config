@@ -84,9 +84,11 @@
 
 [push]
   autoSetupRemote = true
+  useForceIfIncludes = true
 
 [rebase]
   autoStash = true
+  missingCommitsCheck = error
   updateRefs = true
 
 [remote "origin"]
@@ -95,3 +97,7 @@
 [rerere]
   enabled = true
   autoUpdate = true
+
+
+[safe]
+  bareRepository = explicit
