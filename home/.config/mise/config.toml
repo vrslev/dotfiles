@@ -11,7 +11,8 @@ XDG_CACHE_HOME = "{{env.HOME}}/.cache"
 LANG = "en_US.UTF-8"
 LANGUAGE = "{{env.LANG}}"
 LC_ALL = "{{env.LANG}}"
-EDITOR = "code --wait"
+EDITOR = "micro"
+VISUAL = "micro"
 PYTHONPYCACHEPREFIX = "{{env.XDG_CACHE_HOME}}/python/pycache"
 MYPY_CACHE_DIR = "{{env.XDG_CACHE_HOME}}/mypy"
 RUFF_CACHE_DIR = "{{env.XDG_CACHE_HOME}}/ruff"
@@ -91,6 +92,7 @@ uv = { version = "latest", postinstall = "mise run _install-fish-completions uv 
 xh = { version = "latest", postinstall = "mise run _install-fish-completions xh --generate complete-fish && mkdir -p ~/.local/bin && ln (which xh) ~/.local/bin/xhs" }
 yq = { version = "latest", postinstall = "mise run _install-fish-completions yq completion fish" }
 zoxide = "latest"
+"aqua:zyedidia/micro" = "latest"
 "cargo:mergiraf" = { version = "latest", postinstall = "mergiraf languages --gitattributes > $DOTFILES_ROOT/home/.config/git/gitattributes" }
 "cargo:tokei" = "latest"
 "npm:confluence-cli" = "latest"
@@ -106,7 +108,6 @@ zoxide = "latest"
 "npm:agent-browser" = "latest"
 "github:umputun/revdiff" = "latest"
 "npm:@earendil-works/pi-coding-agent" = "latest"
-"npm:@openai/codex" = "latest"
 "github:eugene1g/agent-safehouse" = { version = "latest", asset_pattern = "safehouse.sh" }
 "github:charmbracelet/glow" = "latest"
 

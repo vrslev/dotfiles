@@ -38,7 +38,7 @@
   ui = auto
 
 [core]
-  editor = code --wait
+  editor = micro
   pager = delta
   attributesFile = ~/.config/git/gitattributes
 
