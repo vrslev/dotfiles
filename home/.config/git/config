@@ -12,11 +12,11 @@
   a = add
   sw = switch
   swc = switch --create
-  main-branch = !git rev-parse --verify --quiet --abbrev-ref origin/HEAD -- | yq 'sub(\"origin/\", \"\")'
-  main = !git sw "$(git main-branch)"
+  main-branch = "!branch=$(git symbolic-ref --short refs/remotes/origin/HEAD) && printf '%s\\n' \"${branch#origin/}\""
+  main = !git switch \"$(git main-branch)\"
   cm = commit -m
   cm1 = commit -m 1
-  ca = !git add . && git commit -m
+  ca = !git add --all && git commit -m
   cai = !cai
   caip = !cai --push
   empty = !git commit -m 'empty' --allow-empty && git push
@@ -24,17 +24,57 @@
   d = diff
   ds = diff --staged
   st = status
-  rm-merged-branches = !git worktree prune --expire now && git branch --merged "$(git main-branch)" --format '%(refname:short) %(upstream:track)' | awk '$2 == \"[gone]\" { print $1 }' | xargs -r git branch -d
-  sync = !git main && git pull --prune && git rm-merged-branches
-	reword = "!f() {\n  GIT_SEQUENCE_EDITOR=\"perl -i -pe 's/^pick/reword/ if $. == 1'\" GIT_EDITOR=\"printf \\\"%s\\n\\\" \\\"$2\\\" >\" git rebase -i \"$1^\";\n}; f"
-  undo = reset HEAD^
+  rm-merged-branches = !git worktree prune --expire now && git branch --merged \"$(git main-branch)\" --format '%(refname:short) %(upstream:track)' | awk '$2 == \"[gone]\" { print $1 }' | xargs -r git branch -d
+  sync = !git main && git pull && git rm-merged-branches
+  fixup = history fixup
+  reword = history reword
+  split = history split
+  undo = reset --mixed HEAD^
 
-[rerere]
-  enabled = true
-  autoupdate = true
+[branch]
+  sort = -committerdate
+
+[column]
+  ui = auto
+
+[core]
+  editor = code --wait
+  pager = delta
+  attributesFile = ~/.config/git/gitattributes
+
+[delta]
+  navigate = true
+
+[diff]
+  tool = vscode
+  colorMoved = default
+
+[difftool "vscode"]
+  cmd = code --wait --diff $LOCAL $REMOTE
 
 [fetch]
   prune = true
+
+[help]
+  autoCorrect = prompt
+
+[hook "last-commit-msg"]
+  command = gen-last-commit-msg
+  event = post-commit
+
+[interactive]
+  diffFilter = delta --color-only
+
+[merge]
+  conflictStyle = zdiff3
+  tool = vscode
+
+[merge "mergiraf"]
+  name = mergiraf
+  driver = mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P
+
+[mergetool "vscode"]
+  cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
 
 [pull]
   rebase = true
@@ -44,48 +84,11 @@
 
 [rebase]
   autoStash = true
+  updateRefs = true
 
-[branch]
-  sort = -committerdate
+[remote "origin"]
+  followRemoteHEAD = always
 
-[help]
-  autoCorrect = 10
-
-[core]
-  editor = code --wait
-  pager = delta
-	attributesfile = ~/.config/git/gitattributes
-  hooksPath = ~/.config/git/hooks
-
-[diff]
-  tool = vscode
-  colorMoved = default
-
-[difftool "vscode"]
-  cmd = code --wait --diff $LOCAL $REMOTE
-
-[merge]
-  conflictstyle = diff3
-  tool = vscode
-
-[merge]
-  tool = vscode
-
-[mergetool "vscode"]
-  cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
-
-[merge "mergiraf"]
-	name = mergiraf
-	driver = mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P
-
-[interactive]
-  diffFilter = delta --color-only
-
-[delta]
-  navigate = true
-
-[color]
-  ui = true
-
-[column]
-  ui = auto
+[rerere]
+  enabled = true
+  autoUpdate = true
