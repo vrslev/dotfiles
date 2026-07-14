@@ -1,6 +1,6 @@
 # Lev's dotfiles
 
-I use macOS, [Visual Studio Code](https://code.visualstudio.com), [Ghostty](https://ghostty.org/), [Fish](https://fishshell.com).
+I use macOS, [Visual Studio Code](https://code.visualstudio.com), [Codex](https://openai.com/codex/), [Ghostty](https://ghostty.org/), [Fish](https://fishshell.com).
 
 ## Notable places
 
