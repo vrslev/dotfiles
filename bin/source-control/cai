@@ -8,7 +8,7 @@ Usage: cai [options]
 Stage changes, generate a commit message with pi, and commit.
 
 Options:
-  --staged                    Use current staged changes; do not run git add .
+  --staged                    Use current staged changes; do not run git add --all
   --push                      Run git push after committing
   --provider NAME             pi provider; defaults to PI_COMMIT_PROVIDER or pi settings
   --model PATTERN             pi model pattern/id; defaults to PI_COMMIT_MODEL or pi settings
@@ -69,7 +69,7 @@ while (($#)); do
 done
 
 if ((stage_changes)); then
-    git add .
+    git add --all
 fi
 
 if git diff --cached --quiet --exit-code; then
