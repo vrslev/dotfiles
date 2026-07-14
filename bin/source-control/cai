@@ -77,25 +77,23 @@ if git diff --cached --quiet --exit-code; then
     exit 1
 fi
 
-if ((${#generator_arguments[@]})); then
-    if ! commit_message="$(gen-commit-msg --staged "${generator_arguments[@]}")"; then
-        echo "cai: failed to generate commit message" >&2
-        exit 1
-    fi
-else
-    if ! commit_message="$(gen-commit-msg --staged)"; then
-        echo "cai: failed to generate commit message" >&2
-        exit 1
-    fi
-fi
-
-if [[ -z "$commit_message" ]]; then
-    echo "cai: empty commit message" >&2
-    exit 1
+retry_with_post_commit_hook=0
+if ! commit_message="$(gen-commit-msg --staged "${generator_arguments[@]}")"; then
+    echo "cai: generation failed; committing with placeholder 1" >&2
+    commit_message=1
+    retry_with_post_commit_hook=1
+elif [[ -z "$commit_message" ]]; then
+    echo "cai: empty message; committing with placeholder 1" >&2
+    commit_message=1
+    retry_with_post_commit_hook=1
 fi
 
 echo "cai: $commit_message" >&2
-CAI_SKIP_POST_COMMIT=1 git commit -m "$commit_message"
+if ((retry_with_post_commit_hook)); then
+    git commit -m "$commit_message"
+else
+    CAI_SKIP_POST_COMMIT=1 git commit -m "$commit_message"
+fi
 
 if ((push_after_commit)); then
     git push
