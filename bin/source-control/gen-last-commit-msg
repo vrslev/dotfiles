@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -euo pipefail
 
 if [ -n "${CAI_SKIP_POST_COMMIT:-}" ]; then
@@ -7,5 +7,5 @@ fi
 
 last_commit_id=$(git rev-parse HEAD)
 if new_commit_message=$(gen-commit-msg "$last_commit_id") && test -n "$new_commit_message"; then
-    git commit --amend -m "$new_commit_message" --no-verify
+    CAI_SKIP_POST_COMMIT=1 git commit --amend -m "$new_commit_message" --no-verify
 fi
