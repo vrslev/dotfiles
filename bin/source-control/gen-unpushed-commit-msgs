@@ -1,19 +1,138 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -euo pipefail
 
-unpushed_commits=$(git log @{u}.. --pretty=format:"%H" || git log $(git main-branch).. --pretty=format:"%H")
-if [ -z "$unpushed_commits" ]; then
-  echo "No unpushed commits found."
-  exit 0
+usage() {
+    cat <<'EOF'
+Usage: gen-unpushed-commit-msgs [--dry-run] [--yes]
+
+Generate messages for placeholder commits that are not present upstream.
+
+Options:
+  --dry-run  Show proposed rewrites without changing history
+  --yes      Rewrite without prompting
+  -h, --help Show this help
+EOF
+}
+
+if [[ ${1:-} == "--write-message" ]]; then
+    printf '%s\n' "${GEN_UNPUSHED_COMMIT_MESSAGE:?}" > "$2"
+    exit 0
 fi
 
-for commit_id in $unpushed_commits; do
-  new_commit_message=$(gen-commit-msg "$commit_id")
-  echo $new_commit_message
-  if ! test -z "$new_commit_message"; then
-      echo "$commit_id: updated message to \"$new_commit_message\""
-      git reword "$commit_id" "$new_commit_message"
-  fi
+dry_run=0
+assume_yes=0
+
+while (($#)); do
+    case "$1" in
+        --dry-run)
+            dry_run=1
+            shift
+            ;;
+        --yes)
+            assume_yes=1
+            shift
+            ;;
+        -h | --help)
+            usage
+            exit 0
+            ;;
+        *)
+            echo "gen-unpushed-commit-msgs: unknown argument: $1" >&2
+            usage >&2
+            exit 2
+            ;;
+    esac
 done
 
-echo "AI commit message generation complete for all unpushed commits."
+branch_name="$(git branch --show-current)"
+if [[ -z "$branch_name" ]]; then
+    echo "gen-unpushed-commit-msgs: detached HEAD is not supported" >&2
+    exit 1
+fi
+
+if upstream="$(git rev-parse --abbrev-ref --symbolic-full-name '@{upstream}' 2>/dev/null)"; then
+    base="$upstream"
+elif git show-ref --verify --quiet "refs/remotes/origin/$branch_name"; then
+    base="origin/$branch_name"
+else
+    main_branch="$(git main-branch)"
+    if git show-ref --verify --quiet "refs/remotes/origin/$main_branch"; then
+        base="origin/$main_branch"
+    else
+        base="$main_branch"
+    fi
+fi
+
+if ! git rev-parse --verify --quiet "$base^{commit}" >/dev/null; then
+    echo "gen-unpushed-commit-msgs: base $base does not exist" >&2
+    exit 1
+fi
+
+range="$base..HEAD"
+if [[ -n "$(git rev-list --merges --max-count=1 "$range")" ]]; then
+    echo "gen-unpushed-commit-msgs: $range contains merges, which git history cannot rewrite" >&2
+    exit 1
+fi
+
+commit_ids=()
+new_messages=()
+while IFS= read -r commit_id; do
+    if ! new_commit_message="$(gen-commit-msg "$commit_id")"; then
+        echo "gen-unpushed-commit-msgs: message generation failed; history was not changed" >&2
+        exit 1
+    fi
+    [[ -n "$new_commit_message" ]] || continue
+
+    current_message="$(git log -1 --format=%B "$commit_id")"
+    [[ "$new_commit_message" != "$current_message" ]] || continue
+
+    commit_ids+=("$commit_id")
+    new_messages+=("$new_commit_message")
+    old_subject="$(git log -1 --format=%s "$commit_id")"
+    new_subject="${new_commit_message%%$'\n'*}"
+    printf '%s: %s -> %s\n' "${commit_id:0:12}" "$old_subject" "$new_subject"
+done < <(git rev-list "$range")
+
+if ((${#commit_ids[@]} == 0)); then
+    echo "No placeholder commit messages to update."
+    exit 0
+fi
+
+if ((dry_run)); then
+    exit 0
+fi
+
+if ((!assume_yes)); then
+    if [[ ! -t 0 ]]; then
+        echo "gen-unpushed-commit-msgs: rerun with --yes to rewrite in a non-interactive shell" >&2
+        exit 2
+    fi
+    read -r -p "Rewrite ${#commit_ids[@]} commit message(s)? [y/N] " reply
+    [[ "$reply" == [yY] ]] || exit 0
+fi
+
+original_head="$(git rev-parse HEAD)"
+backup_ref="refs/rewritten/gen-unpushed-commit-msgs/$original_head"
+git update-ref "$backup_ref" "$original_head"
+rewrite_succeeded=0
+
+cleanup() {
+    if ((rewrite_succeeded)); then
+        git update-ref -d "$backup_ref" || true
+    else
+        echo "gen-unpushed-commit-msgs: original HEAD saved at $backup_ref" >&2
+    fi
+}
+trap cleanup EXIT
+
+printf -v editor_command '%q --write-message' "$0"
+
+# Newest-first order keeps the remaining ancestor IDs valid after each rewrite.
+for index in "${!commit_ids[@]}"; do
+    GEN_UNPUSHED_COMMIT_MESSAGE="${new_messages[$index]}" \
+        GIT_EDITOR="$editor_command" \
+        git history reword "${commit_ids[$index]}" --update-refs=head
+done
+
+rewrite_succeeded=1
+echo "Updated ${#commit_ids[@]} unpushed commit message(s)."
