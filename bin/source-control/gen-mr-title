@@ -1,4 +1,4 @@
-#!/usr/bin/env uv run --script
+#!/usr/bin/env -S uv run --python 3.14 --script
 # /// script
 # requires-python = ">=3.14"
 # dependencies = [
@@ -63,7 +63,7 @@ def main():
     try:
         # Get branch name for context
         branch_name = subprocess.run(
-            ["git", "rev-parse", "--abbrev-ref", "HEAD"],
+            ["git", "branch", "--show-current"],
             capture_output=True,
             text=True,
             check=True,
@@ -90,6 +90,9 @@ def main():
             else:
                 # Final fallback: default branch
                 target_branch = get_default_branch()
+
+        if target_branch == branch_name:
+            target_branch = get_default_branch()
 
         # Find the common ancestor (merge base) between current branch and target branch
         merge_base = subprocess.run(

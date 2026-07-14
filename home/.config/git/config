@@ -12,11 +12,11 @@
   a = add
   sw = switch
   swc = switch --create
-  main-branch = !git rev-parse --verify --quiet --abbrev-ref origin/HEAD -- | yq 'sub(\"origin/\", \"\")'
-  main = !git sw "$(git main-branch)"
+  main-branch = "!branch=$(git symbolic-ref --short refs/remotes/origin/HEAD) && printf '%s\\n' \"${branch#origin/}\""
+  main = !git switch \"$(git main-branch)\"
   cm = commit -m
   cm1 = commit -m 1
-  ca = !git add . && git commit -m
+  ca = !git add --all && git commit -m
   cai = !cai
   caip = !cai --push
   empty = !git commit -m 'empty' --allow-empty && git push
@@ -24,38 +24,29 @@
   d = diff
   ds = diff --staged
   st = status
-  rm-merged-branches = !git worktree prune --expire now && git branch --merged "$(git main-branch)" --format '%(refname:short) %(upstream:track)' | awk '$2 == \"[gone]\" { print $1 }' | xargs -r git branch -d
-  sync = !git main && git pull --prune && git rm-merged-branches
-	reword = "!f() {\n  GIT_SEQUENCE_EDITOR=\"perl -i -pe 's/^pick/reword/ if $. == 1'\" GIT_EDITOR=\"printf \\\"%s\\n\\\" \\\"$2\\\" >\" git rebase -i \"$1^\";\n}; f"
-  undo = reset HEAD^
-
-[rerere]
-  enabled = true
-  autoupdate = true
-
-[fetch]
-  prune = true
-
-[pull]
-  rebase = true
-
-[push]
-  autoSetupRemote = true
-
-[rebase]
-  autoStash = true
+  rm-merged-branches = !git worktree prune --expire now && git branch --merged \"$(git main-branch)\" --format '%(refname:short) %(upstream:track)' | awk '$2 == \"[gone]\" { print $1 }' | xargs -r git branch -d
+  sync = !git main && git pull && git rm-merged-branches
+  fixup = history fixup
+  reword = history reword
+  split = history split
+  undo = reset --mixed HEAD^
 
 [branch]
   sort = -committerdate
 
-[help]
-  autoCorrect = 10
+[column]
+  ui = auto
 
 [core]
   editor = code --wait
   pager = delta
-	attributesfile = ~/.config/git/gitattributes
-  hooksPath = ~/.config/git/hooks
+  attributesFile = ~/.config/git/gitattributes
+
+[delta]
+  navigate = true
+  line-numbers = true
+  hyperlinks = true
+  hyperlinks-file-link-format = vscode://file/{path}:{line}
 
 [diff]
   tool = vscode
@@ -64,28 +55,48 @@
 [difftool "vscode"]
   cmd = code --wait --diff $LOCAL $REMOTE
 
-[merge]
-  conflictstyle = diff3
-  tool = vscode
+[fetch]
+  prune = true
 
-[merge]
-  tool = vscode
+[help]
+  autoCorrect = prompt
 
-[mergetool "vscode"]
-  cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
-
-[merge "mergiraf"]
-	name = mergiraf
-	driver = mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P
+[hook "last-commit-msg"]
+  command = gen-last-commit-msg
+  event = post-commit
 
 [interactive]
   diffFilter = delta --color-only
 
-[delta]
-  navigate = true
+[merge]
+  conflictStyle = zdiff3
+  tool = vscode
 
-[color]
-  ui = true
+[merge "mergiraf"]
+  name = mergiraf
+  driver = mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P
 
-[column]
-  ui = auto
+[mergetool "vscode"]
+  cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
+
+[pull]
+  rebase = true
+
+[push]
+  autoSetupRemote = true
+  useForceIfIncludes = true
+
+[rebase]
+  autoStash = true
+  missingCommitsCheck = error
+  updateRefs = true
+
+[remote "origin"]
+  followRemoteHEAD = always
+
+[rerere]
+  enabled = true
+  autoUpdate = true
+
+[safe]
+  bareRepository = explicit

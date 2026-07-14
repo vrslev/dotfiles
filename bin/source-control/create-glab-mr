@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
 usage() {
     cat <<'EOF'
@@ -23,11 +24,11 @@ fi
 
 cai || true
 
-branch_name="$(git rev-parse --abbrev-ref HEAD)"
-work_issue_no="$(get-work-issue-no $branch_name)"
+branch_name="$(git branch --show-current)"
+work_issue_no="$(get-work-issue-no "$branch_name")"
 
 title=""
-if [ -n "$1" ]; then
+if [ -n "${1:-}" ]; then
     if [ "$1" = "--use-last-commit-msg" ]; then
         title="$(git log -1 --pretty=%B | head -1)"
     else

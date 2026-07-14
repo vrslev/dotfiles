@@ -41,7 +41,7 @@ def iter_paths_with_ignores(root_path: Path) -> Iterable[Path]:
 def iter_git_repos(root_path: Path) -> Iterable[Path]:
     for child_path in iter_paths_with_ignores(root_path):
         with suppress(PermissionError):
-            if (child_path / ".git").is_dir():
+            if (child_path / ".git").exists():
                 yield child_path
 
 
