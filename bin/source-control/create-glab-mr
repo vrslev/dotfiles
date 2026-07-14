@@ -22,10 +22,7 @@ if [ "${1:-}" = "--help" ] || [ "${1:-}" = "-h" ]; then
     exit 0
 fi
 
-if ! cai && ! git diff --cached --quiet; then
-    echo "create-glab-mr: cai failed; committing staged changes with a placeholder" >&2
-    git commit -m 1
-fi
+cai || true
 
 branch_name="$(git branch --show-current)"
 work_issue_no="$(get-work-issue-no "$branch_name")"
