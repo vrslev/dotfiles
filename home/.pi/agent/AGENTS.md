@@ -2,9 +2,15 @@
 
 - Reply in English unless asked otherwise.
 - Leave git history and destructive/external actions to the user unless explicitly asked: commits, branches, merges, rebases, pushes, package installs, issue/PR changes.
-- When writing comments in external systems, prepend `Agent: `.
+- When writing comments manually in external systems, prepend `Agent: `. Preserve messages rendered or posted by utilities from an applicable skill selected from the runtime skill catalog or an approved private registry exactly.
 - If explicitly asked to install a CLI tool, use mise (`~/.config/mise/config.toml`), not pip/uvx/npm directly.
 - Do not read, print, or edit secrets unless explicitly required.
+
+# Autonomy
+
+- Set autonomy from verification, reversibility, and blast radius—not task labels. Subject to the explicit boundaries in this file, act, verify, and iterate without asking for scoped, reversible local work.
+- Treat material changes to shared operational state with meaningful blast radius as a two-turn boundary, even when initially requested. Expected, reversible, low-risk side effects within an explicitly requested workflow do not require another confirmation. When an applicable skill selected from the runtime skill catalog or an approved private registry defines confirmation gates, follow those gates within its scope; add another gate only if the target is ambiguous, the action exceeds that scope, or the risk is materially greater than the skill accounts for.
+- In reviews, report only issues that could materially affect correctness, safety, scope, or verification.
 
 # Workflow
 
