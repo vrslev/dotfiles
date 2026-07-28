@@ -1,61 +1,89 @@
 # Lev's dotfiles
 
-I use macOS, [Visual Studio Code](https://code.visualstudio.com), [Codex](https://openai.com/codex/), [Ghostty](https://ghostty.org/), [Fish](https://fishshell.com).
+I use macOS, [Visual Studio Code](https://code.visualstudio.com), [Codex](https://openai.com/codex/), [Ghostty](https://ghostty.org/), [Fish](https://fishshell.com), and [mise](https://mise.jdx.dev).
 
 ## Notable places
 
-- [`bin`](bin)
+- [`home/.config/mise/config.toml`](home/.config/mise/config.toml) — global tools, environment, packages, dotfiles, macOS defaults, and sync tasks
+- [`bin`](bin) — reusable commands
+- [`home`](home) — files linked into `$HOME`
 - [`home/.pi/agent`](home/.pi/agent)
 - [`home/Library/Application Support/Code (VS Code)`](home/Library/Application%20Support/Code)
-- [`home/.config/mise/config.toml`](home/.config/mise/config.toml)
-- [`Brewfile`](Brewfile)
 - [`home/.config/git`](home/.config/git)
 
-## Getting started
+## Migrate this Mac
 
-Open terminal and install [Homebrew](https://brew.sh):
+Once this version is checked out at `~/code/dotfiles`, migrate the existing installation with:
+
+```sh
+mise bootstrap --yes
+```
+
+Bootstrap is the migration. It installs anything missing, replaces the old linker with mise-managed symlinks, applies macOS defaults, configures Fish, starts Ollama, and verifies the resulting state. It is safe to re-run.
+
+Restart the Mac after the first successful migration so applications reload the managed defaults.
+
+## Set up a new Mac
+
+Install [Homebrew](https://brew.sh):
 
 ```sh
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-Set up Fish:
+Clone this repository:
 
 ```sh
-/opt/homebrew/bin/brew install fish
-sudo /bin/bash -c "echo /opt/homebrew/bin/fish >>/etc/shells"
-chsh -s /opt/homebrew/bin/fish
+mkdir -p ~/code
+git clone https://github.com/vrslev/dotfiles ~/code/dotfiles
+cd ~/code/dotfiles
 ```
 
-Open another terminal tab and clone this repository:
+Install mise:
 
 ```sh
-mkdir code
-git clone https://github.com/vrslev/dotfiles code/dotfiles
-cd code/dotfiles
-```
-
-Install [mise](https://mise.jdx.dev):
-
-```sh
-eval (/opt/homebrew/bin/brew shellenv)
+eval "$(/opt/homebrew/bin/brew shellenv)"
 brew install mise
 ```
 
-Install dependencies for the first time:
+Bootstrap from the global config source before it has been linked into place:
 
 ```sh
-eval (/opt/homebrew/bin/brew shellenv)
-/opt/homebrew/bin/brew bundle --file Brewfile --no-restart
-MISE_GLOBAL_CONFIG_FILE=home/.config/mise/config.toml mise up --yes --jobs 16
+MISE_GLOBAL_CONFIG_FILE="$PWD/home/.config/mise/config.toml" \
+  mise bootstrap --yes
 ```
 
-Install dotfiles:
+The config is global once `~/.config/mise` points to `home/.config/mise`; there is no project-local `mise.toml`. Restart the computer after the first bootstrap.
+
+## Maintenance
+
+The routine command to remember is:
 
 ```sh
-./bin/dotfiles/link-config-files
-./bin/dotfiles/sync-deps
-sudo ./bin/dotfiles/set-macos-defaults
+mise run sync:all
 ```
 
-Restart the computer to apply macOS defaults.
+It fast-forwards the repository, re-applies links, and synchronizes tools and packages. Ollama is restarted only when its installed version changes.
+
+The narrower tasks and read-only status commands are discoverable instead of needing to be memorized:
+
+```sh
+mise tasks
+mise bootstrap status
+```
+
+Use mise directly to manage dotfiles:
+
+```sh
+mise dotfiles add --global ~/.example
+mise dotfiles apply --yes
+```
+
+## Caveats
+
+- `sync:all` uses `git pull --ff-only`; it stops instead of rebasing a divergent checkout.
+- Removing a package from `[bootstrap.packages]` does not uninstall it. Prune packages only when removal is intentional.
+- Mise refuses conflicting dotfile targets by default. Inspect the conflict instead of reaching for `--force`.
+- The config assumes this repository lives at `~/code/dotfiles`, and most versions are `latest`, so a fresh bootstrap can resolve newer software.
+- Safari defaults and VS Code extensions are intentionally unmanaged.
+- The official ChatGPT cask currently owns the same `/Applications/ChatGPT.app` used by Codex. An identical existing bundle can be adopted; a different bundle at that path blocks installation rather than being overwritten.

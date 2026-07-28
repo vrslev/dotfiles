@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-set -xeuo pipefail
-
-cd $DOTFILES_ROOT
-git pull
-
-link-config-files
-sync-deps

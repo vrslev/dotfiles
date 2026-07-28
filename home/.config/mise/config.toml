@@ -1,12 +1,12 @@
 [env]
 _.path = [
-    "~/code/dotfiles/bin/dotfiles",
-    "~/code/dotfiles/bin/source-control",
-    "~/code/dotfiles/bin/utils",
-    "~/.local/bin",
-    "~/.cargo/bin",
+  "~/code/dotfiles/bin/dotfiles",
+  "~/code/dotfiles/bin/source-control",
+  "~/code/dotfiles/bin/utils",
+  "~/.local/bin",
+  "~/.cargo/bin",
 ]
-_.file = { path = "{{config_root}}/.config/mise/.env" }
+_.file = { path = "{{env.HOME}}/.config/mise/.env" }
 XDG_CACHE_HOME = "{{env.HOME}}/.cache"
 LANG = "en_US.UTF-8"
 LANGUAGE = "{{env.LANG}}"
@@ -24,7 +24,7 @@ HOMEBREW_DOWNLOAD_CONCURRENCY = "auto"
 UV_SYSTEM_CERTS = "true"
 DOTFILES_ROOT = "{{env.HOME}}/code/dotfiles"
 STARSHIP_LOG = "error"
-LOCAL_FISH_COMPLETION_DIR = "{{config_root}}/.config/fish/completions"
+LOCAL_FISH_COMPLETION_DIR = "{{env.HOME}}/.config/fish/completions"
 COMPOSE_PROGRESS = "quiet"
 PI_SKIP_VERSION_CHECK = 1
 PI_CACHE_RETENTION = "long"
@@ -79,17 +79,17 @@ kubectl = "latest"
 glab = "latest"
 node = "24"
 python = [
-    { version = "3.14", postinstall = "pip install mypy" },
-    { version = "3.13", postinstall = "pip install mypy" },
-    { version = "3.12", postinstall = "pip install mypy" },
-    { version = "3.11", postinstall = "pip install mypy" },
-    { version = "3.10", postinstall = "pip install mypy" },
+  { version = "3.14", postinstall = "pip install mypy" },
+  { version = "3.13", postinstall = "pip install mypy" },
+  { version = "3.12", postinstall = "pip install mypy" },
+  { version = "3.11", postinstall = "pip install mypy" },
+  { version = "3.10", postinstall = "pip install mypy" },
 ]
 ripgrep = { version = "latest", postinstall = "mise run _install-fish-completions rg --generate complete-fish" }
 starship = "latest"
 usage = "latest"
 uv = { version = "latest", postinstall = "mise run _install-fish-completions uv generate-shell-completion fish" }
-xh = { version = "latest", postinstall = "mise run _install-fish-completions xh --generate complete-fish && mkdir -p ~/.local/bin && ln (which xh) ~/.local/bin/xhs" }
+xh = { version = "latest", postinstall = "mise run _install-fish-completions xh --generate complete-fish && mkdir -p ~/.local/bin && ln -f \"$(command -v xh)\" ~/.local/bin/xhs" }
 yq = { version = "latest", postinstall = "mise run _install-fish-completions yq completion fish" }
 zoxide = "latest"
 "aqua:zyedidia/micro" = "latest"
@@ -103,6 +103,7 @@ zoxide = "latest"
 "pipx:yt-dlp" = "latest"
 "spm:sindresorhus/macos-trash" = "latest"
 "github:ankitpokhrel/jira-cli" = { version = "latest", postinstall = "mise run _install-fish-completions jira completion fish" }
+"github:getsentry/cli" = "latest"
 "pipx:ty" = "latest"
 "npm:typescript-language-server" = "latest"
 "npm:agent-browser" = "latest"
@@ -114,17 +115,207 @@ zoxide = "latest"
 
 [settings]
 experimental = true
-trusted_config_paths = [
-    "~/.config/mise/config.toml",
-    "~/.config/mise/config.local.toml",
-    "~/code/dotfiles/home/.config/mise/config.toml",
-    "~/code/dotfiles/home/.config/mise/config.local.toml",
-]
+dotfiles.root = "~/code/dotfiles/home"
+dotfiles.default_mode = "symlink"
 fetch_remote_versions_cache = "2d"
-fetch_remote_versions_timeout = "1s"
+fetch_remote_versions_timeout = "15m"
 pipx.uvx = true
 python.uv_venv_auto = "source"
 python.compile = false
 cargo.binstall = true
 github_attestations = false
 minimum_release_age = "7d"
+
+[task_config]
+shell = "bash -c"
+
+[dotfiles]
+"~/.bashrc" = { mode = "symlink" }
+"~/.claude/CLAUDE.md" = { source = "~/code/dotfiles/home/.pi/agent/AGENTS.md", mode = "symlink" }
+"~/.codex/AGENTS.md" = { mode = "symlink" }
+"~/.codex/skills/brainstorm-funnel" = { mode = "symlink" }
+"~/.codex/skills/double-check" = { mode = "symlink" }
+"~/.codex/skills/eval-designer" = { mode = "symlink" }
+"~/.codex/skills/private-skill-registries" = { mode = "symlink" }
+"~/.codex/skills/prompt-surgeon" = { mode = "symlink" }
+"~/.config/fish/config.fish" = { mode = "symlink" }
+"~/.config/ghostty/config" = { mode = "symlink" }
+"~/.config/git" = { mode = "symlink" }
+"~/.config/mise" = { mode = "symlink" }
+"~/.config/revdiff/config" = { mode = "symlink" }
+"~/.config/revdiff/themes/github-light" = { mode = "symlink" }
+"~/.config/starship.toml" = { mode = "symlink" }
+"~/.config/ty/ty.toml" = { mode = "symlink" }
+"~/.config/zed/keymap.json" = { mode = "symlink" }
+"~/.config/zed/settings.json" = { mode = "symlink" }
+"~/.hushlogin" = { mode = "symlink" }
+"~/.local/bin/vscode-kubectl-stub" = { mode = "symlink" }
+"~/.pi/agent/AGENTS.md" = { mode = "symlink" }
+"~/.pi/agent/extensions" = { mode = "symlink" }
+"~/.pi/agent/keybindings.json" = { mode = "symlink" }
+"~/.pi/agent/settings.json" = { mode = "symlink" }
+"~/.pi/agent/skills" = { mode = "symlink" }
+"~/Library/Application Support/Code/User/keybindings.json" = { mode = "symlink" }
+"~/Library/Application Support/Code/User/settings.json" = { mode = "symlink" }
+"~/Library/Application Support/Code/User/snippets" = { mode = "symlink" }
+"~/Library/Application Support/pypoetry/config.toml" = { mode = "symlink" }
+
+[bootstrap.packages]
+"brew:bison" = "latest"
+"brew:ca-certificates" = "latest"
+"brew:cmake" = "latest"
+"brew:eza" = "latest"
+"brew:ffmpeg" = "latest"
+"brew:fish" = "latest"
+"brew:git" = "latest"
+"brew:graphviz" = "latest"
+"brew:jfrog-cli" = "latest"
+"brew:libmagic" = "latest"
+"brew:mas" = "latest"
+"brew:mise" = "latest"
+"brew:ollama" = "latest"
+"brew:pandoc" = "latest"
+"brew:parallel" = "latest"
+"brew:postgresql@14" = "latest"
+"brew:snappy" = "latest"
+"brew:telnet" = "latest"
+"brew:tmux" = "latest"
+"brew:tree" = "latest"
+"brew:watch" = "latest"
+"brew:wget" = "latest"
+"brew-cask:chatgpt" = "latest"
+"brew-cask:eqmac" = "latest"
+"brew-cask:font-fira-code-nerd-font" = "latest"
+"brew-cask:freelens" = "latest"
+"brew-cask:ghostty" = "latest"
+"brew-cask:handy" = "latest"
+"brew-cask:iina" = "latest"
+"brew-cask:jordanbaird-ice" = "latest"
+"brew-cask:localsend" = "latest"
+"brew-cask:orbstack" = "latest"
+"brew-cask:postman" = "latest"
+"brew-cask:rectangle" = "latest"
+"brew-cask:spotify" = "latest"
+"brew-cask:the-unarchiver" = "latest"
+"brew-cask:transmission" = "latest"
+"brew-cask:visual-studio-code" = "latest"
+"brew-cask:zed" = "latest"
+"mas:1473808464" = "latest"                     # Focusito
+"mas:682658836" = "latest"                      # GarageBand
+"mas:409183694" = "latest"                      # Keynote
+"mas:409203825" = "latest"                      # Numbers
+"mas:409201541" = "latest"                      # Pages
+"mas:1289583905" = "latest"                     # Pixelmator Pro
+"mas:1529448980" = "latest"                     # Reeder
+"mas:932747118" = "latest"                      # Shadowrocket
+"mas:897283731" = "latest"                      # Strongbox
+"mas:904280696" = "latest"                      # Things
+"mas:1662217862" = "latest"                     # Wipr
+
+[bootstrap.macos.defaults.NSGlobalDomain]
+NSWindowResizeTime = 0.001
+ApplePressAndHoldEnabled = false
+KeyRepeat = 1
+InitialKeyRepeat = 10
+NSNavPanelExpandedStateForSaveMode = true
+NSNavPanelExpandedStateForSaveMode2 = true
+PMPrintingExpandedStateForPrint = true
+PMPrintingExpandedStateForPrint2 = true
+NSAutomaticWindowAnimationsEnabled = false
+AppleShowAllExtensions = true
+
+[bootstrap.macos.defaults."com.apple.finder"]
+QuitMenuItem = true
+DisableAllAnimations = true
+ShowStatusBar = true
+_FXSortFoldersFirst = true
+FXDefaultSearchScope = "SCcf"
+FXEnableExtensionChangeWarning = false
+FXPreferredViewStyle = "Nlsv"
+OpenWindowForNewRemovableDisk = true
+
+[bootstrap.macos.defaults."com.apple.frameworks.diskimages"]
+auto-open-ro-root = true
+auto-open-rw-root = true
+skip-verify = true
+skip-verify-locked = true
+skip-verify-remote = true
+
+[bootstrap.macos.defaults."com.apple.dock"]
+tilesize = 36
+launchanim = false
+expose-animation-duration = 0.1
+autohide-delay = 0.0
+autohide-time-modifier = 0.0
+show-recents = false
+size-immutable = true
+
+[bootstrap.macos.defaults."com.apple.print.PrintingPrefs"]
+"Quit When Finished" = true
+
+[bootstrap.macos.defaults."com.apple.LaunchServices"]
+LSQuarantine = false
+
+[bootstrap.macos.defaults."com.apple.desktopservices"]
+DSDontWriteNetworkStores = true
+DSDontWriteUSBStores = true
+
+[bootstrap.macos.defaults."com.apple.TimeMachine"]
+DoNotOfferNewDisksForBackup = true
+
+[bootstrap.macos.defaults."com.apple.HIToolbox"]
+AppleFnUsageType = 2
+
+[bootstrap.user]
+login_shell = "/opt/homebrew/bin/fish"
+
+[bootstrap.hooks.final]
+run = "mise bootstrap status --missing"
+
+[tasks."sync:all"]
+description = "Pull, re-apply dotfiles, and update dependencies"
+run = ['git -C "$DOTFILES_ROOT" pull --ff-only', "mise run sync:after-repo"]
+
+[tasks."sync:repo"]
+description = "Fast-forward the dotfiles repository"
+run = 'git -C "$DOTFILES_ROOT" pull --ff-only'
+
+[tasks."sync:tools"]
+description = "Upgrade and prune mise-managed tools"
+run = '''
+set -euo pipefail
+
+export MISE_FETCH_REMOTE_VERSIONS_TIMEOUT=100
+mise upgrade --yes
+mise prune --yes
+mise reshim --yes
+'''
+
+[tasks."sync:packages"]
+description = "Install and upgrade machine-global packages"
+run = '''
+set -euo pipefail
+
+ollama_before="$(brew list --versions ollama 2>/dev/null || true)"
+mise bootstrap packages apply --yes
+mise bootstrap packages upgrade --yes
+ollama_after="$(brew list --versions ollama 2>/dev/null || true)"
+
+if [[ "$ollama_before" != "$ollama_after" ]]; then
+  brew services restart ollama
+else
+  brew services start ollama
+fi
+'''
+
+[tasks."sync:deps"]
+description = "Update tools and machine-global packages"
+run = [{ task = "sync:tools" }, { task = "sync:packages" }]
+
+[tasks."sync:after-repo"]
+hide = true
+run = ["mise dotfiles apply --yes", { task = "sync:deps" }]
+
+[tasks.bootstrap]
+description = "Start background services"
+run = "brew services start ollama"
