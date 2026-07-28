@@ -38,7 +38,7 @@
   ui = auto
 
 [core]
-  editor = micro
+  editor = zed --wait
   pager = delta
   attributesFile = ~/.config/git/gitattributes
 
