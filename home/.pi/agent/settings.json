@@ -12,6 +12,9 @@
     "maxRetries": 10
   },
   "steeringMode": "all",
+  "skills": [
+    "~/.codex/skills"
+  ],
   "packages": [
     "npm:@tmustier/pi-tab-status",
     "npm:pi-caffeinate",
