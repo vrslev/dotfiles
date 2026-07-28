@@ -5,10 +5,11 @@
         "source": "~/.pi/agent/AGENTS.md"
     },
     "~/.codex/AGENTS.md",
-    {
-        "target": "~/.codex/skills/pi",
-        "source": "~/code/dotfiles/home/.pi/agent/skills"
-    },
+    "~/.codex/skills/brainstorm-funnel",
+    "~/.codex/skills/double-check",
+    "~/.codex/skills/eval-designer",
+    "~/.codex/skills/private-skill-registries",
+    "~/.codex/skills/prompt-surgeon",
     "~/.config/fish/config.fish",
     "~/.config/ghostty/config",
     "~/.config/git",

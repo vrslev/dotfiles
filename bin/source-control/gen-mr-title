@@ -1,19 +1,64 @@
 #!/usr/bin/env -S uv run --python 3.14 --script
-# /// script
-# requires-python = ">=3.14"
-# dependencies = [
-#     "openai",
-# ]
-# ///
+# pyright: strict
 import os
+import re
 import subprocess
 import sys
+from typing import Final
 
-from openai import OpenAI
+from codex_generator import generate_with_codex
+
+DEFAULT_MODEL: Final = "gpt-5.6-luna"
+TITLE_PROMPT: Final = (
+    "Generate one concise, descriptive merge request title.\n"
+    "Success means:\n"
+    "- the first character is a letter\n"
+    "- the title is no more than 50 characters\n"
+    "- it describes the overall theme rather than individual commits\n"
+    "- it considers the Jira issue when one is supplied\n"
+    "- it does not use template words such as adjust\n"
+    "Return only the title, without quotes, Markdown, a prefix, or a trailing period.\n"
+    "Use only the supplied context. Do not inspect files or use tools."
+)
 
 
 def log(content: str) -> None:
     print(f"gen-mr-title: {content}", file=sys.stderr)
+
+
+def clean_title(raw_output: str) -> str:
+    output_lines = [line.strip() for line in raw_output.splitlines() if not line.strip().startswith("```")]
+    while output_lines and not output_lines[0]:
+        output_lines.pop(0)
+    if not output_lines:
+        return ""
+
+    title = re.sub(r"(?i)^(merge request|mr) title\s*:\s*", "", output_lines[0])
+    title = re.sub(r"^[-*•]\s+", "", title)
+    title = re.sub(r"\s+", " ", title.strip("`'\" ")).rstrip(".")
+    return title
+
+
+def generate_title(
+    context: str,
+    *,
+    model: str,
+    reasoning_effort: str,
+    timeout_seconds: float,
+) -> str:
+    raw_title = generate_with_codex(
+        TITLE_PROMPT,
+        context,
+        model=model,
+        reasoning_effort=reasoning_effort,
+        timeout_seconds=timeout_seconds,
+    )
+    title = clean_title(raw_title)
+    if re.match(r"^[A-Za-z]", title) is None:
+        raise RuntimeError(f"MR title must start with a letter: {title!r}")
+    if len(title) > 50:
+        raise RuntimeError(f"MR title must be at most 50 characters: {title!r}")
+    return title
 
 
 def get_default_branch() -> str:
@@ -59,7 +104,7 @@ def parse_branch_name(ref: str) -> str:
     return ref
 
 
-def main():
+def main() -> None:
     try:
         # Get branch name for context
         branch_name = subprocess.run(
@@ -160,30 +205,26 @@ def main():
                     f"failed to get Jira issue details for {issue_number}: {jira_result.stderr}"
                 )
 
-        client = OpenAI(
-            api_key=os.environ["SCRIPTS_OPENAI_API_KEY"],
-            base_url=os.environ["SCRIPTS_OPENAI_BASE_URL"],
-            timeout=5,
-            max_retries=1,
+        model = os.environ.get(
+            "CODEX_MR_TITLE_MODEL",
+            os.environ.get("CODEX_GENERATOR_MODEL", DEFAULT_MODEL),
         )
-
-        response = client.chat.completions.create(
-            model=os.environ["SCRIPTS_OPENAI_MODEL"],
-            messages=[
-                {
-                    "role": "system",
-                    "content": "Generate a concise and descriptive merge request title based on the git commits. Make sure first character of your answer is a letter. Do not use template words such as 'adjust'. Keep it really short, no more than 50 characters! Focus on the overall theme of the changes rather than individual commits. If a Jira issue is provided, consider the issue description and comments when generating the title.",
-                },
-                {
-                    "role": "user",
-                    "content": f"# Branch name: {branch_name}{jira_context}\n\n# Changes in this branch:\n{diff_text}",
-                },
-            ],
-            max_tokens=100,
-            temperature=0.5,
+        reasoning_effort = os.environ.get(
+            "CODEX_MR_TITLE_THINKING",
+            os.environ.get("CODEX_GENERATOR_THINKING", "low"),
         )
-
-        title = response.choices[0].message.content.strip()
+        timeout_seconds = float(
+            os.environ.get(
+                "CODEX_MR_TITLE_TIMEOUT",
+                os.environ.get("CODEX_GENERATOR_TIMEOUT", "60"),
+            )
+        )
+        title = generate_title(
+            f"# Branch name: {branch_name}{jira_context}\n\n# Changes in this branch:\n{diff_text}",
+            model=model,
+            reasoning_effort=reasoning_effort,
+            timeout_seconds=timeout_seconds,
+        )
         sys.stdout.write(title)
 
     except Exception as exception:

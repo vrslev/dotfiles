@@ -9,7 +9,10 @@ import subprocess
 import sys
 import typing
 
+from codex_generator import generate_with_codex
+
 DEFAULT_MAX_DIFF_CHARS: typing.Final = 32 * 1024
+DEFAULT_MODEL: typing.Final = "gpt-5.6-luna"
 CONCISE_SYSTEM_PROMPT: typing.Final = (
     "You write git commit summaries. Output exactly one line, no quotes, no Markdown, no prefix, "
     "no trailing period. Start with a letter. Keep it under 50 characters. Use imperative mood. "
@@ -26,7 +29,7 @@ MCGA_SYSTEM_PROMPT: typing.Final = (
     "Trump by name."
 )
 MCGA_USER_PROMPT: typing.Final = "Generate an MCGA-style commit message for this git diff."
-THINKING_LEVELS: typing.Final = ("off", "minimal", "low", "medium", "high", "xhigh")
+THINKING_LEVELS: typing.Final = ("low", "medium", "high", "xhigh", "max")
 COMMIT_STYLES: typing.Final = ("concise", "mcga")
 
 
@@ -34,8 +37,7 @@ COMMIT_STYLES: typing.Final = ("concise", "mcga")
 class ParsedArguments(typing.NamedTuple):
     commit_identifier: str | None
     staged: bool
-    provider: str | None
-    model: str | None
+    model: str
     thinking: str
     timeout_seconds: float
     max_diff_chars: int
@@ -43,23 +45,41 @@ class ParsedArguments(typing.NamedTuple):
 
 
 def parse_arguments(raw_arguments: list[str]) -> ParsedArguments:
-    argument_parser = argparse.ArgumentParser(description="Generate a git commit message using pi.")
+    argument_parser = argparse.ArgumentParser(description="Generate a git commit message using Codex.")
     argument_parser.add_argument("commit_identifier", nargs="?")
     argument_parser.add_argument("--staged", action="store_true", help="Generate from staged changes")
-    argument_parser.add_argument("--provider", default=os.environ.get("PI_COMMIT_PROVIDER", "openai-codex"))
-    argument_parser.add_argument("--model", default=os.environ.get("PI_COMMIT_MODEL", "gpt-5.3-codex-spark"))
+    argument_parser.add_argument(
+        "--model",
+        default=os.environ.get("CODEX_COMMIT_MODEL", os.environ.get("CODEX_GENERATOR_MODEL", DEFAULT_MODEL)),
+    )
     argument_parser.add_argument(
         "--thinking",
         choices=THINKING_LEVELS,
-        default=os.environ.get("PI_COMMIT_THINKING", "low"),
+        default=os.environ.get(
+            "CODEX_COMMIT_THINKING",
+            os.environ.get("CODEX_GENERATOR_THINKING", "low"),
+        ),
     )
-    argument_parser.add_argument("--timeout", type=float, default=float(os.environ.get("PI_COMMIT_TIMEOUT", "60")))
+    argument_parser.add_argument(
+        "--timeout",
+        type=float,
+        default=float(
+            os.environ.get(
+                "CODEX_COMMIT_TIMEOUT",
+                os.environ.get("CODEX_GENERATOR_TIMEOUT", "60"),
+            )
+        ),
+    )
     argument_parser.add_argument(
         "--max-diff-chars",
         type=int,
-        default=int(os.environ.get("PI_COMMIT_MAX_DIFF_CHARS", str(DEFAULT_MAX_DIFF_CHARS))),
+        default=int(os.environ.get("CODEX_COMMIT_MAX_DIFF_CHARS", str(DEFAULT_MAX_DIFF_CHARS))),
     )
-    argument_parser.add_argument("--style", choices=COMMIT_STYLES, default=os.environ.get("PI_COMMIT_STYLE", "concise"))
+    argument_parser.add_argument(
+        "--style",
+        choices=COMMIT_STYLES,
+        default=os.environ.get("CODEX_COMMIT_STYLE", "concise"),
+    )
     namespace = argument_parser.parse_args(raw_arguments)
     commit_identifier = typing.cast(str | None, namespace.commit_identifier)
     staged = typing.cast(bool, namespace.staged)
@@ -71,8 +91,7 @@ def parse_arguments(raw_arguments: list[str]) -> ParsedArguments:
     return ParsedArguments(
         commit_identifier=commit_identifier,
         staged=staged,
-        provider=typing.cast(str | None, namespace.provider),
-        model=typing.cast(str | None, namespace.model),
+        model=typing.cast(str, namespace.model),
         thinking=typing.cast(str, namespace.thinking),
         timeout_seconds=typing.cast(float, namespace.timeout),
         max_diff_chars=typing.cast(int, namespace.max_diff_chars),
@@ -142,37 +161,20 @@ def get_prompts(style: str) -> tuple[str, str]:
     return CONCISE_SYSTEM_PROMPT, CONCISE_USER_PROMPT
 
 
-def generate_with_pi(arguments: ParsedArguments, diff_content: str) -> str:
+def generate_commit_message(arguments: ParsedArguments, diff_content: str) -> str:
     system_prompt, user_prompt = get_prompts(arguments.style)
-    pi_command = [
-        "pi",
-        "--no-session",
-        "--no-tools",
-        "--no-context-files",
-        "--no-skills",
-        "--no-prompt-templates",
-        "--thinking",
-        arguments.thinking,
-    ]
-    if arguments.provider is not None:
-        pi_command.extend(["--provider", arguments.provider])
-    if arguments.model is not None:
-        pi_command.extend(["--model", arguments.model])
-    pi_command.extend(["--system-prompt", system_prompt, "-p", user_prompt])
-
-    completed_process = subprocess.run(
-        pi_command,
-        input=f"# Git diff\n{diff_content}",
-        capture_output=True,
-        text=True,
-        timeout=arguments.timeout_seconds,
-        check=False,
+    raw_output = generate_with_codex(
+        (
+            f"{system_prompt}\n\n"
+            f"{user_prompt}\n"
+            "Use only the supplied diff. Do not inspect files or use tools."
+        ),
+        f"# Git diff\n{diff_content}",
+        model=arguments.model,
+        reasoning_effort=arguments.thinking,
+        timeout_seconds=arguments.timeout_seconds,
     )
-    if completed_process.returncode != 0:
-        error_output = completed_process.stderr.strip() or completed_process.stdout.strip()
-        raise RuntimeError(error_output or f"pi exited with {completed_process.returncode}")
-
-    commit_message = clean_commit_message(completed_process.stdout, arguments.style)
+    commit_message = clean_commit_message(raw_output, arguments.style)
     if not commit_message:
         raise RuntimeError("empty model output")
     subject_line = commit_message.splitlines()[0]
@@ -208,7 +210,7 @@ def execute_main() -> int:
         if len(diff_content) > arguments.max_diff_chars:
             write_log_message(label, f"truncating commit diff — it exceeds max_diff_chars={arguments.max_diff_chars}")
             diff_content = diff_content[: arguments.max_diff_chars]
-        sys.stdout.write(generate_with_pi(arguments, diff_content))
+        sys.stdout.write(generate_commit_message(arguments, diff_content))
     except (OSError, RuntimeError, subprocess.SubprocessError) as error:
         write_log_message(label, f"failed to generate commit message: {error}")
         return 1
