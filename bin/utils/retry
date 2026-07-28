@@ -1,34 +1,52 @@
-#!/bin/bash
-# Retry a command on failure
-# Usage: 
-#   retry command...
-#   retry --attempts 7 --delay 1 command...
-# Examples: 
-#   retry curl https://example.com
-#   retry --attempts 7 --delay 1 curl https://example.com
+#!/usr/bin/env bash
 
-max_attempts=7
+set -euo pipefail
+
+max_attempts=3
 delay_seconds=1
 
-# Parse command line arguments
+usage() {
+    cat <<'EOF'
+Usage: retry [OPTIONS] [--] command [args...]
+
+Retry a command until it succeeds or the attempt limit is reached.
+
+Options:
+  --attempts NUM   Total attempts (default: 3)
+  --delay SECONDS  Delay between attempts (default: 1)
+  -h, --help       Show this help
+EOF
+}
+
+fail() {
+    echo "retry: $1" >&2
+    echo >&2
+    usage >&2
+    exit 2
+}
+
 while [[ $# -gt 0 ]]; do
     case $1 in
         --attempts)
-            max_attempts="$2"
+            [[ $# -ge 2 ]] || fail "--attempts requires a value"
+            max_attempts=$2
             shift 2
             ;;
         --delay)
-            delay_seconds="$2"
+            [[ $# -ge 2 ]] || fail "--delay requires a value"
+            delay_seconds=$2
             shift 2
+            ;;
+        -h | --help)
+            usage
+            exit 0
             ;;
         --)
             shift
             break
             ;;
         -*)
-            echo "Unknown option: $1" >&2
-            echo "Usage: retry [--attempts NUM] [--delay SECONDS] command..." >&2
-            exit 1
+            fail "unknown option: $1"
             ;;
         *)
             break
@@ -36,32 +54,26 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-if [ $# -lt 1 ]; then
-    echo "Usage: retry [--attempts NUM] [--delay SECONDS] command..." >&2
-    echo "Examples:" >&2
-    echo "  retry curl https://example.com" >&2
-    echo "  retry --attempts 3 --delay 3 curl https://example.com" >&2
-    exit 1
-fi
+[[ $max_attempts =~ ^[1-9][0-9]*$ ]] ||
+    fail "--attempts must be a positive integer"
+[[ $delay_seconds =~ ^[0-9]+([.][0-9]+)?$ ]] ||
+    fail "--delay must be a non-negative number"
+[[ $# -gt 0 ]] || fail "missing command"
 
-attempt=1
-while [ $attempt -le $max_attempts ]; do
+exit_code=0
+for ((attempt = 1; attempt <= max_attempts; attempt++)); do
     echo "Attempt $attempt/$max_attempts: $*" >&2
-    "$@"
-    exit_code=$?
-    
-    if [ $exit_code -eq 0 ]; then
+    if "$@"; then
         exit 0
-    fi
-    
-    if [ $attempt -lt $max_attempts ]; then
-        echo "Command failed with exit code $exit_code. Retrying in $delay_seconds seconds..." >&2
-        sleep $delay_seconds
     else
-        echo "Command failed after $max_attempts attempts." >&2
+        exit_code=$?
     fi
-    
-    attempt=$((attempt + 1))
+
+    if ((attempt < max_attempts)); then
+        echo "Command failed with exit code $exit_code. Retrying in $delay_seconds seconds..." >&2
+        sleep "$delay_seconds"
+    fi
 done
 
-exit $exit_code
+echo "Command failed after $max_attempts attempts." >&2
+exit "$exit_code"
