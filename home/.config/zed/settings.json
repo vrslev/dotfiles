@@ -1,0 +1,139 @@
+{
+  "$schema": "zed://schemas/settings",
+  "base_keymap": "VSCode",
+  "theme": {
+    "mode": "system",
+    "light": "One Light",
+    "dark": "One Dark"
+  },
+  "ui_font_family": ".SystemUIFont",
+  "ui_font_size": 15,
+  "buffer_font_family": "FiraCode Nerd Font",
+  "buffer_font_size": 14,
+  "buffer_font_features": { "calt": true },
+  "buffer_line_height": { "custom": 1.45 },
+
+  "restore_on_startup": "none",
+  "cursor_blink": false,
+  "current_line_highlight": "gutter",
+  "minimap": { "show": "never" },
+  "sticky_scroll": { "enabled": true },
+  "inlay_hints": { "enabled": true },
+
+  "diagnostics": {
+    "inline": {
+      "enabled": true,
+      "max_severity": "warning"
+    }
+  },
+
+  "toolbar": {
+    "breadcrumbs": false,
+    "quick_actions": false,
+    "selections_menu": false,
+    "agent_review": false,
+    "code_actions": false
+  },
+  "tab_bar": {
+    "show": true,
+    "show_nav_history_buttons": false,
+    "show_tab_bar_buttons": false
+  },
+  "tabs": {
+    "file_icons": false,
+    "git_status": true
+  },
+  "preview_tabs": {
+    "enabled": true,
+    "enable_preview_from_project_panel": true,
+    "enable_preview_from_file_finder": true,
+    "enable_preview_from_multibuffer": true,
+    "enable_preview_file_from_code_navigation": true
+  },
+
+  "project_panel": {
+    "dock": "right",
+    "entry_spacing": "standard",
+    "file_icons": true,
+    "folder_icons": true,
+    "git_status": true,
+    "auto_reveal_entries": true,
+    "auto_fold_dirs": true,
+    "sticky_scroll": true,
+    "starts_open": true
+  },
+  "outline_panel": {
+    "button": false,
+    "dock": "right"
+  },
+  "git_panel": {
+    "dock": "right",
+    "file_icons": false,
+    "group_by": "staging",
+    "tree_view": true,
+    "starts_open": false,
+    "show_count_badge": true,
+    "entry_primary_click_action": "project_diff"
+  },
+  "git": {
+    "inline_blame": { "enabled": false },
+    "blame": { "show_avatar": false }
+  },
+
+  "autosave": "on_focus_change",
+  "format_on_save": "modifications_if_available",
+  "remove_trailing_whitespace_on_save": true,
+  "ensure_final_newline_on_save": true,
+
+  "show_edit_predictions": false,
+  "disable_ai": true,
+  "agent": {
+    "enabled": false,
+    "button": false
+  },
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
+  },
+  "title_bar": {
+    "show_branch_status_icon": true,
+    "show_branch_name": true,
+    "show_worktree_name": true,
+    "show_onboarding_banner": false,
+    "show_user_picture": false,
+    "show_user_menu": false,
+    "show_sign_in": false
+  },
+
+  "file_scan_exclusions": [
+    "**/.git",
+    "**/.svn",
+    "**/.hg",
+    "**/.jj",
+    "**/.sl",
+    "**/.repo",
+    "**/CVS",
+    "**/.DS_Store",
+    "**/Thumbs.db",
+    "**/.classpath",
+    "**/.settings",
+    "**/__pycache__",
+    "**/.coverage*",
+    "**/.mypy_cache",
+    "**/.pytest_cache",
+    "**/.ruff_cache",
+    "**/coverage.xml"
+  ],
+
+  "terminal": {
+    "shell": {
+      "with_arguments": {
+        "program": "/opt/homebrew/bin/fish",
+        "args": ["-l"]
+      }
+    },
+    "blinking": "off",
+    "copy_on_select": true,
+    "detect_venv": "off"
+  }
+}

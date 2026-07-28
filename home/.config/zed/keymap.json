@@ -1,0 +1,65 @@
+[
+  {
+    "context": "Workspace",
+    "use_key_equivalents": true,
+    "bindings": {
+      "ctrl-0": "project_panel::ToggleFocus",
+      "ctrl-shift-n": "workspace::ToggleZoom",
+      "ctrl-alt-o": "workspace::AddFolderToProject",
+      "ctrl-alt-z": "workspace::NewTerminal",
+      "ctrl-,": "pane::GoBack",
+      "ctrl-.": "pane::GoForward",
+
+      "cmd-shift-c": "git::BranchDiff",
+      "cmd-shift-d": "git::Diff",
+      "cmd-shift-f": "project_panel::ToggleFocus",
+      "cmd-shift-g": "git_panel::ToggleFocus",
+      "cmd-shift-s": "pane::DeploySearch",
+      "cmd-shift-t": "terminal_panel::ToggleFocus",
+
+      "alt-[": [
+        "workspace::DecreaseActiveDockSize",
+        { "px": 0 }
+      ],
+      "alt-]": [
+        "workspace::IncreaseActiveDockSize",
+        { "px": 0 }
+      ],
+
+      "cmd-alt-t": "workspace::NewCenterTerminal",
+      "cmd-k cmd-w": [
+        "pane::CloseCleanItems",
+        { "close_pinned": false }
+      ]
+    }
+  },
+  {
+    "context": "Editor && mode == full",
+    "use_key_equivalents": true,
+    "bindings": {
+      "f2": null,
+      "f3": "editor::Rename",
+      "shift-enter": "editor::OpenUrl",
+      "ctrl-shift-p": "editor::ToggleInlineDiagnostics",
+      "cmd-i": null
+    }
+  },
+  {
+    "context": "ProjectPanel",
+    "use_key_equivalents": true,
+    "bindings": {
+      "cmd-k a": "project_panel::NewFile",
+      "cmd-k shift-a": "project_panel::NewDirectory"
+    }
+  },
+  {
+    "context": "Terminal",
+    "use_key_equivalents": true,
+    "bindings": {
+      "shift-enter": [
+        "terminal::SendText",
+        "\u001b[13;2u"
+      ]
+    }
+  }
+]

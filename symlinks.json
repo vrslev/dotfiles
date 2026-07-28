@@ -17,6 +17,8 @@
     "~/.config/revdiff/themes/github-light",
     "~/.config/starship.toml",
     "~/.config/ty/ty.toml",
+    "~/.config/zed/keymap.json",
+    "~/.config/zed/settings.json",
     "~/.hushlogin",
     "~/.pi/agent/AGENTS.md",
     "~/.pi/agent/extensions",
