@@ -60,7 +60,9 @@ while [ "$#" -gt 0 ]; do
     shift
 done
 
-cai || true
+if [ -n "$(git status --porcelain)" ]; then
+    cai
+fi
 
 branch_name="$(git branch --show-current)"
 work_issue_no="$(get-work-issue-no "$branch_name")"

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.13
+#!/usr/bin/env -S uv run --no-project --python 3.13 --script
 # pyright: strict
 from __future__ import annotations
 
@@ -12,7 +12,7 @@ import typing
 from codex_generator import generate_with_codex
 
 DEFAULT_MAX_DIFF_CHARS: typing.Final = 32 * 1024
-DEFAULT_MODEL: typing.Final = "gpt-5.6-luna"
+DEFAULT_MODEL: typing.Final = "gpt-5.6-terra"
 CONCISE_SYSTEM_PROMPT: typing.Final = (
     "You write git commit summaries. Output exactly one line, no quotes, no Markdown, no prefix, "
     "no trailing period. Start with a letter. Keep it under 50 characters. Use imperative mood. "
@@ -66,7 +66,7 @@ def parse_arguments(raw_arguments: list[str]) -> ParsedArguments:
         default=float(
             os.environ.get(
                 "CODEX_COMMIT_TIMEOUT",
-                os.environ.get("CODEX_GENERATOR_TIMEOUT", "60"),
+                os.environ.get("CODEX_GENERATOR_TIMEOUT", "120"),
             )
         ),
     )

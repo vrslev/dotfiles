@@ -12,7 +12,7 @@ Options:
   --push                      Run git push after committing
   --model MODEL               Codex model; defaults to gen-commit-msg
   --thinking LEVEL            Codex reasoning effort; defaults to gen-commit-msg
-  --timeout SECONDS           Codex timeout; defaults to CODEX_COMMIT_TIMEOUT or 60
+  --timeout SECONDS           Codex timeout; defaults to CODEX_COMMIT_TIMEOUT or 120
   --max-diff-chars CHARS      Diff chars sent to Codex; defaults to CODEX_COMMIT_MAX_DIFF_CHARS or 32768
   --style STYLE               Commit style: mcga or concise; defaults to gen-commit-msg
   -h, --help                  Show this help
@@ -66,7 +66,6 @@ if git diff --cached --quiet --exit-code; then
     exit 1
 fi
 
-retry_with_post_commit_hook=0
 if ((${#generator_arguments[@]})); then
     generator_command=(gen-commit-msg --staged "${generator_arguments[@]}")
 else
@@ -74,20 +73,14 @@ else
 fi
 
 if ! commit_message="$("${generator_command[@]}")"; then
-    echo "cai: generation failed; committing with placeholder 1" >&2
-    commit_message=1
-    retry_with_post_commit_hook=1
+    echo "cai: generation failed; no commit created" >&2
+    exit 1
 elif [[ -z "$commit_message" ]]; then
-    echo "cai: empty message; committing with placeholder 1" >&2
-    commit_message=1
-    retry_with_post_commit_hook=1
+    echo "cai: empty message; no commit created" >&2
+    exit 1
 fi
 
-if ((retry_with_post_commit_hook)); then
-    git commit -m "$commit_message"
-else
-    CAI_SKIP_POST_COMMIT=1 git commit -m "$commit_message"
-fi
+CAI_SKIP_POST_COMMIT=1 git commit -m "$commit_message"
 
 if ((push_after_commit)); then
     git push

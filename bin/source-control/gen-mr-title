@@ -1,4 +1,4 @@
-#!/usr/bin/env -S uv run --python 3.14 --script
+#!/usr/bin/env -S uv run --no-project --python 3.14 --script
 # pyright: strict
 import os
 import re
@@ -8,7 +8,7 @@ from typing import Final
 
 from codex_generator import generate_with_codex
 
-DEFAULT_MODEL: Final = "gpt-5.6-luna"
+DEFAULT_MODEL: Final = "gpt-5.6-terra"
 TITLE_PROMPT: Final = (
     "Generate one concise, descriptive merge request title.\n"
     "Success means:\n"
@@ -216,7 +216,7 @@ def main() -> None:
         timeout_seconds = float(
             os.environ.get(
                 "CODEX_MR_TITLE_TIMEOUT",
-                os.environ.get("CODEX_GENERATOR_TIMEOUT", "60"),
+                os.environ.get("CODEX_GENERATOR_TIMEOUT", "120"),
             )
         )
         title = generate_title(
