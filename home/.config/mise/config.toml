@@ -112,6 +112,7 @@ zoxide = "latest"
 "github:eugene1g/agent-safehouse" = { version = "latest", asset_pattern = "safehouse.sh" }
 "github:charmbracelet/glow" = "latest"
 "npm:@openai/codex" = "latest"
+bun = "latest"
 
 [settings]
 experimental = true
