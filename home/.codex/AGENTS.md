@@ -14,6 +14,8 @@
 
 # Workflow
 
+- When the user corrects behavior, update the applicable skill; use `AGENTS.md` for general guidance.
+- When updating a skill, review it end to end and make it more concise without losing useful guidance.
 - If a `Justfile` exists, inspect it and prefer `just <recipe>`; otherwise use repo-documented commands.
 - After code changes, run relevant targeted tests/lint when available and report checks not run.
 - Do not scan `$HOME` broadly.
