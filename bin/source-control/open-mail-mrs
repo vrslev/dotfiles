@@ -168,7 +168,7 @@ class Notification:
 
     @property
     def url(self) -> str:
-        return f"https://{self.host}/{self.project_path}/-/merge_requests/{self.mr_iid}/diffs"
+        return f"https://{self.host}/{self.project_path}/-/merge_requests/{self.mr_iid}"
 
     @property
     def label(self) -> str:
