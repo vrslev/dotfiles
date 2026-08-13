@@ -140,6 +140,7 @@ shell = "bash -c"
 "~/.codex/skills/eval-designer" = { mode = "symlink" }
 "~/.codex/skills/private-skill-registries" = { mode = "symlink" }
 "~/.codex/skills/prompt-surgeon" = { mode = "symlink" }
+"~/.codex/skills/reflect-on-thread" = { mode = "symlink" }
 "~/.config/fish/config.fish" = { mode = "symlink" }
 "~/.config/ghostty/config" = { mode = "symlink" }
 "~/.config/git" = { mode = "symlink" }

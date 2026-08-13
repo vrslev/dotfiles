@@ -1,0 +1,7 @@
+interface:
+  display_name: "Reflect on Thread"
+  short_description: "Audit this conversation as a second pass"
+  default_prompt: "Use $reflect-on-thread to audit this conversation."
+
+policy:
+  allow_implicit_invocation: false
