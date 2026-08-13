@@ -48,6 +48,9 @@ python3 <this-skill-dir>/scripts/search_private_skills.py --top 8 "<query>"
 ```
 
 Then read the best 1-3 matching `SKILL.md` files before recommending or using one.
+If the top results are semantically unrelated, retry once with narrower task
+nouns and any internal product or platform names the user supplied before
+concluding that no skill matches.
 
 Common commands:
 
