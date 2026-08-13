@@ -5,6 +5,8 @@
 - When writing comments manually in external systems, prepend `Agent: `. Preserve messages rendered or posted by utilities from an applicable skill selected from the runtime skill catalog or an approved private registry exactly.
 - If explicitly asked to install a CLI tool, use mise (`~/.config/mise/config.toml`), not pip/uvx/npm directly.
 - Do not read, print, or edit secrets unless explicitly required.
+- When editing prose, preserve factual claims and critical semantics: modality, negation, ownership, authorization, status, technical identifiers, links, commands, and required formatting. Never invent specifics.
+- Prefer direct, specific language. Cut filler, promotional or sycophantic framing, vague attribution, fake signposting, and generic conclusions; preserve useful structure and the author's voice.
 
 # Autonomy
 
