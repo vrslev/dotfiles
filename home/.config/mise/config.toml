@@ -136,6 +136,7 @@ shell = "bash -c"
 "~/.claude/CLAUDE.md" = { source = "~/code/gh/vrslev/dotfiles/home/.pi/agent/AGENTS.md", mode = "symlink" }
 "~/.codex/AGENTS.md" = { mode = "symlink" }
 "~/.codex/skills/brainstorm-funnel" = { mode = "symlink" }
+"~/.codex/skills/cat-v-code-review" = { mode = "symlink" }
 "~/.codex/skills/double-check" = { mode = "symlink" }
 "~/.codex/skills/eval-designer" = { mode = "symlink" }
 "~/.codex/skills/private-skill-registries" = { mode = "symlink" }
@@ -199,7 +200,6 @@ shell = "bash -c"
 "brew-cask:postman" = "latest"
 "brew-cask:rectangle" = "latest"
 "brew-cask:spotify" = "latest"
-"brew-cask:the-unarchiver" = "latest"
 "brew-cask:transmission" = "latest"
 "brew-cask:visual-studio-code" = "latest"
 "brew-cask:zed" = "latest"
