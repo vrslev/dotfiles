@@ -13,7 +13,7 @@ I use macOS, [Visual Studio Code](https://code.visualstudio.com), [Codex](https:
 
 ## Migrate this Mac
 
-Once this version is checked out at `~/code/dotfiles`, migrate the existing installation with:
+Once this version is checked out at `~/code/gh/vrslev/dotfiles`, migrate the existing installation with:
 
 ```sh
 mise bootstrap --yes
@@ -34,9 +34,9 @@ Install [Homebrew](https://brew.sh):
 Clone this repository:
 
 ```sh
-mkdir -p ~/code
-git clone https://github.com/vrslev/dotfiles ~/code/dotfiles
-cd ~/code/dotfiles
+mkdir -p ~/code/gh/vrslev
+git clone https://github.com/vrslev/dotfiles ~/code/gh/vrslev/dotfiles
+cd ~/code/gh/vrslev/dotfiles
 ```
 
 Install mise:
@@ -84,6 +84,6 @@ mise dotfiles apply --yes
 - `sync:all` uses `git pull --ff-only`; it stops instead of rebasing a divergent checkout.
 - Removing a package from `[bootstrap.packages]` does not uninstall it. Prune packages only when removal is intentional.
 - Mise refuses conflicting dotfile targets by default. Inspect the conflict instead of reaching for `--force`.
-- The config assumes this repository lives at `~/code/dotfiles`, and most versions are `latest`, so a fresh bootstrap can resolve newer software.
+- The config assumes this repository lives at `~/code/gh/vrslev/dotfiles`, and most versions are `latest`, so a fresh bootstrap can resolve newer software.
 - Safari defaults and VS Code extensions are intentionally unmanaged.
 - The official ChatGPT cask currently owns the same `/Applications/ChatGPT.app` used by Codex. An identical existing bundle can be adopted; a different bundle at that path blocks installation rather than being overwritten.

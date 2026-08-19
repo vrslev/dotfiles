@@ -2,8 +2,11 @@
   name = Lev Vereshchagin
   email = mail@vrslev.com
 
-[includeIf "gitdir:~/web/"]  # Work config
-  path = ~/web/.gitconfig
+[includeIf "hasconfig:remote.*.url:ssh://*gitlab*/**"]
+  path = ~/code/glab/.gitconfig
+
+[includeIf "hasconfig:remote.*.url:https://*gitlab*/**"]
+  path = ~/code/glab/.gitconfig
 
 [init]
   defaultBranch = main

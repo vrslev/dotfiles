@@ -1,0 +1,76 @@
+#!/usr/bin/env fish
+
+set -l groups_file ~/.config/sync-repos/groups
+set -l host
+set -l group
+
+switch (count $argv)
+    case 1
+        set group (string trim -c / -- "$argv[1]")
+        if not test -r $groups_file
+            echo "clone-glab-group: $groups_file is not readable" >&2
+            exit 1
+        end
+        while read -l configured_host configured_group extra
+            if test "$configured_group" = "$group"; and test -z "$extra"
+                set host "$configured_host"
+                break
+            end
+        end < $groups_file
+        if test -z "$host"
+            echo "clone-glab-group: group is not configured: $group" >&2
+            exit 1
+        end
+    case 2
+        set host "$argv[1]"
+        set group (string trim -c / -- "$argv[2]")
+    case '*'
+        echo "usage: clone-glab-group [HOST] GROUP" >&2
+        exit 1
+end
+
+set -l encoded_group (jq -nr --arg group "$group" '$group | @uri')
+set -l projects_file (mktemp -t clone-glab-group.XXXXXX)
+set -l result 0
+
+env GITLAB_HOST="$host" glab api --paginate \
+    "groups/$encoded_group/projects?include_subgroups=true&with_shared=false&per_page=100" \
+    | jq -r '.[] | .path_with_namespace' > $projects_file
+set -l api_status $pipestatus
+if test $api_status[1] -ne 0; or test $api_status[2] -ne 0
+    rm -f -- $projects_file
+    exit 1
+end
+
+while read -l project
+    set -l target ~/code/glab/$project
+
+    if test -e $target
+        set -l origin (git -C $target remote get-url origin 2>/dev/null)
+        set origin (string replace -r '\\.git$' '' -- "$origin")
+        if not test -d $target; or not string match -q "*$host*$project" -- "$origin"
+            echo "clone-glab-group: destination collision: $target" >&2
+            set result 1
+        end
+        continue
+    end
+
+    mkdir -p (dirname $target)
+    set -l staging "$target.clone-$fish_pid"
+    if test -e $staging
+        echo "clone-glab-group: staging path exists: $staging" >&2
+        set result 1
+        continue
+    end
+
+    if env GITLAB_HOST="$host" GIT_LFS_SKIP_SMUDGE=1 \
+            glab repo clone "$project" "$staging" -- --filter=blob:none
+        mv -- $staging $target
+    else
+        rm -rf -- $staging
+        set result 1
+    end
+end < $projects_file
+
+rm -f -- $projects_file
+exit $result

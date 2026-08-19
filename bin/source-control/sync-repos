@@ -1,2 +1,31 @@
 #!/usr/bin/env fish
-list-repos $argv | for-dir - -- git sync
+
+set -l result 0
+
+if test (count $argv) -eq 0
+    set -l groups_file ~/.config/sync-repos/groups
+
+    if test -r $groups_file
+        while read -l host group extra
+            if test -z "$host"; or string match -qr '^#' -- "$host"
+                continue
+            end
+            if test -z "$group"; or test -n "$extra"
+                echo "sync-repos: invalid group entry: $host $group $extra" >&2
+                set result 1
+                continue
+            end
+            if not clone-glab-group "$host" "$group"
+                set result 1
+            end
+        end < $groups_file
+    end
+
+    set argv ~/code
+end
+
+if not list-repos $argv | for-dir - -- env GIT_LFS_SKIP_SMUDGE=1 git sync
+    set result 1
+end
+
+exit $result

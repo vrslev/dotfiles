@@ -1,8 +1,8 @@
 [env]
 _.path = [
-  "~/code/dotfiles/bin/dotfiles",
-  "~/code/dotfiles/bin/source-control",
-  "~/code/dotfiles/bin/utils",
+  "~/code/gh/vrslev/dotfiles/bin/dotfiles",
+  "~/code/gh/vrslev/dotfiles/bin/source-control",
+  "~/code/gh/vrslev/dotfiles/bin/utils",
   "~/.local/bin",
   "~/.cargo/bin",
 ]
@@ -23,7 +23,7 @@ HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK = 1
 HOMEBREW_DOWNLOAD_CONCURRENCY = "auto"
 HOMEBREW_NO_ASK = 1
 UV_SYSTEM_CERTS = "true"
-DOTFILES_ROOT = "{{env.HOME}}/code/dotfiles"
+DOTFILES_ROOT = "{{env.HOME}}/code/gh/vrslev/dotfiles"
 STARSHIP_LOG = "error"
 LOCAL_FISH_COMPLETION_DIR = "{{env.HOME}}/.config/fish/completions"
 COMPOSE_PROGRESS = "quiet"
@@ -46,7 +46,7 @@ ls = "eza --icons --all"
 ll = "eza --icons --all --long"
 dir-size = "du -sh"
 git-root = "cd $(git rev-parse --show-toplevel)"
-spi = "env TMUX_TMPDIR=$HOME/.pi/agent/tmux safehouse.sh --env --enable=clipboard --enable=agent-browser --enable=docker --enable=kubectl --enable=ssh --enable=shell-init --add-dirs=$HOME/code/dotfiles/home/.pi --add-dirs-ro=$HOME/code/dotfiles --add-dirs-ro=$HOME/.config --add-dirs-ro=$HOME/web/.gitconfig pi"
+spi = "env TMUX_TMPDIR=$HOME/.pi/agent/tmux safehouse.sh --env --enable=clipboard --enable=agent-browser --enable=docker --enable=kubectl --enable=ssh --enable=shell-init --add-dirs=$HOME/code/gh/vrslev/dotfiles/home/.pi --add-dirs-ro=$HOME/code/gh/vrslev/dotfiles --add-dirs-ro=$HOME/.config --add-dirs-ro=$HOME/code/glab/.gitconfig pi"
 
 [hooks]
 postinstall = 'mkdir -p "$LOCAL_FISH_COMPLETION_DIR"'
@@ -117,7 +117,7 @@ bun = "latest"
 
 [settings]
 experimental = true
-dotfiles.root = "~/code/dotfiles/home"
+dotfiles.root = "~/code/gh/vrslev/dotfiles/home"
 dotfiles.default_mode = "symlink"
 fetch_remote_versions_cache = "2d"
 fetch_remote_versions_timeout = "15m"
@@ -133,7 +133,7 @@ shell = "bash -c"
 
 [dotfiles]
 "~/.bashrc" = { mode = "symlink" }
-"~/.claude/CLAUDE.md" = { source = "~/code/dotfiles/home/.pi/agent/AGENTS.md", mode = "symlink" }
+"~/.claude/CLAUDE.md" = { source = "~/code/gh/vrslev/dotfiles/home/.pi/agent/AGENTS.md", mode = "symlink" }
 "~/.codex/AGENTS.md" = { mode = "symlink" }
 "~/.codex/skills/brainstorm-funnel" = { mode = "symlink" }
 "~/.codex/skills/double-check" = { mode = "symlink" }
