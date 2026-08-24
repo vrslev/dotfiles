@@ -20,8 +20,6 @@
   cm = commit -m
   cm1 = commit -m 1
   ca = !git add --all && git commit -m
-  cai = !cai
-  caip = !cai --push
   empty = !git commit -m 'empty' --allow-empty && git push
   l = log --oneline --decorate --color --graph
   d = diff
@@ -63,10 +61,6 @@
 
 [help]
   autoCorrect = prompt
-
-[hook "last-commit-msg"]
-  command = gen-last-commit-msg
-  event = post-commit
 
 [interactive]
   diffFilter = delta --color-only

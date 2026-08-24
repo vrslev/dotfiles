@@ -7,7 +7,6 @@ I use macOS, [Visual Studio Code](https://code.visualstudio.com), [Codex](https:
 - [`home/.config/mise/config.toml`](home/.config/mise/config.toml) — global tools, environment, packages, dotfiles, macOS defaults, and sync tasks
 - [`bin`](bin) — reusable commands
 - [`home`](home) — files linked into `$HOME`
-- [`home/.pi/agent`](home/.pi/agent)
 - [`home/Library/Application Support/Code (VS Code)`](home/Library/Application%20Support/Code)
 - [`home/.config/git`](home/.config/git)
 
@@ -83,6 +82,7 @@ mise bootstrap dotfiles apply --yes
 
 - `dotfiles:sync` uses `git pull --ff-only`; it stops instead of rebasing a divergent checkout.
 - Removing a package from `[bootstrap.packages]` does not uninstall it. Prune packages only when removal is intentional.
+- Removing a `[dotfiles]` entry does not remove its existing target. Delete obsolete targets explicitly.
 - Mise refuses conflicting dotfile targets by default. Inspect the conflict instead of reaching for `--force`.
 - The config assumes this repository lives at `~/code/gh/vrslev/dotfiles`, and most versions are `latest`, so a fresh bootstrap can resolve newer software.
 - Safari defaults and VS Code extensions are intentionally unmanaged.

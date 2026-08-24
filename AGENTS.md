@@ -8,7 +8,7 @@ macOS dotfiles for Fish, Ghostty, VS Code, Git, mise, etc. Installed via symlink
 - `home/.config/mise/config.toml` — canonical global mise config for tools, environment, packages, dotfiles, bootstrap state, and orchestration tasks.
 - `bin/` — scripts on `$PATH`:
   - `bin/dotfiles/` — dotfiles-specific utilities that are not mise wrappers.
-  - `bin/source-control/` — Git/GitLab helpers (`g`, `gen-commit-msg`, `create-glab-mr`, ...).
+  - `bin/source-control/` — Git/GitLab helpers (`open-mail-mrs`, `sync-repos`, ...).
   - `bin/utils/` — misc utilities.
 - `README.md` — first-time setup steps.
 

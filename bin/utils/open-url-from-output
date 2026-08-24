@@ -1,2 +1,0 @@
-#!/usr/bin/env fish
-rg 'https://[^ >]+' -o | xargs open

@@ -27,8 +27,6 @@ DOTFILES_ROOT = "{{env.HOME}}/code/gh/vrslev/dotfiles"
 STARSHIP_LOG = "error"
 LOCAL_FISH_COMPLETION_DIR = "{{env.HOME}}/.config/fish/completions"
 COMPOSE_PROGRESS = "quiet"
-PI_SKIP_VERSION_CHECK = 1
-PI_CACHE_RETENTION = "long"
 
 [shell_alias]
 b = "brew"
@@ -46,7 +44,6 @@ ls = "eza --icons --all"
 ll = "eza --icons --all --long"
 dir-size = "du -sh"
 git-root = "cd $(git rev-parse --show-toplevel)"
-spi = "env TMUX_TMPDIR=$HOME/.pi/agent/tmux safehouse.sh --env --enable=clipboard --enable=agent-browser --enable=docker --enable=kubectl --enable=ssh --enable=shell-init --add-dirs=$HOME/code/gh/vrslev/dotfiles/home/.pi --add-dirs-ro=$HOME/code/gh/vrslev/dotfiles --add-dirs-ro=$HOME/.config --add-dirs-ro=$HOME/code/glab/.gitconfig pi"
 
 [hooks]
 postinstall = 'mkdir -p "$LOCAL_FISH_COMPLETION_DIR"'
@@ -94,7 +91,7 @@ xh = { version = "latest", postinstall = "mise run _install-fish-completions xh 
 yq = { version = "latest", postinstall = "mise run _install-fish-completions yq completion fish" }
 zoxide = "latest"
 "aqua:zyedidia/micro" = "latest"
-"cargo:mergiraf" = { version = "latest", postinstall = "mergiraf languages --gitattributes > ~/.gitattributes" }
+"cargo:mergiraf" = "latest"
 "cargo:tokei" = "latest"
 "npm:confluence-cli" = "latest"
 "pipx:eof-fixer" = "latest"
@@ -134,10 +131,10 @@ shell = "bash -c"
 
 [dotfiles]
 "~/.bashrc" = {}
-"~/.claude/CLAUDE.md" = { source = "~/code/gh/vrslev/dotfiles/home/.pi/agent/AGENTS.md" }
 "~/.codex/AGENTS.md" = {}
 "~/.codex/skills/brainstorm-funnel" = {}
 "~/.codex/skills/cat-v-code-review" = {}
+"~/.codex/skills/create-today-reminder" = {}
 "~/.codex/skills/double-check" = {}
 "~/.codex/skills/eval-designer" = {}
 "~/.codex/skills/private-skill-registries" = {}
@@ -147,23 +144,15 @@ shell = "bash -c"
 "~/.config/ghostty/config" = {}
 "~/.config/git" = {}
 "~/.config/mise" = {}
-"~/.config/revdiff/config" = {}
-"~/.config/revdiff/themes/github-light" = {}
 "~/.config/starship.toml" = {}
 "~/.config/ty/ty.toml" = {}
 "~/.config/zed/keymap.json" = {}
 "~/.config/zed/settings.json" = {}
 "~/.hushlogin" = {}
 "~/.local/bin/vscode-kubectl-stub" = {}
-"~/.pi/agent/AGENTS.md" = {}
-"~/.pi/agent/extensions" = {}
-"~/.pi/agent/keybindings.json" = {}
-"~/.pi/agent/settings.json" = {}
-"~/.pi/agent/skills" = {}
 "~/Library/Application Support/Code/User/keybindings.json" = {}
 "~/Library/Application Support/Code/User/settings.json" = {}
 "~/Library/Application Support/Code/User/snippets" = {}
-"~/Library/Application Support/pypoetry/config.toml" = {}
 
 [bootstrap.packages]
 "brew:bison" = "latest"
@@ -274,7 +263,10 @@ AppleFnUsageType = 2
 login_shell = "/opt/homebrew/bin/fish"
 
 [bootstrap.hooks.final]
-run = "mise bootstrap status --missing"
+run = [
+  "mergiraf languages --gitattributes > ~/.gitattributes",
+  "mise bootstrap status --missing",
+]
 
 [tasks."dotfiles:sync"]
 description = "Update dotfiles, tools, and packages"
@@ -287,6 +279,7 @@ mise bootstrap dotfiles apply --yes
 mise install --yes
 mise upgrade --yes
 mise prune --yes
+mergiraf languages --gitattributes > ~/.gitattributes
 
 mise bootstrap packages apply --yes
 mise bootstrap packages upgrade --yes
