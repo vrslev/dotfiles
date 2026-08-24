@@ -19,7 +19,7 @@ Once this version is checked out at `~/code/gh/vrslev/dotfiles`, migrate the exi
 mise bootstrap --yes
 ```
 
-Bootstrap is the migration. It installs anything missing, replaces the old linker with mise-managed symlinks, applies macOS defaults, configures Fish, starts Ollama, and verifies the resulting state. It is safe to re-run.
+Bootstrap is the migration. It installs anything missing, replaces the old linker with mise-managed symlinks, applies macOS defaults, configures Fish, and verifies the resulting state. It is safe to re-run.
 
 Restart the Mac after the first successful migration so applications reload the managed defaults.
 
@@ -75,8 +75,8 @@ mise bootstrap status
 Use mise directly to manage dotfiles:
 
 ```sh
-mise dotfiles add --global ~/.example
-mise dotfiles apply --yes
+mise bootstrap dotfiles add --global ~/.example
+mise bootstrap dotfiles apply --yes
 ```
 
 ## Caveats

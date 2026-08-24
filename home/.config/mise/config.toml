@@ -80,11 +80,11 @@ kubectl = "latest"
 glab = "latest"
 node = "24"
 python = [
-  { version = "3.14", postinstall = "pip install mypy" },
-  { version = "3.13", postinstall = "pip install mypy" },
-  { version = "3.12", postinstall = "pip install mypy" },
-  { version = "3.11", postinstall = "pip install mypy" },
-  { version = "3.10", postinstall = "pip install mypy" },
+  "3.14",
+  "3.13",
+  "3.12",
+  "3.11",
+  "3.10",
 ]
 ripgrep = { version = "latest", postinstall = "mise run _install-fish-completions rg --generate complete-fish" }
 starship = "latest"
@@ -94,12 +94,13 @@ xh = { version = "latest", postinstall = "mise run _install-fish-completions xh 
 yq = { version = "latest", postinstall = "mise run _install-fish-completions yq completion fish" }
 zoxide = "latest"
 "aqua:zyedidia/micro" = "latest"
-"cargo:mergiraf" = { version = "latest", postinstall = "mergiraf languages --gitattributes > $DOTFILES_ROOT/home/.config/git/gitattributes" }
+"cargo:mergiraf" = { version = "latest", postinstall = "mergiraf languages --gitattributes > ~/.gitattributes" }
 "cargo:tokei" = "latest"
 "npm:confluence-cli" = "latest"
 "pipx:eof-fixer" = "latest"
 "pipx:mattermost-cli" = "latest"
 "pipx:maturin" = "latest"
+"pipx:mypy" = "latest"
 "pipx:poetry" = { version = "latest", postinstall = "mise run _install-fish-completions poetry completions fish" }
 "pipx:yt-dlp" = "latest"
 "spm:sindresorhus/macos-trash" = "latest"
@@ -132,37 +133,37 @@ minimum_release_age = "7d"
 shell = "bash -c"
 
 [dotfiles]
-"~/.bashrc" = { mode = "symlink" }
-"~/.claude/CLAUDE.md" = { source = "~/code/gh/vrslev/dotfiles/home/.pi/agent/AGENTS.md", mode = "symlink" }
-"~/.codex/AGENTS.md" = { mode = "symlink" }
-"~/.codex/skills/brainstorm-funnel" = { mode = "symlink" }
-"~/.codex/skills/cat-v-code-review" = { mode = "symlink" }
-"~/.codex/skills/double-check" = { mode = "symlink" }
-"~/.codex/skills/eval-designer" = { mode = "symlink" }
-"~/.codex/skills/private-skill-registries" = { mode = "symlink" }
-"~/.codex/skills/prompt-surgeon" = { mode = "symlink" }
-"~/.codex/skills/reflect-on-thread" = { mode = "symlink" }
-"~/.config/fish/config.fish" = { mode = "symlink" }
-"~/.config/ghostty/config" = { mode = "symlink" }
-"~/.config/git" = { mode = "symlink" }
-"~/.config/mise" = { mode = "symlink" }
-"~/.config/revdiff/config" = { mode = "symlink" }
-"~/.config/revdiff/themes/github-light" = { mode = "symlink" }
-"~/.config/starship.toml" = { mode = "symlink" }
-"~/.config/ty/ty.toml" = { mode = "symlink" }
-"~/.config/zed/keymap.json" = { mode = "symlink" }
-"~/.config/zed/settings.json" = { mode = "symlink" }
-"~/.hushlogin" = { mode = "symlink" }
-"~/.local/bin/vscode-kubectl-stub" = { mode = "symlink" }
-"~/.pi/agent/AGENTS.md" = { mode = "symlink" }
-"~/.pi/agent/extensions" = { mode = "symlink" }
-"~/.pi/agent/keybindings.json" = { mode = "symlink" }
-"~/.pi/agent/settings.json" = { mode = "symlink" }
-"~/.pi/agent/skills" = { mode = "symlink" }
-"~/Library/Application Support/Code/User/keybindings.json" = { mode = "symlink" }
-"~/Library/Application Support/Code/User/settings.json" = { mode = "symlink" }
-"~/Library/Application Support/Code/User/snippets" = { mode = "symlink" }
-"~/Library/Application Support/pypoetry/config.toml" = { mode = "symlink" }
+"~/.bashrc" = {}
+"~/.claude/CLAUDE.md" = { source = "~/code/gh/vrslev/dotfiles/home/.pi/agent/AGENTS.md" }
+"~/.codex/AGENTS.md" = {}
+"~/.codex/skills/brainstorm-funnel" = {}
+"~/.codex/skills/cat-v-code-review" = {}
+"~/.codex/skills/double-check" = {}
+"~/.codex/skills/eval-designer" = {}
+"~/.codex/skills/private-skill-registries" = {}
+"~/.codex/skills/prompt-surgeon" = {}
+"~/.codex/skills/reflect-on-thread" = {}
+"~/.config/fish/config.fish" = {}
+"~/.config/ghostty/config" = {}
+"~/.config/git" = {}
+"~/.config/mise" = {}
+"~/.config/revdiff/config" = {}
+"~/.config/revdiff/themes/github-light" = {}
+"~/.config/starship.toml" = {}
+"~/.config/ty/ty.toml" = {}
+"~/.config/zed/keymap.json" = {}
+"~/.config/zed/settings.json" = {}
+"~/.hushlogin" = {}
+"~/.local/bin/vscode-kubectl-stub" = {}
+"~/.pi/agent/AGENTS.md" = {}
+"~/.pi/agent/extensions" = {}
+"~/.pi/agent/keybindings.json" = {}
+"~/.pi/agent/settings.json" = {}
+"~/.pi/agent/skills" = {}
+"~/Library/Application Support/Code/User/keybindings.json" = {}
+"~/Library/Application Support/Code/User/settings.json" = {}
+"~/Library/Application Support/Code/User/snippets" = {}
+"~/Library/Application Support/pypoetry/config.toml" = {}
 
 [bootstrap.packages]
 "brew:bison" = "latest"
@@ -281,9 +282,8 @@ run = '''
 set -euo pipefail
 
 git -C "$DOTFILES_ROOT" pull --ff-only
-mise dotfiles apply --yes
+mise bootstrap dotfiles apply --yes
 
-export MISE_FETCH_REMOTE_VERSIONS_TIMEOUT=100
 mise install --yes
 mise upgrade --yes
 mise prune --yes

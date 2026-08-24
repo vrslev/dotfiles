@@ -14,9 +14,9 @@ macOS dotfiles for Fish, Ghostty, VS Code, Git, mise, etc. Installed via symlink
 
 ## Conventions
 
-- Add a dotfile with `mise dotfiles add --global ~/<path>`, or place it under `home/<path>` and add its target to `[dotfiles]` in `home/.config/mise/config.toml`.
+- Add a dotfile with `mise bootstrap dotfiles add --global ~/<path>`, or place it under `home/<path>` and add its target to `[dotfiles]` in `home/.config/mise/config.toml`.
 - Remove a dotfile by removing its `[dotfiles]` entry and source from `home/`.
-- Re-apply managed dotfiles with `mise dotfiles apply --yes`.
+- Re-apply managed dotfiles with `mise bootstrap dotfiles apply --yes`.
 - Python scripts: `#!/usr/bin/env -S uv run --python 3.13 --script` or `#!/usr/bin/env python3`, `# pyright: strict`, no comments unless they add info beyond the code.
 - Shell scripts: `#!/usr/bin/env bash`, `set -euo pipefail`.
 - `$DOTFILES_ROOT` env var points at this repo (set by the global mise config).
