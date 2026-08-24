@@ -60,12 +60,12 @@ The config is global once `~/.config/mise` points to `home/.config/mise`; there 
 The routine command to remember is:
 
 ```sh
-mise run sync:all
+mise run dotfiles:sync
 ```
 
-It fast-forwards the repository, re-applies links, and synchronizes tools and packages. Ollama is restarted only when its installed version changes.
+It fast-forwards the repository, re-applies links, and synchronizes tools and packages.
 
-The narrower tasks and read-only status commands are discoverable instead of needing to be memorized:
+Available tasks and read-only bootstrap status are discoverable:
 
 ```sh
 mise tasks
@@ -81,7 +81,7 @@ mise dotfiles apply --yes
 
 ## Caveats
 
-- `sync:all` uses `git pull --ff-only`; it stops instead of rebasing a divergent checkout.
+- `dotfiles:sync` uses `git pull --ff-only`; it stops instead of rebasing a divergent checkout.
 - Removing a package from `[bootstrap.packages]` does not uninstall it. Prune packages only when removal is intentional.
 - Mise refuses conflicting dotfile targets by default. Inspect the conflict instead of reaching for `--force`.
 - The config assumes this repository lives at `~/code/gh/vrslev/dotfiles`, and most versions are `latest`, so a fresh bootstrap can resolve newer software.

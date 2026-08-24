@@ -275,50 +275,19 @@ login_shell = "/opt/homebrew/bin/fish"
 [bootstrap.hooks.final]
 run = "mise bootstrap status --missing"
 
-[tasks."sync:all"]
-description = "Pull, re-apply dotfiles, and update dependencies"
-run = ['git -C "$DOTFILES_ROOT" pull --ff-only', "mise run sync:after-repo"]
-
-[tasks."sync:repo"]
-description = "Fast-forward the dotfiles repository"
-run = 'git -C "$DOTFILES_ROOT" pull --ff-only'
-
-[tasks."sync:tools"]
-description = "Upgrade and prune mise-managed tools"
+[tasks."dotfiles:sync"]
+description = "Update dotfiles, tools, and packages"
 run = '''
 set -euo pipefail
+
+git -C "$DOTFILES_ROOT" pull --ff-only
+mise dotfiles apply --yes
 
 export MISE_FETCH_REMOTE_VERSIONS_TIMEOUT=100
+mise install --yes
 mise upgrade --yes
 mise prune --yes
-mise reshim --yes
-'''
 
-[tasks."sync:packages"]
-description = "Install and upgrade machine-global packages"
-run = '''
-set -euo pipefail
-
-ollama_before="$(brew list --versions ollama 2>/dev/null || true)"
 mise bootstrap packages apply --yes
 mise bootstrap packages upgrade --yes
-ollama_after="$(brew list --versions ollama 2>/dev/null || true)"
-
-if [[ "$ollama_before" != "$ollama_after" ]]; then
-  brew services restart ollama
-else
-  brew services start ollama
-fi
 '''
-
-[tasks."sync:deps"]
-description = "Update tools and machine-global packages"
-run = [{ task = "sync:tools" }, { task = "sync:packages" }]
-
-[tasks."sync:after-repo"]
-hide = true
-run = ["mise dotfiles apply --yes", { task = "sync:deps" }]
-
-[tasks.bootstrap]
-description = "Start background services"
-run = "brew services start ollama"

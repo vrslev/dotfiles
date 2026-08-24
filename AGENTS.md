@@ -25,8 +25,8 @@ macOS dotfiles for Fish, Ghostty, VS Code, Git, mise, etc. Installed via symlink
 
 - Migrate this machine: `mise bootstrap --yes`
 - Bootstrap a new machine: `MISE_GLOBAL_CONFIG_FILE="$PWD/home/.config/mise/config.toml" mise bootstrap --yes`
-- Sync everything (pull, relink, update brew/mise): `mise run sync:all`
-- Discover narrower maintenance tasks: `mise tasks`
+- Sync everything (pull, relink, update brew/mise): `mise run dotfiles:sync`
+- List available tasks: `mise tasks`
 - Check dependency/bootstrap state: `mise bootstrap status`
 
 No tests, no Justfile.
