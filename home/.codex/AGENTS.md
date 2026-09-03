@@ -1,7 +1,7 @@
 # User preferences
 
 - Reply in English unless asked otherwise.
-- Leave destructive Git operations, merges, rebases, package installs, and external changes outside the requested workflow to the user. When the user explicitly asks to deliver changes, scoped branch creation, commits, pushes, and a draft merge request may proceed without separate confirmation; do not mark the merge request ready or merge it unless asked.
+- Leave destructive Git operations, merges, rebases, dependency changes, global package installs, and external changes outside the requested workflow to the user. Installing or syncing a project's already-declared dependencies with its documented lockfile and tooling is an expected setup and verification step and may proceed without separate confirmation; do not add or upgrade dependencies unless requested. When the user explicitly asks to deliver changes, scoped branch creation, commits, pushes, and a draft merge request may proceed without separate confirmation; do not mark the merge request ready or merge it unless asked.
 - When manually writing a comment in an external system, match the language of the comment or thread. Start Russian comments with `Агент:` and other comments with `Agent:`, then leave a blank line before the comment body. Preserve messages rendered or posted by utilities from an applicable skill selected from the runtime skill catalog or an approved private registry exactly.
 - If explicitly asked to install a CLI tool, use mise (`~/.config/mise/config.toml`), not pip/uvx/npm directly.
 - Do not read, print, or edit secrets unless explicitly required.
@@ -17,14 +17,21 @@
 # Workflow
 
 - Treat an explicit correction to agent behavior as authorization for a scoped durable prompt update unless the user requested plan-only or read-only work. Keep one-off task details local.
+- When clarification is necessary, collect every currently knowable material question and ask them together in one message. Do not split questions into rounds when their dependencies can be resolved from available context or investigation.
 - Put reusable standing behavior in `AGENTS.md` rather than relying on memory to recover it. Use memory for historical context, project instructions for repository-specific behavior, and a focused skill only for a distinct workflow that would add noise globally.
 - When changing instructions, read the target end to end, prefer tightening, merging, or deleting existing guidance over appending another rule, preserve unrelated edits, and verify the resulting diff.
-- Delegate concrete, bounded subtasks when they can run independently and materially reduce latency or provide an independent check. Keep synthesis, decisions, and verification in the primary task; skip delegation for small or tightly coupled work.
+- Do not delegate by default. Delegate only when the user explicitly asks, or when at least two independent subtasks each require substantial work and each child can work from a short task-specific handoff. Do not delegate work that would make a child reread the same skill, large reference set, or evidence bundle as the parent. Use at most one delegation wave and no nested delegation unless asked.
+- Among applicable skills, use the smallest non-overlapping set: one primary workflow skill plus only the tool skills for systems actually touched. Do not add generic helper or discovery skills after a sufficient workflow is selected. Do not reread a skill or reference within the same turn unless it changed or the earlier read was incomplete. After compaction, reload only material needed for the next action, preserving exact operational gates.
 - On a merge request already authorized for agent work, inspect and respond to clearly LLM-authored review comments without waiting for a separate request: independently verify each claim, fix valid in-scope issues, reply with the evidence or resolution, and reread the posted reply. Do not automatically act on human review comments, resolve discussions, expand scope, mark the merge request ready, or merge it.
 - If a `Justfile` exists, inspect it and prefer `just <recipe>`; otherwise use repo-documented commands.
+- Before reading large files, logs, or potentially noisy command output, estimate their size. Keep raw output in a file and read targeted searches or ranges into context. Load inputs for editing, transformation, or verbatim copying completely, and ensure output limiting does not hide the primary command's exit status.
+- Batch independent checks when safe. Do not repeat successful reads or checks without a new reason.
 - After code changes, run relevant targeted tests/lint when available and report checks not run.
+- When a web task requires SSO, use `agent-browser` rather than the in-app browser.
 - Do not scan `$HOME` broadly.
-- For long-running tasks, use tmux or log output to a file.
+- For long-running tasks, use tmux or log output to a file and poll at intervals appropriate to their expected duration.
+- For work likely to exceed 50 tool calls, split execution into explicit phases and maintain a compact task-state artifact containing the objective, verified facts, decisions, authoritative IDs and paths, completed checks, and next action. After compaction, continue from that artifact instead of reconstructing history or rereading every prior source.
+- Stop when the requirements are met and required checks have passed; report changed artifacts, checks run, and anything that could not be verified.
 
 # Code changes
 

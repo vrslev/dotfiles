@@ -76,13 +76,7 @@ killport = "latest"
 kubectl = "latest"
 glab = "latest"
 node = "24"
-python = [
-  "3.14",
-  "3.13",
-  "3.12",
-  "3.11",
-  "3.10",
-]
+python = ["3.14", "3.13", "3.12", "3.11", "3.10"]
 ripgrep = { version = "latest", postinstall = "mise run _install-fish-completions rg --generate complete-fish" }
 starship = "latest"
 usage = "latest"
@@ -112,6 +106,7 @@ zoxide = "latest"
 "github:charmbracelet/glow" = "latest"
 "npm:@openai/codex" = "latest"
 bun = "latest"
+"aqua:git-lfs/git-lfs" = "latest"
 
 [settings]
 experimental = true
@@ -133,7 +128,6 @@ shell = "bash -c"
 "~/.bashrc" = {}
 "~/.codex/AGENTS.md" = {}
 "~/.codex/skills/brainstorm-funnel" = {}
-"~/.codex/skills/cat-v-code-review" = {}
 "~/.codex/skills/create-today-reminder" = {}
 "~/.codex/skills/double-check" = {}
 "~/.codex/skills/eval-designer" = {}
