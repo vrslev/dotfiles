@@ -127,12 +127,6 @@ shell = "bash -c"
 [dotfiles]
 "~/.bashrc" = {}
 "~/.codex/AGENTS.md" = {}
-"~/.codex/skills/brainstorm-funnel" = {}
-"~/.codex/skills/create-today-reminder" = {}
-"~/.codex/skills/double-check" = {}
-"~/.codex/skills/eval-designer" = {}
-"~/.codex/skills/prompt-surgeon" = {}
-"~/.codex/skills/reflect-on-thread" = {}
 "~/.config/fish/config.fish" = {}
 "~/.config/ghostty/config" = {}
 "~/.config/git" = {}
