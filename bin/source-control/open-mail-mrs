@@ -12,7 +12,27 @@ from collections import OrderedDict
 from collections.abc import Sequence
 
 
-READ_SCRIPT = r'''
+MAILBOX_SCRIPT = r'''
+on gitlabMessages(targetAccountId)
+    tell application "Mail"
+        set messageList to {}
+        set mailboxFound to false
+        repeat with mailAccount in accounts
+            if targetAccountId is "" or (id of mailAccount) is targetAccountId then
+                if exists mailbox "GitLab" of mailAccount then
+                    set mailboxFound to true
+                    set messageList to messageList & (get messages of mailbox "GitLab" of mailAccount)
+                end if
+            end if
+        end repeat
+        if not mailboxFound then error "No GitLab mailbox found"
+        return messageList
+    end tell
+end gitlabMessages
+'''
+
+
+READ_SCRIPT = MAILBOX_SCRIPT + r'''
 on cleanText(valueText)
     set valueText to valueText as text
     set oldDelimiters to AppleScript's text item delimiters
@@ -45,15 +65,7 @@ end safeHeader
 on run argv
     set outputPath to item 1 of argv
     tell application "Mail"
-        if (count of message viewers) is 0 then error "No Mail message viewer is open"
-        if (count of selection) > 0 then
-            set messageList to selection
-        else
-            set selectedMailboxesList to selected mailboxes of message viewer 1
-            if (count of selectedMailboxesList) is 0 then error "No mailbox is selected"
-            set selectedMailbox to item 1 of selectedMailboxesList
-            set messageList to messages of selectedMailbox
-        end if
+        set messageList to my gitlabMessages("")
 
         set outputHandle to open for access POSIX file outputPath with write permission
         set eof outputHandle to 0
@@ -104,7 +116,7 @@ on run argv
 end run
 '''
 
-MARK_READ_SCRIPT = r'''
+MARK_READ_SCRIPT = MAILBOX_SCRIPT + r'''
 on safeHeader(mailMessage, headerName)
     tell application "Mail"
         try
@@ -121,15 +133,7 @@ on run argv
     set targetMrIid to item 3 of argv
 
     tell application "Mail"
-        if (count of message viewers) is 0 then error "No Mail message viewer is open"
-        if (count of selection) > 0 then
-            set messageList to selection
-        else
-            set selectedMailboxesList to selected mailboxes of message viewer 1
-            if (count of selectedMailboxesList) is 0 then error "No mailbox is selected"
-            set selectedMailbox to item 1 of selectedMailboxesList
-            set messageList to messages of selectedMailbox
-        end if
+        set messageList to my gitlabMessages(targetAccountId)
 
         set markedCount to 0
         repeat with mailMessage in messageList
