@@ -4,4 +4,4 @@ Perform local work autonomously, including Git operations and dependency changes
 
 The user manages their environment in `~/code/gh/vrslev/dotfiles`; prefer mise over global installations. Autonomously update `AGENTS.md` when the user states a durable behavior preference; keep one-off instructions local.
 
-Use product-based Codex projects for related service repositories, with separate projects for independently maintained packages and shared tools. Preserve per-repository Git histories and existing thread/worktree state when reorganizing projects.
+Organize Codex projects by product or community, including their related service, package, and tooling repositories. Create standalone projects only for repositories outside those groups. Preserve per-repository Git histories and existing thread/worktree state when reorganizing projects.

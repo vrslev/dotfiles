@@ -6,18 +6,19 @@ Keep machine-specific project roots in `~/.config/codex-projects/config.json`:
 {
   "projects": [
     {"name": "product", "roots": ["~/code/acme/product"]},
-    {"name": "tool", "roots": ["~/code/acme/tool"]}
+    {"name": "community", "roots": ["~/code/public/community", "~/code/private/community"]},
+    {"name": "personal-tool", "roots": ["~/code/personal/tool"]}
   ],
-  "discover": [
-    {"under": "~/code/acme/libraries", "pattern": "*/.git", "prefix": "lib-"}
-  ]
+  "discover": []
 }
 ```
 
-Product folders include future child repositories as they are cloned. Discovery
-rules create separate projects for matching local repositories. They do not
-discover or clone remote repositories. Keep independently maintained packages
-and shared tools as separate projects, even when a product folder includes them.
+Product and community folders include future child repositories as they are
+cloned. Group their related services, packages, and tools together; reserve
+standalone projects for repositories outside those groups. Optional discovery
+rules create separate projects for matching local repositories, so leave them
+empty when parent-folder projects already cover the repositories. Discovery
+rules do not discover or clone remote repositories.
 
 `codex-projects-sync` previews the catalog. `codex-projects-sync --apply` applies
 it when ChatGPT/Codex is closed, or queues one reconciliation for app exit. A
