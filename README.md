@@ -87,3 +87,7 @@ mise bootstrap dotfiles apply --yes
 - The config assumes this repository lives at `~/code/gh/vrslev/dotfiles`, and most versions are `latest`, so a fresh bootstrap can resolve newer software.
 - Safari defaults and VS Code extensions are intentionally unmanaged.
 - The official ChatGPT cask currently owns the same `/Applications/ChatGPT.app` used by Codex. An identical existing bundle can be adopted; a different bundle at that path blocks installation rather than being overwritten.
+
+## Codex projects
+
+See [project reconciliation](docs/codex-projects.md) for product folders, separate package projects, and automatic additions after repository sync.

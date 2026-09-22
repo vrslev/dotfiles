@@ -34,7 +34,7 @@ set -l projects_file (mktemp -t clone-glab-group.XXXXXX)
 set -l result 0
 
 env GITLAB_HOST="$host" glab api --paginate \
-    "groups/$encoded_group/projects?include_subgroups=true&with_shared=false&per_page=100" \
+    "groups/$encoded_group/projects?include_subgroups=true&with_shared=false&archived=false&per_page=100" \
     | jq -r '.[] | .path_with_namespace' > $projects_file
 set -l api_status $pipestatus
 if test $api_status[1] -ne 0; or test $api_status[2] -ne 0

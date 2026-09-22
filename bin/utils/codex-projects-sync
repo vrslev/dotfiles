@@ -1,0 +1,310 @@
+#!/usr/bin/env python3
+# pyright: strict
+"""Reconcile local Codex projects while the desktop application is closed."""
+
+import argparse
+import copy
+import fcntl
+import json
+import os
+from pathlib import Path
+import sqlite3
+import subprocess
+import sys
+import tempfile
+import time
+import uuid
+from urllib.parse import urlsplit
+from typing import Any, cast
+
+Json = dict[str, Any]
+
+
+def expanded(value: str) -> str:
+    return str(Path(value).expanduser().absolute())
+
+
+def contains(root: str, path: str) -> bool:
+    return path == root or path.startswith(root.rstrip('/') + '/')
+
+
+def running() -> bool:
+    processes = subprocess.run(['ps', '-axo', 'comm='], check=True, capture_output=True, text=True)
+    return any('/Contents/MacOS/' in line and
+               (line.endswith('/ChatGPT') or line.endswith('/Codex'))
+               for line in processes.stdout.splitlines())
+
+
+def desired_projects(config: Json) -> list[Json]:
+    desired: list[Json] = []
+    for entry in config['projects']:
+        roots = [expanded(x) for x in entry['roots']]
+        missing = [x for x in roots if not Path(x).is_dir()]
+        if missing:
+            raise ValueError(f'Missing project roots: {missing}')
+        desired.append(dict(entry, roots=roots))
+    assigned = {root for entry in desired for root in entry['roots']}
+    for rule in config.get('discover', []):
+        parent = Path(rule['under']).expanduser()
+        for marker in sorted(parent.glob(rule.get('pattern', '*/.git'))):
+            root = str(marker.parent.absolute())
+            if root in assigned:
+                continue
+            if marker.parent.name in rule.get('exclude', []):
+                continue
+            desired.append({'name': rule.get('prefix', '') + marker.parent.name, 'roots': [root]})
+            assigned.add(root)
+    names = [entry['name'] for entry in desired]
+    if len(names) != len(set(names)):
+        raise ValueError('Duplicate project names; give discovery rules distinct prefixes')
+    return desired
+
+
+def reconcile(state: Json, desired: list[Json]) -> tuple[Json, dict[str, str], list[tuple[str, str]]]:
+    state = copy.deepcopy(state)
+    old: dict[str, Json] = state.get('local-projects', {})
+    projects: dict[str, Json] = {}
+    now = int(time.time() * 1000)
+    for entry in desired:
+        matches = [p for p in old.values() if p['name'] == entry['name']]
+        if len(matches) > 1:
+            raise ValueError(f"Duplicate existing project: {entry['name']}")
+        prior = matches[0] if matches else None
+        project_id = prior['id'] if prior else str(uuid.uuid5(uuid.NAMESPACE_URL, 'codex-local-project:' + entry['name']))
+        value = dict(prior or {}, id=project_id, name=entry['name'], rootPaths=entry['roots'])
+        value.setdefault('createdAt', now)
+        value['updatedAt'] = prior['updatedAt'] if prior and prior.get('rootPaths') == entry['roots'] else now
+        projects[project_id] = value
+    mapping: dict[str, str] = {}
+    replacements: list[tuple[str, str]] = []
+    for project_id, prior in old.items():
+        if project_id in projects:
+            mapping[project_id] = project_id
+            continue
+        root_matches: list[tuple[int, str]] = []
+        for target in projects.values():
+            for root in target['rootPaths']:
+                if prior.get('rootPaths') and all(contains(root, path) for path in prior['rootPaths']):
+                    root_matches.append((len(root), target['id']))
+        if root_matches:
+            target_id = max(root_matches)[1]
+            mapping[project_id] = target_id
+            replacements.append((prior['name'], projects[target_id]['name']))
+        else:
+            projects[project_id] = prior
+            mapping[project_id] = project_id
+    state['local-projects'] = projects
+    order = [p['id'] for entry in desired for p in projects.values() if p['name'] == entry['name']]
+    order += [x for x in state.get('project-order', []) if x in projects and x not in order]
+    order += [x for x in projects if x not in order]
+    state['project-order'] = order
+    for assignment in state.get('thread-project-assignments', {}).values():
+        if assignment.get('projectKind') == 'local':
+            old_id = assignment.get('projectId')
+            assignment['projectId'] = mapping.get(old_id, old_id)
+    selected = state.get('selected-project')
+    if isinstance(selected, str):
+        state['selected-project'] = mapping.get(selected, selected)
+    elif isinstance(selected, dict):
+        selection = cast(Json, selected)
+        selected_id = selection.get('projectId')
+        if selection.get('projectKind') == 'local' and isinstance(selected_id, str):
+            selection['projectId'] = mapping.get(selected_id, selected_id)
+    for key in ['sidebar-project-thread-orders', 'project-appearances']:
+        converted: Json = {}
+        entries: Json = state.get(key, {})
+        for project_id, value in entries.items():
+            target_id = mapping.get(project_id, project_id)
+            if target_id not in converted:
+                converted[target_id] = copy.deepcopy(value)
+            elif key == 'sidebar-project-thread-orders':
+                ids = converted[target_id].setdefault('threadIds', [])
+                ids.extend(x for x in value.get('threadIds', []) if x not in ids)
+        if key in state:
+            state[key] = converted
+    if 'electron-saved-workspace-roots' in state:
+        state['electron-saved-workspace-roots'] = list(dict.fromkeys(root for p in projects.values() for root in p['rootPaths']))
+    return state, mapping, replacements
+
+
+def origin_key(value: str) -> tuple[str | None, str]:
+    if '://' not in value and '@' in value and ':' in value:
+        value = 'ssh://' + value.replace(':', '/', 1)
+    parts = urlsplit(value)
+    return (parts.hostname, parts.path.rstrip('/').removesuffix('.git'))
+
+
+def preserve_implicit_threads(config: Json, state_path: Path, original: Json, updated: Json, mapping: dict[str, str]) -> None:
+    retired = {old: new for old, new in mapping.items() if old != new}
+    if not retired:
+        return
+    roots: dict[str, str] = {}
+    origins: dict[tuple[str | None, str], str] = {}
+    for old, new in retired.items():
+        for root in original['local-projects'][old]['rootPaths']:
+            roots[root] = new
+            result = subprocess.run(['git', '-C', root, 'config', '--get', 'remote.origin.url'], capture_output=True, text=True)
+            if result.returncode == 0:
+                origins[origin_key(result.stdout.strip())] = new
+    db_path = state_path.parent / config.get('state_db', 'state_5.sqlite')
+    connection = sqlite3.connect(db_path.as_uri() + '?mode=ro', uri=True)
+    assignments = updated.setdefault('thread-project-assignments', {})
+    projectless = set(original.get('projectless-thread-ids', []))
+    hints = original.get('thread-workspace-root-hints', {})
+    for thread_id, cwd, origin in connection.execute('SELECT id,cwd,git_origin_url FROM threads'):
+        if thread_id in assignments or thread_id in projectless:
+            continue
+        target = origins.get(origin_key(origin)) if origin else None
+        for root, project_id in roots.items():
+            if contains(root, cwd) or contains(root, hints.get(thread_id, '')):
+                target = project_id
+                break
+        if target:
+            assignments[thread_id] = {'projectKind': 'local', 'projectId': target}
+    connection.close()
+
+
+def write_json(path: Path, data: Json) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.NamedTemporaryFile('w', dir=path.parent, delete=False) as output:
+        json.dump(data, output, indent=2)
+        output.write('\n')
+        output.flush()
+        os.fsync(output.fileno())
+        temporary = output.name
+    os.chmod(temporary, 0o600)
+    os.replace(temporary, path)
+
+
+def status(config: Json, cache: Path, value: Json) -> None:
+    write_json(cache / 'status.json', value)
+    if config.get('report'):
+        write_json(Path(config['report']).expanduser(), value)
+
+
+def apply(config: Json, state_path: Path, original: Json, updated: Json, mapping: dict[str, str], cache: Path) -> Path:
+    if running():
+        raise RuntimeError('Close ChatGPT/Codex before applying the project catalog')
+    db_path = state_path.parent / config.get('state_db', 'state_5.sqlite')
+    connection = sqlite3.connect(db_path)
+    connection.execute('PRAGMA foreign_keys=ON')
+    connection.execute('PRAGMA busy_timeout=10000')
+    required = {'projects', 'project_roots', 'threads'}
+    present = {x[0] for x in connection.execute("SELECT name FROM sqlite_master WHERE type='table'")}
+    if not required <= present:
+        raise RuntimeError('Unexpected Codex database schema; no changes applied')
+    stamp = time.strftime('%Y%m%d-%H%M%S') + '-' + uuid.uuid4().hex[:8]
+    backup = cache / 'backups' / stamp
+    backup.mkdir(parents=True, mode=0o700)
+    write_json(backup / 'global-state.json', original)
+    with sqlite3.connect(backup / db_path.name) as destination:
+        connection.backup(destination)
+    os.chmod(backup / db_path.name, 0o600)
+    hosts = updated.setdefault('app-server-project-id-by-legacy-project-id-by-host', {})
+    host = config.get('host', 'local:' + str(state_path.parent))
+    old_ids = copy.deepcopy(hosts.get(host, {}))
+    ids = hosts.setdefault(host, {})
+    current = {x[0] for x in connection.execute('SELECT id FROM projects')}
+    for legacy in updated['local-projects']:
+        if legacy not in ids or ids[legacy] not in current:
+            ids[legacy] = str(uuid.uuid5(uuid.NAMESPACE_URL, 'codex-app-server-project:' + legacy))
+    try:
+        connection.execute('BEGIN IMMEDIATE')
+        for position, legacy in enumerate(updated['project-order']):
+            project = updated['local-projects'][legacy]
+            database_id = ids[legacy]
+            connection.execute('INSERT INTO projects (id,name,metadata,position,created_at_ms,updated_at_ms) VALUES (?,?,?,?,?,?) ON CONFLICT(id) DO UPDATE SET name=excluded.name,position=excluded.position,updated_at_ms=excluded.updated_at_ms',
+                               (database_id, project['name'], '{}', position, project['createdAt'], project['updatedAt']))
+            connection.execute('DELETE FROM project_roots WHERE project_id=?', (database_id,))
+            connection.executemany('INSERT INTO project_roots (project_id,position,path) VALUES (?,?,?)',
+                                   [(database_id, i, root) for i, root in enumerate(project['rootPaths'])])
+        for old, new in mapping.items():
+            if old != new and old in old_ids:
+                connection.execute('UPDATE threads SET project_id=? WHERE project_id=?', (ids[new], old_ids[old]))
+                connection.execute('DELETE FROM project_idempotency_keys WHERE project_id=?', (old_ids[old],))
+                connection.execute('DELETE FROM project_roots WHERE project_id=?', (old_ids[old],))
+                connection.execute('DELETE FROM projects WHERE id=?', (old_ids[old],))
+                ids.pop(old, None)
+        for thread_id, assignment in updated.get('thread-project-assignments', {}).items():
+            project_id = assignment.get('projectId')
+            if assignment.get('projectKind') == 'local' and project_id in ids:
+                connection.execute('UPDATE threads SET project_id=? WHERE id=?', (ids[project_id], thread_id))
+        if connection.execute('PRAGMA foreign_key_check').fetchall():
+            raise RuntimeError('Foreign key validation failed')
+        if running() or json.loads(state_path.read_text()) != original:
+            raise RuntimeError('Codex reopened or its state changed; retry after closing it')
+        write_json(state_path, updated)
+        connection.commit()
+    except BaseException:
+        connection.rollback()
+        if json.loads(state_path.read_text()) == updated:
+            write_json(state_path, original)
+        raise
+    finally:
+        connection.close()
+    return backup
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--config', type=Path, default=Path('~/.config/codex-projects/config.json').expanduser())
+    parser.add_argument('--apply', action='store_true', help='Apply now, or queue once until the desktop app closes')
+    parser.add_argument('--wait', action='store_true', help=argparse.SUPPRESS)
+    parser.add_argument('--only-when-closed', action='store_true', help=argparse.SUPPRESS)
+    args = parser.parse_args()
+    args.config = args.config.expanduser().resolve()
+    config = json.loads(args.config.read_text())
+    state_path = Path(config.get('state', '~/.codex/.codex-global-state.json')).expanduser()
+    cache = Path(config.get('cache', '~/.cache/codex-projects')).expanduser()
+    cache.mkdir(parents=True, exist_ok=True)
+    if args.wait:
+        with (cache / 'pending.lock').open('w') as lock:
+            try:
+                fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            except BlockingIOError:
+                return
+            while True:
+                while running():
+                    time.sleep(3)
+                time.sleep(2)
+                result = subprocess.run([sys.executable, str(Path(__file__).resolve()), '--config', str(args.config), '--apply', '--only-when-closed'])
+                if result.returncode != 75:
+                    break
+            if result.returncode:
+                status(config, cache, {'status': 'failed', 'failedAt': time.time(), 'log': str(cache / 'pending.log')})
+                raise SystemExit(result.returncode)
+        return
+    original = json.loads(state_path.read_text())
+    updated, mapping, replacements = reconcile(original, desired_projects(config))
+    preserve_implicit_threads(config, state_path, original, updated, mapping)
+    summary = {'projects': [{'name': p['name'], 'roots': p['rootPaths']} for p in updated['local-projects'].values()],
+               'replaced': replacements, 'changed': updated != original}
+    if args.apply:
+        print(f"Codex projects: {len(summary['projects'])}; replaced entries: {len(replacements)}; changes: {summary['changed']}")
+    else:
+        print(json.dumps(summary, indent=2))
+    if not args.apply or not summary['changed']:
+        return
+    if running():
+        if args.only_when_closed:
+            raise SystemExit(75)
+        with (cache / 'pending.log').open('a') as output:
+            worker = subprocess.Popen([sys.executable, str(Path(__file__).resolve()), '--config', str(args.config), '--wait'],
+                                      stdin=subprocess.DEVNULL, stdout=output, stderr=output, start_new_session=True)
+        status(config, cache, {'status': 'waiting-for-app-exit', 'queuedAt': time.time(), 'workerPid': worker.pid, **summary})
+        print('Queued: quit ChatGPT/Codex, wait for status.json to say applied, then reopen normally.')
+        return
+    with (cache / 'apply.lock').open('w') as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        fresh = json.loads(state_path.read_text())
+        updated, mapping, replacements = reconcile(fresh, desired_projects(config))
+        preserve_implicit_threads(config, state_path, fresh, updated, mapping)
+        if updated == fresh:
+            return
+        backup = apply(config, state_path, fresh, updated, mapping, cache)
+    status(config, cache, {'status': 'applied', 'completedAt': time.time(), 'backup': str(backup), **summary})
+    print('Applied and backed up to', backup)
+
+
+if __name__ == '__main__':
+    main()
