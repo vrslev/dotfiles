@@ -103,7 +103,7 @@ on run argv
                     set gitlabHost to my safeHeader(mailMessage, "x-gitlab-host")
                     set listUnsubscribe to my safeHeader(mailMessage, "list-unsubscribe")
                     set listId to my safeHeader(mailMessage, "list-id")
-                    write ((my cleanText(accountId)) & tab & (my cleanText(accountName)) & tab & projectPath & tab & mrIid & tab & gitlabHost & tab & listUnsubscribe & tab & listId & tab & (my cleanText(subjectText)) & tab & (my cleanText(senderText)) & tab & (my cleanText(dateReceivedText)) & tab & (my cleanText(readStatusText)) & tab & (my cleanText(bodyText)) & linefeed) to outputHandle as «class utf8»
+                    write ((id of mailMessage as text) & tab & (my cleanText(accountId)) & tab & (my cleanText(accountName)) & tab & projectPath & tab & mrIid & tab & gitlabHost & tab & listUnsubscribe & tab & listId & tab & (my cleanText(subjectText)) & tab & (my cleanText(senderText)) & tab & (my cleanText(dateReceivedText)) & tab & (my cleanText(readStatusText)) & tab & (my cleanText(bodyText)) & linefeed) to outputHandle as «class utf8»
                 end if
             end repeat
         on error errorMessage number errorNumber
@@ -116,38 +116,35 @@ on run argv
 end run
 '''
 
-MARK_READ_SCRIPT = MAILBOX_SCRIPT + r'''
-on safeHeader(mailMessage, headerName)
-    tell application "Mail"
-        try
-            return content of header headerName of mailMessage
-        on error
-            return ""
-        end try
-    end tell
-end safeHeader
-
+CLEANUP_SCRIPT = MAILBOX_SCRIPT + r'''
 on run argv
     set targetAccountId to item 1 of argv
-    set targetProjectPath to item 2 of argv
-    set targetMrIid to item 3 of argv
+    set targetMessageIds to items 2 thru -1 of argv
 
     tell application "Mail"
         set messageList to my gitlabMessages(targetAccountId)
+        set targetTrash to missing value
+        repeat with trashFolder in mailboxes of trash mailbox
+            if (id of account of trashFolder) is targetAccountId then
+                set targetTrash to contents of trashFolder
+                exit repeat
+            end if
+        end repeat
+        if targetTrash is missing value then error "No Trash mailbox found for the Mail account"
 
         set markedCount to 0
+        set movedCount to 0
         repeat with mailMessage in messageList
-            try
-                set accountId to id of account of mailbox of mailMessage
-                set projectPath to my safeHeader(mailMessage, "x-gitlab-project-path")
-                set mrIid to my safeHeader(mailMessage, "x-gitlab-mergerequest-iid")
-                if accountId is targetAccountId and projectPath is targetProjectPath and mrIid is targetMrIid and read status of mailMessage is false then
+            if (id of mailMessage as text) is in targetMessageIds then
+                if read status of mailMessage is false then
                     set read status of mailMessage to true
                     set markedCount to markedCount + 1
                 end if
-            end try
+                move mailMessage to targetTrash
+                set movedCount to movedCount + 1
+            end if
         end repeat
-        return markedCount as text
+        return (markedCount as text) & tab & (movedCount as text)
     end tell
 end run
 '''
@@ -155,6 +152,7 @@ end run
 
 @dataclasses.dataclass(frozen=True)
 class Notification:
+    message_id: str
     account_id: str
     account_name: str
     project_path: str
@@ -223,9 +221,10 @@ def read_notifications() -> tuple[int, list[Notification]]:
         with open(output_path, encoding="utf-8", errors="replace") as file:
             for line in file:
                 fields = line.rstrip("\n").split("\t")
-                if len(fields) != 12:
+                if len(fields) != 13:
                     continue
                 (
+                    message_id,
                     account_id,
                     account_name,
                     project_path,
@@ -244,6 +243,7 @@ def read_notifications() -> tuple[int, list[Notification]]:
                     continue
                 notifications.append(
                     Notification(
+                        message_id=message_id,
                         account_id=account_id,
                         account_name=account_name,
                         project_path=project_path,
@@ -268,10 +268,11 @@ def group_notifications(notifications: Sequence[Notification]) -> OrderedDict[tu
     return groups
 
 
-def mark_group_read(group: Sequence[Notification]) -> int:
+def cleanup_group(group: Sequence[Notification]) -> tuple[int, int]:
     notification = group[0]
-    output = run_osascript(MARK_READ_SCRIPT, [notification.account_id, notification.project_path, notification.mr_iid])
-    return int(output)
+    output = run_osascript(CLEANUP_SCRIPT, [notification.account_id, *(item.message_id for item in group)])
+    marked, moved = output.split("\t")
+    return int(marked), int(moved)
 
 
 def git_config_value(key: str) -> str:
@@ -573,21 +574,21 @@ def main() -> int:
         print_summary(ordered_groups, terms)
 
         if dry_run:
-            print(f"\n{yellow(bold('DRY RUN'))} {gray('would open')} {bold(str(len(ordered_groups)))} {gray('MR(s) and mark unread notifications read')}")
+            print(f"\n{yellow(bold('DRY RUN'))} {gray('would open')} {bold(str(len(ordered_groups)))} {gray('MR(s), mark unread notifications read, and move all matching notifications to Trash')}")
         else:
             print(f"\n{bold(cyan(f'Opening {len(ordered_groups)} MR(s)'))}")
             for group in ordered_groups:
                 first = group[0]
                 print(f"   {cyan('•')} {bold(first.label)}")
-                subprocess.run(["open", first.url], check=False)
+                subprocess.run(["open", first.url], check=True)
 
-            unread_total = sum(1 for group in ordered_groups for notification in group if not notification.read)
             marked_total = 0
-            if unread_total:
-                for group in ordered_groups:
-                    if any(not notification.read for notification in group):
-                        marked_total += mark_group_read(group)
-            print(green(f"Marked {marked_total} notification(s) read."))
+            moved_total = 0
+            for group in ordered_groups:
+                marked, moved = cleanup_group(group)
+                marked_total += marked
+                moved_total += moved
+            print(green(f"Marked {marked_total} notification(s) read; moved {moved_total} notification(s) to Trash."))
         return 0
     except Exception as exception:
         print(f"open-mail-mrs: {exception}", file=sys.stderr)
