@@ -35,6 +35,25 @@ def running() -> bool:
                for line in processes.stdout.splitlines())
 
 
+def repositories_under(value: str) -> list[str]:
+    parent = Path(expanded(value))
+    if not parent.is_dir():
+        raise ValueError(f'Missing repository parent: {parent}')
+    repositories: list[str] = []
+    for current, directories, files in os.walk(parent):
+        if '.git' in directories:
+            top = subprocess.run(['git', '-C', current, 'rev-parse', '--show-toplevel'],
+                                 capture_output=True, text=True)
+            if top.returncode == 0 and top.stdout.strip() == current:
+                repositories.append(current)
+            directories[:] = []
+        elif '.git' in files:
+            directories[:] = []
+        else:
+            directories.sort()
+    return repositories
+
+
 def desired_projects(config: Json) -> list[Json]:
     desired: list[Json] = []
     for entry in config['projects']:
@@ -42,6 +61,11 @@ def desired_projects(config: Json) -> list[Json]:
         missing = [x for x in roots if not Path(x).is_dir()]
         if missing:
             raise ValueError(f'Missing project roots: {missing}')
+        for parent in entry.get('repositoriesUnder', []):
+            roots.extend(repositories_under(parent))
+        roots = list(dict.fromkeys(roots))
+        if not roots:
+            raise ValueError(f"Project has no repository roots: {entry['name']}")
         desired.append(dict(entry, roots=roots))
     assigned = {root for entry in desired for root in entry['roots']}
     for rule in config.get('discover', []):
@@ -225,7 +249,10 @@ def apply(config: Json, state_path: Path, original: Json, updated: Json, mapping
                 connection.execute('DELETE FROM project_roots WHERE project_id=?', (old_ids[old],))
                 connection.execute('DELETE FROM projects WHERE id=?', (old_ids[old],))
                 ids.pop(old, None)
+        previous_assignments = original.get('thread-project-assignments', {})
         for thread_id, assignment in updated.get('thread-project-assignments', {}).items():
+            if assignment == previous_assignments.get(thread_id):
+                continue
             project_id = assignment.get('projectId')
             if assignment.get('projectKind') == 'local' and project_id in ids:
                 connection.execute('UPDATE threads SET project_id=? WHERE id=?', (ids[project_id], thread_id))

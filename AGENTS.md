@@ -20,6 +20,7 @@ macOS dotfiles for Fish, Ghostty, VS Code, Git, mise, etc. Installed via symlink
 - Python scripts: `#!/usr/bin/env -S uv run --python 3.13 --script` or `#!/usr/bin/env python3`, `# pyright: strict`, no comments unless they add info beyond the code.
 - Shell scripts: `#!/usr/bin/env bash`, `set -euo pipefail`.
 - `$DOTFILES_ROOT` env var points at this repo (set by the global mise config).
+- For grouped Codex projects, register each child Git checkout as a project root. Use `repositoriesUnder` for parent folders so new clones join the same project without making a non-Git parent the task working directory.
 
 ## Common tasks
 
