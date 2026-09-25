@@ -173,6 +173,10 @@ class Notification:
         return f"https://{self.host}/{self.project_path}/-/merge_requests/{self.mr_iid}"
 
     @property
+    def diff_url(self) -> str:
+        return f"{self.url}/diffs"
+
+    @property
     def label(self) -> str:
         project = self.project_path.rsplit("/", 1)[-1]
         return f"{project} !{self.mr_iid}"
@@ -574,13 +578,14 @@ def main() -> int:
         print_summary(ordered_groups, terms)
 
         if dry_run:
-            print(f"\n{yellow(bold('DRY RUN'))} {gray('would open')} {bold(str(len(ordered_groups)))} {gray('MR(s), mark unread notifications read, and move all matching notifications to Trash')}")
+            print(f"\n{yellow(bold('DRY RUN'))} {gray('would open MR and diff pages for')} {bold(str(len(ordered_groups)))} {gray('MR(s), mark unread notifications read, and move all matching notifications to Trash')}")
         else:
-            print(f"\n{bold(cyan(f'Opening {len(ordered_groups)} MR(s)'))}")
+            print(f"\n{bold(cyan(f'Opening MR and diff pages for {len(ordered_groups)} MR(s)'))}")
             for group in ordered_groups:
                 first = group[0]
                 print(f"   {cyan('•')} {bold(first.label)}")
                 subprocess.run(["open", first.url], check=True)
+                subprocess.run(["open", first.diff_url], check=True)
 
             marked_total = 0
             moved_total = 0
