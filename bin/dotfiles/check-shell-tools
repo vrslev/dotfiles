@@ -5,43 +5,43 @@ repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd -P)"
 fish_bin=/opt/homebrew/bin/fish
 
 if [[ ! -x "$fish_bin" ]]; then
-  printf 'dotfiles smoke: Fish is missing at %s\n' "$fish_bin" >&2
+  printf 'shell tools check: Fish is missing at %s\n' "$fish_bin" >&2
   exit 1
 fi
 
 fish_commands=$(cat <<'FISH'
 if not status is-login
-  echo 'dotfiles smoke: Fish is not a login shell' >&2
+  echo 'shell tools check: Fish is not a login shell' >&2
   exit 1
 end
 
 if not status is-interactive
-  echo 'dotfiles smoke: Fish is not interactive' >&2
+  echo 'shell tools check: Fish is not interactive' >&2
   exit 1
 end
 
-if test "$DOTFILES_ROOT" != "$SMOKE_EXPECTED_ROOT"
-  echo 'dotfiles smoke: DOTFILES_ROOT is incorrect' >&2
+if test "$DOTFILES_ROOT" != "$SHELL_TOOLS_EXPECTED_ROOT"
+  echo 'shell tools check: DOTFILES_ROOT is incorrect' >&2
   exit 1
 end
 
 for utility in brew mise git uv rg codex starship zoxide fzf
   if not type -q $utility
-    echo "dotfiles smoke: missing $utility" >&2
+    echo "shell tools check: missing $utility" >&2
     exit 1
   end
   if not $utility --version >/dev/null 2>&1
-    echo "dotfiles smoke: $utility --version failed" >&2
+    echo "shell tools check: $utility --version failed" >&2
     exit 1
   end
 end
 
 if not fish_prompt >/dev/null
-  echo 'dotfiles smoke: Fish prompt failed' >&2
+  echo 'shell tools check: Fish prompt failed' >&2
   exit 1
 end
 
-echo 'dotfiles smoke: ok'
+echo 'shell tools check: ok'
 FISH
 )
 
@@ -52,14 +52,14 @@ output=$(env -i \
   SHELL="$fish_bin" \
   TERM=xterm-256color \
   PATH=/usr/bin:/bin:/usr/sbin:/sbin \
-  SMOKE_EXPECTED_ROOT="$repo_root" \
+  SHELL_TOOLS_EXPECTED_ROOT="$repo_root" \
   "$fish_bin" -l -i -c "$fish_commands" 2>&1) || {
   printf '%s\n' "$output" >&2
   exit 1
 }
 
-if [[ "$output" != 'dotfiles smoke: ok' ]]; then
-  printf 'dotfiles smoke: unexpected Fish startup output:\n%s\n' "$output" >&2
+if [[ "$output" != 'shell tools check: ok' ]]; then
+  printf 'shell tools check: unexpected Fish startup output:\n%s\n' "$output" >&2
   exit 1
 fi
 

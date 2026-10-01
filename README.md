@@ -64,7 +64,7 @@ mise run dotfiles:sync
 
 It fast-forwards the repository, re-applies links, and synchronizes tools and packages.
 It then checks Fish startup and the essential commands. Run the check separately with
-`mise run dotfiles:smoke`.
+`mise run dotfiles:check-shell-tools`.
 
 Available tasks and read-only bootstrap status are discoverable:
 

@@ -269,9 +269,9 @@ mergiraf languages --gitattributes > ~/.gitattributes
 
 mise bootstrap packages apply --yes
 mise bootstrap packages upgrade --yes
-mise run dotfiles:smoke
+mise run dotfiles:check-shell-tools
 '''
 
-[tasks."dotfiles:smoke"]
+[tasks."dotfiles:check-shell-tools"]
 description = "Check Fish startup and essential commands"
-run = "$DOTFILES_ROOT/bin/dotfiles/smoke-test"
+run = "$DOTFILES_ROOT/bin/dotfiles/check-shell-tools"
