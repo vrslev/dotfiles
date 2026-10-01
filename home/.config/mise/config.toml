@@ -186,10 +186,8 @@ shell = "bash -c"
 "mas:409203825" = "latest"                      # Numbers
 "mas:409201541" = "latest"                      # Pages
 "mas:1289583905" = "latest"                     # Pixelmator Pro
-"mas:1529448980" = "latest"                     # Reeder
 "mas:932747118" = "latest"                      # Shadowrocket
 "mas:897283731" = "latest"                      # Strongbox
-"mas:904280696" = "latest"                      # Things
 "mas:1662217862" = "latest"                     # Wipr
 
 [bootstrap.macos.defaults.NSGlobalDomain]
