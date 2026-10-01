@@ -91,3 +91,7 @@ mise bootstrap dotfiles apply --yes
 ## Codex projects
 
 See [project reconciliation](docs/codex-projects.md) for product folders, separate package projects, and automatic additions after repository sync.
+
+## Personal writing skill
+
+[`writing-style`](home/.agents/skills/writing-style/SKILL.md) guides drafts in my voice, with Russian and English examples and notes on its evidence. Mise installs it at `~/.agents/skills/writing-style`. Invoke it with `$writing-style`, or ask Codex to write in my style. Refinements use my own corrections and human-authored prose, excluding generated or assisted drafts.

@@ -125,6 +125,7 @@ minimum_release_age = "7d"
 shell = "bash -c"
 
 [dotfiles]
+"~/.agents/skills/writing-style" = {}
 "~/.bashrc" = {}
 "~/.codex/AGENTS.md" = {}
 "~/.config/fish/config.fish" = {}
