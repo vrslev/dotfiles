@@ -109,6 +109,7 @@ bun = "latest"
 "aqua:git-lfs/git-lfs" = "latest"
 
 [settings]
+disable_update_warning = true
 experimental = true
 dotfiles.root = "~/code/gh/vrslev/dotfiles/home"
 dotfiles.default_mode = "symlink"
