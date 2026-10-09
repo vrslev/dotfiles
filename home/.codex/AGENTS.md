@@ -11,3 +11,5 @@ The user manages their environment in `~/code/gh/vrslev/dotfiles`; prefer mise o
 Organize Codex projects by product or community, including their related service, package, and tooling repositories. Create standalone projects only for repositories outside those groups. Preserve per-repository Git histories and existing thread/worktree state when reorganizing projects.
 
 Remove dependencies that become unused in the same change that removes their last consumer. Check application code, tests, tooling, entrypoints, plugins, and configuration before removal; keep dependencies with remaining supported consumers. Update the lockfile with the owning refactor rather than deferring its dependency cleanup to a separate task.
+
+Prefer reusing existing common/shared definitions over adding duplicates. Before adding domain content, compare complete objects with the existing common sources and select only what the domain needs. Keep differing behavior local or use explicit overrides; preserve every existing consumer, including disabled domains, and verify unchanged effective content when moving definitions to common.
