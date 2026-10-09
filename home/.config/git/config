@@ -8,6 +8,10 @@
 [includeIf "hasconfig:remote.*.url:https://*gitlab*/**"]
   path = ~/code/glab/.gitconfig
 
+[credential]
+  helper =
+  helper = /Library/Developer/CommandLineTools/usr/libexec/git-core/git-credential-osxkeychain
+
 [init]
   defaultBranch = main
 
