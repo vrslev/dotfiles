@@ -679,17 +679,20 @@ def main() -> int:
         with ThreadPoolExecutor(max_workers=min(8, len(ordered_groups))) as executor:
             issues_by_group = list(executor.map(mr_jira_issues, ordered_groups))
         issues = list(dict.fromkeys(issue for group_issues in issues_by_group for issue in group_issues))
-        urls: list[str] = []
         for group, group_issues in zip(ordered_groups, issues_by_group, strict=True):
             first = group[0]
-            urls.extend((first.url, first.diff_url))
             if group_issues:
                 print(f"   {cyan(first.label)} {gray('· Jira:')} {', '.join(group_issues)}")
 
         if dry_run:
             print(f"\n{yellow(bold('DRY RUN'))} {gray('would open MR and diff pages for')} {bold(str(len(ordered_groups)))} {gray('MR(s) and')} {bold(str(len(issues)))} {gray('Jira issue(s) together in a new Safari window, wait for page content to load, mark unread notifications read, and move all matching notifications to Trash')}")
         else:
-            urls.extend(jira_urls(issues))
+            issue_urls = dict(zip(issues, jira_urls(issues), strict=True))
+            urls: list[str] = []
+            for group, group_issues in zip(ordered_groups, issues_by_group, strict=True):
+                first = group[0]
+                urls.extend((first.url, first.diff_url))
+                urls.extend(issue_urls[issue] for issue in group_issues)
             urls = list(dict.fromkeys(urls))
             print(f"\n{bold(cyan(f'Opening {len(urls)} pages together in a new Safari window; waiting for page content…'))}", flush=True)
             run_osascript(OPEN_SCRIPT, urls)
