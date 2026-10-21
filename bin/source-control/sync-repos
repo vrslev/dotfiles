@@ -24,6 +24,38 @@ def details(result: subprocess.CompletedProcess[str]) -> None:
         print(f"    {line}")
 
 
+def sync_repo(repo: str) -> tuple[str, subprocess.CompletedProcess[str]]:
+    metadata = run(
+        "git", "rev-parse", "--path-format=absolute", "--git-dir", "--git-common-dir",
+        cwd=repo,
+    )
+    if metadata.returncode:
+        return "FAIL", metadata
+    git_dir, common_dir = metadata.stdout.splitlines()
+    if Path(git_dir).resolve() != Path(common_dir).resolve():
+        return "SKIP", subprocess.CompletedProcess(
+            (), 0, "Linked worktree; sync its primary checkout instead.", ""
+        )
+
+    branch = run("git", "main-branch", cwd=repo)
+    if branch.returncode:
+        return "FAIL", branch
+    owner = run(
+        "git", "for-each-ref", "--format=%(worktreepath)",
+        f"refs/heads/{branch.stdout.strip()}", cwd=repo,
+    )
+    if owner.returncode:
+        return "FAIL", owner
+    worktree = owner.stdout.strip()
+    if worktree and Path(worktree).resolve() != Path(repo).resolve():
+        return "SKIP", subprocess.CompletedProcess(
+            (), 0, f"Default branch is checked out in {worktree}.", ""
+        )
+
+    result = run("env", "GIT_LFS_SKIP_SMUDGE=1", "git", "sync", cwd=repo)
+    return ("FAIL" if result.returncode else "OK"), result
+
+
 def main() -> int:
     started = time.monotonic()
     failed = False
@@ -71,13 +103,12 @@ def main() -> int:
 
     total = len(repos)
     succeeded = 0
+    skipped = 0
     failures: list[str] = []
     print(f"\nSyncing repositories ({total})…", flush=True)
     with ThreadPoolExecutor(max_workers=os.cpu_count() or 1) as executor:
         futures = {
-            executor.submit(
-                run, "env", "GIT_LFS_SKIP_SMUDGE=1", "git", "sync", cwd=repo
-            ): repo
+            executor.submit(sync_repo, repo): repo
             for repo in repos
         }
         for completed, future in enumerate(as_completed(futures), start=1):
@@ -87,18 +118,26 @@ def main() -> int:
                 if repo.startswith(str(home) + "/")
                 else repo
             )
-            result = future.result()
-            if result.returncode:
+            status, result = future.result()
+            if status == "FAIL":
                 failures.append(display)
-                print(f"[{completed}/{total}] {red}FAIL{reset}  {display}")
-                details(result)
+                status_color = red
+            elif status == "SKIP":
+                skipped += 1
+                status_color = ""
             else:
                 succeeded += 1
-                print(f"[{completed}/{total}] {green}OK{reset}    {display}")
+                status_color = green
+            print(
+                f"[{completed}/{total}] {status_color}{status:<4}{reset}  {display}"
+            )
+            if status != "OK":
+                details(result)
             sys.stdout.flush()
 
     print(
-        f"\nRepositories: {succeeded} succeeded, {len(failures)} failed.", flush=True
+        f"\nRepositories: {succeeded} succeeded, {skipped} skipped, "
+        f"{len(failures)} failed.", flush=True
     )
     if failures:
         failed = True
