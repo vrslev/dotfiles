@@ -1,37 +1,125 @@
-#!/usr/bin/env fish
+#!/usr/bin/env python3
+# pyright: strict
 
-set -l result 0
+from __future__ import annotations
 
-if test (count $argv) -eq 0
-    set -l groups_file ~/.config/sync-repos/groups
+import os
+import shutil
+import subprocess
+import sys
+import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from pathlib import Path
 
-    if test -r $groups_file
-        while read -l host group extra
-            if test -z "$host"; or string match -qr '^#' -- "$host"
-                continue
-            end
-            if test -z "$group"; or test -n "$extra"
-                echo "sync-repos: invalid group entry: $host $group $extra" >&2
-                set result 1
-                continue
-            end
-            if not clone-glab-group "$host" "$group"
-                set result 1
-            end
-        end < $groups_file
-    end
 
-    set argv ~/code
-end
+def run(*args: str, cwd: str | None = None) -> subprocess.CompletedProcess[str]:
+    try:
+        return subprocess.run(args, cwd=cwd, capture_output=True, text=True)
+    except OSError as error:
+        return subprocess.CompletedProcess(args, 127, "", str(error))
 
-if not list-repos $argv | for-dir - -- env GIT_LFS_SKIP_SMUDGE=1 git sync
-    set result 1
-end
 
-if test -r ~/.config/codex-projects/config.json; and command -q codex-projects-sync
-    if not codex-projects-sync --apply
-        set result 1
-    end
-end
+def details(result: subprocess.CompletedProcess[str]) -> None:
+    for line in result.stdout.splitlines() + result.stderr.splitlines():
+        print(f"    {line}")
 
-exit $result
+
+def main() -> int:
+    started = time.monotonic()
+    failed = False
+    roots = sys.argv[1:]
+    home = Path.home()
+    color = sys.stdout.isatty() and "NO_COLOR" not in os.environ
+    green, red, reset = (
+        ("\033[32m", "\033[31m", "\033[0m") if color else ("", "", "")
+    )
+
+    if not roots:
+        groups_file = home / ".config/sync-repos/groups"
+        if groups_file.is_file():
+            for line in groups_file.read_text().splitlines():
+                fields = line.split()
+                if not fields or fields[0].startswith("#"):
+                    continue
+                if len(fields) != 2:
+                    print(
+                        f"{red}FAIL{reset}  Invalid group entry: {line}", flush=True
+                    )
+                    failed = True
+                    continue
+                print(f"Discovering repositories: {'/'.join(fields)}", flush=True)
+                result = run("clone-glab-group", *fields)
+                details(result)
+                if result.returncode:
+                    print(
+                        f"{red}FAIL{reset}  Group discovery: {'/'.join(fields)}",
+                        flush=True,
+                    )
+                    failed = True
+        roots = [str(home / "code")]
+
+    print("Finding local repositories…", flush=True)
+    listing = run("list-repos", *roots)
+    repos = list(dict.fromkeys(filter(None, listing.stdout.splitlines())))
+    if listing.returncode:
+        print(f"{red}FAIL{reset}  Repository discovery", flush=True)
+        for line in listing.stderr.splitlines():
+            print(f"    {line}")
+        failed = True
+    elif listing.stderr:
+        print(listing.stderr, end="", file=sys.stderr)
+
+    total = len(repos)
+    succeeded = 0
+    failures: list[str] = []
+    print(f"\nSyncing repositories ({total})…", flush=True)
+    with ThreadPoolExecutor(max_workers=os.cpu_count() or 1) as executor:
+        futures = {
+            executor.submit(
+                run, "env", "GIT_LFS_SKIP_SMUDGE=1", "git", "sync", cwd=repo
+            ): repo
+            for repo in repos
+        }
+        for completed, future in enumerate(as_completed(futures), start=1):
+            repo = futures[future]
+            display = (
+                "~/" + repo[len(str(home)) + 1 :]
+                if repo.startswith(str(home) + "/")
+                else repo
+            )
+            result = future.result()
+            if result.returncode:
+                failures.append(display)
+                print(f"[{completed}/{total}] {red}FAIL{reset}  {display}")
+                details(result)
+            else:
+                succeeded += 1
+                print(f"[{completed}/{total}] {green}OK{reset}    {display}")
+            sys.stdout.flush()
+
+    print(
+        f"\nRepositories: {succeeded} succeeded, {len(failures)} failed.", flush=True
+    )
+    if failures:
+        failed = True
+        print("Failed repositories:")
+        for repo in failures:
+            print(f"  {repo}")
+
+    if (home / ".config/codex-projects/config.json").is_file() and shutil.which(
+        "codex-projects-sync"
+    ):
+        print("\nUpdating Codex projects…", flush=True)
+        result = run("codex-projects-sync", "--apply")
+        details(result)
+        if result.returncode:
+            print(f"{red}FAIL{reset}  Codex projects", flush=True)
+            failed = True
+
+    status = f"{red}FAILED{reset}" if failed else f"{green}OK{reset}"
+    print(f"\n{status}  sync-repos finished in {time.monotonic() - started:.1f}s.")
+    return int(failed)
+
+
+if __name__ == "__main__":
+    sys.exit(main())
