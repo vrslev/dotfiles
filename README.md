@@ -90,6 +90,10 @@ mise bootstrap dotfiles apply --yes
 - Safari defaults and VS Code extensions are intentionally unmanaged.
 - The official ChatGPT cask currently owns the same `/Applications/ChatGPT.app` used by Codex. An identical existing bundle can be adopted; a different bundle at that path blocks installation rather than being overwritten.
 
+## Mail merge request filtering
+
+Set `OPEN_MAIL_MRS_IGNORED_PROJECTS` to a space-separated list of repository paths in the ignored `~/.config/mise/.env` file. For those repositories, `open-mail-mrs` skips threads containing only opening, reviewer assignment, approval, or merge notifications, except for your own MRs. When unset, all repositories are included.
+
 ## Codex projects
 
 See [project reconciliation](docs/codex-projects.md) for product folders, separate package projects, and automatic additions after repository sync.
