@@ -1,0 +1,311 @@
+#!/usr/bin/env python3
+# pyright: strict
+"""Save selected Codex text state to a dedicated, private Git repository."""
+
+import argparse
+from datetime import datetime, timezone
+import fcntl
+import hashlib
+import json
+import os
+from pathlib import Path
+import plistlib
+import re
+import subprocess
+import sys
+import tempfile
+import tomllib
+from typing import Any
+
+CONFIG = Path.home() / '.config/codex-state-backup/config.json'
+LABEL = 'local.codex-state-backup'
+AUTOMATION_FIELDS = {'version', 'id', 'kind', 'name', 'prompt', 'status', 'rrule',
+                     'target_thread_id', 'created_at', 'updated_at', 'cwds', 'model',
+                     'reasoning_effort', 'execution_environment', 'notification_policy',
+                     'destination', 'project_id'}
+ROOT_KEYS = ('project-order', 'pinned-thread-ids', 'electron-saved-workspace-roots')
+ATOM_KEYS = ('flat-project-sidebar-preferences-v1', 'sidebar-collapsed-sections-v1',
+             'codex-sidebar-sort-mode-v1', 'sidebar-organize-mode-v1',
+             'sidebar-keep-projects-in-recent-v1', 'sidebar-project-list-expanded-v1',
+             'app-shell:right-panel-width:v3', 'app-shell-file-tree-open',
+             'markdownCodeBlockWordWrap', 'wrapCodeDiff.2')
+SECRET = re.compile(r'-----BEGIN (?:[A-Z]+ )?PRIVATE KEY-----|'
+                    r'\bgh[pousr]_[A-Za-z0-9]{20,}|\bglpat-[A-Za-z0-9_-]{20,}|'
+                    r'\bsk-(?:proj-)?[A-Za-z0-9_-]{32,}|'
+                    r'https?://[^\s/@:]+:[^\s/@]+@')
+
+
+def now() -> str:
+    return datetime.now(timezone.utc).isoformat(timespec='seconds')
+
+
+def json_bytes(value: Any) -> bytes:
+    return (json.dumps(value, indent=2, sort_keys=True, ensure_ascii=False) + '\n').encode()
+
+
+def write(path: Path, data: bytes) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
+    with tempfile.NamedTemporaryFile(dir=path.parent, delete=False) as temporary:
+        temporary.write(data)
+        temporary_path = Path(temporary.name)
+    os.replace(temporary_path, path)
+
+
+def stable_read(path: Path, scan: bool = True) -> bytes:
+    if path.is_symlink():
+        raise ValueError(f'Symlink rejected: {path}')
+    for _ in range(3):
+        before = path.stat()
+        data = path.read_bytes()
+        after = path.stat()
+        if (before.st_ino, before.st_size, before.st_mtime_ns) == (
+                after.st_ino, after.st_size, after.st_mtime_ns):
+            if scan and SECRET.search(data.decode('utf-8')):
+                raise ValueError(f'Possible credential in {path}; snapshot aborted')
+            return data
+    raise ValueError(f'File kept changing: {path}; retry later')
+
+
+def collect(home: Path) -> dict[str, bytes]:
+    files: dict[str, bytes] = {}
+    for name in ('memories', 'memories_v2'):
+        root = home / name
+        if not root.is_dir() or root.is_symlink():
+            raise ValueError(f'Missing or linked memory directory: {root}')
+        for current, directories, names in os.walk(root, followlinks=False):
+            directories[:] = sorted(d for d in directories if d != '.git')
+            if any((Path(current) / d).is_symlink() for d in directories):
+                raise ValueError(f'Linked memory directory in {current}')
+            for filename in sorted(names):
+                if filename.endswith('.md'):
+                    source = Path(current) / filename
+                    files[source.relative_to(home).as_posix()] = stable_read(source)
+    root = home / 'automations'
+    if not root.is_dir() or root.is_symlink():
+        raise ValueError(f'Missing or linked automation directory: {root}')
+    for source in sorted(root.glob('*/automation.toml')):
+        if source.parent.is_symlink():
+            raise ValueError(f'Linked automation directory: {source.parent}')
+        data = stable_read(source)
+        definition = tomllib.loads(data.decode())
+        if not {'id', 'name', 'prompt', 'status', 'rrule'} <= definition.keys():
+            raise ValueError(f'Unexpected automation definition: {source}')
+        if definition.keys() - AUTOMATION_FIELDS:
+            raise ValueError(f'Unknown automation fields in {source}; update the allowlist')
+        files[source.relative_to(home).as_posix()] = data
+    state = json.loads(stable_read(home / '.codex-global-state.json', scan=False))
+    selected = {key: state[key] for key in ROOT_KEYS if key in state}
+    projects = state.get('local-projects', {})
+    fields = ('id', 'name', 'rootPaths', 'createdAt', 'updatedAt')
+    selected['local-projects'] = {
+        key: {field: value[field] for field in fields if field in value}
+        for key, value in projects.items()}
+    atoms = state.get('electron-persisted-atom-state', {})
+    chosen: dict[str, Any] = {key: atoms[key] for key in ATOM_KEYS if key in atoms}
+    for key, allowed in (
+            ('flat-project-sidebar-preferences-v1',
+             ('chatSortMode', 'initialized', 'mode', 'projectSortMode')),
+            ('sidebar-collapsed-sections-v1', ('chats', 'cloud', 'pinned', 'threads'))):
+        if key in chosen:
+            chosen[key] = {field: chosen[key][field] for field in allowed if field in chosen[key]}
+    selected['electron-persisted-atom-state'] = chosen
+    files['global-state.json'] = json_bytes(selected)
+    if SECRET.search(files['global-state.json'].decode()):
+        raise ValueError('Possible credential in selected global settings; snapshot aborted')
+    return files
+
+
+def git(repository: Path, *args: str) -> str:
+    result = subprocess.run(
+        ['git', '-c', 'core.hooksPath=/dev/null', '-c', 'commit.gpgSign=false',
+         '-C', str(repository), *args], check=True, capture_output=True, text=True,
+        timeout=120, env={**os.environ, 'GIT_TERMINAL_PROMPT': '0', 'GCM_INTERACTIVE': 'never'})
+    return result.stdout.strip()
+
+
+def verify(snapshot: Path) -> dict[str, bytes]:
+    if snapshot.is_symlink():
+        raise ValueError('Linked snapshot directory')
+    manifest = json.loads(stable_read(snapshot / 'manifest.json'))
+    if manifest.get('version') != 1:
+        raise ValueError('Unsupported snapshot version')
+    files: dict[str, bytes] = {}
+    for name, expected in manifest['files'].items():
+        path = Path(name)
+        if path.is_absolute() or '..' in path.parts or path.as_posix() != name:
+            raise ValueError('Unsafe snapshot path')
+        allowed = (name == 'global-state.json' or
+                   (path.parts[0] in ('memories', 'memories_v2') and path.suffix == '.md') or
+                   (len(path.parts) == 3 and path.parts[0] == 'automations' and
+                    path.name == 'automation.toml'))
+        if not allowed or any(part.startswith('.') for part in path.parts):
+            raise ValueError('Unexpected snapshot file')
+        if any(parent.is_symlink() for parent in [snapshot, *(snapshot / path).parents]):
+            raise ValueError('Linked snapshot directory')
+        data = stable_read(snapshot / path)
+        if {'sha256': hashlib.sha256(data).hexdigest(), 'bytes': len(data)} != expected:
+            raise ValueError(f'Snapshot checksum mismatch: {name}')
+        files[name] = data
+    actual = {p.relative_to(snapshot).as_posix() for p in snapshot.rglob('*') if p.is_file()}
+    if any(p.is_symlink() for p in snapshot.rglob('*')):
+        raise ValueError('Linked snapshot entry')
+    if actual != set(files) | {'manifest.json'}:
+        raise ValueError('Unexpected or missing snapshot files')
+    return files
+
+
+def snapshot(config: dict[str, Any]) -> dict[str, Any]:
+    repository = Path(config['repository']).expanduser().absolute()
+    home = Path(config.get('codex_home', '~/.codex')).expanduser().resolve()
+    if repository.resolve().is_relative_to(home) or home.is_relative_to(repository.resolve()):
+        raise ValueError('Backup repository must be separate from Codex data')
+    files = collect(home)
+    manifest = {'version': 1, 'files': {
+        name: {'sha256': hashlib.sha256(data).hexdigest(), 'bytes': len(data)}
+        for name, data in sorted(files.items())}}
+    if not (repository / '.git').exists():
+        if repository.exists() and any(repository.iterdir()):
+            raise ValueError('A new backup repository must be empty')
+        repository.mkdir(parents=True, exist_ok=True, mode=0o700)
+        git(repository, 'init', '--quiet', '--initial-branch=main')
+    if repository.is_symlink() or not (repository / '.git').is_dir() or (repository / '.git').is_symlink():
+        raise ValueError('Linked backup repository rejected')
+    if git(repository, 'rev-parse', '--show-toplevel') != str(repository.resolve()):
+        raise ValueError('Backup must be a dedicated repository')
+    tracked = git(repository, 'ls-files').splitlines()
+    if any(name != 'README.md' and not name.startswith('snapshot/') for name in tracked):
+        raise ValueError('Unexpected tracked files in backup repository')
+    if git(repository, 'status', '--porcelain'):
+        raise ValueError('Backup repository has local changes; inspect before retrying')
+    if (repository / 'snapshot').is_symlink():
+        raise ValueError('Linked snapshot rejected')
+    with tempfile.TemporaryDirectory(prefix='.codex-backup-', dir=repository.parent) as temporary:
+        staging = Path(temporary) / 'snapshot'
+        for name, data in files.items():
+            write(staging / name, data)
+        write(staging / 'manifest.json', json_bytes(manifest))
+        verify(staging)
+        destination = repository / 'snapshot'
+        previous = Path(temporary) / 'previous'
+        if destination.exists():
+            destination.rename(previous)
+        try:
+            staging.rename(destination)
+        except OSError:
+            if previous.exists():
+                previous.rename(destination)
+            raise
+    readme = ('# Codex state backup\n\nPrivate text snapshots: memory, automation definitions, '
+              'and selected UI/project settings. No sessions or SQLite databases.\n\n'
+              'Use `codex-state-backup restore --destination <new-directory>` to verify and '
+              'extract the latest snapshot without changing the running application.\n'
+              'Review definitions, pause automations, and rebind missing chats before importing.\n')
+    write(repository / 'README.md', readme.encode())
+    git(repository, 'add', '--all', '--', 'snapshot', 'README.md')
+    changed = bool(git(repository, 'diff', '--cached', '--name-only'))
+    if changed:
+        git(repository, 'commit', '--quiet', '-m', 'Update Codex state snapshot')
+    result: dict[str, Any] = {'snapshot_at': now(), 'commit': git(repository, 'rev-parse', 'HEAD'),
+                              'changed': changed, 'files': len(files),
+                              'bytes': sum(len(data) for data in files.values()),
+                              'push_enabled': config.get('push_enabled', False)}
+    return result
+
+
+def install(config_path: Path, repository: Path) -> None:
+    if sys.platform != 'darwin':
+        raise ValueError('launchd installation requires macOS')
+    if not config_path.exists():
+        write(config_path, json_bytes({'repository': str(repository), 'codex_home': '~/.codex',
+                                      'push_enabled': False}))
+    config = json.loads(config_path.read_text())
+    if type(config.get('push_enabled', False)) is not bool:
+        raise ValueError('push_enabled must be a JSON boolean')
+    if config.get('push_enabled', False):
+        raise ValueError('Disable push before installing the schedule')
+    logs = Path.home() / 'Library/Logs/codex-state-backup'
+    logs.mkdir(parents=True, exist_ok=True, mode=0o700)
+    agent = Path.home() / 'Library/LaunchAgents' / f'{LABEL}.plist'
+    if agent.exists():
+        raise ValueError('LaunchAgent already exists; inspect it before replacing')
+    content = {'Label': LABEL,
+               'ProgramArguments': [sys.executable, str(Path(__file__).absolute()),
+                                    '--config', str(config_path), 'snapshot'],
+               'StartCalendarInterval': {'Minute': 0}, 'RunAtLoad': True,
+               'ProcessType': 'Background', 'LowPriorityIO': True, 'Umask': 0o077,
+               'EnvironmentVariables': {'PATH': '/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin'},
+               'StandardOutPath': str(logs / 'output.log'),
+               'StandardErrorPath': str(logs / 'error.log')}
+    write(agent, plistlib.dumps(content))
+    subprocess.run(['launchctl', 'bootstrap', f'gui/{os.getuid()}', str(agent)], check=True)
+    print(json.dumps({'agent': str(agent), 'config': str(config_path), 'push_enabled': False}))
+
+
+def main() -> None:
+    os.umask(0o077)
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--config', type=Path, default=CONFIG)
+    commands = parser.add_subparsers(dest='command', required=True)
+    commands.add_parser('snapshot')
+    commands.add_parser('status')
+    restore = commands.add_parser('restore', help='Verify and extract into a new directory only')
+    restore.add_argument('--destination', type=Path, required=True)
+    setup = commands.add_parser('install', help='Install an hourly, local-only LaunchAgent')
+    setup.add_argument('--repository', type=Path, required=True)
+    args = parser.parse_args()
+    config_path = args.config.expanduser().absolute()
+    if args.command == 'install':
+        install(config_path, args.repository.expanduser().absolute())
+        return
+    config = json.loads(config_path.read_text())
+    state = config_path.parent / 'status.json'
+    if type(config.get('push_enabled', False)) is not bool:
+        raise ValueError('push_enabled must be a JSON boolean')
+    if args.command == 'status':
+        print(state.read_text() if state.exists() else 'No snapshot attempted yet')
+        return
+    with (config_path.parent / 'backup.lock').open('a') as lock:
+        try:
+            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError:
+            print('Backup already running')
+            return
+        if args.command == 'restore':
+            repository = Path(config['repository']).expanduser()
+            files = verify(repository / 'snapshot')
+            destination = args.destination.expanduser().absolute()
+            destination.mkdir(parents=True, exist_ok=False, mode=0o700)
+            for name, data in files.items():
+                write(destination / name, data)
+            print(json.dumps({'destination': str(destination), 'files': len(files)}))
+            return
+        previous = json.loads(state.read_text()) if state.exists() else {}
+        try:
+            result = snapshot(config)
+            previous.update(result)
+            if result['push_enabled']:
+                repository = Path(config['repository']).expanduser()
+                git(repository, 'config', '--local', '--get', 'remote.origin.url')
+                expected = config.get('expected_remote')
+                remotes = git(repository, 'remote', 'get-url', '--push', '--all', 'origin').splitlines()
+                if not expected or remotes != [expected]:
+                    raise ValueError('Push remote does not match the approved destination')
+                write(state, json_bytes({**previous, 'last_attempt_at': now(), 'ok': False,
+                                         'error': 'Push not completed'}))
+                git(repository, 'push', '--no-follow-tags', 'origin', 'HEAD:refs/heads/main')
+                result['last_successful_push'] = now()
+        except Exception as error:
+            write(state, json_bytes({**previous, 'last_attempt_at': now(),
+                                     'ok': False, 'error': str(error)}))
+            raise
+        write(state, json_bytes({**previous, **result, 'last_attempt_at': now(),
+                                 'ok': True, 'error': None}))
+        print(json.dumps(result))
+
+
+if __name__ == '__main__':
+    try:
+        main()
+    except (OSError, ValueError, subprocess.SubprocessError) as error:
+        print(f'Backup failed: {error}', file=sys.stderr)
+        sys.exit(1)
