@@ -60,6 +60,10 @@ suggestions distinguishable; preserve the source's actual degree of commitment.
 
 ## Adapt to the reader
 
+**GitLab merge request:** follow the destination rules in
+[GitLab merge requests](references/gitlab-merge-requests.md) when preparing
+titles or descriptions.
+
 **Peer message:** usually point → short explanation → practical suggestion.
 Use shared context and a concrete question when a decision is needed. Link the
 relevant object close to the statement it supports.
