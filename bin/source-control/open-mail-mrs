@@ -107,7 +107,8 @@ on run argv
                     set gitlabHost to my safeHeader(mailMessage, "x-gitlab-host")
                     set listUnsubscribe to my safeHeader(mailMessage, "list-unsubscribe")
                     set listId to my safeHeader(mailMessage, "list-id")
-                    write ((id of mailMessage as text) & tab & (my cleanText(accountId)) & tab & (my cleanText(accountName)) & tab & projectPath & tab & mrIid & tab & gitlabHost & tab & listUnsubscribe & tab & listId & tab & (my cleanText(subjectText)) & tab & (my cleanText(senderText)) & tab & (my cleanText(dateReceivedText)) & tab & (my cleanText(readStatusText)) & tab & (my cleanText(bodyText)) & linefeed) to outputHandle as «class utf8»
+                    set notificationReason to my safeHeader(mailMessage, "x-gitlab-notificationreason")
+                    write ((id of mailMessage as text) & tab & (my cleanText(accountId)) & tab & (my cleanText(accountName)) & tab & projectPath & tab & mrIid & tab & gitlabHost & tab & listUnsubscribe & tab & listId & tab & (my cleanText(subjectText)) & tab & (my cleanText(senderText)) & tab & (my cleanText(dateReceivedText)) & tab & (my cleanText(readStatusText)) & tab & (my cleanText(bodyText)) & tab & (my cleanText(notificationReason)) & linefeed) to outputHandle as «class utf8»
                 end if
             end repeat
         on error errorMessage number errorNumber
@@ -208,6 +209,7 @@ class Notification:
     date_received: str
     read: bool
     body: str
+    reason: str
 
     @property
     def key(self) -> tuple[str, str, str, str]:
@@ -225,6 +227,14 @@ class Notification:
     def label(self) -> str:
         project = self.project_path.rsplit("/", 1)[-1]
         return f"{project} !{self.mr_iid}"
+
+
+@dataclasses.dataclass(frozen=True)
+class MRContext:
+    issues: list[str]
+    author_id: int | None
+    draft: bool
+    description: str
 
 
 def run_osascript(script: str, args: Sequence[str]) -> str:
@@ -270,7 +280,7 @@ def read_notifications() -> tuple[int, list[Notification]]:
         with open(output_path, encoding="utf-8", errors="replace") as file:
             for line in file:
                 fields = line.rstrip("\n").split("\t")
-                if len(fields) != 13:
+                if len(fields) != 14:
                     continue
                 (
                     message_id,
@@ -286,6 +296,7 @@ def read_notifications() -> tuple[int, list[Notification]]:
                     date_received,
                     read_status,
                     body,
+                    reason,
                 ) = fields
                 host = extract_host(gitlab_host, list_unsubscribe, list_id)
                 if not account_id or not host:
@@ -303,6 +314,7 @@ def read_notifications() -> tuple[int, list[Notification]]:
                         date_received=date_received,
                         read=read_status.lower() == "true",
                         body=body,
+                        reason=reason,
                     )
                 )
         return message_count, notifications
@@ -338,13 +350,19 @@ def gitlab_details(host: str, endpoint: str) -> dict[str, object]:
     return cast(dict[str, object], payload)
 
 
-def mr_context(group: Sequence[Notification]) -> tuple[list[str], int | None]:
+def mr_context(group: Sequence[Notification]) -> MRContext:
     notification = group[0]
     text = "\n".join(mr_title(item.subject) for item in group)
     endpoint = f"projects/{quote(notification.project_path, safe='')}/merge_requests/{notification.mr_iid}"
     author_id = None
+    draft = False
+    description = ""
     try:
         details = gitlab_details(notification.host, endpoint)
+        draft = details.get("draft") is True or details.get("work_in_progress") is True
+        value = details.get("description")
+        if isinstance(value, str):
+            description = value
         author = details.get("author")
         if isinstance(author, dict):
             value = cast(dict[str, object], author).get("id")
@@ -357,7 +375,7 @@ def mr_context(group: Sequence[Notification]) -> tuple[list[str], int | None]:
                 text += f"\n{value}"
     except (OSError, subprocess.TimeoutExpired, RuntimeError, ValueError):
         print(f"Warning: could not inspect {notification.label}; checking notification titles for Jira issues.", file=sys.stderr)
-    return jira_issue_keys(text), author_id
+    return MRContext(jira_issue_keys(text), author_id, draft, description)
 
 
 def lifecycle_event(notification: Notification) -> bool:
@@ -371,20 +389,37 @@ def lifecycle_event(notification: Notification) -> bool:
     ) is not None
 
 
-def skip_group(group: Sequence[Notification], author_id: int | None, users: dict[str, int | None]) -> bool:
+def skip_group(group: Sequence[Notification], context: MRContext, users: dict[str, dict[str, object] | None]) -> str | None:
     first = group[0]
     ignored_projects = os.environ.get("OPEN_MAIL_MRS_IGNORED_PROJECTS", "").split()
-    if first.project_path not in ignored_projects or author_id is None or not all(map(lifecycle_event, group)):
-        return False
+    routine = first.project_path in ignored_projects and all(map(lifecycle_event, group))
+    if not (context.draft or routine) or context.author_id is None:
+        return None
     if first.host not in users:
         users[first.host] = None
         try:
-            user_id = gitlab_details(first.host, "user").get("id")
-            if isinstance(user_id, int):
-                users[first.host] = user_id
+            user = gitlab_details(first.host, "user")
+            if isinstance(user.get("id"), int):
+                users[first.host] = user
         except (OSError, subprocess.TimeoutExpired, RuntimeError, ValueError):
-            print("Warning: could not identify the GitLab user; keeping MRs from ignored projects.", file=sys.stderr)
-    return users[first.host] is not None and author_id != users[first.host]
+            print("Warning: could not identify the GitLab user; keeping MRs eligible to open.", file=sys.stderr)
+    user = users[first.host]
+    if user is None or context.author_id == user["id"]:
+        return None
+    if context.draft:
+        if any(item.reason.strip().lower() == "mentioned" for item in group):
+            return None
+        username = user.get("username")
+        if not isinstance(username, str) or not username:
+            return None
+        mention = rf"(?<![\w@])@{re.escape(username)}(?![\w-]|\.[\w.-])"
+        text = "\n".join([context.description, *(f"{item.subject}\n{item.body}" for item in group)])
+        if re.search(mention, text, re.IGNORECASE):
+            return None
+        return "draft without a mention for you"
+    if routine:
+        return "only opening, reviewer assignment, approval, or merge events"
+    return None
 
 
 def jira_urls(issues: Sequence[str]) -> list[str]:
@@ -714,15 +749,16 @@ def main() -> int:
         ordered_groups = sorted_group_values(groups)
         with ThreadPoolExecutor(max_workers=min(8, len(ordered_groups))) as executor:
             contexts = list(executor.map(mr_context, ordered_groups))
-        users: dict[str, int | None] = {}
+        users: dict[str, dict[str, object] | None] = {}
         open_groups: list[list[Notification]] = []
         issues_by_group: list[list[str]] = []
-        for group, (group_issues, author_id) in zip(ordered_groups, contexts, strict=True):
-            if skip_group(group, author_id, users):
-                print(f"Skipping {group[0].label}: only opening, reviewer assignment, approval, or merge events.")
+        for group, context in zip(ordered_groups, contexts, strict=True):
+            reason = skip_group(group, context, users)
+            if reason:
+                print(f"Skipping {group[0].label}: {reason}.")
                 continue
             open_groups.append(group)
-            issues_by_group.append(group_issues)
+            issues_by_group.append(context.issues)
         ordered_groups = open_groups
         print_summary(ordered_groups, terms)
         issues = list(dict.fromkeys(issue for group_issues in issues_by_group for issue in group_issues))
