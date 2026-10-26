@@ -8,6 +8,8 @@ Perform local work autonomously, including Git operations and dependency changes
 
 The user manages their environment in `~/code/gh/vrslev/dotfiles`; prefer mise over global installations. Autonomously update `AGENTS.md` when the user states a durable behavior preference; keep one-off instructions local.
 
+Reuse an existing Python environment when its interpreter, locked dependencies, editable-install paths, and concurrent use are compatible. Do not create an environment for every probe or copy environments into snapshots. Keep separate environments when dependencies or editable installs require it, and never mutate an environment another active task uses. Use the package manager's shared cache when creating environments. Remove temporary environments and regenerable build or benchmark artifacts when their task is finished, preserving source, patches, and evidence needed to reproduce the result.
+
 Organize Codex projects by product or community, including their related service, package, and tooling repositories. Create standalone projects only for repositories outside those groups. Preserve per-repository Git histories and existing thread/worktree state when reorganizing projects.
 
 Remove dependencies that become unused in the same change that removes their last consumer. Check application code, tests, tooling, entrypoints, plugins, and configuration before removal; keep dependencies with remaining supported consumers. Update the lockfile with the owning refactor rather than deferring its dependency cleanup to a separate task.
