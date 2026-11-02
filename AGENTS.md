@@ -14,6 +14,7 @@ macOS dotfiles for Fish, Ghostty, VS Code, Git, mise, etc. Installed via symlink
 
 ## Conventions
 
+- Manage system packages through `mise bootstrap packages apply`; prefer mise over direct package-manager commands.
 - Add a dotfile with `mise bootstrap dotfiles add --global ~/<path>`, or place it under `home/<path>` and add its target to `[dotfiles]` in `home/.config/mise/config.toml`.
 - Remove a dotfile by removing its `[dotfiles]` entry and source from `home/`.
 - Re-apply managed dotfiles with `mise bootstrap dotfiles apply --yes`.

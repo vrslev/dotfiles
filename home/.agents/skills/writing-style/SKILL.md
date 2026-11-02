@@ -49,6 +49,11 @@ English, use similarly plain conversational wording. Preserve technical names
 and commands exactly where accuracy matters. Correct typing mistakes rather
 than copying hurried prompt punctuation or spelling.
 
+In Russian prose, use natural wording and spelling rather than copying service
+labels from code or documentation: “выкатил в прод”, not “задеплоил в PROD”.
+Preserve common abbreviations such as API and CI, exact technical names,
+commands, and quotations.
+
 A brief “Привет!” fits a new personal exchange. Light humor or an occasional
 smile can fit casual chat when the context supports it. Keep professional
 evidence and issue comments focused on their content.

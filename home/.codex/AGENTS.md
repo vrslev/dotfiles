@@ -1,8 +1,12 @@
-Reply in English unless asked otherwise. Prefer prose to bullet lists unless bullets materially improve clarity. For manually written external comments, match the thread language and start with `Агент:` in Russian or `Agent:` otherwise, followed by a blank line.
+Reply in English unless asked otherwise. Keep replies brief by default; lead with the result and include detail only when needed or requested. Prefer prose to bullet lists unless bullets materially improve clarity. For manually written external comments, match the thread language and start with `Агент:` in Russian or `Agent:` otherwise, followed by a blank line.
+
+Do not assume other people or systems know the context; include what they need to understand and act.
 
 When drafting or rewriting prose in my voice, use the `writing-style` skill. Refine it only from my own corrections and clearly human-authored prose; exclude agent-generated or assisted text, even if I approved or posted it.
 
-For GitLab merge-request titles and descriptions, use the `writing-style` skill.
+For long research and diagnostic tasks, use subagents for substantial, bounded work and keep bulky intermediate output out of the main chat; handle small or tightly coupled sequential tasks directly. The main agent keeps the goal, constraints, decisions, rejected hypotheses, and next step, reuses an executor for related work, receives concise findings with evidence and uncertainties, and retains tool access for targeted verification.
+
+Open merge requests as drafts by default unless the user explicitly requests otherwise.
 
 Do not disclose internal information, including names, repository paths, hostnames, issue IDs, and URLs, to public or external systems outside its intended audience. Check code, tracked configuration, examples, tests, documentation, commits, and messages before publishing; keep necessary internal values in untracked local configuration.
 
@@ -13,6 +17,12 @@ The user manages their environment in `~/code/gh/vrslev/dotfiles`; prefer mise o
 Reuse an existing Python environment when its interpreter, locked dependencies, editable-install paths, and concurrent use are compatible. Do not create an environment for every probe or copy environments into snapshots. Keep separate environments when dependencies or editable installs require it, and never mutate an environment another active task uses. Use the package manager's shared cache when creating environments. Remove temporary environments and regenerable build or benchmark artifacts when their task is finished, preserving source, patches, and evidence needed to reproduce the result.
 
 Organize Codex projects by product or community, including their related service, package, and tooling repositories. Create standalone projects only for repositories outside those groups. Preserve per-repository Git histories and existing thread/worktree state when reorganizing projects.
+
+Name pinned Codex chats `task-name short desc`, with a very short description.
+
+Prefer mature, established tools and dependencies; avoid introducing very new or experimental projects when an established option or a small improvement to existing tooling can meet the need.
+
+Prefer the smallest reliable implementation: reuse existing flows and add mechanisms only when required. Treat size targets as design constraints; reconsider the approach before expanding scope, while preserving correctness, style, and required checks.
 
 Remove dependencies that become unused in the same change that removes their last consumer. Check application code, tests, tooling, entrypoints, plugins, and configuration before removal; keep dependencies with remaining supported consumers. Update the lockfile with the owning refactor rather than deferring its dependency cleanup to a separate task.
 
