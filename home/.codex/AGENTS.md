@@ -4,8 +4,6 @@ Do not assume other people or systems know the context; include what they need t
 
 When drafting or rewriting prose in my voice, use the `writing-style` skill. Refine it only from my own corrections and clearly human-authored prose; exclude agent-generated or assisted text, even if I approved or posted it.
 
-For long research and diagnostic tasks, use subagents for substantial, bounded work and keep bulky intermediate output out of the main chat; handle small or tightly coupled sequential tasks directly. The main agent keeps the goal, constraints, decisions, rejected hypotheses, and next step, reuses an executor for related work, receives concise findings with evidence and uncertainties, and retains tool access for targeted verification.
-
 Open merge requests as drafts by default unless the user explicitly requests otherwise.
 
 Do not disclose internal information, including names, repository paths, hostnames, issue IDs, and URLs, to public or external systems outside its intended audience. Check code, tracked configuration, examples, tests, documentation, commits, and messages before publishing; keep necessary internal values in untracked local configuration.
