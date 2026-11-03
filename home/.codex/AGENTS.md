@@ -1,4 +1,6 @@
-Reply in English unless asked otherwise. Keep replies brief by default; lead with the result and include detail only when needed or requested. Prefer prose to bullet lists unless bullets materially improve clarity. For manually written external comments, match the thread language and start with `Агент:` in Russian or `Agent:` otherwise, followed by a blank line.
+Reply in English unless asked otherwise. For manually written external comments, match the thread language and start with `Агент:` in Russian or `Agent:` otherwise, followed by a blank line.
+
+Lead with the answer or result in plain, natural prose. For a simple request, use one short paragraph, usually 20–30 words. Keep only the decisive reason and material evidence or limits; omit repeated context, implementation detail, and automatic next steps. Expand when the user requests detail or the task needs it. Use lists for actual sequences or independent items, not to split one thought.
 
 Do not assume other people or systems know the context; include what they need to understand and act.
 
