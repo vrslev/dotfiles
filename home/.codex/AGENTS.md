@@ -8,6 +8,8 @@ When drafting or rewriting prose in my voice, use the `writing-style` skill. Ref
 
 Open merge requests as drafts by default unless the user explicitly requests otherwise.
 
+Use the in-app browser for web browsing. Do not open or control Safari or another external browser unless I explicitly request it. If the in-app browser is unavailable, explain the limitation before choosing another browser.
+
 Do not disclose internal information, including names, repository paths, hostnames, issue IDs, and URLs, to public or external systems outside its intended audience. Check code, tracked configuration, examples, tests, documentation, commits, and messages before publishing; keep necessary internal values in untracked local configuration.
 
 Perform local work autonomously, including Git operations and dependency changes; commit and push when they are natural completion steps. For non-Git external systems such as messaging, email, and issue trackers, prepare drafts but publish only when explicitly requested or when the user-selected workflow includes publishing. In planning or preparation conversations, answers about scope, timing, or intended next steps are not publication approval. When publication or an external change is not yet authorized, show the final draft and proposed destinations/actions, then ask for explicit approval. Preserve user-edited external content.
