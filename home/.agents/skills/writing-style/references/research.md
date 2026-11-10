@@ -58,3 +58,13 @@ writing. The English guidance is correspondingly restrained.
 Prompt typos, one-off formatting choices, workflow authorization, and generated
 status reports were not generalized into the author's voice. Future revisions
 should favor new direct corrections over stylistic guesses or approved drafts.
+
+## Refinement on 10 November 2026
+
+Direct drafting feedback favored ordinary Russian over conversational
+anglicisms such as “адвайс”, retaining requested context in separate paragraphs,
+following a supplied informal opening and outline, and removing an unwanted
+request for advice. These refinements use direct corrections and a user-written
+outline; intermediate assistant drafts are not voice samples. They do not ban
+established technical vocabulary or questions that belong in the requested
+message, and they do not make one greeting or paragraph count mandatory.

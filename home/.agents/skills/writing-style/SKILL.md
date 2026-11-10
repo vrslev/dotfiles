@@ -22,7 +22,9 @@ clear thought in few words, with enough explanation to understand and act.
    an outsider needs the problem and its significance explained. Read
    [examples](references/examples.md) when choosing between these registers.
 3. Lead with the point: the change, answer, proposal, or problem. Connect it to
-   its consequence, then add the reason or next step if useful.
+   its consequence, then add the reason or next step if useful. Follow the
+   user's supplied opening, outline, and stance. Keep distinct topics in
+   separate paragraphs without dropping context the user asked to retain.
 4. Edit for density. Keep each thought once. Replace abstract claims with an
    action or effect. Remove details the reader cannot use; retain conditions
    that change the meaning. Brevity is finished when the reader can understand
@@ -43,20 +45,23 @@ use lists for several independent items or ordered instructions. Add headings
 when they help navigate a longer text. A short message usually needs none.
 
 Sound relaxed without performing informality. In Russian peer conversations,
-familiar anglicisms and team slang are natural: “деплой”, “тулы”, “флоу”,
-“импакт”, “CI”, “e2e”. Use the reader's vocabulary, not a quota of slang. In
-English, use similarly plain conversational wording. Preserve technical names
-and commands exactly where accuracy matters. Correct typing mistakes rather
-than copying hurried prompt punctuation or spelling.
+use plain conversational wording. Do not adopt an anglicism merely because it
+appears in a rough request: use “посоветоваться”, not “попросить адвайс”.
+Familiar technical terms and abbreviations are fine where natural and precise;
+do not use slang as a marker of the author's voice. In English, use similarly
+plain conversational wording. Preserve technical names and commands exactly
+where accuracy matters. Correct typing mistakes rather than copying hurried
+prompt punctuation or spelling.
 
 In Russian prose, use natural wording and spelling rather than copying service
 labels from code or documentation: “выкатил в прод”, not “задеплоил в PROD”.
 Preserve common abbreviations such as API and CI, exact technical names,
 commands, and quotations.
 
-A brief “Привет!” fits a new personal exchange. Light humor or an occasional
-smile can fit casual chat when the context supports it. Keep professional
-evidence and issue comments focused on their content.
+A brief “Привет!” fits a new personal exchange. Preserve an opening supplied
+by the user, such as “Привет)”, and its degree of informality. Light humor or an
+occasional smile can fit casual chat when the context supports it. Keep
+professional evidence and issue comments focused on their content.
 
 Express uncertainty locally and proportionately: “Кажется…”, “Не уверен…”,
 “Возможно…”, “I think…”, followed by the reason or a useful next step. Acknowledge
@@ -70,8 +75,10 @@ suggestions distinguishable; preserve the source's actual degree of commitment.
 titles or descriptions.
 
 **Peer message:** usually point → short explanation → practical suggestion.
-Use shared context and a concrete question when a decision is needed. Link the
-relevant object close to the statement it supports.
+Use shared context and a direct question when it belongs in the intended
+message. Keep a concern or proposal as such; do not automatically append a
+request for advice, approval, or a next step. Link the relevant object close to
+the statement it supports.
 
 **Issue or technical comment:** describe the observed behavior, the relevant
 cause or constraint, and the proposed action. Retain the scope and conditions
