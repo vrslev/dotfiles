@@ -173,12 +173,12 @@ on run urls
     tell application "Safari"
         make new document with properties {URL:item 1 of urls}
         set targetWindow to front window
+        set index of targetWindow to (count windows)
         set openedTabs to {current tab of targetWindow}
         repeat with targetURL in rest of urls
             set end of openedTabs to make new tab at end of tabs of targetWindow with properties {URL:contents of targetURL}
         end repeat
         set current tab of targetWindow to item 1 of openedTabs
-        activate
 
         set deadline to (current date) + 60
         set readyPasses to 0
@@ -186,6 +186,7 @@ on run urls
             set allReady to true
             repeat with tabIndex from 1 to count of openedTabs
                 set openedTab to item tabIndex of openedTabs
+                set pageReady to false
                 try
                     with timeout of 5 seconds
                         set pageReady to do JavaScript "location.href !== 'about:blank' && document.readyState !== 'loading' && document.body !== null" in openedTab
@@ -193,15 +194,22 @@ on run urls
                             set pageReady to do JavaScript __DIFF_READY_SCRIPT__ in openedTab
                         end if
                     end timeout
-                    if pageReady is not true then set allReady to false
                 on error errorMessage number errorNumber
                     if errorNumber is 8 or errorNumber is -1743 then error errorMessage number errorNumber
-                    set allReady to false
+                    set pageReady to false
                 end try
+                if pageReady is not true then
+                    set allReady to false
+                    set current tab of targetWindow to openedTab
+                    delay 0.2
+                end if
             end repeat
             if allReady then
                 set readyPasses to readyPasses + 1
-                if readyPasses is 2 then return
+                if readyPasses is 2 then
+                    set current tab of targetWindow to item 1 of openedTabs
+                    return
+                end if
             else
                 set readyPasses to 0
             end if
