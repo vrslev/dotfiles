@@ -1,2 +1,8 @@
-#!/usr/bin/env fish
-orbctl start &>/dev/null; and /usr/local/bin/docker $argv
+#!/usr/bin/env bash
+set -euo pipefail
+
+if ! colima status >/dev/null 2>&1; then
+    PATH="/opt/homebrew/bin:$PATH" colima start
+fi
+
+exec /opt/homebrew/bin/docker "$@"
