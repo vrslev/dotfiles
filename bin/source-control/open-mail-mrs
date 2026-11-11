@@ -180,7 +180,7 @@ on run urls
         end repeat
         set current tab of targetWindow to item 1 of openedTabs
 
-        set deadline to (current date) + 60
+        set deadline to (current date) + 600
         set readyPasses to 0
         repeat
             set allReady to true
@@ -213,7 +213,7 @@ on run urls
             else
                 set readyPasses to 0
             end if
-            if (current date) is greater than deadline then error "Safari pages or merge request diffs did not finish loading within 60 seconds; notifications were kept."
+            if (current date) is greater than deadline then error "Safari pages or merge request diffs did not finish loading within 10 minutes; notifications were kept."
             delay 0.5
         end repeat
     end tell
