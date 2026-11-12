@@ -178,7 +178,7 @@ PAGE_ERROR_SCRIPT = r"""
 (() => {
     if (/\/users\/sign_in\/?$/.test(location.pathname)) return 'GitLab sign-in required';
     const error = document.querySelector('.error-container h1');
-    return error ? error.textContent.trim() : '';
+    return error ? error.textContent.replace(/\s+/g, ' ').trim() : '';
 })()
 """
 
@@ -205,7 +205,7 @@ on run urls
                     with timeout of 5 seconds
                         set pageError to do JavaScript __PAGE_ERROR_SCRIPT__ in openedTab
                         if pageError is not "" then
-                            set pageErrors to pageErrors & " Page " & tabIndex & ": " & pageError & "."
+                            set pageErrors to pageErrors & (item tabIndex of urls) & (character id 9) & pageError & linefeed
                             exit repeat
                         end if
                         set pageReady to do JavaScript "location.href !== 'about:blank' && document.readyState !== 'loading' && document.body !== null" in openedTab
@@ -228,7 +228,7 @@ on run urls
             end repeat
         end repeat
         set current tab of targetWindow to item 1 of openedTabs
-        if pageErrors is not "" then error "Review pages failed; notifications were kept." & pageErrors
+        return pageErrors
     end tell
 end run
 '''.replace("__DIFF_READY_SCRIPT__", json.dumps(DIFF_READY_SCRIPT)).replace("__PAGE_ERROR_SCRIPT__", json.dumps(PAGE_ERROR_SCRIPT))
@@ -314,7 +314,9 @@ def run_osascript(script: str, args: Sequence[str]) -> str:
     finally:
         os.unlink(script_path)
     if result.returncode != 0:
-        raise RuntimeError(result.stderr.strip() or result.stdout.strip())
+        message = result.stderr.strip() or result.stdout.strip()
+        message = re.sub(rf"^{re.escape(script_path)}:[0-9:]+ (?:execution |syntax )?error: ", "", message)
+        raise RuntimeError(message)
     return result.stdout.strip()
 
 
@@ -814,6 +816,17 @@ def summary_key(url: str) -> str:
     return urlunsplit((parsed.scheme, parsed.netloc, path, "", ""))
 
 
+def review_errors(output: str, labels: dict[str, str]) -> list[str]:
+    errors: list[str] = []
+    for line in output.strip().splitlines():
+        url, separator, reason = line.partition("\t")
+        if not separator or not reason or not url.startswith(("https://", "http://")):
+            raise RuntimeError("Unexpected review-page result; notifications were kept.")
+        key = summary_key(url)
+        errors.append(f"{labels.get(key, key)}: {reason}\n  {key}")
+    return list(dict.fromkeys(errors))
+
+
 def watch_summaries(threads: Sequence[MRThread], issue_urls: dict[str, str], terms: Sequence[str], status: str) -> None:
     summaries: dict[str, list[list[Notification]]] = {}
     for thread in threads:
@@ -892,6 +905,8 @@ def main() -> int:
             windows.setdefault(window, []).append(MRThread(group, context))
         issues = list(dict.fromkeys(issue for threads in windows.values() for thread in threads for issue in thread.context.issues))
         issue_urls = {} if dry_run else dict(zip(issues, jira_urls(issues), strict=True))
+        labels = {url: issue for issue, url in issue_urls.items()}
+        labels.update((thread.notifications[0].url, thread.notifications[0].label) for threads in windows.values() for thread in threads)
         loading_errors: list[str] = []
         for window, threads in windows.items():
             urls: list[str] = []
@@ -906,7 +921,8 @@ def main() -> int:
             elif urls:
                 print(f"\n{bold(cyan(f'Opening {len(urls)} pages in a new Safari window: {window}; waiting for page and diff content…'))}", flush=True)
                 try:
-                    run_osascript(OPEN_SCRIPT, urls)
+                    output = run_osascript(OPEN_SCRIPT, urls)
+                    loading_errors.extend(f"{window}: {error}" for error in review_errors(output, labels))
                 except RuntimeError as exception:
                     loading_errors.append(f"{window}: {exception}")
         if loading_errors:
