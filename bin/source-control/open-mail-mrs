@@ -9,11 +9,12 @@ import re
 import subprocess
 import sys
 import tempfile
+import time
 from collections import OrderedDict
 from collections.abc import Sequence
 from concurrent.futures import ThreadPoolExecutor
 from typing import cast
-from urllib.parse import quote
+from urllib.parse import quote, urlsplit, urlunsplit
 
 
 MAILBOX_SCRIPT = r'''
@@ -231,6 +232,21 @@ on run urls
     end tell
 end run
 '''.replace("__DIFF_READY_SCRIPT__", json.dumps(DIFF_READY_SCRIPT)).replace("__PAGE_ERROR_SCRIPT__", json.dumps(PAGE_ERROR_SCRIPT))
+
+
+CURRENT_TAB_SCRIPT = r'''
+if application "Safari" is not running then return ""
+tell application "Safari"
+    if (count windows) is 0 then return ""
+    return URL of current tab of front window
+end tell
+'''
+
+NOTIFY_SCRIPT = r'''
+on run argv
+    display notification (item 1 of argv) with title (item 2 of argv)
+end run
+'''
 
 
 @dataclasses.dataclass(frozen=True)
@@ -792,6 +808,57 @@ def print_summary(groups: Sequence[Sequence[Notification]], terms: Sequence[str]
             print_event(notification, terms)
 
 
+def summary_key(url: str) -> str:
+    parsed = urlsplit(url)
+    path = re.sub(r"(/-/merge_requests/[1-9][0-9]*)(?:/.*)?$", r"\1", parsed.path.rstrip("/"))
+    return urlunsplit((parsed.scheme, parsed.netloc, path, "", ""))
+
+
+def watch_summaries(threads: Sequence[MRThread], issue_urls: dict[str, str], terms: Sequence[str], status: str) -> None:
+    summaries: dict[str, list[list[Notification]]] = {}
+    for thread in threads:
+        urls = [thread.notifications[0].url, *(issue_urls[issue] for issue in thread.context.issues)]
+        for url in urls:
+            summaries.setdefault(summary_key(url), []).append(thread.notifications)
+    interactive = sys.stdout.isatty()
+    previous: str | None = None
+    try:
+        if interactive:
+            print("\033[?1049h", end="", flush=True)
+        while True:
+            url = run_osascript(CURRENT_TAB_SCRIPT, [])
+            key = summary_key(url)
+            if key != previous:
+                if interactive:
+                    print("\033[2J\033[H", end="")
+                print(bold(cyan(status)))
+                print(dim("Following Safari's selected tab · Ctrl-C to exit" if interactive else "Selected Safari tab"))
+                groups = summaries.get(key)
+                if groups:
+                    print()
+                    print_summary(groups, terms)
+                else:
+                    print("\nSelect a review tab in Safari to see its summary.")
+                sys.stdout.flush()
+                previous = key
+            if not interactive or not url:
+                return
+            time.sleep(0.5)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        if interactive:
+            print("\033[?1049l", end="", flush=True)
+
+
+def notify_ready(status: str, failed: bool) -> None:
+    title = "MR review needs attention" if failed else "MR tabs ready"
+    try:
+        run_osascript(NOTIFY_SCRIPT, [status, title])
+    except (OSError, RuntimeError) as exception:
+        print(f"Warning: could not send the ready notification: {exception}", file=sys.stderr)
+
+
 def options() -> tuple[bool, bool]:
     args = sys.argv[1:]
     if any(arg not in {"--dry-run", "--keep-mail"} for arg in args):
@@ -827,11 +894,8 @@ def main() -> int:
         issue_urls = {} if dry_run else dict(zip(issues, jira_urls(issues), strict=True))
         loading_errors: list[str] = []
         for window, threads in windows.items():
-            print(f"\n{bold(magenta(window))}")
             urls: list[str] = []
-            for issue, task_threads in group_by_jira(threads).items():
-                print(f"\n{bold(blue(issue or 'No Jira task'))}")
-                print_summary([thread.notifications for thread in task_threads], terms)
+            for task_threads in group_by_jira(threads).values():
                 for thread in task_threads:
                     first = thread.notifications[0]
                     urls.extend((first.url, first.diff_url))
@@ -846,16 +910,20 @@ def main() -> int:
                 except RuntimeError as exception:
                     loading_errors.append(f"{window}: {exception}")
         if loading_errors:
-            raise RuntimeError("\n".join(loading_errors))
+            print("\n".join(loading_errors), file=sys.stderr)
         if dry_run:
             print("\nWould wait up to 15 minutes per window for page and diff content to load.")
             print("Would leave mail notifications unchanged (--keep-mail)." if keep_mail else "Would mark unread notifications read and move all matching notifications to Trash.")
-        elif keep_mail:
-            print("Mail notifications left unchanged (--keep-mail).")
+        elif loading_errors or keep_mail:
+            print("Mail notifications left unchanged (--keep-mail)." if keep_mail else "Loading failed; mail notifications left unchanged.")
         else:
             marked_total, moved_total = cleanup_notifications(notifications)
             print(green(f"Marked {marked_total} notification(s) read; moved {moved_total} notification(s) to Trash."))
-        return 0
+        if not dry_run and windows:
+            status = "Review tabs opened; some pages failed to load. Mail kept." if loading_errors else "Review tabs are open and ready."
+            notify_ready(status, bool(loading_errors))
+            watch_summaries([thread for threads in windows.values() for thread in threads], issue_urls, terms, status)
+        return int(bool(loading_errors))
     except Exception as exception:
         print(f"open-mail-mrs: {exception}", file=sys.stderr)
         return 1
