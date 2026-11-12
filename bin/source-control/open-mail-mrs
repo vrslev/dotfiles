@@ -161,9 +161,23 @@ DIFF_READY_SCRIPT = r"""
     const diffs = document.querySelector('#diffs');
     const visible = element => element.getClientRects().length > 0 && getComputedStyle(element).visibility !== 'hidden';
     if (!diffs || !visible(diffs)) return false;
-    const pending = diffs.querySelectorAll('.loading, .gl-spinner, [aria-busy="true"], .diff-files-holder > .gl-alert-danger');
-    if (Array.from(pending).some(visible)) return false;
+    const errors = diffs.querySelectorAll('.diff-files-holder > .gl-alert-danger');
+    if (Array.from(errors).some(visible)) return false;
+    const pending = diffs.querySelectorAll('.loading, .gl-spinner, [aria-busy="true"]');
+    if (Array.from(pending).some(element => {
+        const rect = element.getBoundingClientRect();
+        return visible(element) && rect.bottom > 0 && rect.top < innerHeight && rect.right > 0 && rect.left < innerWidth;
+    })) return false;
     return Array.from(diffs.querySelectorAll('.diff-file, [data-testid="no-changes-message"]')).some(visible);
+})()
+"""
+
+
+PAGE_ERROR_SCRIPT = r"""
+(() => {
+    if (/\/users\/sign_in\/?$/.test(location.pathname)) return 'GitLab sign-in required';
+    const error = document.querySelector('.error-container h1');
+    return error ? error.textContent.trim() : '';
 })()
 """
 
@@ -179,6 +193,7 @@ on run urls
             set end of openedTabs to make new tab at end of tabs of targetWindow with properties {URL:contents of targetURL}
         end repeat
         set deadline to (current date) + 900
+        set pageErrors to ""
         repeat with tabIndex from 1 to count of openedTabs
             set openedTab to item tabIndex of openedTabs
             set current tab of targetWindow to openedTab
@@ -187,6 +202,11 @@ on run urls
                 set pageReady to false
                 try
                     with timeout of 5 seconds
+                        set pageError to do JavaScript __PAGE_ERROR_SCRIPT__ in openedTab
+                        if pageError is not "" then
+                            set pageErrors to pageErrors & " Page " & tabIndex & ": " & pageError & "."
+                            exit repeat
+                        end if
                         set pageReady to do JavaScript "location.href !== 'about:blank' && document.readyState !== 'loading' && document.body !== null" in openedTab
                         if pageReady is true and (item tabIndex of urls) ends with "/diffs" then
                             set pageReady to do JavaScript __DIFF_READY_SCRIPT__ in openedTab
@@ -207,9 +227,10 @@ on run urls
             end repeat
         end repeat
         set current tab of targetWindow to item 1 of openedTabs
+        if pageErrors is not "" then error "Review pages failed; notifications were kept." & pageErrors
     end tell
 end run
-'''.replace("__DIFF_READY_SCRIPT__", json.dumps(DIFF_READY_SCRIPT))
+'''.replace("__DIFF_READY_SCRIPT__", json.dumps(DIFF_READY_SCRIPT)).replace("__PAGE_ERROR_SCRIPT__", json.dumps(PAGE_ERROR_SCRIPT))
 
 
 @dataclasses.dataclass(frozen=True)
@@ -771,17 +792,16 @@ def print_summary(groups: Sequence[Sequence[Notification]], terms: Sequence[str]
             print_event(notification, terms)
 
 
-def dry_run_requested() -> bool:
-    if len(sys.argv) == 1:
-        return False
-    if len(sys.argv) == 2 and sys.argv[1] == "--dry-run":
-        return True
-    print("Usage: open-mail-mrs [--dry-run]", file=sys.stderr)
-    raise SystemExit(2)
+def options() -> tuple[bool, bool]:
+    args = sys.argv[1:]
+    if any(arg not in {"--dry-run", "--keep-mail"} for arg in args):
+        print("Usage: open-mail-mrs [--dry-run] [--keep-mail]", file=sys.stderr)
+        raise SystemExit(2)
+    return "--dry-run" in args, "--keep-mail" in args
 
 
 def main() -> int:
-    dry_run = dry_run_requested()
+    dry_run, keep_mail = options()
     try:
         message_count, notifications = read_notifications()
         groups = group_notifications(notifications)
@@ -805,6 +825,7 @@ def main() -> int:
             windows.setdefault(window, []).append(MRThread(group, context))
         issues = list(dict.fromkeys(issue for threads in windows.values() for thread in threads for issue in thread.context.issues))
         issue_urls = {} if dry_run else dict(zip(issues, jira_urls(issues), strict=True))
+        loading_errors: list[str] = []
         for window, threads in windows.items():
             print(f"\n{bold(magenta(window))}")
             urls: list[str] = []
@@ -820,9 +841,17 @@ def main() -> int:
                 print(f"\n{yellow(bold('DRY RUN'))} Would open MR, diff, and Jira pages for {len(threads)} MR(s), grouped by Jira task, in a new Safari window: {window}.")
             elif urls:
                 print(f"\n{bold(cyan(f'Opening {len(urls)} pages in a new Safari window: {window}; waiting for page and diff content…'))}", flush=True)
-                run_osascript(OPEN_SCRIPT, urls)
+                try:
+                    run_osascript(OPEN_SCRIPT, urls)
+                except RuntimeError as exception:
+                    loading_errors.append(f"{window}: {exception}")
+        if loading_errors:
+            raise RuntimeError("\n".join(loading_errors))
         if dry_run:
-            print("\nWould wait up to 15 minutes per window for page and diff content to load, then mark unread notifications read and move all matching notifications to Trash.")
+            print("\nWould wait up to 15 minutes per window for page and diff content to load.")
+            print("Would leave mail notifications unchanged (--keep-mail)." if keep_mail else "Would mark unread notifications read and move all matching notifications to Trash.")
+        elif keep_mail:
+            print("Mail notifications left unchanged (--keep-mail).")
         else:
             marked_total, moved_total = cleanup_notifications(notifications)
             print(green(f"Marked {marked_total} notification(s) read; moved {moved_total} notification(s) to Trash."))
