@@ -178,14 +178,12 @@ on run urls
         repeat with targetURL in rest of urls
             set end of openedTabs to make new tab at end of tabs of targetWindow with properties {URL:contents of targetURL}
         end repeat
-        set current tab of targetWindow to item 1 of openedTabs
-
         set deadline to (current date) + 900
-        set readyPasses to 0
-        repeat
-            set allReady to true
-            repeat with tabIndex from 1 to count of openedTabs
-                set openedTab to item tabIndex of openedTabs
+        repeat with tabIndex from 1 to count of openedTabs
+            set openedTab to item tabIndex of openedTabs
+            set current tab of targetWindow to openedTab
+            set readyPasses to 0
+            repeat
                 set pageReady to false
                 try
                     with timeout of 5 seconds
@@ -198,24 +196,17 @@ on run urls
                     if errorNumber is 8 or errorNumber is -1743 then error errorMessage number errorNumber
                     set pageReady to false
                 end try
-                if pageReady is not true then
-                    set allReady to false
-                    set current tab of targetWindow to openedTab
-                    delay 0.2
+                if pageReady is true then
+                    set readyPasses to readyPasses + 1
+                    if readyPasses is 2 then exit repeat
+                else
+                    set readyPasses to 0
                 end if
+                if (current date) is greater than deadline then error "Safari pages or merge request diffs did not finish loading within 15 minutes; notifications were kept."
+                delay 0.5
             end repeat
-            if allReady then
-                set readyPasses to readyPasses + 1
-                if readyPasses is 2 then
-                    set current tab of targetWindow to item 1 of openedTabs
-                    return
-                end if
-            else
-                set readyPasses to 0
-            end if
-            if (current date) is greater than deadline then error "Safari pages or merge request diffs did not finish loading within 15 minutes; notifications were kept."
-            delay 0.5
         end repeat
+        set current tab of targetWindow to item 1 of openedTabs
     end tell
 end run
 '''.replace("__DIFF_READY_SCRIPT__", json.dumps(DIFF_READY_SCRIPT))

@@ -92,7 +92,7 @@ mise bootstrap dotfiles apply --yes
 
 ## Mail merge request review
 
-`open-mail-mrs` groups the summary and browser tabs by the first Jira key found in each MR title or branch name, with unlinked MRs grouped together. MRs assigned to your authenticated GitLab user open in a separate Safari window; reviewer assignments and authorship alone do not count. Existing draft and notification filters still apply. Each MR opens with its diff and linked Jira issues. Notifications are cleared only after all windows finish loading, allowing up to 15 minutes per window. Use `--dry-run` to preview the groups without opening windows or clearing mail.
+`open-mail-mrs` groups the summary and browser tabs by the first Jira key found in each MR title or branch name, with unlinked MRs grouped together. MRs assigned to your authenticated GitLab user open in a separate Safari window; reviewer assignments and authorship alone do not count. Existing draft and notification filters still apply. Each MR opens with its diff and linked Jira issues. Tabs load one at a time in the background window, selecting each once instead of repeatedly cycling through pending tabs. Notifications are cleared only after all windows finish loading, allowing up to 15 minutes per window. Use `--dry-run` to preview the groups without opening windows or clearing mail.
 
 Set `OPEN_MAIL_MRS_IGNORED_PROJECTS` to a space-separated list of repository paths in the ignored `~/.config/mise/.env` file. For those repositories, `open-mail-mrs` skips threads containing only opening, reviewer assignment, approval, or merge notifications, except for your own MRs. When unset, all repositories are included.
 
