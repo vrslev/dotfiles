@@ -1,0 +1,142 @@
+#!/usr/bin/env python3
+# pyright: strict
+import argparse
+import asyncio
+import contextlib
+import ipaddress
+import ssl
+from pathlib import Path
+
+LIMIT = 65536
+TIMEOUT = 30
+
+
+async def read_headers(reader: asyncio.StreamReader) -> bytes:
+    return await asyncio.wait_for(reader.readuntil(b"\r\n\r\n"), TIMEOUT)
+
+
+async def relay(reader: asyncio.StreamReader, writer: asyncio.StreamWriter) -> None:
+    while data := await reader.read(LIMIT):
+        writer.write(data)
+        await writer.drain()
+
+
+async def bridge(
+    client_writer: asyncio.StreamWriter,
+    upstream_reader: asyncio.StreamReader,
+    client_to_upstream: asyncio.Task[None],
+) -> None:
+    tasks = {
+        client_to_upstream,
+        asyncio.create_task(relay(upstream_reader, client_writer)),
+    }
+    try:
+        await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
+    finally:
+        for task in tasks:
+            task.cancel()
+        await asyncio.gather(*tasks, return_exceptions=True)
+
+
+async def handle(
+    reader: asyncio.StreamReader,
+    writer: asyncio.StreamWriter,
+    *,
+    upstream_host: str,
+    upstream_port: int,
+    target: str,
+    local_tls: ssl.SSLContext,
+    upstream_tls: ssl.SSLContext,
+) -> None:
+    upstream_writer: asyncio.StreamWriter | None = None
+    established = False
+    client_to_upstream: asyncio.Task[None] | None = None
+    try:
+        request = await read_headers(reader)
+        if request.split(b"\r\n", 1)[0] != f"CONNECT {target}:443 HTTP/1.1".encode():
+            writer.write(b"HTTP/1.1 403 Forbidden\r\nContent-Length: 0\r\n\r\n")
+            await writer.drain()
+            return
+        upstream_reader, upstream_writer = await asyncio.wait_for(
+            asyncio.open_connection(upstream_host, upstream_port, limit=LIMIT), TIMEOUT
+        )
+        upstream_writer.write(
+            f"CONNECT {target}:443 HTTP/1.1\r\nHost: {target}:443\r\n\r\n".encode()
+        )
+        await upstream_writer.drain()
+        response = await read_headers(upstream_reader)
+        if response.split(b"\r\n", 1)[0].split()[1] != b"200":
+            raise ConnectionError("Upstream proxy rejected CONNECT")
+        await asyncio.wait_for(
+            upstream_writer.start_tls(upstream_tls, server_hostname=target), TIMEOUT
+        )
+        writer.write(b"HTTP/1.1 200 Connection Established\r\n\r\n")
+        await writer.drain()
+        established = True
+        await asyncio.wait_for(writer.start_tls(local_tls), TIMEOUT)
+        request = await read_headers(reader)
+        upstream_writer.write(request)
+        await upstream_writer.drain()
+        client_to_upstream = asyncio.create_task(relay(reader, upstream_writer))
+        response = await read_headers(upstream_reader)
+        # One TLS write prevents header-by-header records from tripping the client's read heuristic.
+        writer.write(response)
+        await writer.drain()
+        await bridge(writer, upstream_reader, client_to_upstream)
+    except (OSError, TimeoutError, ValueError, asyncio.IncompleteReadError,
+            asyncio.LimitOverrunError, ConnectionError):
+        if not established:
+            writer.write(b"HTTP/1.1 502 Bad Gateway\r\nContent-Length: 0\r\n\r\n")
+            with contextlib.suppress(OSError):
+                await writer.drain()
+    finally:
+        if client_to_upstream is not None:
+            client_to_upstream.cancel()
+            await asyncio.gather(client_to_upstream, return_exceptions=True)
+        for stream in (upstream_writer, writer):
+            if stream is not None:
+                stream.close()
+                with contextlib.suppress(OSError, TimeoutError):
+                    await asyncio.wait_for(stream.wait_closed(), 5)
+
+
+async def serve(args: argparse.Namespace) -> None:
+    if not ipaddress.ip_address(args.listen_host).is_loopback:
+        raise ValueError("The listener must use a loopback address")
+    if not ipaddress.ip_address(args.upstream_host).is_loopback:
+        raise ValueError("The upstream proxy must use a loopback address")
+    local_tls = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+    local_tls.minimum_version = ssl.TLSVersion.TLSv1_2
+    local_tls.load_cert_chain(args.cert, args.key)
+    upstream_tls = ssl.create_default_context(cafile=args.upstream_ca)
+    upstream_tls.set_alpn_protocols(["http/1.1"])
+
+    async def connected(reader: asyncio.StreamReader, writer: asyncio.StreamWriter) -> None:
+        await handle(
+            reader, writer, upstream_host=args.upstream_host,
+            upstream_port=args.upstream_port, target=args.target,
+            local_tls=local_tls, upstream_tls=upstream_tls,
+        )
+
+    server = await asyncio.start_server(
+        connected, args.listen_host, args.listen_port, limit=LIMIT
+    )
+    async with server:
+        await server.serve_forever()
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--listen-host", default="127.0.0.1")
+    parser.add_argument("--listen-port", type=int, required=True)
+    parser.add_argument("--upstream-host", default="127.0.0.1")
+    parser.add_argument("--upstream-port", type=int, required=True)
+    parser.add_argument("--target", required=True)
+    parser.add_argument("--cert", type=Path, required=True)
+    parser.add_argument("--key", type=Path, required=True)
+    parser.add_argument("--upstream-ca", type=Path)
+    asyncio.run(serve(parser.parse_args()))
+
+
+if __name__ == "__main__":
+    main()
