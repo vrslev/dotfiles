@@ -25,8 +25,11 @@ projects and do not discover or clone remote repositories.
 `codex-projects-sync` previews the catalog. `codex-projects-sync --apply` applies
 it when ChatGPT/Codex is closed, or queues one reconciliation for app exit. A
 queued run writes its result to `~/.cache/codex-projects/status.json`; errors go
-to `pending.log` in that directory. Wait until the status says `applied` before
-reopening the app normally. No terminal launcher is needed for daily app use.
+to `pending.log` in that directory. The waiting status identifies the worker
+that holds the queue lock; repeated requests do not replace it. An optional
+`report` destination is best-effort and cannot fail the reconciliation. Wait
+until the status says `applied` before reopening the app normally. No terminal
+launcher is needed for daily app use.
 
 The command updates the desktop catalog and its SQLite project records together,
 retains unrelated projects, repairs configured paths by project name, and moves

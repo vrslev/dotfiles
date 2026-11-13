@@ -196,14 +196,20 @@ def write_json(path: Path, data: Json) -> None:
         output.flush()
         os.fsync(output.fileno())
         temporary = output.name
-    os.chmod(temporary, 0o600)
-    os.replace(temporary, path)
+    try:
+        os.chmod(temporary, 0o600)
+        os.replace(temporary, path)
+    finally:
+        Path(temporary).unlink(missing_ok=True)
 
 
 def status(config: Json, cache: Path, value: Json) -> None:
     write_json(cache / 'status.json', value)
     if config.get('report'):
-        write_json(Path(config['report']).expanduser(), value)
+        try:
+            write_json(Path(config['report']).expanduser(), value)
+        except OSError as error:
+            print(f'Optional project report could not be written: {error}', file=sys.stderr)
 
 
 def apply(config: Json, state_path: Path, original: Json, updated: Json, mapping: dict[str, str], cache: Path) -> Path:
@@ -284,12 +290,18 @@ def main() -> None:
     state_path = Path(config.get('state', '~/.codex/.codex-global-state.json')).expanduser()
     cache = Path(config.get('cache', '~/.cache/codex-projects')).expanduser()
     cache.mkdir(parents=True, exist_ok=True)
+    original = json.loads(state_path.read_text())
+    updated, mapping, replacements = reconcile(original, desired_projects(config))
+    preserve_implicit_threads(config, state_path, original, updated, mapping)
+    summary = {'projects': [{'name': p['name'], 'roots': p['rootPaths']} for p in updated['local-projects'].values()],
+               'replaced': replacements, 'changed': updated != original}
     if args.wait:
         with (cache / 'pending.lock').open('w') as lock:
             try:
                 fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
             except BlockingIOError:
                 return
+            status(config, cache, {'status': 'waiting-for-app-exit', 'queuedAt': time.time(), 'workerPid': os.getpid(), **summary})
             while True:
                 while running():
                     time.sleep(3)
@@ -301,24 +313,20 @@ def main() -> None:
                 status(config, cache, {'status': 'failed', 'failedAt': time.time(), 'log': str(cache / 'pending.log')})
                 raise SystemExit(result.returncode)
         return
-    original = json.loads(state_path.read_text())
-    updated, mapping, replacements = reconcile(original, desired_projects(config))
-    preserve_implicit_threads(config, state_path, original, updated, mapping)
-    summary = {'projects': [{'name': p['name'], 'roots': p['rootPaths']} for p in updated['local-projects'].values()],
-               'replaced': replacements, 'changed': updated != original}
     if args.apply:
         print(f"Codex projects: {len(summary['projects'])}; replaced entries: {len(replacements)}; changes: {summary['changed']}")
     else:
         print(json.dumps(summary, indent=2))
     if not args.apply or not summary['changed']:
+        if args.apply:
+            status(config, cache, {'status': 'applied', 'completedAt': time.time(), **summary})
         return
     if running():
         if args.only_when_closed:
             raise SystemExit(75)
         with (cache / 'pending.log').open('a') as output:
-            worker = subprocess.Popen([sys.executable, str(Path(__file__).resolve()), '--config', str(args.config), '--wait'],
-                                      stdin=subprocess.DEVNULL, stdout=output, stderr=output, start_new_session=True)
-        status(config, cache, {'status': 'waiting-for-app-exit', 'queuedAt': time.time(), 'workerPid': worker.pid, **summary})
+            subprocess.Popen([sys.executable, str(Path(__file__).resolve()), '--config', str(args.config), '--wait'],
+                             stdin=subprocess.DEVNULL, stdout=output, stderr=output, start_new_session=True)
         print('Queued: quit ChatGPT/Codex, wait for status.json to say applied, then reopen normally.')
         return
     with (cache / 'apply.lock').open('w') as lock:
@@ -327,6 +335,7 @@ def main() -> None:
         updated, mapping, replacements = reconcile(fresh, desired_projects(config))
         preserve_implicit_threads(config, state_path, fresh, updated, mapping)
         if updated == fresh:
+            status(config, cache, {'status': 'applied', 'completedAt': time.time(), **dict(summary, changed=False)})
             return
         backup = apply(config, state_path, fresh, updated, mapping, cache)
     status(config, cache, {'status': 'applied', 'completedAt': time.time(), 'backup': str(backup), **summary})

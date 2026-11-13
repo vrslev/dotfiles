@@ -31,4 +31,6 @@ macOS dotfiles for Fish, Ghostty, VS Code, Git, mise, etc. Installed via symlink
 - List available tasks: `mise tasks`
 - Check dependency/bootstrap state: `mise bootstrap status`
 
-No tests, no Justfile.
+- Run tests: `python3 -m unittest discover -s tests`
+
+No Justfile.
