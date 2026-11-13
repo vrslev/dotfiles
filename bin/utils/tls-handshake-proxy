@@ -6,6 +6,7 @@ import contextlib
 import ipaddress
 import ssl
 from pathlib import Path
+from urllib.parse import urlsplit
 
 LIMIT = 65536
 TIMEOUT = 30
@@ -45,6 +46,7 @@ async def handle(
     upstream_host: str,
     upstream_port: int,
     target: str,
+    tunnel_domains: list[str],
     local_tls: ssl.SSLContext,
     upstream_tls: ssl.SSLContext,
 ) -> None:
@@ -53,7 +55,16 @@ async def handle(
     client_to_upstream: asyncio.Task[None] | None = None
     try:
         request = await read_headers(reader)
-        if request.split(b"\r\n", 1)[0] != f"CONNECT {target}:443 HTTP/1.1".encode():
+        parts = request.split(b"\r\n", 1)[0].split(b" ")
+        destination = urlsplit("//" + parts[1].decode("ascii")) if len(parts) == 3 else None
+        host = destination.hostname if destination else None
+        allowed = host == target or any(
+            host == domain or (host is not None and host.endswith("." + domain))
+            for domain in tunnel_domains
+        )
+        if (parts[0] != b"CONNECT" or parts[-1] != b"HTTP/1.1" or not allowed
+                or destination is None or destination.port != 443
+                or destination.username is not None or destination.path):
             writer.write(b"HTTP/1.1 403 Forbidden\r\nContent-Length: 0\r\n\r\n")
             await writer.drain()
             return
@@ -61,12 +72,19 @@ async def handle(
             asyncio.open_connection(upstream_host, upstream_port, limit=LIMIT), TIMEOUT
         )
         upstream_writer.write(
-            f"CONNECT {target}:443 HTTP/1.1\r\nHost: {target}:443\r\n\r\n".encode()
+            f"CONNECT {host}:443 HTTP/1.1\r\nHost: {host}:443\r\n\r\n".encode()
         )
         await upstream_writer.drain()
         response = await read_headers(upstream_reader)
         if response.split(b"\r\n", 1)[0].split()[1] != b"200":
             raise ConnectionError("Upstream proxy rejected CONNECT")
+        if host != target:
+            writer.write(b"HTTP/1.1 200 Connection Established\r\n\r\n")
+            await writer.drain()
+            established = True
+            client_to_upstream = asyncio.create_task(relay(reader, upstream_writer))
+            await bridge(writer, upstream_reader, client_to_upstream)
+            return
         await asyncio.wait_for(
             upstream_writer.start_tls(upstream_tls, server_hostname=target), TIMEOUT
         )
@@ -115,6 +133,7 @@ async def serve(args: argparse.Namespace) -> None:
         await handle(
             reader, writer, upstream_host=args.upstream_host,
             upstream_port=args.upstream_port, target=args.target,
+            tunnel_domains=args.tunnel_domain,
             local_tls=local_tls, upstream_tls=upstream_tls,
         )
 
@@ -132,6 +151,7 @@ def main() -> None:
     parser.add_argument("--upstream-host", default="127.0.0.1")
     parser.add_argument("--upstream-port", type=int, required=True)
     parser.add_argument("--target", required=True)
+    parser.add_argument("--tunnel-domain", action="append", default=[])
     parser.add_argument("--cert", type=Path, required=True)
     parser.add_argument("--key", type=Path, required=True)
     parser.add_argument("--upstream-ca", type=Path)
