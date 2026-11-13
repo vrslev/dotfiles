@@ -9,6 +9,11 @@ if [[ ! -x "$fish_bin" ]]; then
   exit 1
 fi
 
+python_probe_dir=$(mktemp -d)
+trap 'rm -rf "$python_probe_dir"' EXIT
+mkdir "$python_probe_dir/project"
+printf '[tools]\npython = "3.13"\n' > "$python_probe_dir/project/.mise.toml"
+
 fish_commands=$(cat <<'FISH'
 if not status is-login
   echo 'shell tools check: Fish is not a login shell' >&2
@@ -25,7 +30,7 @@ if test "$DOTFILES_ROOT" != "$SHELL_TOOLS_EXPECTED_ROOT"
   exit 1
 end
 
-for utility in brew mise git uv rg codex starship zoxide fzf
+for utility in brew mise git uv rg codex starship zoxide fzf python3
   if not type -q $utility
     echo "shell tools check: missing $utility" >&2
     exit 1
@@ -36,22 +41,33 @@ for utility in brew mise git uv rg codex starship zoxide fzf
   end
 end
 
+if test (path resolve (command -s python3)) != (path resolve (mise which python3))
+  echo 'shell tools check: Python is not selected by mise' >&2
+  exit 1
+end
+
 if not fish_prompt >/dev/null
   echo 'shell tools check: Fish prompt failed' >&2
   exit 1
 end
 
+if test (python3 -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")') != '3.13'
+  echo 'shell tools check: project Python pin is ignored' >&2
+  exit 1
+end
 echo 'shell tools check: ok'
 FISH
 )
 
-output=$(env -i \
+output=$(cd "$python_probe_dir/project" && env -i \
   HOME="$HOME" \
   USER="$(id -un)" \
   LOGNAME="$(id -un)" \
   SHELL="$fish_bin" \
   TERM=xterm-256color \
   PATH=/usr/bin:/bin:/usr/sbin:/sbin \
+  MISE_STATE_DIR="$python_probe_dir/state" \
+  MISE_TRUSTED_CONFIG_PATHS="$python_probe_dir" \
   SHELL_TOOLS_EXPECTED_ROOT="$repo_root" \
   "$fish_bin" -l -i -c "$fish_commands" 2>&1) || {
   printf '%s\n' "$output" >&2

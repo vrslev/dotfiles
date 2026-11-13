@@ -110,6 +110,7 @@ bun = "latest"
 "aqua:git-lfs/git-lfs" = "latest"
 
 [settings]
+activate_aggressive = true
 disable_update_warning = true
 experimental = true
 dotfiles.root = "~/code/gh/vrslev/dotfiles/home"
