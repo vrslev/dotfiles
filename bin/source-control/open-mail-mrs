@@ -6,16 +6,19 @@ import dataclasses
 import json
 import os
 import re
+import select
 import subprocess
 import sys
 import tempfile
+import termios
 import time
+import tty
+import unicodedata
 from collections import OrderedDict
 from collections.abc import Sequence
 from concurrent.futures import ThreadPoolExecutor
 from typing import cast
 from urllib.parse import quote, urlsplit, urlunsplit
-
 
 MAILBOX_SCRIPT = r'''
 on gitlabMessages(targetAccountId)
@@ -785,15 +788,15 @@ def event_parts(notification: Notification, terms: Sequence[str]) -> tuple[str, 
     return (gray("•"), gray("UPDATE".ljust(8)), f"{cyan(sender_display(notification.sender))}: {description}")
 
 
-def print_event(notification: Notification, terms: Sequence[str]) -> None:
+def event_line(notification: Notification, terms: Sequence[str]) -> str:
     icon, tag, text = event_parts(notification, terms)
     time = gray(received_stamp(notification.date_received).rjust(12))
-    print(f"   {icon} {time} {tag} {text}")
+    return f"   {icon} {time} {tag} {text}"
 
 
-def print_summary(groups: Sequence[Sequence[Notification]], terms: Sequence[str]) -> None:
+def summary_lines(groups: Sequence[Sequence[Notification]], terms: Sequence[str]) -> list[str]:
     unread_total = sum(1 for group in groups for notification in group if not notification.read)
-    print(bold(cyan(f"{len(groups)} MR thread(s) · {unread_total} unread notification(s)")))
+    lines = [bold(cyan(f"{len(groups)} MR thread(s) · {unread_total} unread notification(s)"))]
     for index, group in enumerate(groups, start=1):
         first = group[0]
         events = unique_notifications(group, terms)
@@ -803,11 +806,60 @@ def print_summary(groups: Sequence[Sequence[Notification]], terms: Sequence[str]
         label = bold(cyan(first.label))
         title = bold(subject_title(first.subject))
         path = gray(first.project_path)
-        print()
-        print(f"{gray(str(index).rjust(2) + '.')} {label} {gray('·')} {title}")
-        print(f"    {path} {gray('·')} {count} {gray('·')} {unread}")
-        for notification in events:
-            print_event(notification, terms)
+        lines.extend(("", f"{gray(str(index).rjust(2) + '.')} {label} {gray('·')} {title}"))
+        lines.append(f"    {path} {gray('·')} {count} {gray('·')} {unread}")
+        lines.extend(event_line(notification, terms) for notification in events)
+    return lines
+
+
+def wrap_summary(lines: Sequence[str], width: int) -> list[str]:
+    rows: list[str] = []
+    reset = "\033[0m"
+    for line in lines:
+        row: list[str] = []
+        style_codes: list[str] = []
+        columns = 0
+        for token in re.finditer(r"(\033\[[0-9;]+m)|.", line):
+            character = token[0]
+            if token[1]:
+                row.append(character)
+                if character == reset:
+                    style_codes.clear()
+                else:
+                    style_codes.append(character)
+                continue
+            category = unicodedata.category(character)
+            if category in {"Cc", "Cs"}:
+                continue
+            cells = 0
+            if category not in {"Cf", "Mn", "Me"}:
+                cells = 2 if unicodedata.east_asian_width(character) in {"F", "W"} else 1
+            if columns + cells > width:
+                rows.append("".join(row) + (reset if style_codes else ""))
+                row = style_codes.copy()
+                columns = 0
+            row.append(character)
+            columns += cells
+        rows.append("".join(row) + (reset if style_codes else ""))
+    return rows
+
+
+SCROLL_KEYS = re.compile(rb"\x1b(?:\[([ABFH]|[145678]~|[145678]?$)|O([ABFH]|$)|$)")
+
+
+def scroll_summary(input_bytes: bytes, top: int, page: int, bottom: int) -> tuple[int, bytes]:
+    moves = {b"A": -1, b"B": 1, b"5~": -page, b"6~": page}
+    for match in SCROLL_KEYS.finditer(input_bytes):
+        key = match[1] or match[2]
+        if not key or key.isdigit():
+            return top, match[0]
+        if key in {b"H", b"1~", b"7~"}:
+            top = 0
+        elif key in {b"F", b"4~", b"8~"}:
+            top = bottom
+        else:
+            top = min(bottom, max(0, top + moves.get(key, 0)))
+    return top, b""
 
 
 def summary_key(url: str) -> str:
@@ -827,41 +879,80 @@ def review_errors(output: str, labels: dict[str, str]) -> list[str]:
     return list(dict.fromkeys(errors))
 
 
+def tab_summary(groups: Sequence[Sequence[Notification]], terms: Sequence[str], status: str, heading: str) -> list[str]:
+    lines = [bold(cyan(status)), dim(heading), ""]
+    lines.extend(summary_lines(groups, terms) if groups else ["Select a review tab in Safari to see its summary."])
+    return lines
+
+
+def follow_tab_summary(summaries: dict[str, list[list[Notification]]], terms: Sequence[str], status: str) -> None:
+    input_fd = sys.stdin.fileno()
+    output_fd = sys.stdout.fileno()
+    terminal_settings = termios.tcgetattr(input_fd)
+    previous: str | None = None
+    width = 0
+    top = 0
+    next_poll = 0.0
+    input_bytes = b""
+    lines: list[str] = []
+    rows: list[str] = []
+    frame: tuple[int, int] | None = None
+    try:
+        tty.setcbreak(input_fd)
+        # Alternate-scroll mode translates the mouse wheel into arrow keys.
+        print("\033[?1049h\033[?1007s\033[?1007h", end="", flush=True)
+        while True:
+            if time.monotonic() >= next_poll:
+                url = run_osascript(CURRENT_TAB_SCRIPT, [])
+                if not url:
+                    return
+                key = summary_key(url)
+                if key != previous:
+                    heading = "Following Safari's selected tab · ↑/↓ or PgUp/PgDn to scroll · Ctrl-C to exit"
+                    lines = tab_summary(summaries.get(key, []), terms, status, heading)
+                    previous = key
+                    top = 0
+                    width = 0
+                next_poll = time.monotonic() + 0.5
+
+            size = os.get_terminal_size(output_fd)
+            new_width = max(2, size.columns - 1)
+            page = max(1, size.lines)
+            if new_width != width:
+                width = new_width
+                rows = wrap_summary(lines, width)
+                frame = None
+            bottom = max(0, len(rows) - page)
+            top = min(top, bottom)
+            if frame != (top, page):
+                print("\033[H\033[J" + "\n".join(rows[top:top + page]), end="", flush=True)
+                frame = (top, page)
+
+            readable, _, _ = select.select([input_fd], [], [], max(0, next_poll - time.monotonic()))
+            if readable:
+                data = os.read(input_fd, 4096)
+                if not data:
+                    return
+                top, input_bytes = scroll_summary(input_bytes + data, top, page, bottom)
+    finally:
+        termios.tcsetattr(input_fd, termios.TCSAFLUSH, terminal_settings)
+        print("\033[?1007r\033[?1049l", end="", flush=True)
+
+
 def watch_summaries(threads: Sequence[MRThread], issue_urls: dict[str, str], terms: Sequence[str], status: str) -> None:
     summaries: dict[str, list[list[Notification]]] = {}
     for thread in threads:
         urls = [thread.notifications[0].url, *(issue_urls[issue] for issue in thread.context.issues)]
         for url in urls:
             summaries.setdefault(summary_key(url), []).append(thread.notifications)
-    interactive = sys.stdout.isatty()
-    previous: str | None = None
     try:
-        if interactive:
-            print("\033[?1049h", end="", flush=True)
-        while True:
-            url = run_osascript(CURRENT_TAB_SCRIPT, [])
-            key = summary_key(url)
-            if key != previous:
-                if interactive:
-                    print("\033[2J\033[H", end="")
-                print(bold(cyan(status)))
-                print(dim("Following Safari's selected tab · Ctrl-C to exit" if interactive else "Selected Safari tab"))
-                groups = summaries.get(key)
-                if groups:
-                    print()
-                    print_summary(groups, terms)
-                else:
-                    print("\nSelect a review tab in Safari to see its summary.")
-                sys.stdout.flush()
-                previous = key
-            if not interactive or not url:
-                return
-            time.sleep(0.5)
+        if sys.stdin.isatty() and sys.stdout.isatty():
+            follow_tab_summary(summaries, terms, status)
+        else:
+            key = summary_key(run_osascript(CURRENT_TAB_SCRIPT, []))
+            print("\n".join(tab_summary(summaries.get(key, []), terms, status, "Selected Safari tab")), flush=True)
     except KeyboardInterrupt:
         pass
-    finally:
-        if interactive:
-            print("\033[?1049l", end="", flush=True)
 
 
 def notify_ready(status: str, failed: bool) -> None:
